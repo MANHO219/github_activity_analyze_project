@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "checkedAt": "2026-10-13",
+  "summary": {
+    "artifacts": 58,
+    "examples": 3,
+    "fields": 13,
+    "figures": 5,
+    "graphs": 2,
+    "pageOverflow": false,
+    "treeFiles": 87,
+    "viewportHeight": 841,
+    "viewportWidth": 664
+  },
+  "allTreeCount": "全部数据 / 记录 58 / 58 项",
+  "defaultSelection": "a_data_pipeline/data/raw/2024-01-15-0.json.gz",
+  "zoom125PercentVerified": true,
+  "nodeFileNavigationVerified": [
+    "runs/20240115_1hour_handoff/python/events_clean.parquet",
+    "runs/20240115_1hour_handoff/python/rejected_records.jsonl"
+  ],
+  "consoleErrors": [],
+  "screenshots": [
+    "data_guide_file_graph.jpg",
+    "data_guide_cleaning_graph.jpg",
+    "data_guide_directory_tree.jpg",
+    "data_guide_aggregation.jpg"
+  ]
+}

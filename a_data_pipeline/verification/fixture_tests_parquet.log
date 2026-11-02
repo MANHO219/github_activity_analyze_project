@@ -1,0 +1,40 @@
+test_download_cache_is_verified_and_corruption_is_preserved (test_pipeline.SampleTests.test_download_cache_is_verified_and_corruption_is_preserved) ... 2024-01-15-2.json.gz: cached_verified
+2024-01-15-2.json.gz: failed
+ok
+test_download_request_preserves_manifest_and_raw_data (test_pipeline.SampleTests.test_download_request_preserves_manifest_and_raw_data) ... 2024-01-15-2.json.gz: downloaded_verified
+ok
+test_empty_valid_archive_still_exports_readable_schema (test_pipeline.SampleTests.test_empty_valid_archive_still_exports_readable_schema) ... ok
+test_expected_cleaning_and_process_retention (test_pipeline.SampleTests.test_expected_cleaning_and_process_retention) ... ok
+test_inspection_is_before_dedup (test_pipeline.SampleTests.test_inspection_is_before_dedup) ... ok
+test_missing_hours_require_explicit_opt_in (test_pipeline.SampleTests.test_missing_hours_require_explicit_opt_in) ... ok
+test_spark_and_reference_agree_on_adversarial_inputs (test_pipeline.SampleTests.test_spark_and_reference_agree_on_adversarial_inputs) ... Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/12 16:00:04 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 2) / 2]                                                                                /opt/homebrew/Caskroom/miniforge/base/envs/cs5488-data/lib/python3.11/socket.py:789: ResourceWarning: unclosed <socket.socket fd=10, family=2, type=1, proto=6, laddr=('127.0.0.1', 58135), raddr=('127.0.0.1', 58134)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Caskroom/miniforge/base/envs/cs5488-data/lib/python3.11/socket.py:789: ResourceWarning: unclosed <socket.socket fd=11, family=2, type=1, proto=6, laddr=('127.0.0.1', 58140), raddr=('127.0.0.1', 58139)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Caskroom/miniforge/base/envs/cs5488-data/lib/python3.11/socket.py:789: ResourceWarning: unclosed <socket.socket fd=11, family=2, type=1, proto=6, laddr=('127.0.0.1', 58144), raddr=('127.0.0.1', 58143)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Caskroom/miniforge/base/envs/cs5488-data/lib/python3.11/socket.py:789: ResourceWarning: unclosed <socket.socket fd=11, family=2, type=1, proto=6, laddr=('127.0.0.1', 58146), raddr=('127.0.0.1', 58145)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Caskroom/miniforge/base/envs/cs5488-data/lib/python3.11/socket.py:789: ResourceWarning: unclosed <socket.socket fd=11, family=2, type=1, proto=6, laddr=('127.0.0.1', 58148), raddr=('127.0.0.1', 58147)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Caskroom/miniforge/base/envs/cs5488-data/lib/python3.11/socket.py:789: ResourceWarning: unclosed <socket.socket fd=10, family=2, type=1, proto=6, laddr=('127.0.0.1', 58157), raddr=('127.0.0.1', 58156)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Caskroom/miniforge/base/envs/cs5488-data/lib/python3.11/socket.py:789: ResourceWarning: unclosed <socket.socket fd=10, family=2, type=1, proto=6, laddr=('127.0.0.1', 58159), raddr=('127.0.0.1', 58158)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_truncated_archive_never_marks_stage_completed (test_pipeline.SampleTests.test_truncated_archive_never_marks_stage_completed) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 11.895s
+
+OK

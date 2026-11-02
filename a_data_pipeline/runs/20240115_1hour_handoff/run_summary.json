@@ -1,0 +1,62 @@
+{
+  "state": "completed",
+  "run_directory": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/runs/20240115_1hour_handoff",
+  "config": {
+    "date": "2024-01-15",
+    "hours": [
+      0
+    ],
+    "base_url": "https://data.gharchive.org",
+    "timeout_seconds": 60,
+    "retries": 2,
+    "max_file_bytes": 536870912,
+    "raw_preview_rows": 5,
+    "clean_preview_rows": 100,
+    "parquet_batch_rows": 10000
+  },
+  "stages": {
+    "download": {
+      "completed": true,
+      "output": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/runs/20240115_1hour_handoff/download"
+    },
+    "inspection": {
+      "completed": true,
+      "output": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/runs/20240115_1hour_handoff/inspection"
+    },
+    "python": {
+      "completed": true,
+      "output": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/runs/20240115_1hour_handoff/python",
+      "cleaned_events": 197313
+    },
+    "spark": {
+      "completed": true,
+      "output": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/runs/20240115_1hour_handoff/spark",
+      "cleaned_events": 197313
+    },
+    "comparison": {
+      "completed": true,
+      "output": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/runs/20240115_1hour_handoff/comparison"
+    }
+  },
+  "clean_events": 197313,
+  "coverage": {
+    "rule_version": "a-events-v1",
+    "timezone": "UTC",
+    "date": "2024-01-15",
+    "expected_files": [
+      "2024-01-15-0.json.gz"
+    ],
+    "missing_files": [],
+    "observed_files": [
+      {
+        "name": "2024-01-15-0.json.gz",
+        "path": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/data/raw/2024-01-15-0.json.gz",
+        "bytes": 73709206,
+        "sha256": "019cd01bb263573ae1d633fd965cdc9869fa5eefc31bd409376d10052ed7acd8"
+      }
+    ],
+    "all_requested_archives_present": true,
+    "complete_utc_day_requested": false,
+    "capture_completeness": "not established by archive availability"
+  }
+}

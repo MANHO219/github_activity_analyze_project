@@ -1,0 +1,2 @@
+source_file,blank_lines,nonempty_lines,parse_errors,invalid_records,valid_before_dedup,cleaned_events,duplicates_removed,conflict_occurrences_excluded,time_outside_file_hour_before_dedup,time_outside_file_hour_clean
+2024-01-15-0.json.gz,0,197313,0,0,197313,197313,0,0,0,0

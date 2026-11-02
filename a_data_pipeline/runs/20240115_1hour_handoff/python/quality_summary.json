@@ -1,0 +1,65 @@
+{
+  "rule_version": "a-events-v1",
+  "engine": "python_sqlite",
+  "line_status_counts": {
+    "valid": 197313
+  },
+  "nonempty_lines": 197313,
+  "cleaned_events": 197313,
+  "duplicates_removed": 0,
+  "conflicting_ids": 0,
+  "conflict_occurrences_excluded": 0,
+  "conflict_policy": "exclude all occurrences of a conflicting event ID until reviewed",
+  "rejection_reasons": {},
+  "optional_issues_before_dedup": {},
+  "time_outside_file_hour_before_dedup": 0,
+  "time_outside_file_hour_clean": 0,
+  "clean_event_types": {
+    "CommitCommentEvent": 389,
+    "CreateEvent": 14556,
+    "DeleteEvent": 4251,
+    "ForkEvent": 1194,
+    "GollumEvent": 165,
+    "IssueCommentEvent": 5537,
+    "IssuesEvent": 1975,
+    "MemberEvent": 219,
+    "PublicEvent": 393,
+    "PullRequestEvent": 10154,
+    "PullRequestReviewCommentEvent": 1339,
+    "PullRequestReviewEvent": 2186,
+    "PushEvent": 148461,
+    "ReleaseEvent": 945,
+    "WatchEvent": 5549
+  },
+  "clean_unique_repos": 69768,
+  "grouped_event_count_sum": 197313,
+  "checks": {
+    "valid_count_reconciles": true,
+    "grouped_count_reconciles": true,
+    "clean_ids_unique": true
+  },
+  "coverage": {
+    "rule_version": "a-events-v1",
+    "timezone": "UTC",
+    "date": "2024-01-15",
+    "expected_files": [
+      "2024-01-15-0.json.gz"
+    ],
+    "missing_files": [],
+    "observed_files": [
+      {
+        "name": "2024-01-15-0.json.gz",
+        "path": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/data/raw/2024-01-15-0.json.gz",
+        "bytes": 73709206,
+        "sha256": "019cd01bb263573ae1d633fd965cdc9869fa5eefc31bd409376d10052ed7acd8"
+      }
+    ],
+    "all_requested_archives_present": true,
+    "complete_utc_day_requested": false,
+    "capture_completeness": "not established by archive availability"
+  },
+  "formats": [
+    "csv.gz",
+    "parquet"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "checks": {
+    "same_input_hashes_and_rules": true,
+    "same_line_status_counts": true,
+    "same_rejection_reasons": true,
+    "same_duplicates_removed": true,
+    "same_conflicting_ids": true,
+    "same_conflict_occurrences_excluded": true,
+    "same_clean_unique_repos": true,
+    "same_clean_event_types": true,
+    "same_time_outside_file_hour_before_dedup": true,
+    "same_time_outside_file_hour_clean": true,
+    "left_ids_unique": true,
+    "left_daily_matches_events": true,
+    "left_daily_keys_unique": true,
+    "right_ids_unique": true,
+    "right_daily_matches_events": true,
+    "right_daily_keys_unique": true,
+    "left_parquet_matches_csv": true,
+    "right_parquet_matches_csv": true,
+    "same_parquet_types": true
+  },
+  "differences": {
+    "event_ids_left_only": 0,
+    "event_ids_right_only": 0,
+    "event_rows_left_only": 0,
+    "event_rows_right_only": 0,
+    "daily_counts_left_only": 0,
+    "daily_counts_right_only": 0
+  },
+  "left_events": 197313,
+  "right_events": 197313,
+  "note": "Compares ingestion and DataFrame results; shared parsing rules are also covered by adversarial fixture tests."
+}

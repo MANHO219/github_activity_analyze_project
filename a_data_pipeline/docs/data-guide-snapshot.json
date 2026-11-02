@@ -1,0 +1,2784 @@
+{
+  "document_date": "2026-11-02",
+  "run_name": "20240115_1hour_handoff",
+  "run_path": "runs/20240115_1hour_handoff",
+  "config": {
+    "date": "2024-01-15",
+    "hours": [
+      0
+    ],
+    "base_url": "https://data.gharchive.org",
+    "timeout_seconds": 60,
+    "retries": 2,
+    "max_file_bytes": 536870912,
+    "raw_preview_rows": 5,
+    "clean_preview_rows": 100,
+    "parquet_batch_rows": 10000
+  },
+  "quality": {
+    "rule_version": "a-events-v1",
+    "engine": "python_sqlite",
+    "line_status_counts": {
+      "valid": 197313
+    },
+    "nonempty_lines": 197313,
+    "cleaned_events": 197313,
+    "duplicates_removed": 0,
+    "conflicting_ids": 0,
+    "conflict_occurrences_excluded": 0,
+    "conflict_policy": "exclude all occurrences of a conflicting event ID until reviewed",
+    "rejection_reasons": {},
+    "optional_issues_before_dedup": {},
+    "time_outside_file_hour_before_dedup": 0,
+    "time_outside_file_hour_clean": 0,
+    "clean_event_types": {
+      "CommitCommentEvent": 389,
+      "CreateEvent": 14556,
+      "DeleteEvent": 4251,
+      "ForkEvent": 1194,
+      "GollumEvent": 165,
+      "IssueCommentEvent": 5537,
+      "IssuesEvent": 1975,
+      "MemberEvent": 219,
+      "PublicEvent": 393,
+      "PullRequestEvent": 10154,
+      "PullRequestReviewCommentEvent": 1339,
+      "PullRequestReviewEvent": 2186,
+      "PushEvent": 148461,
+      "ReleaseEvent": 945,
+      "WatchEvent": 5549
+    },
+    "clean_unique_repos": 69768,
+    "grouped_event_count_sum": 197313,
+    "checks": {
+      "valid_count_reconciles": true,
+      "grouped_count_reconciles": true,
+      "clean_ids_unique": true
+    },
+    "coverage": {
+      "rule_version": "a-events-v1",
+      "timezone": "UTC",
+      "date": "2024-01-15",
+      "expected_files": [
+        "2024-01-15-0.json.gz"
+      ],
+      "missing_files": [],
+      "observed_files": [
+        {
+          "name": "2024-01-15-0.json.gz",
+          "path": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/data/raw/2024-01-15-0.json.gz",
+          "bytes": 73709206,
+          "sha256": "019cd01bb263573ae1d633fd965cdc9869fa5eefc31bd409376d10052ed7acd8"
+        }
+      ],
+      "all_requested_archives_present": true,
+      "complete_utc_day_requested": false,
+      "capture_completeness": "not established by archive availability"
+    },
+    "formats": [
+      "csv.gz",
+      "parquet"
+    ]
+  },
+  "inspection": {
+    "count_scope": "raw occurrences before deduplication",
+    "line_status_counts": {
+      "valid": 197313
+    },
+    "unique_valid_repos": 69768,
+    "event_time_min": "2024-01-15T00:00:00.000000Z",
+    "event_time_max": "2024-01-15T00:59:59.000000Z",
+    "event_types": {
+      "CommitCommentEvent": 389,
+      "CreateEvent": 14556,
+      "DeleteEvent": 4251,
+      "ForkEvent": 1194,
+      "GollumEvent": 165,
+      "IssueCommentEvent": 5537,
+      "IssuesEvent": 1975,
+      "MemberEvent": 219,
+      "PublicEvent": 393,
+      "PullRequestEvent": 10154,
+      "PullRequestReviewCommentEvent": 1339,
+      "PullRequestReviewEvent": 2186,
+      "PushEvent": 148461,
+      "ReleaseEvent": 945,
+      "WatchEvent": 5549
+    },
+    "rejection_reasons": {},
+    "optional_field_issues": {},
+    "coverage": {
+      "rule_version": "a-events-v1",
+      "timezone": "UTC",
+      "date": "2024-01-15",
+      "expected_files": [
+        "2024-01-15-0.json.gz"
+      ],
+      "missing_files": [],
+      "observed_files": [
+        {
+          "name": "2024-01-15-0.json.gz",
+          "path": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/data/raw/2024-01-15-0.json.gz",
+          "bytes": 73709206,
+          "sha256": "019cd01bb263573ae1d633fd965cdc9869fa5eefc31bd409376d10052ed7acd8"
+        }
+      ],
+      "all_requested_archives_present": true,
+      "complete_utc_day_requested": false,
+      "capture_completeness": "not established by archive availability"
+    }
+  },
+  "input_manifest": {
+    "rule_version": "a-events-v1",
+    "timezone": "UTC",
+    "date": "2024-01-15",
+    "expected_files": [
+      "2024-01-15-0.json.gz"
+    ],
+    "missing_files": [],
+    "observed_files": [
+      {
+        "name": "2024-01-15-0.json.gz",
+        "path": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/data/raw/2024-01-15-0.json.gz",
+        "bytes": 73709206,
+        "sha256": "019cd01bb263573ae1d633fd965cdc9869fa5eefc31bd409376d10052ed7acd8"
+      }
+    ],
+    "all_requested_archives_present": true,
+    "complete_utc_day_requested": false,
+    "capture_completeness": "not established by archive availability"
+  },
+  "run_status": {
+    "stage": "pipeline",
+    "state": "completed",
+    "started_at": "2026-10-12T08:01:27+00:00",
+    "rule_version": "a-events-v1",
+    "config": {
+      "date": "2024-01-15",
+      "hours": [
+        0
+      ],
+      "base_url": "https://data.gharchive.org",
+      "timeout_seconds": 60,
+      "retries": 2,
+      "max_file_bytes": 536870912,
+      "raw_preview_rows": 5,
+      "clean_preview_rows": 100,
+      "parquet_batch_rows": 10000
+    },
+    "argv": [
+      "scripts/run_sample.py",
+      "--with-spark",
+      "--run-dir",
+      "runs/20240115_1hour_handoff"
+    ],
+    "environment": {
+      "python": "3.11.17 (main, Oct  6 2026, 23:54:59) [Clang 21.1.8 ]",
+      "executable": "/opt/homebrew/Caskroom/miniforge/base/envs/cs5488-data/bin/python",
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "cpu_count": 10,
+      "memory_bytes": 17179869184,
+      "packages": {
+        "pyarrow": "25.0.0",
+        "pyspark": "3.5.7",
+        "py4j": "0.10.9.7"
+      },
+      "java_home": "/opt/homebrew/Caskroom/miniforge/base/envs/cs5488-data/lib/jvm",
+      "code_sha256": "4c868b129a70b430ed9e5cd4b1684fd6ecda8120017e0abeabac9da566d4b1f9"
+    },
+    "finished_at": "2026-10-12T08:02:47+00:00",
+    "elapsed_seconds": 79.55236
+  },
+  "run_summary": {
+    "state": "completed",
+    "run_directory": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/runs/20240115_1hour_handoff",
+    "config": {
+      "date": "2024-01-15",
+      "hours": [
+        0
+      ],
+      "base_url": "https://data.gharchive.org",
+      "timeout_seconds": 60,
+      "retries": 2,
+      "max_file_bytes": 536870912,
+      "raw_preview_rows": 5,
+      "clean_preview_rows": 100,
+      "parquet_batch_rows": 10000
+    },
+    "stages": {
+      "download": {
+        "completed": true,
+        "output": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/runs/20240115_1hour_handoff/download"
+      },
+      "inspection": {
+        "completed": true,
+        "output": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/runs/20240115_1hour_handoff/inspection"
+      },
+      "python": {
+        "completed": true,
+        "output": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/runs/20240115_1hour_handoff/python",
+        "cleaned_events": 197313
+      },
+      "spark": {
+        "completed": true,
+        "output": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/runs/20240115_1hour_handoff/spark",
+        "cleaned_events": 197313
+      },
+      "comparison": {
+        "completed": true,
+        "output": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/runs/20240115_1hour_handoff/comparison"
+      }
+    },
+    "clean_events": 197313,
+    "coverage": {
+      "rule_version": "a-events-v1",
+      "timezone": "UTC",
+      "date": "2024-01-15",
+      "expected_files": [
+        "2024-01-15-0.json.gz"
+      ],
+      "missing_files": [],
+      "observed_files": [
+        {
+          "name": "2024-01-15-0.json.gz",
+          "path": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/data/raw/2024-01-15-0.json.gz",
+          "bytes": 73709206,
+          "sha256": "019cd01bb263573ae1d633fd965cdc9869fa5eefc31bd409376d10052ed7acd8"
+        }
+      ],
+      "all_requested_archives_present": true,
+      "complete_utc_day_requested": false,
+      "capture_completeness": "not established by archive availability"
+    }
+  },
+  "examples": [
+    {
+      "raw": {
+        "id": "34816047159",
+        "type": "PushEvent",
+        "actor": {
+          "id": 49699333,
+          "login": "dependabot[bot]",
+          "display_login": "dependabot",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/dependabot[bot]",
+          "avatar_url": "https://avatars.githubusercontent.com/u/49699333?"
+        },
+        "repo": {
+          "id": 39464018,
+          "name": "apache/superset",
+          "url": "https://api.github.com/repos/apache/superset"
+        },
+        "payload": {
+          "repository_id": 39464018,
+          "push_id": 16635812223,
+          "size": 15,
+          "distinct_size": 1,
+          "ref": "refs/heads/dependabot/npm_and_yarn/superset-frontend/plugins/legacy-preset-chart-nvd3/urijs-tw-1.19.11",
+          "head": "4c8e93be44bb0a8d29ab5284be9c60a4a070a98a",
+          "before": "76e1e9b452a308866c71da146922fd9577fca5f3",
+          "commits": [
+            {
+              "sha": "a59f69161081d45fc5467fd3d4273b8b9e6089a8",
+              "author": {
+                "email": "49699333+dependabot[bot]@users.noreply.github.com",
+                "name": "dependabot[bot]"
+              },
+              "message": "build(deps): update fast-safe-stringify requirement from ^2.0.6 to ^2.1.1 in /superset-frontend/plugins/legacy-preset-chart-nvd3 (#26601)\n\nSigned-off-by: dependabot[bot] <support@github.com>\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+              "distinct": false,
+              "url": "https://api.github.com/repos/apache/superset/commits/a59f69161081d45fc5467fd3d4273b8b9e6089a8"
+            }
+          ]
+        },
+        "public": true,
+        "created_at": "2024-01-15T00:00:00Z",
+        "org": {
+          "id": 47359,
+          "login": "apache",
+          "gravatar_id": "",
+          "url": "https://api.github.com/orgs/apache",
+          "avatar_url": "https://avatars.githubusercontent.com/u/47359?"
+        }
+      },
+      "cuts": [
+        {
+          "path": "payload.commits",
+          "original_items": 15,
+          "shown_items": 1
+        }
+      ],
+      "clean": {
+        "event_id": "34816047159",
+        "event_type": "PushEvent",
+        "event_time": "2024-01-15T00:00:00.000000Z",
+        "repo_id": 39464018,
+        "repo_name": "apache/superset",
+        "actor_id": 49699333,
+        "actor_login": "dependabot[bot]",
+        "event_date": "2024-01-15",
+        "source_file": "2024-01-15-0.json.gz",
+        "source_line": 1,
+        "source_hour": "2024-01-15T00:00:00Z",
+        "time_outside_file_hour": false,
+        "optional_field_issues": []
+      },
+      "payload_keys": [
+        "repository_id",
+        "push_id",
+        "size",
+        "distinct_size",
+        "ref",
+        "head",
+        "before",
+        "commits"
+      ],
+      "commit_count": 15
+    },
+    {
+      "raw": {
+        "id": "34816051245",
+        "type": "PullRequestEvent",
+        "actor": {
+          "id": 49699333,
+          "login": "dependabot[bot]",
+          "display_login": "dependabot",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/dependabot[bot]",
+          "avatar_url": "https://avatars.githubusercontent.com/u/49699333?"
+        },
+        "repo": {
+          "id": 39464018,
+          "name": "apache/superset",
+          "url": "https://api.github.com/repos/apache/superset"
+        },
+        "payload": {
+          "action": "opened",
+          "number": 26610,
+          "pull_request": {
+            "url": "https://api.github.com/repos/apache/superset/pulls/26610",
+            "id": 1678336974,
+            "node_id": "PR_kwDOAlosUs5kCWPO",
+            "html_url": "https://github.com/apache/superset/pull/26610",
+            "diff_url": "https://github.com/apache/superset/pull/26610.diff",
+            "patch_url": "https://github.com/apache/superset/pull/26610.patch",
+            "issue_url": "https://api.github.com/repos/apache/superset/issues/26610",
+            "number": 26610,
+            "state": "open",
+            "locked": false,
+            "title": "build(deps-dev): bump prettier from 2.4.1 to 3.2.2 in /superset-frontend",
+            "user": {
+              "login": "dependabot[bot]",
+              "id": 49699333,
+              "node_id": "MDM6Qm90NDk2OTkzMzM=",
+              "avatar_url": "https://avatars.githubusercontent.com/in/29110?v=4",
+              "gravatar_id": "",
+              "url": "https://api.github.com/users/dependabot%5Bbot%5D",
+              "html_url": "https://github.com/apps/dependabot",
+              "followers_url": "https://api.github.com/users/dependabot%5Bbot%5D/followers",
+              "following_url": "https://api.github.com/users/dependabot%5Bbot%5D/following{/other_user}",
+              "gists_url": "https://api.github.com/users/dependabot%5Bbot%5D/gists{/gist_id}",
+              "starred_url": "https://api.github.com/users/dependabot%5Bbot%5D/starred{/owner}{/repo}",
+              "subscriptions_url": "https://api.github.com/users/dependabot%5Bbot%5D/subscriptions",
+              "organizations_url": "https://api.github.com/users/dependabot%5Bbot%5D/orgs",
+              "repos_url": "https://api.github.com/users/dependabot%5Bbot%5D/repos",
+              "events_url": "https://api.github.com/users/dependabot%5Bbot%5D/events{/privacy}",
+              "received_events_url": "https://api.github.com/users/dependabot%5Bbot%5D/received_events",
+              "type": "Bot",
+              "site_admin": false
+            },
+            "body": "Bumps [prettier](https://github.com/prettier/prettier) from 2.4.1 to 3.2.2.\n<details>\n<summary>Release notes</summary>\n<p><em>Sourced from <a href=\"https://github.com/prettier/prettier/releases\">prettier's releases</a>.</em></p>\n<blockquote>\n<h2>3.2.2</h2>\n<p>🔗 <a href=\"https://github.com/prettier/prettier/blob/main/CHANGELOG.md#322\">Changelog</a></p>\n<h2>3.2.1</h2>\n<p>🔗 <a href=\"https://github.co…",
+            "created_at": "2024-01-15T00:00:18Z",
+            "updated_at": "2024-01-15T00:00:18Z",
+            "closed_at": null,
+            "merged_at": null,
+            "merge_commit_sha": "9b5bade5e789b0fabc36f15074c5bd8657f253b4",
+            "assignee": null,
+            "assignees": [],
+            "requested_reviewers": [],
+            "requested_teams": [],
+            "labels": [],
+            "milestone": null,
+            "draft": false,
+            "commits_url": "https://api.github.com/repos/apache/superset/pulls/26610/commits",
+            "review_comments_url": "https://api.github.com/repos/apache/superset/pulls/26610/comments",
+            "review_comment_url": "https://api.github.com/repos/apache/superset/pulls/comments{/number}",
+            "comments_url": "https://api.github.com/repos/apache/superset/issues/26610/comments",
+            "statuses_url": "https://api.github.com/repos/apache/superset/statuses/771aea1d8e8efde89a6a80100213b4f65fd79af8",
+            "head": {
+              "label": "apache:dependabot/npm_and_yarn/superset-frontend/prettier-3.2.2",
+              "ref": "dependabot/npm_and_yarn/superset-frontend/prettier-3.2.2",
+              "sha": "771aea1d8e8efde89a6a80100213b4f65fd79af8",
+              "user": {
+                "login": "apache",
+                "id": 47359,
+                "node_id": "MDEyOk9yZ2FuaXphdGlvbjQ3MzU5",
+                "avatar_url": "https://avatars.githubusercontent.com/u/47359?v=4",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/apache",
+                "html_url": "https://github.com/apache",
+                "followers_url": "https://api.github.com/users/apache/followers",
+                "following_url": "https://api.github.com/users/apache/following{/other_user}",
+                "gists_url": "https://api.github.com/users/apache/gists{/gist_id}",
+                "starred_url": "https://api.github.com/users/apache/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/apache/subscriptions",
+                "organizations_url": "https://api.github.com/users/apache/orgs",
+                "repos_url": "https://api.github.com/users/apache/repos",
+                "events_url": "https://api.github.com/users/apache/events{/privacy}",
+                "received_events_url": "https://api.github.com/users/apache/received_events",
+                "type": "Organization",
+                "site_admin": false
+              },
+              "repo": {
+                "id": 39464018,
+                "node_id": "MDEwOlJlcG9zaXRvcnkzOTQ2NDAxOA==",
+                "name": "superset",
+                "full_name": "apache/superset",
+                "private": false,
+                "owner": {
+                  "login": "apache",
+                  "id": 47359,
+                  "node_id": "MDEyOk9yZ2FuaXphdGlvbjQ3MzU5",
+                  "avatar_url": "https://avatars.githubusercontent.com/u/47359?v=4",
+                  "gravatar_id": "",
+                  "url": "https://api.github.com/users/apache",
+                  "html_url": "https://github.com/apache",
+                  "followers_url": "https://api.github.com/users/apache/followers",
+                  "following_url": "https://api.github.com/users/apache/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/apache/gists{/gist_id}",
+                  "starred_url": "https://api.github.com/users/apache/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/apache/subscriptions",
+                  "organizations_url": "https://api.github.com/users/apache/orgs",
+                  "repos_url": "https://api.github.com/users/apache/repos",
+                  "events_url": "https://api.github.com/users/apache/events{/privacy}",
+                  "received_events_url": "https://api.github.com/users/apache/received_events",
+                  "type": "Organization",
+                  "site_admin": false
+                },
+                "html_url": "https://github.com/apache/superset",
+                "description": "Apache Superset is a Data Visualization and Data Exploration Platform",
+                "fork": false,
+                "url": "https://api.github.com/repos/apache/superset",
+                "forks_url": "https://api.github.com/repos/apache/superset/forks",
+                "keys_url": "https://api.github.com/repos/apache/superset/keys{/key_id}",
+                "collaborators_url": "https://api.github.com/repos/apache/superset/collaborators{/collaborator}",
+                "teams_url": "https://api.github.com/repos/apache/superset/teams",
+                "hooks_url": "https://api.github.com/repos/apache/superset/hooks",
+                "issue_events_url": "https://api.github.com/repos/apache/superset/issues/events{/number}",
+                "events_url": "https://api.github.com/repos/apache/superset/events",
+                "assignees_url": "https://api.github.com/repos/apache/superset/assignees{/user}",
+                "branches_url": "https://api.github.com/repos/apache/superset/branches{/branch}",
+                "tags_url": "https://api.github.com/repos/apache/superset/tags",
+                "blobs_url": "https://api.github.com/repos/apache/superset/git/blobs{/sha}",
+                "git_tags_url": "https://api.github.com/repos/apache/superset/git/tags{/sha}",
+                "git_refs_url": "https://api.github.com/repos/apache/superset/git/refs{/sha}",
+                "trees_url": "https://api.github.com/repos/apache/superset/git/trees{/sha}",
+                "statuses_url": "https://api.github.com/repos/apache/superset/statuses/{sha}",
+                "languages_url": "https://api.github.com/repos/apache/superset/languages",
+                "stargazers_url": "https://api.github.com/repos/apache/superset/stargazers",
+                "contributors_url": "https://api.github.com/repos/apache/superset/contributors",
+                "subscribers_url": "https://api.github.com/repos/apache/superset/subscribers",
+                "subscription_url": "https://api.github.com/repos/apache/superset/subscription",
+                "commits_url": "https://api.github.com/repos/apache/superset/commits{/sha}",
+                "git_commits_url": "https://api.github.com/repos/apache/superset/git/commits{/sha}",
+                "comments_url": "https://api.github.com/repos/apache/superset/comments{/number}",
+                "issue_comment_url": "https://api.github.com/repos/apache/superset/issues/comments{/number}",
+                "contents_url": "https://api.github.com/repos/apache/superset/contents/{+path}",
+                "compare_url": "https://api.github.com/repos/apache/superset/compare/{base}...{head}",
+                "merges_url": "https://api.github.com/repos/apache/superset/merges",
+                "archive_url": "https://api.github.com/repos/apache/superset/{archive_format}{/ref}",
+                "downloads_url": "https://api.github.com/repos/apache/superset/downloads",
+                "issues_url": "https://api.github.com/repos/apache/superset/issues{/number}",
+                "pulls_url": "https://api.github.com/repos/apache/superset/pulls{/number}",
+                "milestones_url": "https://api.github.com/repos/apache/superset/milestones{/number}",
+                "notifications_url": "https://api.github.com/repos/apache/superset/notifications{?since,all,participating}",
+                "labels_url": "https://api.github.com/repos/apache/superset/labels{/name}",
+                "releases_url": "https://api.github.com/repos/apache/superset/releases{/id}",
+                "deployments_url": "https://api.github.com/repos/apache/superset/deployments",
+                "created_at": "2015-07-21T18:55:34Z",
+                "updated_at": "2024-01-14T21:30:14Z",
+                "pushed_at": "2024-01-15T00:00:18Z",
+                "git_url": "git://github.com/apache/superset.git",
+                "ssh_url": "git@github.com:apache/superset.git",
+                "clone_url": "https://github.com/apache/superset.git",
+                "svn_url": "https://github.com/apache/superset",
+                "homepage": "https://superset.apache.org/",
+                "size": 564486,
+                "stargazers_count": 56163,
+                "watchers_count": 56163,
+                "language": "TypeScript",
+                "has_issues": true,
+                "has_projects": true,
+                "has_downloads": true,
+                "has_wiki": true,
+                "has_pages": true,
+                "has_discussions": true,
+                "forks_count": 12100,
+                "mirror_url": null,
+                "archived": false,
+                "disabled": false,
+                "open_issues_count": 1820,
+                "license": {
+                  "key": "apache-2.0",
+                  "name": "Apache License 2.0",
+                  "spdx_id": "Apache-2.0",
+                  "url": "https://api.github.com/licenses/apache-2.0",
+                  "node_id": "MDc6TGljZW5zZTI="
+                },
+                "allow_forking": true,
+                "is_template": false,
+                "web_commit_signoff_required": false,
+                "topics": [
+                  "analytics"
+                ],
+                "visibility": "public",
+                "forks": 12100,
+                "open_issues": 1820,
+                "watchers": 56163,
+                "default_branch": "master"
+              }
+            },
+            "base": {
+              "label": "apache:master",
+              "ref": "master",
+              "sha": "552823f3295599ea1917e3f20eb3e19c9d89fad9",
+              "user": {
+                "login": "apache",
+                "id": 47359,
+                "node_id": "MDEyOk9yZ2FuaXphdGlvbjQ3MzU5",
+                "avatar_url": "https://avatars.githubusercontent.com/u/47359?v=4",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/apache",
+                "html_url": "https://github.com/apache",
+                "followers_url": "https://api.github.com/users/apache/followers",
+                "following_url": "https://api.github.com/users/apache/following{/other_user}",
+                "gists_url": "https://api.github.com/users/apache/gists{/gist_id}",
+                "starred_url": "https://api.github.com/users/apache/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/apache/subscriptions",
+                "organizations_url": "https://api.github.com/users/apache/orgs",
+                "repos_url": "https://api.github.com/users/apache/repos",
+                "events_url": "https://api.github.com/users/apache/events{/privacy}",
+                "received_events_url": "https://api.github.com/users/apache/received_events",
+                "type": "Organization",
+                "site_admin": false
+              },
+              "repo": {
+                "id": 39464018,
+                "node_id": "MDEwOlJlcG9zaXRvcnkzOTQ2NDAxOA==",
+                "name": "superset",
+                "full_name": "apache/superset",
+                "private": false,
+                "owner": {
+                  "login": "apache",
+                  "id": 47359,
+                  "node_id": "MDEyOk9yZ2FuaXphdGlvbjQ3MzU5",
+                  "avatar_url": "https://avatars.githubusercontent.com/u/47359?v=4",
+                  "gravatar_id": "",
+                  "url": "https://api.github.com/users/apache",
+                  "html_url": "https://github.com/apache",
+                  "followers_url": "https://api.github.com/users/apache/followers",
+                  "following_url": "https://api.github.com/users/apache/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/apache/gists{/gist_id}",
+                  "starred_url": "https://api.github.com/users/apache/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/apache/subscriptions",
+                  "organizations_url": "https://api.github.com/users/apache/orgs",
+                  "repos_url": "https://api.github.com/users/apache/repos",
+                  "events_url": "https://api.github.com/users/apache/events{/privacy}",
+                  "received_events_url": "https://api.github.com/users/apache/received_events",
+                  "type": "Organization",
+                  "site_admin": false
+                },
+                "html_url": "https://github.com/apache/superset",
+                "description": "Apache Superset is a Data Visualization and Data Exploration Platform",
+                "fork": false,
+                "url": "https://api.github.com/repos/apache/superset",
+                "forks_url": "https://api.github.com/repos/apache/superset/forks",
+                "keys_url": "https://api.github.com/repos/apache/superset/keys{/key_id}",
+                "collaborators_url": "https://api.github.com/repos/apache/superset/collaborators{/collaborator}",
+                "teams_url": "https://api.github.com/repos/apache/superset/teams",
+                "hooks_url": "https://api.github.com/repos/apache/superset/hooks",
+                "issue_events_url": "https://api.github.com/repos/apache/superset/issues/events{/number}",
+                "events_url": "https://api.github.com/repos/apache/superset/events",
+                "assignees_url": "https://api.github.com/repos/apache/superset/assignees{/user}",
+                "branches_url": "https://api.github.com/repos/apache/superset/branches{/branch}",
+                "tags_url": "https://api.github.com/repos/apache/superset/tags",
+                "blobs_url": "https://api.github.com/repos/apache/superset/git/blobs{/sha}",
+                "git_tags_url": "https://api.github.com/repos/apache/superset/git/tags{/sha}",
+                "git_refs_url": "https://api.github.com/repos/apache/superset/git/refs{/sha}",
+                "trees_url": "https://api.github.com/repos/apache/superset/git/trees{/sha}",
+                "statuses_url": "https://api.github.com/repos/apache/superset/statuses/{sha}",
+                "languages_url": "https://api.github.com/repos/apache/superset/languages",
+                "stargazers_url": "https://api.github.com/repos/apache/superset/stargazers",
+                "contributors_url": "https://api.github.com/repos/apache/superset/contributors",
+                "subscribers_url": "https://api.github.com/repos/apache/superset/subscribers",
+                "subscription_url": "https://api.github.com/repos/apache/superset/subscription",
+                "commits_url": "https://api.github.com/repos/apache/superset/commits{/sha}",
+                "git_commits_url": "https://api.github.com/repos/apache/superset/git/commits{/sha}",
+                "comments_url": "https://api.github.com/repos/apache/superset/comments{/number}",
+                "issue_comment_url": "https://api.github.com/repos/apache/superset/issues/comments{/number}",
+                "contents_url": "https://api.github.com/repos/apache/superset/contents/{+path}",
+                "compare_url": "https://api.github.com/repos/apache/superset/compare/{base}...{head}",
+                "merges_url": "https://api.github.com/repos/apache/superset/merges",
+                "archive_url": "https://api.github.com/repos/apache/superset/{archive_format}{/ref}",
+                "downloads_url": "https://api.github.com/repos/apache/superset/downloads",
+                "issues_url": "https://api.github.com/repos/apache/superset/issues{/number}",
+                "pulls_url": "https://api.github.com/repos/apache/superset/pulls{/number}",
+                "milestones_url": "https://api.github.com/repos/apache/superset/milestones{/number}",
+                "notifications_url": "https://api.github.com/repos/apache/superset/notifications{?since,all,participating}",
+                "labels_url": "https://api.github.com/repos/apache/superset/labels{/name}",
+                "releases_url": "https://api.github.com/repos/apache/superset/releases{/id}",
+                "deployments_url": "https://api.github.com/repos/apache/superset/deployments",
+                "created_at": "2015-07-21T18:55:34Z",
+                "updated_at": "2024-01-14T21:30:14Z",
+                "pushed_at": "2024-01-15T00:00:18Z",
+                "git_url": "git://github.com/apache/superset.git",
+                "ssh_url": "git@github.com:apache/superset.git",
+                "clone_url": "https://github.com/apache/superset.git",
+                "svn_url": "https://github.com/apache/superset",
+                "homepage": "https://superset.apache.org/",
+                "size": 564486,
+                "stargazers_count": 56163,
+                "watchers_count": 56163,
+                "language": "TypeScript",
+                "has_issues": true,
+                "has_projects": true,
+                "has_downloads": true,
+                "has_wiki": true,
+                "has_pages": true,
+                "has_discussions": true,
+                "forks_count": 12100,
+                "mirror_url": null,
+                "archived": false,
+                "disabled": false,
+                "open_issues_count": 1820,
+                "license": {
+                  "key": "apache-2.0",
+                  "name": "Apache License 2.0",
+                  "spdx_id": "Apache-2.0",
+                  "url": "https://api.github.com/licenses/apache-2.0",
+                  "node_id": "MDc6TGljZW5zZTI="
+                },
+                "allow_forking": true,
+                "is_template": false,
+                "web_commit_signoff_required": false,
+                "topics": [
+                  "analytics"
+                ],
+                "visibility": "public",
+                "forks": 12100,
+                "open_issues": 1820,
+                "watchers": 56163,
+                "default_branch": "master"
+              }
+            },
+            "_links": {
+              "self": {
+                "href": "https://api.github.com/repos/apache/superset/pulls/26610"
+              },
+              "html": {
+                "href": "https://github.com/apache/superset/pull/26610"
+              },
+              "issue": {
+                "href": "https://api.github.com/repos/apache/superset/issues/26610"
+              },
+              "comments": {
+                "href": "https://api.github.com/repos/apache/superset/issues/26610/comments"
+              },
+              "review_comments": {
+                "href": "https://api.github.com/repos/apache/superset/pulls/26610/comments"
+              },
+              "review_comment": {
+                "href": "https://api.github.com/repos/apache/superset/pulls/comments{/number}"
+              },
+              "commits": {
+                "href": "https://api.github.com/repos/apache/superset/pulls/26610/commits"
+              },
+              "statuses": {
+                "href": "https://api.github.com/repos/apache/superset/statuses/771aea1d8e8efde89a6a80100213b4f65fd79af8"
+              }
+            },
+            "author_association": "CONTRIBUTOR",
+            "auto_merge": null,
+            "active_lock_reason": null,
+            "merged": false,
+            "mergeable": true,
+            "rebaseable": true,
+            "mergeable_state": "unstable",
+            "merged_by": null,
+            "comments": 0,
+            "review_comments": 0,
+            "maintainer_can_modify": false,
+            "commits": 1,
+            "additions": 21,
+            "deletions": 18,
+            "changed_files": 2
+          }
+        },
+        "public": true,
+        "created_at": "2024-01-15T00:00:19Z",
+        "org": {
+          "id": 47359,
+          "login": "apache",
+          "gravatar_id": "",
+          "url": "https://api.github.com/orgs/apache",
+          "avatar_url": "https://avatars.githubusercontent.com/u/47359?"
+        }
+      },
+      "cuts": [
+        {
+          "path": "payload.pull_request.body",
+          "original_characters": 9268,
+          "shown_characters": 400
+        },
+        {
+          "path": "payload.pull_request.head.repo.topics",
+          "original_items": 18,
+          "shown_items": 1
+        },
+        {
+          "path": "payload.pull_request.base.repo.topics",
+          "original_items": 18,
+          "shown_items": 1
+        }
+      ],
+      "clean": {
+        "event_id": "34816051245",
+        "event_type": "PullRequestEvent",
+        "event_time": "2024-01-15T00:00:19.000000Z",
+        "repo_id": 39464018,
+        "repo_name": "apache/superset",
+        "actor_id": 49699333,
+        "actor_login": "dependabot[bot]",
+        "event_date": "2024-01-15",
+        "source_file": "2024-01-15-0.json.gz",
+        "source_line": 1092,
+        "source_hour": "2024-01-15T00:00:00Z",
+        "time_outside_file_hour": false,
+        "optional_field_issues": []
+      },
+      "payload_keys": [
+        "action",
+        "number",
+        "pull_request"
+      ],
+      "commit_count": 0
+    },
+    {
+      "raw": {
+        "id": "34816415532",
+        "type": "WatchEvent",
+        "actor": {
+          "id": 1676634,
+          "login": "fzsens",
+          "display_login": "fzsens",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/fzsens",
+          "avatar_url": "https://avatars.githubusercontent.com/u/1676634?"
+        },
+        "repo": {
+          "id": 39464018,
+          "name": "apache/superset",
+          "url": "https://api.github.com/repos/apache/superset"
+        },
+        "payload": {
+          "action": "started"
+        },
+        "public": true,
+        "created_at": "2024-01-15T00:37:47Z",
+        "org": {
+          "id": 47359,
+          "login": "apache",
+          "gravatar_id": "",
+          "url": "https://api.github.com/orgs/apache",
+          "avatar_url": "https://avatars.githubusercontent.com/u/47359?"
+        }
+      },
+      "cuts": [],
+      "clean": {
+        "event_id": "34816415532",
+        "event_type": "WatchEvent",
+        "event_time": "2024-01-15T00:37:47.000000Z",
+        "repo_id": 39464018,
+        "repo_name": "apache/superset",
+        "actor_id": 1676634,
+        "actor_login": "fzsens",
+        "event_date": "2024-01-15",
+        "source_file": "2024-01-15-0.json.gz",
+        "source_line": 116955,
+        "source_hour": "2024-01-15T00:00:00Z",
+        "time_outside_file_hour": false,
+        "optional_field_issues": []
+      },
+      "payload_keys": [
+        "action"
+      ],
+      "commit_count": 0
+    }
+  ],
+  "event_preview": [
+    {
+      "sequence": 1,
+      "canonical_sha256": "bec5d02fc69bbef2a8213e36870ff052a7c6f18fe40534c5abbc5aac6c15f430",
+      "event_id": "34816047159",
+      "event_type": "PushEvent",
+      "event_time": "2024-01-15T00:00:00.000000Z",
+      "repo_id": 39464018,
+      "repo_name": "apache/superset",
+      "actor_id": 49699333,
+      "actor_login": "dependabot[bot]",
+      "event_date": "2024-01-15",
+      "source_file": "2024-01-15-0.json.gz",
+      "source_line": 1,
+      "source_hour": "2024-01-15T00:00:00Z",
+      "time_outside_file_hour": 0,
+      "optional_field_issues": "[]"
+    },
+    {
+      "sequence": 687,
+      "canonical_sha256": "d9a17783813d6e21110568b0d44603fa2dff9536121b4f4eea3015f3a169244a",
+      "event_id": "34816049771",
+      "event_type": "PushEvent",
+      "event_time": "2024-01-15T00:00:12.000000Z",
+      "repo_id": 39464018,
+      "repo_name": "apache/superset",
+      "actor_id": 49699333,
+      "actor_login": "dependabot[bot]",
+      "event_date": "2024-01-15",
+      "source_file": "2024-01-15-0.json.gz",
+      "source_line": 687,
+      "source_hour": "2024-01-15T00:00:00Z",
+      "time_outside_file_hour": 0,
+      "optional_field_issues": "[]"
+    },
+    {
+      "sequence": 718,
+      "canonical_sha256": "bacfa6af42e3b681cdb36825e92e18dc1549e7d2c7a4cd445597b64f164bcefa",
+      "event_id": "34816049871",
+      "event_type": "PushEvent",
+      "event_time": "2024-01-15T00:00:12.000000Z",
+      "repo_id": 39464018,
+      "repo_name": "apache/superset",
+      "actor_id": 49699333,
+      "actor_login": "dependabot[bot]",
+      "event_date": "2024-01-15",
+      "source_file": "2024-01-15-0.json.gz",
+      "source_line": 718,
+      "source_hour": "2024-01-15T00:00:00Z",
+      "time_outside_file_hour": 0,
+      "optional_field_issues": "[]"
+    },
+    {
+      "sequence": 1092,
+      "canonical_sha256": "91107fb9c8ffffc0919f58ae19f091fba3058fe65899d533f7a6ad50b210d5d4",
+      "event_id": "34816051245",
+      "event_type": "PullRequestEvent",
+      "event_time": "2024-01-15T00:00:19.000000Z",
+      "repo_id": 39464018,
+      "repo_name": "apache/superset",
+      "actor_id": 49699333,
+      "actor_login": "dependabot[bot]",
+      "event_date": "2024-01-15",
+      "source_file": "2024-01-15-0.json.gz",
+      "source_line": 1092,
+      "source_hour": "2024-01-15T00:00:00Z",
+      "time_outside_file_hour": 0,
+      "optional_field_issues": "[]"
+    },
+    {
+      "sequence": 1101,
+      "canonical_sha256": "83be2b57c04675482fb1d533a776ece2be3928b1450c100786e8b5f5fb73d181",
+      "event_id": "34816051287",
+      "event_type": "CreateEvent",
+      "event_time": "2024-01-15T00:00:20.000000Z",
+      "repo_id": 39464018,
+      "repo_name": "apache/superset",
+      "actor_id": 49699333,
+      "actor_login": "dependabot[bot]",
+      "event_date": "2024-01-15",
+      "source_file": "2024-01-15-0.json.gz",
+      "source_line": 1101,
+      "source_hour": "2024-01-15T00:00:00Z",
+      "time_outside_file_hour": 0,
+      "optional_field_issues": "[]"
+    },
+    {
+      "sequence": 1115,
+      "canonical_sha256": "c06a42be41c54bb9c2d59da9fcb7a7df2ec7be5971adfde52bc1233baa25cf41",
+      "event_id": "34816051335",
+      "event_type": "PushEvent",
+      "event_time": "2024-01-15T00:00:20.000000Z",
+      "repo_id": 39464018,
+      "repo_name": "apache/superset",
+      "actor_id": 49699333,
+      "actor_login": "dependabot[bot]",
+      "event_date": "2024-01-15",
+      "source_file": "2024-01-15-0.json.gz",
+      "source_line": 1115,
+      "source_hour": "2024-01-15T00:00:00Z",
+      "time_outside_file_hour": 0,
+      "optional_field_issues": "[]"
+    },
+    {
+      "sequence": 1368,
+      "canonical_sha256": "3ea3bd3aaa669a31c5acd6256f1e314d25775eef18a26357114969b728200fca",
+      "event_id": "34816052220",
+      "event_type": "IssueCommentEvent",
+      "event_time": "2024-01-15T00:00:25.000000Z",
+      "repo_id": 39464018,
+      "repo_name": "apache/superset",
+      "actor_id": 49699333,
+      "actor_login": "dependabot[bot]",
+      "event_date": "2024-01-15",
+      "source_file": "2024-01-15-0.json.gz",
+      "source_line": 1368,
+      "source_hour": "2024-01-15T00:00:00Z",
+      "time_outside_file_hour": 0,
+      "optional_field_issues": "[]"
+    },
+    {
+      "sequence": 1388,
+      "canonical_sha256": "3aa04b83a10edd006b66be8e3a187dfe35cc64702b69b283c153f7bb1c519256",
+      "event_id": "34816052288",
+      "event_type": "PushEvent",
+      "event_time": "2024-01-15T00:00:25.000000Z",
+      "repo_id": 39464018,
+      "repo_name": "apache/superset",
+      "actor_id": 49699333,
+      "actor_login": "dependabot[bot]",
+      "event_date": "2024-01-15",
+      "source_file": "2024-01-15-0.json.gz",
+      "source_line": 1388,
+      "source_hour": "2024-01-15T00:00:00Z",
+      "time_outside_file_hour": 0,
+      "optional_field_issues": "[]"
+    }
+  ],
+  "repo_example": {
+    "repo_id": 39464018,
+    "first_observed_at": "2024-01-15T00:00:00.000000Z",
+    "last_observed_at": "2024-01-15T00:47:19.000000Z",
+    "event_count": 90,
+    "observed_name_count": 1,
+    "repo_name": "apache/superset"
+  },
+  "daily_example": [
+    {
+      "repo_id": 39464018,
+      "event_date": "2024-01-15",
+      "event_type": "PushEvent",
+      "event_count": 46
+    },
+    {
+      "repo_id": 39464018,
+      "event_date": "2024-01-15",
+      "event_type": "PullRequestEvent",
+      "event_count": 14
+    },
+    {
+      "repo_id": 39464018,
+      "event_date": "2024-01-15",
+      "event_type": "DeleteEvent",
+      "event_count": 13
+    },
+    {
+      "repo_id": 39464018,
+      "event_date": "2024-01-15",
+      "event_type": "PullRequestReviewEvent",
+      "event_count": 13
+    },
+    {
+      "repo_id": 39464018,
+      "event_date": "2024-01-15",
+      "event_type": "IssueCommentEvent",
+      "event_count": 2
+    },
+    {
+      "repo_id": 39464018,
+      "event_date": "2024-01-15",
+      "event_type": "CreateEvent",
+      "event_count": 1
+    },
+    {
+      "repo_id": 39464018,
+      "event_date": "2024-01-15",
+      "event_type": "WatchEvent",
+      "event_count": 1
+    }
+  ],
+  "sql_tables": [
+    {
+      "name": "cleaned_events",
+      "kind": "table",
+      "rows": 197313
+    },
+    {
+      "name": "conflicting_occurrences",
+      "kind": "view",
+      "rows": 0
+    },
+    {
+      "name": "daily_counts",
+      "kind": "table",
+      "rows": 84692
+    },
+    {
+      "name": "duplicate_occurrences",
+      "kind": "view",
+      "rows": 0
+    },
+    {
+      "name": "event_groups",
+      "kind": "table",
+      "rows": 197313
+    },
+    {
+      "name": "valid_events",
+      "kind": "table",
+      "rows": 197313
+    }
+  ],
+  "schema": [
+    {
+      "name": "event_id",
+      "origin": "id",
+      "kind": "规范化",
+      "detail": "标识一次事件；作为去重键。合法正整数 ID 转为字符串。",
+      "type": "string"
+    },
+    {
+      "name": "event_type",
+      "origin": "type",
+      "kind": "提取",
+      "detail": "区分推送、PR、Issue 等活动。非空字符串；未知事件类型也保留。",
+      "type": "string"
+    },
+    {
+      "name": "event_time",
+      "origin": "created_at",
+      "kind": "规范化",
+      "detail": "事件发生时刻；解析带时区的时间并转成 UTC。它不是仓库创建时间。",
+      "type": "timestamp[us, tz=UTC]"
+    },
+    {
+      "name": "repo_id",
+      "origin": "repo.id",
+      "kind": "规范化",
+      "detail": "标识仓库，作为仓库表和事件表的连接键。合法正整数，保存为 int64。",
+      "type": "int64"
+    },
+    {
+      "name": "repo_name",
+      "origin": "repo.name",
+      "kind": "提取",
+      "detail": "样本中观察到的 owner/repo 名称；缺失或无效时置空并保留事件。",
+      "type": "string"
+    },
+    {
+      "name": "actor_id",
+      "origin": "actor.id",
+      "kind": "规范化",
+      "detail": "发起者 ID；缺失或无效时置空并标记。后续统计参与者时可使用。",
+      "type": "int64"
+    },
+    {
+      "name": "actor_login",
+      "origin": "actor.login",
+      "kind": "提取",
+      "detail": "发起者账号名，可能是用户或机器人；本轮保留机器人活动。",
+      "type": "string"
+    },
+    {
+      "name": "event_date",
+      "origin": "从 event_time 取 UTC 日期",
+      "kind": "推导",
+      "detail": "方便按日期分组。按日期分组不意味着已经读取完整一天。",
+      "type": "date32[day]"
+    },
+    {
+      "name": "source_file",
+      "origin": "读取时记录输入文件名",
+      "kind": "追溯",
+      "detail": "说明这一事件来自哪个小时档案。用于回查原始记录。",
+      "type": "string"
+    },
+    {
+      "name": "source_line",
+      "origin": "解压后逐行计数，从 1 开始",
+      "kind": "追溯",
+      "detail": "原始档案中的行号，包含前面的空行；与事件 ID 是不同概念。",
+      "type": "int64"
+    },
+    {
+      "name": "source_hour",
+      "origin": "从文件名解析日期和小时",
+      "kind": "追溯",
+      "detail": "记录档案标注的 UTC 小时；例如文件名最后的 -0 表示 00 时。",
+      "type": "timestamp[us, tz=UTC]"
+    },
+    {
+      "name": "time_outside_file_hour",
+      "origin": "比较 event_time 所在小时与 source_hour",
+      "kind": "标记",
+      "detail": "二者不一致时为 true；标记后仍保留事件，供检查档案时间偏差。",
+      "type": "bool"
+    },
+    {
+      "name": "optional_field_issues",
+      "origin": "检查 repo_name / actor_id / actor_login",
+      "kind": "标记",
+      "detail": "保存可选字段问题列表；[] 表示未发现这几项问题。CSV/SQLite 中是 JSON 文本，Parquet 中是真正的字符串列表。",
+      "type": "list<element: string>"
+    }
+  ],
+  "stages": [
+    {
+      "id": "download",
+      "number": "01",
+      "title": "获取原始档案并验证可读性",
+      "script": "download_sample.py",
+      "function": "gharchive_a/download.py:download",
+      "input": "日期、小时、GH Archive 下载地址，以及可能已存在的原始缓存文件。",
+      "change": "按日期/小时生成文件名；下载到 .part，完整解压检查后计算 SHA-256，再生成正式 .json.gz。已有文件校验后复用。这里保持原始事件内容。",
+      "output": "data/raw/*.json.gz 是原始输入；download_manifest.json 是脚本产生的获取记录。失败的 .part 另留存。",
+      "used_by": "原始档案会分别被 inspection、Python 清洗和 Spark 清洗读取。下载报告用于核实来源、缓存状态和失败小时。",
+      "code": [
+        "gharchive_a/download.py:download",
+        "gharchive_a/download.py:verify_archive"
+      ]
+    },
+    {
+      "id": "inspection",
+      "number": "02",
+      "title": "查看原始内容并形成检查报告",
+      "script": "inspect_sample.py",
+      "function": "gharchive_a/inspect.py:inspect",
+      "input": "原始 .json.gz 档案；不是 download_manifest.json 中的事件数据。",
+      "change": "逐行读原始字节，解码 UTF-8，解析 JSON，使用统一规则检查共同字段；统计清洗前的事件分布、仓库数和异常，保留前 5 条记录及其解析结果。",
+      "output": "raw_examples.json、inspection_summary.json、file_statistics.csv、raw_event_types.csv、raw_anomalies.jsonl。它们都是处理产生的预览/报告。",
+      "used_by": "给人检查数据结构和覆盖。Python 与 Spark 会重新读取原始档案；不会拿前 5 条预览作为完整数据输入。",
+      "code": [
+        "gharchive_a/inspect.py:inspect",
+        "gharchive_a/records.py:iter_records",
+        "gharchive_a/records.py:normalize_line"
+      ]
+    },
+    {
+      "id": "python",
+      "number": "03",
+      "title": "Python 清洗、去重、汇总与导出",
+      "script": "clean_sample.py",
+      "function": "gharchive_a/clean.py:clean",
+      "input": "同一份原始 .json.gz；共同规则来自 records.py。",
+      "change": "规范字段后把有效事件存进 working.sqlite3；按事件 ID 和完整内容哈希分组；去除相同内容重复，暂排除冲突 ID；再从清洗事件导出事件表、仓库清单和日期/类型计数。",
+      "output": "三张主要分析表、名称历史、清洗前 SQLite、异常/重复/冲突文件、逐小时质量与总质量报告。",
+      "used_by": "B 用仓库清单开始补元数据；C 用事件明细和计数开发原型；comparison 读取此路径的 CSV、Parquet 和输入清单来核对。",
+      "code": [
+        "gharchive_a/clean.py:clean",
+        "gharchive_a/records.py:normalize_line",
+        "gharchive_a/export.py:export_events",
+        "gharchive_a/export.py:export_daily"
+      ]
+    },
+    {
+      "id": "spark",
+      "number": "04",
+      "title": "Spark 从原始档案独立计算同样的结果",
+      "script": "clean_sample_spark.py",
+      "function": "gharchive_a/spark_clean.py:clean_spark",
+      "input": "同一份原始 .json.gz；不是 Python 导出的事件表。",
+      "change": "把小时文件分配给 Spark 分区；分区内使用相同逐行解析规则，再以明确 schema 建立 DataFrame。去重、冲突处理、分组由 Spark 实现；会话时区和 Parquet 时间格式固定。",
+      "output": "对应的事件表、仓库清单、活动计数、问题记录；另外导出 valid_before_dedup.parquet，并记录 Spark 环境和 worker 代码快照。",
+      "used_by": "先验证 Spark 算对了；D 后续可在固定输入与任务上设计并行度实验。两套输出是同样本的复算结果，分析选一套使用。",
+      "code": [
+        "gharchive_a/spark_clean.py:clean_spark",
+        "gharchive_a/spark_clean.py:parse_archive",
+        "gharchive_a/spark_clean.py:parsed_schema"
+      ]
+    },
+    {
+      "id": "comparison",
+      "number": "05",
+      "title": "核对两条计算路径及事件 Parquet 导出",
+      "script": "compare_outputs.py",
+      "function": "gharchive_a/compare.py:compare",
+      "input": "python/ 和 spark/ 的输入清单、quality_summary、events_clean.csv.gz、repo_daily_counts.csv，以及事件 Parquet。",
+      "change": "先验证输入文件哈希、请求范围和规则版本相同。导入 comparison.sqlite3，比较事件 ID、全部事件字段及日分组；从事件明细重算日计数；读回事件 Parquet 核对值、行数、UTC 类型与 CSV 一致。",
+      "output": "comparison_summary.json、parquet_validation.json、6 类差异样例 CSV、comparison.sqlite3。它们是验证产物。",
+      "used_by": "通过核对后交接。当前自动比较范围包括事件表和 CSV 日计数；仓库清单/名称历史、日计数 Parquet 未在此脚本中逐字段自动比较。",
+      "code": [
+        "gharchive_a/compare.py:compare",
+        "gharchive_a/compare.py:check_parquet"
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "data/raw/2024-01-15-0.json.gz",
+      "label": "data/raw/2024-01-15-0.json.gz",
+      "stage": "raw",
+      "category": "raw",
+      "producer": "GH Archive；download_sample.py 获取/验证",
+      "grain": "解压后每个非空行是一个原始 JSON 事件",
+      "purpose": "最初输入；保留完整 payload、actor/repo 详情及其他原始字段。",
+      "bytes": 73709206,
+      "rows": 197313,
+      "is_directory": false,
+      "parts": [],
+      "sha256": "019cd01bb263573ae1d633fd965cdc9869fa5eefc31bd409376d10052ed7acd8"
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/HANDOFF.md",
+      "label": "HANDOFF.md",
+      "stage": "root",
+      "category": "report",
+      "producer": "run_sample.py",
+      "grain": "交接入口",
+      "purpose": "本次结果、覆盖范围和优先读取文件的说明。",
+      "bytes": 685,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/pipeline.log",
+      "label": "pipeline.log",
+      "stage": "root",
+      "category": "report",
+      "producer": "run_sample.py",
+      "grain": "运行日志",
+      "purpose": "阶段执行及错误追踪；不包含完整事件数据。",
+      "bytes": 473,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/resolved_config.json",
+      "label": "resolved_config.json",
+      "stage": "root",
+      "category": "config",
+      "producer": "run_sample.py",
+      "grain": "实际参数",
+      "purpose": "覆盖命令行后的日期、小时及运行配置；不是事件。",
+      "bytes": 252,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/run_summary.json",
+      "label": "run_summary.json",
+      "stage": "root",
+      "category": "report",
+      "producer": "run_sample.py",
+      "grain": "阶段进度",
+      "purpose": "哪几个阶段完成、清洗事件数和覆盖范围。",
+      "bytes": 2024,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/stage_status.json",
+      "label": "stage_status.json",
+      "stage": "root",
+      "category": "report",
+      "producer": "run_sample.py / common.stage_directory",
+      "grain": "运行状态",
+      "purpose": "开始/结束、成功/失败、版本、参数、环境、源码哈希和耗时。",
+      "bytes": 1167,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/download/download_manifest.json",
+      "label": "download/download_manifest.json",
+      "stage": "download",
+      "category": "report",
+      "producer": "download_sample.py",
+      "grain": "获取记录",
+      "purpose": "文件来源 URL、字节数、SHA-256、缓存或下载、尝试和失败状态。",
+      "bytes": 493,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/download/stage_status.json",
+      "label": "download/stage_status.json",
+      "stage": "download",
+      "category": "report",
+      "producer": "download_sample.py + common.stage_directory",
+      "grain": "运行状态",
+      "purpose": "开始/结束、成功/失败、版本、参数、环境、源码哈希和耗时。",
+      "bytes": 1167,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/inspection/file_statistics.csv",
+      "label": "inspection/file_statistics.csv",
+      "stage": "inspection",
+      "category": "report",
+      "producer": "inspect_sample.py",
+      "grain": "一行一个输入档案",
+      "purpose": "清洗前逐档案的行数、解析/字段问题和时间偏离。",
+      "bytes": 180,
+      "rows": 1,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/inspection/input_manifest.json",
+      "label": "inspection/input_manifest.json",
+      "stage": "inspection",
+      "category": "report",
+      "producer": "inspect_sample.py + common.select_inputs",
+      "grain": "输入清单",
+      "purpose": "实际读取的档案、哈希、请求/缺失小时及覆盖边界。",
+      "bytes": 602,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/inspection/inspection_summary.json",
+      "label": "inspection/inspection_summary.json",
+      "stage": "inspection",
+      "category": "report",
+      "producer": "inspect_sample.py",
+      "grain": "清洗前统计",
+      "purpose": "去重前有效记录的分布、字段问题、仓库数和时间范围。",
+      "bytes": 1397,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/inspection/raw_anomalies.jsonl",
+      "label": "inspection/raw_anomalies.jsonl",
+      "stage": "inspection",
+      "category": "audit",
+      "producer": "inspect_sample.py",
+      "grain": "一行一条检查异常",
+      "purpose": "解析失败或关键字段无效的原始行和检查结果。",
+      "bytes": 0,
+      "rows": 0,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/inspection/raw_event_types.csv",
+      "label": "inspection/raw_event_types.csv",
+      "stage": "inspection",
+      "category": "report",
+      "producer": "inspect_sample.py",
+      "grain": "一行一种事件类型",
+      "purpose": "有效记录在去重前的事件类型计数。",
+      "bytes": 349,
+      "rows": 15,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/inspection/raw_examples.json",
+      "label": "inspection/raw_examples.json",
+      "stage": "inspection",
+      "category": "preview",
+      "producer": "inspect_sample.py",
+      "grain": "前 5 个非空记录",
+      "purpose": "带 raw_line 原文副本和规范字段、status 的检查预览。不是 GH Archive 的原始文件。",
+      "bytes": 55000,
+      "rows": 5,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/inspection/stage_status.json",
+      "label": "inspection/stage_status.json",
+      "stage": "inspection",
+      "category": "report",
+      "producer": "inspect_sample.py + common.stage_directory",
+      "grain": "运行状态",
+      "purpose": "开始/结束、成功/失败、版本、参数、环境、源码哈希和耗时。",
+      "bytes": 1167,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/conflicting_records.jsonl",
+      "label": "python/conflicting_records.jsonl",
+      "stage": "python",
+      "category": "audit",
+      "producer": "scripts/clean_sample.py → clean.py / export.py",
+      "grain": "一行一个冲突 ID 的有效出现",
+      "purpose": "同一 ID 内容不同时，保存所有出现；暂不进入清洗结果。",
+      "bytes": 0,
+      "rows": 0,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/duplicate_records.jsonl",
+      "label": "python/duplicate_records.jsonl",
+      "stage": "python",
+      "category": "audit",
+      "producer": "scripts/clean_sample.py → clean.py / export.py",
+      "grain": "一行一个被移除的重复出现",
+      "purpose": "同一 ID、完整内容相同的重复；保留首次来源，记录其他出现。",
+      "bytes": 0,
+      "rows": 0,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/events_clean.csv.gz",
+      "label": "python/events_clean.csv.gz",
+      "stage": "python",
+      "category": "output",
+      "producer": "scripts/clean_sample.py → clean.py / export.py",
+      "grain": "一行一次事件",
+      "purpose": "与事件 Parquet 对应的压缩 CSV；完整数据，不是 100 行预览。",
+      "bytes": 5280840,
+      "rows": 197313,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/events_clean.parquet",
+      "label": "python/events_clean.parquet",
+      "stage": "python",
+      "category": "output",
+      "producer": "scripts/clean_sample.py → clean.py / export.py",
+      "grain": "一行一次事件",
+      "purpose": "完整清洗事件表；typed Parquet，含 UTC 时间和追溯字段。",
+      "bytes": 7392803,
+      "rows": 197313,
+      "is_directory": true,
+      "parts": [
+        "part-00000.parquet"
+      ]
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/events_preview.csv",
+      "label": "python/events_preview.csv",
+      "stage": "python",
+      "category": "preview",
+      "producer": "scripts/clean_sample.py → clean.py / export.py",
+      "grain": "前 100 条清洗事件",
+      "purpose": "事件表的查看入口，不能拿它代表完整数据量。",
+      "bytes": 17465,
+      "rows": 100,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/flagged_records.jsonl",
+      "label": "python/flagged_records.jsonl",
+      "stage": "python",
+      "category": "audit",
+      "producer": "scripts/clean_sample.py → clean.py / export.py",
+      "grain": "一行一条问题标记",
+      "purpose": "可选字段问题或时间偏离；这类事件仍可进入有效记录与后续去重。",
+      "bytes": 0,
+      "rows": 0,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/hourly_quality.csv",
+      "label": "python/hourly_quality.csv",
+      "stage": "python",
+      "category": "report",
+      "producer": "clean_sample.py",
+      "grain": "一行一个输入档案",
+      "purpose": "逐档案清洗前/后、重复、冲突、时间偏离计数。",
+      "bytes": 274,
+      "rows": 1,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/input_manifest.json",
+      "label": "python/input_manifest.json",
+      "stage": "python",
+      "category": "report",
+      "producer": "clean_sample.py + common.select_inputs",
+      "grain": "输入清单",
+      "purpose": "实际读取的档案、哈希、请求/缺失小时及覆盖边界。",
+      "bytes": 602,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/quality_summary.json",
+      "label": "python/quality_summary.json",
+      "stage": "python",
+      "category": "report",
+      "producer": "scripts/clean_sample.py",
+      "grain": "质量总报告",
+      "purpose": "行数、类型/仓库数、排除原因、计数核对和覆盖。",
+      "bytes": 1835,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/rejected_records.jsonl",
+      "label": "python/rejected_records.jsonl",
+      "stage": "python",
+      "category": "audit",
+      "producer": "scripts/clean_sample.py → clean.py / export.py",
+      "grain": "一行一条排除记录",
+      "purpose": "UTF-8/JSON 解析失败或关键字段无效；原始行、原因与来源可回查。",
+      "bytes": 0,
+      "rows": 0,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/repo_candidates.csv",
+      "label": "python/repo_candidates.csv",
+      "stage": "python",
+      "category": "output",
+      "producer": "scripts/clean_sample.py → clean.py / export.py",
+      "grain": "一行一个 repo_id",
+      "purpose": "样本内出现的仓库及首见/末见/事件数；供 B 补标签与元数据。",
+      "bytes": 6677390,
+      "rows": 69768,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/repo_daily_counts.csv",
+      "label": "python/repo_daily_counts.csv",
+      "stage": "python",
+      "category": "output",
+      "producer": "scripts/clean_sample.py → clean.py / export.py",
+      "grain": "一行一个 repo_id × UTC 日期 × 类型",
+      "purpose": "计数单位是事件；只有实际出现的组合，没有补完整日或零活动行。",
+      "bytes": 2990068,
+      "rows": 84692,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/repo_daily_counts.parquet",
+      "label": "python/repo_daily_counts.parquet",
+      "stage": "python",
+      "category": "output",
+      "producer": "scripts/clean_sample.py → clean.py / export.py",
+      "grain": "同日计数表",
+      "purpose": "CSV 日计数的 typed Parquet 保存形式。",
+      "bytes": 571456,
+      "rows": 84692,
+      "is_directory": true,
+      "parts": [
+        "part-00000.parquet"
+      ]
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/repo_name_history.csv",
+      "label": "python/repo_name_history.csv",
+      "stage": "python",
+      "category": "output",
+      "producer": "scripts/clean_sample.py → clean.py / export.py",
+      "grain": "一行一个 repo_id × 观察名称",
+      "purpose": "保留样本内名称与首见/末见/计数；可回查多名称情况。",
+      "bytes": 6543634,
+      "rows": 69829,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/stage_status.json",
+      "label": "python/stage_status.json",
+      "stage": "python",
+      "category": "report",
+      "producer": "clean_sample.py + common.stage_directory",
+      "grain": "运行状态",
+      "purpose": "开始/结束、成功/失败、版本、参数、环境、源码哈希和耗时。",
+      "bytes": 1172,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/python/working.sqlite3",
+      "label": "python/working.sqlite3",
+      "stage": "python",
+      "category": "intermediate",
+      "producer": "clean_sample.py",
+      "grain": "SQLite 表/视图集合",
+      "purpose": "保留清洗前有效记录、去重分组、清洗事件、日计数及重复/冲突视图。",
+      "bytes": 124514304,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/conflicting_records.jsonl",
+      "label": "spark/conflicting_records.jsonl",
+      "stage": "spark",
+      "category": "audit",
+      "producer": "scripts/clean_sample_spark.py → spark_clean.py（CSV 复用 export.py）",
+      "grain": "一行一个冲突 ID 的有效出现",
+      "purpose": "同一 ID 内容不同时，保存所有出现；暂不进入清洗结果。",
+      "bytes": 16,
+      "rows": 0,
+      "is_directory": true,
+      "parts": [
+        "._SUCCESS.crc",
+        ".part-00000-7f3d200d-b898-44e0-b71f-a08c4761a3e5-c000.json.crc",
+        "_SUCCESS",
+        "part-00000-7f3d200d-b898-44e0-b71f-a08c4761a3e5-c000.json"
+      ]
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/duplicate_records.jsonl",
+      "label": "spark/duplicate_records.jsonl",
+      "stage": "spark",
+      "category": "audit",
+      "producer": "scripts/clean_sample_spark.py → spark_clean.py（CSV 复用 export.py）",
+      "grain": "一行一个被移除的重复出现",
+      "purpose": "同一 ID、完整内容相同的重复；保留首次来源，记录其他出现。",
+      "bytes": 16,
+      "rows": 0,
+      "is_directory": true,
+      "parts": [
+        "._SUCCESS.crc",
+        ".part-00000-4e721217-2c17-418d-b83d-e0e070b75010-c000.json.crc",
+        "_SUCCESS",
+        "part-00000-4e721217-2c17-418d-b83d-e0e070b75010-c000.json"
+      ]
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/events_clean.csv.gz",
+      "label": "spark/events_clean.csv.gz",
+      "stage": "spark",
+      "category": "output",
+      "producer": "scripts/clean_sample_spark.py → spark_clean.py（CSV 复用 export.py）",
+      "grain": "一行一次事件",
+      "purpose": "与事件 Parquet 对应的压缩 CSV；完整数据，不是 100 行预览。",
+      "bytes": 5280840,
+      "rows": 197313,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/events_clean.parquet",
+      "label": "spark/events_clean.parquet",
+      "stage": "spark",
+      "category": "output",
+      "producer": "scripts/clean_sample_spark.py → spark_clean.py（CSV 复用 export.py）",
+      "grain": "一行一次事件",
+      "purpose": "完整清洗事件表；typed Parquet，含 UTC 时间和追溯字段。",
+      "bytes": 6554673,
+      "rows": 197313,
+      "is_directory": true,
+      "parts": [
+        "._SUCCESS.crc",
+        ".part-00000-d0d1ea9d-abf0-446c-b922-42baaffd1038-c000.snappy.parquet.crc",
+        ".part-00001-d0d1ea9d-abf0-446c-b922-42baaffd1038-c000.snappy.parquet.crc",
+        "_SUCCESS",
+        "part-00000-d0d1ea9d-abf0-446c-b922-42baaffd1038-c000.snappy.parquet",
+        "part-00001-d0d1ea9d-abf0-446c-b922-42baaffd1038-c000.snappy.parquet"
+      ]
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/events_preview.csv",
+      "label": "spark/events_preview.csv",
+      "stage": "spark",
+      "category": "preview",
+      "producer": "scripts/clean_sample_spark.py → spark_clean.py（CSV 复用 export.py）",
+      "grain": "前 100 条清洗事件",
+      "purpose": "事件表的查看入口，不能拿它代表完整数据量。",
+      "bytes": 17465,
+      "rows": 100,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/flagged_records.jsonl",
+      "label": "spark/flagged_records.jsonl",
+      "stage": "spark",
+      "category": "audit",
+      "producer": "scripts/clean_sample_spark.py → spark_clean.py（CSV 复用 export.py）",
+      "grain": "一行一条问题标记",
+      "purpose": "可选字段问题或时间偏离；这类事件仍可进入有效记录与后续去重。",
+      "bytes": 16,
+      "rows": 0,
+      "is_directory": true,
+      "parts": [
+        "._SUCCESS.crc",
+        ".part-00000-6e385cfe-ad11-4e53-9944-29b917fc2c17-c000.json.crc",
+        "_SUCCESS",
+        "part-00000-6e385cfe-ad11-4e53-9944-29b917fc2c17-c000.json"
+      ]
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/input_manifest.json",
+      "label": "spark/input_manifest.json",
+      "stage": "spark",
+      "category": "report",
+      "producer": "clean_sample_spark.py + common.select_inputs",
+      "grain": "输入清单",
+      "purpose": "实际读取的档案、哈希、请求/缺失小时及覆盖边界。",
+      "bytes": 602,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/quality_summary.json",
+      "label": "spark/quality_summary.json",
+      "stage": "spark",
+      "category": "report",
+      "producer": "scripts/clean_sample_spark.py",
+      "grain": "质量总报告",
+      "purpose": "行数、类型/仓库数、排除原因、计数核对和覆盖。",
+      "bytes": 1883,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/rejected_records.jsonl",
+      "label": "spark/rejected_records.jsonl",
+      "stage": "spark",
+      "category": "audit",
+      "producer": "scripts/clean_sample_spark.py → spark_clean.py（CSV 复用 export.py）",
+      "grain": "一行一条排除记录",
+      "purpose": "UTF-8/JSON 解析失败或关键字段无效；原始行、原因与来源可回查。",
+      "bytes": 16,
+      "rows": 0,
+      "is_directory": true,
+      "parts": [
+        "._SUCCESS.crc",
+        ".part-00000-235bf261-5b53-42ac-a429-fb0b9ec17aa7-c000.json.crc",
+        "_SUCCESS",
+        "part-00000-235bf261-5b53-42ac-a429-fb0b9ec17aa7-c000.json"
+      ]
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/repo_candidates.csv",
+      "label": "spark/repo_candidates.csv",
+      "stage": "spark",
+      "category": "output",
+      "producer": "scripts/clean_sample_spark.py → spark_clean.py（CSV 复用 export.py）",
+      "grain": "一行一个 repo_id",
+      "purpose": "样本内出现的仓库及首见/末见/事件数；供 B 补标签与元数据。",
+      "bytes": 6677390,
+      "rows": 69768,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/repo_daily_counts.csv",
+      "label": "spark/repo_daily_counts.csv",
+      "stage": "spark",
+      "category": "output",
+      "producer": "scripts/clean_sample_spark.py → spark_clean.py（CSV 复用 export.py）",
+      "grain": "一行一个 repo_id × UTC 日期 × 类型",
+      "purpose": "计数单位是事件；只有实际出现的组合，没有补完整日或零活动行。",
+      "bytes": 2990068,
+      "rows": 84692,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/repo_daily_counts.parquet",
+      "label": "spark/repo_daily_counts.parquet",
+      "stage": "spark",
+      "category": "output",
+      "producer": "scripts/clean_sample_spark.py → spark_clean.py（CSV 复用 export.py）",
+      "grain": "同日计数表",
+      "purpose": "CSV 日计数的 typed Parquet 保存形式。",
+      "bytes": 559813,
+      "rows": 84692,
+      "is_directory": true,
+      "parts": [
+        "._SUCCESS.crc",
+        ".part-00000-5f85c9b9-1297-4b82-89fb-663cea256f16-c000.snappy.parquet.crc",
+        "_SUCCESS",
+        "part-00000-5f85c9b9-1297-4b82-89fb-663cea256f16-c000.snappy.parquet"
+      ]
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/repo_name_history.csv",
+      "label": "spark/repo_name_history.csv",
+      "stage": "spark",
+      "category": "output",
+      "producer": "scripts/clean_sample_spark.py → spark_clean.py（CSV 复用 export.py）",
+      "grain": "一行一个 repo_id × 观察名称",
+      "purpose": "保留样本内名称与首见/末见/计数；可回查多名称情况。",
+      "bytes": 6543634,
+      "rows": 69829,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/spark_environment.json",
+      "label": "spark/spark_environment.json",
+      "stage": "spark",
+      "category": "config",
+      "producer": "clean_sample_spark.py",
+      "grain": "Spark 环境记录",
+      "purpose": "master、Java/Python、UTC、时间存储格式及文件读取分区数。",
+      "bytes": 495,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/stage_status.json",
+      "label": "spark/stage_status.json",
+      "stage": "spark",
+      "category": "report",
+      "producer": "clean_sample_spark.py + common.stage_directory",
+      "grain": "运行状态",
+      "purpose": "开始/结束、成功/失败、版本、参数、环境、源码哈希和耗时。",
+      "bytes": 1171,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/valid_before_dedup.parquet",
+      "label": "spark/valid_before_dedup.parquet",
+      "stage": "spark",
+      "category": "intermediate",
+      "producer": "clean_sample_spark.py",
+      "grain": "一行一条去重前有效记录",
+      "purpose": "Spark 的审计导出，含共同字段和完整内容哈希；后续计算继续用 DataFrame。",
+      "bytes": 19406411,
+      "rows": 197313,
+      "is_directory": true,
+      "parts": [
+        "._SUCCESS.crc",
+        ".part-00000-e9e8413f-8ef0-46c7-9c72-081ead14191d-c000.snappy.parquet.crc",
+        "_SUCCESS",
+        "part-00000-e9e8413f-8ef0-46c7-9c72-081ead14191d-c000.snappy.parquet"
+      ]
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/spark/worker_code.zip",
+      "label": "spark/worker_code.zip",
+      "stage": "spark",
+      "category": "code",
+      "producer": "clean_sample_spark.py",
+      "grain": "包内 Python 源码快照",
+      "purpose": "给 worker 导入共享代码，同时保留本次执行代码；不是事件压缩包。",
+      "bytes": 61287,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/comparison/comparison.sqlite3",
+      "label": "comparison/comparison.sqlite3",
+      "stage": "comparison",
+      "category": "intermediate",
+      "producer": "compare_outputs.py",
+      "grain": "验证用 SQLite",
+      "purpose": "导入左右 CSV、日计数和读回的事件 Parquet，用于集合比较。",
+      "bytes": 164229120,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/comparison/comparison_summary.json",
+      "label": "comparison/comparison_summary.json",
+      "stage": "comparison",
+      "category": "report",
+      "producer": "compare_outputs.py",
+      "grain": "核对结论",
+      "purpose": "每项检查是否通过，以及 ID/事件字段/日计数的差异数。",
+      "bytes": 1154,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/comparison/daily_counts_left_only_examples.csv",
+      "label": "comparison/daily_counts_left_only_examples.csv",
+      "stage": "comparison",
+      "category": "audit",
+      "producer": "compare_outputs.py",
+      "grain": "最多 100 个差异样例",
+      "purpose": "从左右集合差中输出 ID、全部事件字段或日计数。0 行表示此比较没有差异。",
+      "bytes": 43,
+      "rows": 0,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/comparison/daily_counts_right_only_examples.csv",
+      "label": "comparison/daily_counts_right_only_examples.csv",
+      "stage": "comparison",
+      "category": "audit",
+      "producer": "compare_outputs.py",
+      "grain": "最多 100 个差异样例",
+      "purpose": "从左右集合差中输出 ID、全部事件字段或日计数。0 行表示此比较没有差异。",
+      "bytes": 43,
+      "rows": 0,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/comparison/event_ids_left_only_examples.csv",
+      "label": "comparison/event_ids_left_only_examples.csv",
+      "stage": "comparison",
+      "category": "audit",
+      "producer": "compare_outputs.py",
+      "grain": "最多 100 个差异样例",
+      "purpose": "从左右集合差中输出 ID、全部事件字段或日计数。0 行表示此比较没有差异。",
+      "bytes": 10,
+      "rows": 0,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/comparison/event_ids_right_only_examples.csv",
+      "label": "comparison/event_ids_right_only_examples.csv",
+      "stage": "comparison",
+      "category": "audit",
+      "producer": "compare_outputs.py",
+      "grain": "最多 100 个差异样例",
+      "purpose": "从左右集合差中输出 ID、全部事件字段或日计数。0 行表示此比较没有差异。",
+      "bytes": 10,
+      "rows": 0,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/comparison/event_rows_left_only_examples.csv",
+      "label": "comparison/event_rows_left_only_examples.csv",
+      "stage": "comparison",
+      "category": "audit",
+      "producer": "compare_outputs.py",
+      "grain": "最多 100 个差异样例",
+      "purpose": "从左右集合差中输出 ID、全部事件字段或日计数。0 行表示此比较没有差异。",
+      "bytes": 163,
+      "rows": 0,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/comparison/event_rows_right_only_examples.csv",
+      "label": "comparison/event_rows_right_only_examples.csv",
+      "stage": "comparison",
+      "category": "audit",
+      "producer": "compare_outputs.py",
+      "grain": "最多 100 个差异样例",
+      "purpose": "从左右集合差中输出 ID、全部事件字段或日计数。0 行表示此比较没有差异。",
+      "bytes": 163,
+      "rows": 0,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/comparison/parquet_validation.json",
+      "label": "comparison/parquet_validation.json",
+      "stage": "comparison",
+      "category": "report",
+      "producer": "compare_outputs.py",
+      "grain": "事件 Parquet 验证",
+      "purpose": "两边事件 Parquet 的字段类型、行数、与 CSV 一致情况。",
+      "bytes": 1086,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    },
+    {
+      "path": "runs/20240115_1hour_handoff/comparison/stage_status.json",
+      "label": "comparison/stage_status.json",
+      "stage": "comparison",
+      "category": "report",
+      "producer": "compare_outputs.py + common.stage_directory",
+      "grain": "运行状态",
+      "purpose": "开始/结束、成功/失败、版本、参数、环境、源码哈希和耗时。",
+      "bytes": 1120,
+      "rows": null,
+      "is_directory": false,
+      "parts": []
+    }
+  ],
+  "sources": {
+    "gharchive_a/__init__.py": {
+      "text": "\"\"\"A-role GH Archive sample pipeline. See README.md before expanding the sample.\"\"\"\n\n__version__ = \"1.0.0\"\n",
+      "functions": {}
+    },
+    "gharchive_a/clean.py": {
+      "text": "\"\"\"Streaming reference implementation with retained SQLite staging data.\n\nDeduplication is disk-backed. If one event ID has multiple full-event hashes,\nall occurrences are held out for review rather than choosing a winner.\n\"\"\"\nfrom collections import Counter\nimport json\nimport sqlite3\n\nfrom .common import EVENT_COLUMNS, json_line, select_inputs, stage_directory, write_csv, write_json\nfrom .export import export_daily, export_events\nfrom .records import iter_records\n\n\ndef dict_rows(db, query):\n    for row in db.execute(query):\n        yield dict(row)\n\n\ndef clean(cfg, data_dir, output, allow_missing=False, parquet=True):\n    if parquet:\n        import pyarrow  # Fail before creating outputs if the dependency is missing.\n    files, manifest = select_inputs(cfg, data_dir, allow_missing)\n    counts, reasons, optional, file_counts = Counter(), Counter(), Counter(), []\n    with stage_directory(output, \"python_clean\", cfg) as out:\n        write_json(out / \"input_manifest.json\", manifest)\n        db = sqlite3.connect(out / \"working.sqlite3\")\n        db.row_factory = sqlite3.Row\n        integer_fields = {\"repo_id\", \"actor_id\", \"source_line\", \"time_outside_file_hour\"}\n        fields = \", \".join(f\"{key} {'INTEGER' if key in integer_fields else 'TEXT'}\" for key in EVENT_COLUMNS)\n        db.execute(f\"CREATE TABLE valid_events (sequence INTEGER PRIMARY KEY, canonical_sha256 TEXT NOT NULL, {fields})\")\n        insert = f\"INSERT INTO valid_events (canonical_sha256, {', '.join(EVENT_COLUMNS)}) VALUES ({', '.join('?' for _ in range(len(EVENT_COLUMNS) + 1))})\"\n        try:\n            with (out / \"rejected_records.jsonl\").open(\"w\", encoding=\"utf-8\") as rejected, (out / \"flagged_records.jsonl\").open(\"w\", encoding=\"utf-8\") as flagged:\n                for path in files:\n                    local = Counter()\n                    for record in iter_records(path):\n                        status = record[\"status\"]\n                        counts[status] += 1\n                        local[status] += 1\n                        if status == \"valid\":\n                            values = [record[\"canonical_sha256\"]]\n                            for key in EVENT_COLUMNS:\n                                value = record.get(key)\n                                if key == \"optional_field_issues\":\n                                    value = json.dumps(value, ensure_ascii=False)\n                                values.append(value)\n                            db.execute(insert, values)\n                            optional.update(record[\"optional_field_issues\"])\n                            if record[\"optional_field_issues\"] or record[\"time_outside_file_hour\"]:\n                                json_line(flagged, {key: record.get(key) for key in (\"event_id\", \"source_file\", \"source_line\", \"optional_field_issues\", \"time_outside_file_hour\")})\n                            if counts[\"valid\"] % 4096 == 0:\n                                db.commit()\n                        elif status != \"blank\":\n                            reasons[record[\"reason\"]] += 1\n                            json_line(rejected, record)\n                    db.commit()\n                    file_counts.append({\"source_file\": path.name, \"blank_lines\": local[\"blank\"],\n                                        \"nonempty_lines\": local[\"valid\"] + local[\"invalid\"] + local[\"parse_error\"],\n                                        \"parse_errors\": local[\"parse_error\"], \"invalid_records\": local[\"invalid\"],\n                                        \"valid_before_dedup\": local[\"valid\"]})\n            db.execute(\"CREATE INDEX event_id_index ON valid_events(event_id)\")\n            db.executescript(\"\"\"\n                CREATE TABLE event_groups AS\n                SELECT event_id, COUNT(*) AS occurrences, COUNT(DISTINCT canonical_sha256) AS variants,\n                       MIN(sequence) AS first_sequence\n                FROM valid_events GROUP BY event_id;\n                CREATE UNIQUE INDEX group_id_index ON event_groups(event_id);\n                CREATE TABLE cleaned_events AS\n                SELECT v.* FROM valid_events v JOIN event_groups g ON v.sequence=g.first_sequence WHERE g.variants=1;\n                CREATE UNIQUE INDEX cleaned_id_index ON cleaned_events(event_id);\n                CREATE INDEX cleaned_repo_time_index ON cleaned_events(repo_id, event_time DESC, sequence DESC);\n                CREATE VIEW duplicate_occurrences AS\n                SELECT v.* FROM valid_events v JOIN event_groups g USING(event_id)\n                WHERE g.variants=1 AND v.sequence!=g.first_sequence;\n                CREATE VIEW conflicting_occurrences AS\n                SELECT v.* FROM valid_events v JOIN event_groups g USING(event_id) WHERE g.variants>1;\n                CREATE TABLE daily_counts AS\n                SELECT repo_id, event_date, event_type, COUNT(*) AS event_count\n                FROM cleaned_events GROUP BY repo_id, event_date, event_type;\n            \"\"\")\n            for view, filename in ((\"duplicate_occurrences\", \"duplicate_records.jsonl\"), (\"conflicting_occurrences\", \"conflicting_records.jsonl\")):\n                with (out / filename).open(\"w\", encoding=\"utf-8\") as handle:\n                    for row in dict_rows(db, f\"SELECT * FROM {view} ORDER BY sequence\"):\n                        row.pop(\"sequence\")\n                        row[\"optional_field_issues\"] = json.loads(row[\"optional_field_issues\"])\n                        json_line(handle, row)\n            cleaned = export_events(dict_rows(db, f\"SELECT {', '.join(EVENT_COLUMNS)} FROM cleaned_events ORDER BY sequence\"),\n                                    out, cfg[\"clean_preview_rows\"], cfg[\"parquet_batch_rows\"], parquet)\n            grouped_total = export_daily(dict_rows(db, \"SELECT * FROM daily_counts ORDER BY repo_id, event_date, event_type\"), out, parquet)\n            names_query = \"\"\"SELECT repo_id, repo_name, MIN(event_time) AS first_observed_at,\n                             MAX(event_time) AS last_observed_at, COUNT(*) AS event_count\n                             FROM cleaned_events GROUP BY repo_id, repo_name ORDER BY repo_id, repo_name\"\"\"\n            write_csv(out / \"repo_name_history.csv\", [\"repo_id\", \"repo_name\", \"first_observed_at\", \"last_observed_at\", \"event_count\"], dict_rows(db, names_query))\n            candidate_query = \"\"\"SELECT c.repo_id,\n                (SELECT n.repo_name FROM cleaned_events n WHERE n.repo_id=c.repo_id AND n.repo_name IS NOT NULL\n                 ORDER BY n.event_time DESC, n.sequence DESC LIMIT 1) AS repo_name,\n                MIN(c.event_time) AS first_observed_at, MAX(c.event_time) AS last_observed_at,\n                COUNT(*) AS event_count, COUNT(DISTINCT c.repo_name) AS observed_name_count\n                FROM cleaned_events c GROUP BY c.repo_id ORDER BY c.repo_id\"\"\"\n            write_csv(out / \"repo_candidates.csv\", [\"repo_id\", \"repo_name\", \"first_observed_at\", \"last_observed_at\", \"event_count\", \"observed_name_count\"], dict_rows(db, candidate_query))\n            for row in file_counts:\n                for view, key in ((\"cleaned_events\", \"cleaned_events\"), (\"duplicate_occurrences\", \"duplicates_removed\"), (\"conflicting_occurrences\", \"conflict_occurrences_excluded\")):\n                    row[key] = db.execute(f\"SELECT COUNT(*) FROM {view} WHERE source_file=?\", (row[\"source_file\"],)).fetchone()[0]\n                row[\"time_outside_file_hour_before_dedup\"] = db.execute(\n                    \"SELECT COALESCE(SUM(time_outside_file_hour), 0) FROM valid_events WHERE source_file=?\", (row[\"source_file\"],)).fetchone()[0]\n                row[\"time_outside_file_hour_clean\"] = db.execute(\n                    \"SELECT COALESCE(SUM(time_outside_file_hour), 0) FROM cleaned_events WHERE source_file=?\", (row[\"source_file\"],)).fetchone()[0]\n            write_csv(out / \"hourly_quality.csv\", list(file_counts[0]), file_counts)\n            duplicates = db.execute(\"SELECT COUNT(*) FROM duplicate_occurrences\").fetchone()[0]\n            conflicts = db.execute(\"SELECT COUNT(*) FROM conflicting_occurrences\").fetchone()[0]\n            conflict_ids = db.execute(\"SELECT COUNT(*) FROM event_groups WHERE variants>1\").fetchone()[0]\n            checks = {\"valid_count_reconciles\": counts[\"valid\"] == cleaned + duplicates + conflicts,\n                      \"grouped_count_reconciles\": grouped_total == cleaned,\n                      \"clean_ids_unique\": db.execute(\"SELECT COUNT(DISTINCT event_id) FROM cleaned_events\").fetchone()[0] == cleaned}\n            summary = {\"rule_version\": manifest[\"rule_version\"], \"engine\": \"python_sqlite\", \"line_status_counts\": dict(counts),\n                       \"nonempty_lines\": counts[\"valid\"] + counts[\"invalid\"] + counts[\"parse_error\"],\n                       \"cleaned_events\": cleaned, \"duplicates_removed\": duplicates,\n                       \"conflicting_ids\": conflict_ids, \"conflict_occurrences_excluded\": conflicts,\n                       \"conflict_policy\": \"exclude all occurrences of a conflicting event ID until reviewed\",\n                       \"rejection_reasons\": dict(reasons), \"optional_issues_before_dedup\": dict(optional),\n                       \"time_outside_file_hour_before_dedup\": db.execute(\"SELECT COALESCE(SUM(time_outside_file_hour), 0) FROM valid_events\").fetchone()[0],\n                       \"time_outside_file_hour_clean\": db.execute(\"SELECT COALESCE(SUM(time_outside_file_hour), 0) FROM cleaned_events\").fetchone()[0],\n                       \"clean_event_types\": {r[0]: r[1] for r in db.execute(\"SELECT event_type, COUNT(*) FROM cleaned_events GROUP BY event_type\")},\n                       \"clean_unique_repos\": db.execute(\"SELECT COUNT(DISTINCT repo_id) FROM cleaned_events\").fetchone()[0],\n                       \"grouped_event_count_sum\": grouped_total, \"checks\": checks, \"coverage\": manifest,\n                       \"formats\": [\"csv.gz\", \"parquet\"] if parquet else [\"csv.gz\"]}\n            write_json(out / \"quality_summary.json\", summary)\n            db.commit()\n            if not all(checks.values()):\n                raise RuntimeError(\"Internal count reconciliation failed; outputs are not ready for handoff\")\n        finally:\n            db.close()\n    return summary\n",
+      "functions": {
+        "dict_rows": {
+          "start": 15,
+          "end": 17
+        },
+        "clean": {
+          "start": 20,
+          "end": 134
+        }
+      }
+    },
+    "gharchive_a/cli.py": {
+      "text": "\"\"\"Thin command-line entry points; data rules live in records.py.\"\"\"\nfrom __future__ import annotations\n\nimport argparse\nimport json\nimport logging\nfrom datetime import datetime, timezone\nfrom pathlib import Path\n\nfrom .common import ROOT, add_input_arguments, load_config, stage_directory, stage_parser, write_json\n\n\ndef main_stage(name):\n    if name == \"compare\":\n        parser = argparse.ArgumentParser(description=\"Compare completed Python and Spark sample runs\")\n        parser.add_argument(\"--python-output\", type=Path, required=True)\n        parser.add_argument(\"--spark-output\", type=Path, required=True)\n        parser.add_argument(\"--output\", type=Path, required=True)\n        args = parser.parse_args()\n        from .compare import compare\n        result = compare(args.python_output, args.spark_output, args.output)\n    else:\n        parser = stage_parser(f\"GH Archive A role: {name}\")\n        if name == \"clean\":\n            parser.add_argument(\"--csv-only\", action=\"store_true\", help=\"Skip Parquet when PyArrow is unavailable\")\n        if name == \"spark\":\n            parser.add_argument(\"--master\", default=\"local[2]\")\n        args = parser.parse_args()\n        cfg = load_config(args)\n        if name == \"download\":\n            from .download import download\n            result = download(cfg, args.data_dir, args.output, args.allow_missing)\n        elif name == \"inspect\":\n            from .inspect import inspect\n            result = inspect(cfg, args.data_dir, args.output, args.allow_missing)\n        elif name == \"clean\":\n            from .clean import clean\n            result = clean(cfg, args.data_dir, args.output, args.allow_missing, not args.csv_only)\n        elif name == \"spark\":\n            from .spark_clean import clean_spark\n            result = clean_spark(cfg, args.data_dir, args.output, args.allow_missing, args.master)\n        else:\n            raise ValueError(f\"Unknown stage {name}\")\n    print(json.dumps({\"output\": str(args.output.resolve()), \"completed\": True,\n                      \"cleaned_events\": result.get(\"cleaned_events\"), \"passed\": result.get(\"passed\")}, ensure_ascii=False))\n\n\ndef main_run():\n    parser = argparse.ArgumentParser(description=\"Run the A-role sample pipeline in a new, auditable directory\")\n    add_input_arguments(parser)\n    parser.add_argument(\"--run-dir\", type=Path, help=\"Must not already exist; defaults to runs/<UTC timestamp>\")\n    parser.add_argument(\"--skip-download\", action=\"store_true\", help=\"Use existing local archives without network requests\")\n    parser.add_argument(\"--csv-only\", action=\"store_true\", help=\"Skip Python Parquet output\")\n    parser.add_argument(\"--with-spark\", action=\"store_true\", help=\"Also run Spark and compare results\")\n    parser.add_argument(\"--master\", default=\"local[2]\")\n    args = parser.parse_args()\n    cfg = load_config(args)\n    out = args.run_dir or ROOT / \"runs\" / datetime.now(timezone.utc).strftime(\"%Y%m%dT%H%M%S%fZ\")\n    with stage_directory(out, \"pipeline\", cfg) as directory:\n        logger = logging.getLogger(\"gharchive_a\")\n        logger.setLevel(logging.INFO)\n        handler = logging.FileHandler(directory / \"pipeline.log\", encoding=\"utf-8\")\n        handler.setFormatter(logging.Formatter(\"%(asctime)s %(levelname)s %(message)s\"))\n        logger.addHandler(handler)\n        summary = {\"state\": \"running\", \"run_directory\": str(directory), \"config\": cfg, \"stages\": {}}\n        write_json(directory / \"resolved_config.json\", cfg)\n\n        def run_stage(name, fn):\n            logger.info(\"Starting %s\", name)\n            print(f\"Starting {name}\", flush=True)\n            value = fn()\n            summary[\"stages\"][name] = {\"completed\": True, \"output\": str(directory / name)}\n            if \"cleaned_events\" in value:\n                summary[\"stages\"][name][\"cleaned_events\"] = value[\"cleaned_events\"]\n            logger.info(\"Completed %s\", name)\n            write_json(directory / \"run_summary.json\", summary)\n            return value\n\n        try:\n            from .clean import clean\n            from .download import download\n            from .inspect import inspect\n            if not args.skip_download:\n                run_stage(\"download\", lambda: download(cfg, args.data_dir, directory / \"download\", args.allow_missing))\n            run_stage(\"inspection\", lambda: inspect(cfg, args.data_dir, directory / \"inspection\", args.allow_missing))\n            quality = run_stage(\"python\", lambda: clean(cfg, args.data_dir, directory / \"python\", args.allow_missing, not args.csv_only))\n            if args.with_spark:\n                from .compare import compare\n                from .spark_clean import clean_spark\n                run_stage(\"spark\", lambda: clean_spark(cfg, args.data_dir, directory / \"spark\", args.allow_missing, args.master))\n                run_stage(\"comparison\", lambda: compare(directory / \"python\", directory / \"spark\", directory / \"comparison\"))\n            summary.update(state=\"completed\", clean_events=quality[\"cleaned_events\"], coverage=quality[\"coverage\"])\n            note = (f\"# A 样本运行交接\\n\\n清洗后事件：{quality['cleaned_events']}；仓库：{quality['clean_unique_repos']}。\\n\\n\"\n                    f\"重复记录移除：{quality['duplicates_removed']}；冲突 ID：{quality['conflicting_ids']}；\"\n                    f\"冲突记录暂排除：{quality['conflict_occurrences_excluded']}。\\n\\n\"\n                    f\"本次覆盖：{', '.join(f['name'] for f in quality['coverage']['observed_files'])}。\\n\\n\"\n                    \"交接优先读取 `python/quality_summary.json`、`python/events_preview.csv`、\"\n                    \"`python/repo_candidates.csv` 和 `python/events_clean.parquet/`（CSV-only 时用 CSV.gz）。\\n\\n\"\n                    \"小时覆盖清单在 `python/input_manifest.json`；日计数仅覆盖已读取档案，不能补推未读取时段的活动。\"\n                    \"AI 分类与生命周期判断由后续阶段完成。\\n\\n\"\n                    \"清洗前有效记录在 `python/working.sqlite3`，异常、重复和冲突记录另有文件；原始 payload 保存在原始小时档案。\\n\")\n            (directory / \"HANDOFF.md\").write_text(note, encoding=\"utf-8\")\n        except BaseException as error:\n            summary.update(state=\"failed\", error=f\"{type(error).__name__}: {error}\")\n            logger.exception(\"Pipeline failed\")\n            raise\n        finally:\n            write_json(directory / \"run_summary.json\", summary)\n            logger.removeHandler(handler)\n            handler.close()\n    print(f\"Completed. Handoff: {Path(out).resolve() / 'HANDOFF.md'}\", flush=True)\n",
+      "functions": {
+        "main_stage": {
+          "start": 13,
+          "end": 45
+        },
+        "main_run": {
+          "start": 48,
+          "end": 111
+        },
+        "run_stage": {
+          "start": 68,
+          "end": 77
+        }
+      }
+    },
+    "gharchive_a/common.py": {
+      "text": "\"\"\"Configuration, immutable run directories and provenance shared by all stages.\"\"\"\nfrom __future__ import annotations\n\nimport argparse\nimport contextlib\nimport csv\nimport hashlib\nimport importlib.metadata\nimport json\nimport os\nimport platform\nimport subprocess\nimport sys\nimport time\nfrom datetime import date, datetime, timezone\nfrom pathlib import Path\n\nROOT = Path(__file__).resolve().parents[1]\nRULE_VERSION = \"a-events-v1\"\nEVENT_COLUMNS = [\n    \"event_id\", \"event_type\", \"event_time\", \"repo_id\", \"repo_name\", \"actor_id\",\n    \"actor_login\", \"event_date\", \"source_file\", \"source_line\", \"source_hour\",\n    \"time_outside_file_hour\", \"optional_field_issues\",\n]\n\n\ndef utc_now():\n    return datetime.now(timezone.utc).isoformat(timespec=\"seconds\")\n\n\ndef write_json(path, value):\n    path = Path(path)\n    path.parent.mkdir(parents=True, exist_ok=True)\n    temporary = path.with_name(path.name + \".tmp\")\n    temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + \"\\n\", encoding=\"utf-8\")\n    temporary.replace(path)\n\n\ndef json_line(handle, value):\n    handle.write(json.dumps(value, ensure_ascii=False, allow_nan=False) + \"\\n\")\n\n\ndef sha256_file(path):\n    digest = hashlib.sha256()\n    with Path(path).open(\"rb\") as handle:\n        for chunk in iter(lambda: handle.read(1024 * 1024), b\"\"):\n            digest.update(chunk)\n    return digest.hexdigest()\n\n\ndef environment():\n    packages = {}\n    for name in (\"pyarrow\", \"pyspark\", \"py4j\"):\n        try:\n            packages[name] = importlib.metadata.version(name)\n        except importlib.metadata.PackageNotFoundError:\n            packages[name] = None\n    memory = None\n    try:\n        memory = os.sysconf(\"SC_PAGE_SIZE\") * os.sysconf(\"SC_PHYS_PAGES\")\n    except (ValueError, OSError, AttributeError):\n        pass\n    if memory is None and platform.system() == \"Darwin\":\n        try:\n            result = subprocess.run([\"/usr/sbin/sysctl\", \"-n\", \"hw.memsize\"], capture_output=True, text=True, timeout=3)\n            if result.returncode == 0:\n                memory = int(result.stdout.strip())\n        except (OSError, ValueError, subprocess.TimeoutExpired):\n            pass\n    digest = hashlib.sha256()\n    for path in sorted((ROOT / \"gharchive_a\").glob(\"*.py\")):\n        digest.update(path.name.encode())\n        digest.update(path.read_bytes())\n    return {\"python\": sys.version, \"executable\": sys.executable,\n            \"platform\": platform.platform(), \"cpu_count\": os.cpu_count(),\n            \"memory_bytes\": memory, \"packages\": packages,\n            \"java_home\": os.environ.get(\"JAVA_HOME\"), \"code_sha256\": digest.hexdigest()}\n\n\ndef add_input_arguments(parser):\n    parser.add_argument(\"--config\", type=Path, default=ROOT / \"config/sample.json\")\n    parser.add_argument(\"--date\", help=\"Override the UTC date, YYYY-MM-DD\")\n    parser.add_argument(\"--hours\", help=\"Override hours, e.g. 0 or 0,1,2 or 0-23\")\n    parser.add_argument(\"--data-dir\", type=Path, default=ROOT / \"data/raw\")\n    parser.add_argument(\"--allow-missing\", action=\"store_true\", help=\"Explicitly permit a partial archive sample\")\n\n\ndef load_config(args):\n    cfg = json.loads(args.config.read_text(encoding=\"utf-8\"))\n    cfg[\"date\"] = args.date or cfg[\"date\"]\n    date.fromisoformat(cfg[\"date\"])\n    if args.hours:\n        hours = []\n        for item in args.hours.split(\",\"):\n            bounds = item.split(\"-\")\n            if len(bounds) == 1:\n                hours.append(int(bounds[0]))\n            elif len(bounds) == 2:\n                lower, upper = map(int, bounds)\n                if lower > upper:\n                    raise ValueError(\"Hour range must be increasing\")\n                hours.extend(range(lower, upper + 1))\n            else:\n                raise ValueError(\"Invalid hour specification\")\n        cfg[\"hours\"] = hours\n    if not cfg[\"hours\"] or any(type(h) is not int or not 0 <= h <= 23 for h in cfg[\"hours\"]):\n        raise ValueError(\"hours must contain integers from 0 to 23\")\n    cfg[\"hours\"] = sorted(set(cfg[\"hours\"]))\n    for key in (\"timeout_seconds\", \"max_file_bytes\", \"parquet_batch_rows\"):\n        if cfg.get(key, 0) <= 0:\n            raise ValueError(f\"{key} must be positive\")\n    if cfg.get(\"retries\", 0) < 0:\n        raise ValueError(\"retries must be nonnegative\")\n    return cfg\n\n\ndef expected_names(cfg):\n    return [f\"{cfg['date']}-{hour}.json.gz\" for hour in cfg[\"hours\"]]\n\n\ndef select_inputs(cfg, data_dir, allow_missing=False):\n    expected = expected_names(cfg)\n    files = [Path(data_dir).resolve() / name for name in expected]\n    present = [path for path in files if path.is_file()]\n    missing = [path.name for path in files if not path.is_file()]\n    if missing and not allow_missing:\n        raise FileNotFoundError(f\"Missing archives: {missing}. Use --allow-missing only for an intentional partial sample.\")\n    if not present:\n        raise FileNotFoundError(\"No input archives found\")\n    manifest = {\"rule_version\": RULE_VERSION, \"timezone\": \"UTC\", \"date\": cfg[\"date\"],\n                \"expected_files\": expected, \"missing_files\": missing,\n                \"observed_files\": [{\"name\": p.name, \"path\": str(p), \"bytes\": p.stat().st_size,\n                                    \"sha256\": sha256_file(p)} for p in present],\n                \"all_requested_archives_present\": not missing,\n                \"complete_utc_day_requested\": cfg[\"hours\"] == list(range(24)),\n                \"capture_completeness\": \"not established by archive availability\"}\n    return present, manifest\n\n\n@contextlib.contextmanager\ndef stage_directory(output, stage, config):\n    \"\"\"Never overwrite an earlier result. A failure still leaves a status file.\"\"\"\n    output = Path(output).resolve()\n    output.mkdir(parents=True, exist_ok=False)\n    start = time.perf_counter()\n    status = {\"stage\": stage, \"state\": \"running\", \"started_at\": utc_now(),\n              \"rule_version\": RULE_VERSION, \"config\": config,\n              \"argv\": sys.argv, \"environment\": environment()}\n    write_json(output / \"stage_status.json\", status)\n    try:\n        yield output\n    except BaseException as error:\n        status.update(state=\"failed\", error=f\"{type(error).__name__}: {error}\")\n        raise\n    else:\n        status[\"state\"] = \"completed\"\n    finally:\n        status.update(finished_at=utc_now(), elapsed_seconds=round(time.perf_counter() - start, 6))\n        write_json(output / \"stage_status.json\", status)\n\n\ndef write_csv(path, columns, rows):\n    \"\"\"Write stable headers even when there are no rows.\"\"\"\n    with Path(path).open(\"w\", encoding=\"utf-8\", newline=\"\") as handle:\n        writer = csv.DictWriter(handle, fieldnames=columns, extrasaction=\"ignore\")\n        writer.writeheader()\n        for row in rows:\n            writer.writerow(row)\n\n\ndef stage_parser(description):\n    parser = argparse.ArgumentParser(description=description)\n    add_input_arguments(parser)\n    parser.add_argument(\"--output\", type=Path, required=True, help=\"New output directory; an existing directory is rejected\")\n    return parser\n",
+      "functions": {
+        "utc_now": {
+          "start": 27,
+          "end": 28
+        },
+        "write_json": {
+          "start": 31,
+          "end": 36
+        },
+        "json_line": {
+          "start": 39,
+          "end": 40
+        },
+        "sha256_file": {
+          "start": 43,
+          "end": 48
+        },
+        "environment": {
+          "start": 51,
+          "end": 77
+        },
+        "add_input_arguments": {
+          "start": 80,
+          "end": 85
+        },
+        "load_config": {
+          "start": 88,
+          "end": 114
+        },
+        "expected_names": {
+          "start": 117,
+          "end": 118
+        },
+        "select_inputs": {
+          "start": 121,
+          "end": 137
+        },
+        "stage_directory": {
+          "start": 141,
+          "end": 159
+        },
+        "write_csv": {
+          "start": 162,
+          "end": 168
+        },
+        "stage_parser": {
+          "start": 171,
+          "end": 175
+        }
+      }
+    },
+    "gharchive_a/compare.py": {
+      "text": "\"\"\"Disk-backed comparison of event identities, every exported field and daily counts.\"\"\"\nimport csv\nimport gzip\nimport json\nimport sqlite3\nfrom datetime import timezone\nfrom pathlib import Path\n\nfrom .common import EVENT_COLUMNS, stage_directory, write_csv, write_json\n\n\ndef require_complete(path):\n    status = json.loads((path / \"stage_status.json\").read_text(encoding=\"utf-8\"))\n    if status[\"state\"] != \"completed\":\n        raise ValueError(f\"Cannot compare an incomplete stage: {path}\")\n    return json.loads((path / \"input_manifest.json\").read_text(encoding=\"utf-8\"))\n\n\ndef check_parquet(db, side, folder):\n    \"\"\"Stream Parquet values back into the same textual contract as CSV.\"\"\"\n    import pyarrow.dataset as ds\n    dataset = ds.dataset(folder / \"events_clean.parquet\", format=\"parquet\")\n    schema = dataset.schema\n    if schema.names != EVENT_COLUMNS:\n        raise ValueError(f\"Unexpected Parquet columns: {folder}\")\n    for key in (\"event_time\", \"source_hour\"):\n        field = schema.field(key)\n        if getattr(field.type, \"tz\", None) != \"UTC\" or getattr(field.type, \"unit\", None) != \"us\":\n            raise ValueError(f\"{side} Parquet {key} must be timestamp[us, tz=UTC], got {field.type}\")\n    db.execute(f\"CREATE TABLE {side}_parquet ({', '.join(key + ' TEXT' for key in EVENT_COLUMNS)})\")\n\n    def rows():\n        for batch in dataset.to_batches(batch_size=10000):\n            for row in batch.to_pylist():\n                for key in (\"event_time\", \"source_hour\"):\n                    precision = \"microseconds\" if key == \"event_time\" else \"seconds\"\n                    row[key] = row[key].astimezone(timezone.utc).isoformat(timespec=precision).replace(\"+00:00\", \"Z\")\n                row[\"event_date\"] = row[\"event_date\"].isoformat()\n                row[\"optional_field_issues\"] = json.dumps(row[\"optional_field_issues\"], ensure_ascii=False)\n                yield [\"\" if row[key] is None else str(row[key]) for key in EVENT_COLUMNS]\n\n    db.executemany(f\"INSERT INTO {side}_parquet VALUES ({', '.join('?' for _ in EVENT_COLUMNS)})\", rows())\n    query = f\"SELECT COUNT(*) FROM (SELECT * FROM {side}_parquet EXCEPT SELECT * FROM {side}_events)\"\n    reverse = f\"SELECT COUNT(*) FROM (SELECT * FROM {side}_events EXCEPT SELECT * FROM {side}_parquet)\"\n    equal_values = db.execute(query).fetchone()[0] == 0 and db.execute(reverse).fetchone()[0] == 0\n    parquet_count = db.execute(f\"SELECT COUNT(*) FROM {side}_parquet\").fetchone()[0]\n    csv_count = db.execute(f\"SELECT COUNT(*) FROM {side}_events\").fetchone()[0]\n    unique = db.execute(f\"SELECT COUNT(DISTINCT event_id) FROM {side}_parquet\").fetchone()[0] == parquet_count\n    return {\"matches_csv\": equal_values and parquet_count == csv_count and unique,\n            \"row_count\": parquet_count, \"types\": {f.name: str(f.type) for f in schema}}\n\n\ndef compare(left, right, output):\n    left, right = Path(left), Path(right)\n    first, second = require_complete(left), require_complete(right)\n    fingerprint = lambda m: sorted((f[\"name\"], f[\"sha256\"]) for f in m[\"observed_files\"])\n    compatible = (fingerprint(first) == fingerprint(second) and first[\"rule_version\"] == second[\"rule_version\"]\n                  and first[\"expected_files\"] == second[\"expected_files\"] and first[\"missing_files\"] == second[\"missing_files\"])\n    with stage_directory(output, \"compare\", {\"left\": str(left.resolve()), \"right\": str(right.resolve())}) as out:\n        if not compatible:\n            write_json(out / \"comparison_summary.json\", {\"passed\": False, \"reason\": \"Different input hashes, requested coverage or rule versions\"})\n            raise ValueError(\"Inputs/rules differ; these runs cannot be compared\")\n        db = sqlite3.connect(out / \"comparison.sqlite3\")\n        try:\n            for side, folder in ((\"left\", left), (\"right\", right)):\n                db.execute(f\"CREATE TABLE {side}_events ({', '.join(key + ' TEXT' for key in EVENT_COLUMNS)})\")\n                with gzip.open(folder / \"events_clean.csv.gz\", \"rt\", encoding=\"utf-8\", newline=\"\") as handle:\n                    reader = csv.DictReader(handle)\n                    if reader.fieldnames != EVENT_COLUMNS:\n                        raise ValueError(f\"Unexpected event columns in {folder}\")\n                    db.executemany(f\"INSERT INTO {side}_events VALUES ({', '.join('?' for _ in EVENT_COLUMNS)})\", ([row[key] for key in EVENT_COLUMNS] for row in reader))\n                db.execute(f\"CREATE INDEX {side}_id ON {side}_events(event_id)\")\n                db.execute(f\"CREATE TABLE {side}_daily (repo_id TEXT, event_date TEXT, event_type TEXT, event_count INTEGER)\")\n                with (folder / \"repo_daily_counts.csv\").open(encoding=\"utf-8\", newline=\"\") as handle:\n                    db.executemany(f\"INSERT INTO {side}_daily VALUES (?, ?, ?, ?)\", ((r[\"repo_id\"], r[\"event_date\"], r[\"event_type\"], int(r[\"event_count\"])) for r in csv.DictReader(handle)))\n            differences = {}\n            for label, columns, left_table, right_table in ((\"event_ids\", [\"event_id\"], \"left_events\", \"right_events\"),\n                                                          (\"event_rows\", EVENT_COLUMNS, \"left_events\", \"right_events\"),\n                                                          (\"daily_counts\", [\"repo_id\", \"event_date\", \"event_type\", \"event_count\"], \"left_daily\", \"right_daily\")):\n                for direction, a, b in ((\"left_only\", left_table, right_table), (\"right_only\", right_table, left_table)):\n                    query = f\"SELECT {', '.join(columns)} FROM {a} EXCEPT SELECT {', '.join(columns)} FROM {b}\"\n                    count = db.execute(f\"SELECT COUNT(*) FROM ({query})\").fetchone()[0]\n                    differences[f\"{label}_{direction}\"] = count\n                    write_csv(out / f\"{label}_{direction}_examples.csv\", columns, (dict(zip(columns, row)) for row in db.execute(query + \" LIMIT 100\")))\n            checks = {\"same_input_hashes_and_rules\": compatible}\n            left_quality = json.loads((left / \"quality_summary.json\").read_text(encoding=\"utf-8\"))\n            right_quality = json.loads((right / \"quality_summary.json\").read_text(encoding=\"utf-8\"))\n            for key in (\"line_status_counts\", \"rejection_reasons\", \"duplicates_removed\", \"conflicting_ids\",\n                        \"conflict_occurrences_excluded\", \"clean_unique_repos\", \"clean_event_types\",\n                        \"time_outside_file_hour_before_dedup\", \"time_outside_file_hour_clean\"):\n                checks[f\"same_{key}\"] = left_quality[key] == right_quality[key]\n            for side in (\"left\", \"right\"):\n                checks[f\"{side}_ids_unique\"] = db.execute(f\"SELECT COUNT(*) = COUNT(DISTINCT event_id) FROM {side}_events\").fetchone()[0] == 1\n                reconstructed = f\"SELECT repo_id, event_date, event_type, COUNT(*) AS event_count FROM {side}_events GROUP BY repo_id, event_date, event_type\"\n                mismatch = db.execute(f\"SELECT COUNT(*) FROM (SELECT * FROM {side}_daily EXCEPT {reconstructed})\").fetchone()[0]\n                reverse = db.execute(f\"SELECT COUNT(*) FROM ({reconstructed} EXCEPT SELECT * FROM {side}_daily)\").fetchone()[0]\n                checks[f\"{side}_daily_matches_events\"] = mismatch == 0 and reverse == 0\n                checks[f\"{side}_daily_keys_unique\"] = db.execute(\n                    f\"SELECT COUNT(*) FROM {side}_daily\").fetchone()[0] == db.execute(\n                    f\"SELECT COUNT(*) FROM (SELECT DISTINCT repo_id, event_date, event_type FROM {side}_daily)\").fetchone()[0]\n            parquet_results = {}\n            for side, folder in ((\"left\", left), (\"right\", right)):\n                if (folder / \"events_clean.parquet\").exists():\n                    parquet_results[side] = check_parquet(db, side, folder)\n                    checks[f\"{side}_parquet_matches_csv\"] = parquet_results[side][\"matches_csv\"]\n                else:\n                    parquet_results[side] = {\"skipped\": \"CSV-only output\"}\n            if \"types\" in parquet_results[\"left\"] and \"types\" in parquet_results[\"right\"]:\n                checks[\"same_parquet_types\"] = parquet_results[\"left\"][\"types\"] == parquet_results[\"right\"][\"types\"]\n            write_json(out / \"parquet_validation.json\", parquet_results)\n            summary = {\"passed\": all(checks.values()) and not any(differences.values()), \"checks\": checks,\n                       \"differences\": differences, \"left_events\": db.execute(\"SELECT COUNT(*) FROM left_events\").fetchone()[0],\n                       \"right_events\": db.execute(\"SELECT COUNT(*) FROM right_events\").fetchone()[0],\n                       \"note\": \"Compares ingestion and DataFrame results; shared parsing rules are also covered by adversarial fixture tests.\"}\n            write_json(out / \"comparison_summary.json\", summary)\n            db.commit()\n            if not summary[\"passed\"]:\n                raise RuntimeError(\"Outputs differ; see comparison summary and difference examples\")\n        finally:\n            db.close()\n    return summary\n",
+      "functions": {
+        "require_complete": {
+          "start": 12,
+          "end": 16
+        },
+        "check_parquet": {
+          "start": 19,
+          "end": 50
+        },
+        "compare": {
+          "start": 53,
+          "end": 121
+        },
+        "rows": {
+          "start": 32,
+          "end": 40
+        }
+      }
+    },
+    "gharchive_a/download.py": {
+      "text": "\"\"\"Bounded streaming downloads; caches are verified, partial attempts are kept.\"\"\"\nfrom __future__ import annotations\n\nimport gzip\nimport os\nimport time\nimport urllib.error\nimport urllib.request\nfrom pathlib import Path\n\nfrom .common import expected_names, sha256_file, stage_directory, utc_now, write_json\n\n\ndef verify_archive(path):\n    with gzip.open(path, \"rb\") as handle:\n        while handle.read(1024 * 1024):\n            pass\n    return sha256_file(path)\n\n\ndef download(cfg, data_dir, output, allow_missing=False):\n    data_dir = Path(data_dir).resolve()\n    data_dir.mkdir(parents=True, exist_ok=True)\n    manifest = {\"date\": cfg[\"date\"], \"requested_files\": expected_names(cfg), \"files\": []}\n    with stage_directory(output, \"download\", cfg) as out:\n        for name in expected_names(cfg):\n            destination = data_dir / name\n            url = cfg[\"base_url\"].rstrip(\"/\") + \"/\" + name\n            entry = {\"name\": name, \"url\": url, \"status\": \"failed\", \"attempts\": []}\n            manifest[\"files\"].append(entry)\n            if destination.exists():\n                try:\n                    if destination.stat().st_size > cfg[\"max_file_bytes\"]:\n                        raise ValueError(\"Existing archive exceeds configured byte budget\")\n                    entry.update(status=\"cached_verified\", bytes=destination.stat().st_size,\n                                 sha256=verify_archive(destination), checked_at=utc_now())\n                except (OSError, EOFError, ValueError) as error:\n                    entry[\"error\"] = f\"Cached file failed verification; preserved: {error}\"\n            else:\n                for attempt_number in range(cfg[\"retries\"] + 1):\n                    partial = data_dir / f\"{name}.{Path(output).name}.attempt-{attempt_number + 1}.part\"\n                    attempt = {\"started_at\": utc_now(), \"partial_file\": str(partial), \"http_status\": None}\n                    entry[\"attempts\"].append(attempt)\n                    try:\n                        request = urllib.request.Request(url, headers={\"User-Agent\": \"CS5488-A-sample/1.0\", \"Accept-Encoding\": \"identity\"})\n                        with urllib.request.urlopen(request, timeout=cfg[\"timeout_seconds\"]) as response, partial.open(\"xb\") as handle:\n                            attempt[\"http_status\"] = response.status\n                            attempt[\"content_type\"] = response.headers.get(\"Content-Type\")\n                            length = response.headers.get(\"Content-Length\")\n                            if length is not None and int(length) > cfg[\"max_file_bytes\"]:\n                                raise ValueError(\"Server file exceeds configured byte budget\")\n                            total = 0\n                            for chunk in iter(lambda: response.read(1024 * 1024), b\"\"):\n                                total += len(chunk)\n                                if total > cfg[\"max_file_bytes\"]:\n                                    raise ValueError(\"Download exceeds configured byte budget\")\n                                handle.write(chunk)\n                            if length is not None and total != int(length):\n                                raise OSError(\"Content-Length does not match downloaded bytes\")\n                        checksum = verify_archive(partial)\n                        # No pre-existing input is overwritten by a rerun.\n                        if destination.exists():\n                            raise FileExistsError(f\"Another run created {destination}; partial is preserved\")\n                        # Atomic creation without replacing a concurrently cached file.\n                        os.link(partial, destination)\n                        partial.unlink()\n                        entry.update(status=\"downloaded_verified\", bytes=total, sha256=checksum)\n                        attempt[\"status\"] = \"completed\"\n                    except (OSError, ValueError, EOFError, urllib.error.URLError) as error:\n                        attempt.update(status=\"failed\", error=f\"{type(error).__name__}: {error}\")\n                        if isinstance(error, urllib.error.HTTPError):\n                            attempt[\"http_status\"] = error.code\n                        entry[\"error\"] = attempt[\"error\"]\n                    finally:\n                        attempt[\"finished_at\"] = utc_now()\n                        if partial.exists():\n                            attempt[\"partial_bytes\"] = partial.stat().st_size\n                        write_json(out / \"download_manifest.json\", manifest)\n                    if entry[\"status\"] == \"downloaded_verified\":\n                        break\n                    if attempt_number < cfg[\"retries\"]:\n                        time.sleep(min(2**attempt_number, 4))\n            write_json(out / \"download_manifest.json\", manifest)\n            print(f\"{name}: {entry['status']}\", flush=True)\n        failed = [row[\"name\"] for row in manifest[\"files\"] if row[\"status\"] == \"failed\"]\n        manifest.update(failed_files=failed, all_requested_archives_verified=not failed)\n        write_json(out / \"download_manifest.json\", manifest)\n        if failed and not allow_missing:\n            raise RuntimeError(f\"Archive download/verification failed: {failed}; see download_manifest.json\")\n    return manifest\n",
+      "functions": {
+        "verify_archive": {
+          "start": 14,
+          "end": 18
+        },
+        "download": {
+          "start": 21,
+          "end": 90
+        }
+      }
+    },
+    "gharchive_a/export.py": {
+      "text": "\"\"\"Portable CSV exports and typed, batched Parquet output.\"\"\"\nfrom __future__ import annotations\n\nimport csv\nimport gzip\nimport json\nfrom datetime import date, datetime\nfrom pathlib import Path\n\nfrom .common import EVENT_COLUMNS, write_csv\n\n\ndef event_schema():\n    import pyarrow as pa\n    return pa.schema([\n        (\"event_id\", pa.string()), (\"event_type\", pa.string()), (\"event_time\", pa.timestamp(\"us\", tz=\"UTC\")),\n        (\"repo_id\", pa.int64()), (\"repo_name\", pa.string()), (\"actor_id\", pa.int64()),\n        (\"actor_login\", pa.string()), (\"event_date\", pa.date32()), (\"source_file\", pa.string()),\n        (\"source_line\", pa.int64()), (\"source_hour\", pa.timestamp(\"us\", tz=\"UTC\")),\n        (\"time_outside_file_hour\", pa.bool_()), (\"optional_field_issues\", pa.list_(pa.string()))])\n\n\ndef csv_event(record):\n    row = {key: record.get(key) for key in EVENT_COLUMNS}\n    flags = row[\"optional_field_issues\"]\n    row[\"optional_field_issues\"] = json.dumps(flags, ensure_ascii=False) if isinstance(flags, list) else flags\n    return row\n\n\ndef decoded_event(record):\n    row = dict(record)\n    row[\"optional_field_issues\"] = json.loads(row[\"optional_field_issues\"]) if isinstance(row[\"optional_field_issues\"], str) else row[\"optional_field_issues\"]\n    row[\"time_outside_file_hour\"] = bool(row[\"time_outside_file_hour\"])\n    return row\n\n\ndef export_events(rows, output, preview_rows=100, batch_rows=10000, parquet=True):\n    out = Path(output)\n    writer = None\n    if parquet:\n        import pyarrow.parquet as pq\n        (out / \"events_clean.parquet\").mkdir()\n        writer = pq.ParquetWriter(out / \"events_clean.parquet/part-00000.parquet\", event_schema(), compression=\"snappy\")\n    batch, preview, count = [], [], 0\n    try:\n        with gzip.open(out / \"events_clean.csv.gz\", \"wt\", encoding=\"utf-8\", newline=\"\") as handle:\n            csv_writer = csv.DictWriter(handle, fieldnames=EVENT_COLUMNS)\n            csv_writer.writeheader()\n            for original in rows:\n                row = decoded_event(original)\n                csv_writer.writerow(csv_event(row))\n                if count < preview_rows:\n                    preview.append(csv_event(row))\n                count += 1\n                if writer:\n                    typed = {key: row.get(key) for key in EVENT_COLUMNS}\n                    for key in (\"event_time\", \"source_hour\"):\n                        typed[key] = datetime.fromisoformat(typed[key].replace(\"Z\", \"+00:00\"))\n                    typed[\"event_date\"] = date.fromisoformat(typed[\"event_date\"])\n                    batch.append(typed)\n                    if len(batch) >= batch_rows:\n                        _write_batch(writer, batch)\n                        batch.clear()\n            if writer and batch:\n                _write_batch(writer, batch)\n    finally:\n        if writer:\n            writer.close()\n    write_csv(out / \"events_preview.csv\", EVENT_COLUMNS, preview)\n    return count\n\n\ndef _write_batch(writer, rows):\n    import pyarrow as pa\n    writer.write_table(pa.Table.from_pylist(rows, schema=event_schema()))\n\n\ndef export_daily(rows, output, parquet=True):\n    out = Path(output)\n    columns = [\"repo_id\", \"event_date\", \"event_type\", \"event_count\"]\n    writer = None\n    if parquet:\n        import pyarrow as pa\n        import pyarrow.parquet as pq\n        schema = pa.schema([(\"repo_id\", pa.int64()), (\"event_date\", pa.date32()), (\"event_type\", pa.string()), (\"event_count\", pa.int64())])\n        (out / \"repo_daily_counts.parquet\").mkdir()\n        writer = pq.ParquetWriter(out / \"repo_daily_counts.parquet/part-00000.parquet\", schema, compression=\"snappy\")\n    total, batch = 0, []\n    try:\n        with (out / \"repo_daily_counts.csv\").open(\"w\", encoding=\"utf-8\", newline=\"\") as handle:\n            csv_writer = csv.DictWriter(handle, fieldnames=columns)\n            csv_writer.writeheader()\n            for record in rows:\n                row = dict(record)\n                csv_writer.writerow(row)\n                total += int(row[\"event_count\"])\n                if writer:\n                    row[\"event_date\"] = date.fromisoformat(row[\"event_date\"])\n                    batch.append(row)\n                    if len(batch) == 10000:\n                        writer.write_table(pa.Table.from_pylist(batch, schema=schema))\n                        batch.clear()\n            if writer and batch:\n                writer.write_table(pa.Table.from_pylist(batch, schema=schema))\n    finally:\n        if writer:\n            writer.close()\n    return total\n",
+      "functions": {
+        "event_schema": {
+          "start": 13,
+          "end": 20
+        },
+        "csv_event": {
+          "start": 23,
+          "end": 27
+        },
+        "decoded_event": {
+          "start": 30,
+          "end": 34
+        },
+        "export_events": {
+          "start": 37,
+          "end": 70
+        },
+        "_write_batch": {
+          "start": 73,
+          "end": 75
+        },
+        "export_daily": {
+          "start": 78,
+          "end": 108
+        }
+      }
+    },
+    "gharchive_a/inspect.py": {
+      "text": "\"\"\"Inspect all raw lines before cleaning and retain the observed distributions.\"\"\"\nfrom collections import Counter\n\nfrom .common import json_line, select_inputs, stage_directory, write_csv, write_json\nfrom .records import iter_records\n\n\ndef inspect(cfg, data_dir, output, allow_missing=False):\n    files, manifest = select_inputs(cfg, data_dir, allow_missing)\n    status_counts, types, issues, reasons = Counter(), Counter(), Counter(), Counter()\n    repositories, samples, per_file = set(), [], []\n    minimum = maximum = None\n    with stage_directory(output, \"inspect\", cfg) as out:\n        write_json(out / \"input_manifest.json\", manifest)\n        with (out / \"raw_anomalies.jsonl\").open(\"w\", encoding=\"utf-8\") as anomalies:\n            for path in files:\n                counts = Counter()\n                file_repos = set()\n                for record in iter_records(path):\n                    status = record[\"status\"]\n                    counts[status] += 1\n                    status_counts[status] += 1\n                    if status != \"blank\" and len(samples) < cfg[\"raw_preview_rows\"]:\n                        samples.append(record)\n                    if status == \"valid\":\n                        types[record[\"event_type\"]] += 1\n                        repositories.add(record[\"repo_id\"])\n                        file_repos.add(record[\"repo_id\"])\n                        issues.update(record[\"optional_field_issues\"])\n                        stamp = record[\"event_time\"]\n                        minimum = stamp if minimum is None else min(minimum, stamp)\n                        maximum = stamp if maximum is None else max(maximum, stamp)\n                        if record[\"time_outside_file_hour\"]:\n                            counts[\"time_outside_file_hour\"] += 1\n                    elif status != \"blank\":\n                        reasons[record[\"reason\"]] += 1\n                        json_line(anomalies, record)\n                per_file.append({\"source_file\": path.name, \"blank_lines\": counts[\"blank\"],\n                                 \"nonempty_lines\": counts[\"valid\"] + counts[\"invalid\"] + counts[\"parse_error\"],\n                                 \"parse_errors\": counts[\"parse_error\"], \"invalid_records\": counts[\"invalid\"],\n                                 \"valid_before_dedup\": counts[\"valid\"], \"unique_valid_repos\": len(file_repos),\n                                 \"time_outside_file_hour\": counts[\"time_outside_file_hour\"]})\n        summary = {\"count_scope\": \"raw occurrences before deduplication\", \"line_status_counts\": dict(status_counts),\n                   \"unique_valid_repos\": len(repositories), \"event_time_min\": minimum, \"event_time_max\": maximum,\n                   \"event_types\": dict(sorted(types.items())), \"rejection_reasons\": dict(reasons),\n                   \"optional_field_issues\": dict(issues), \"coverage\": manifest}\n        write_json(out / \"inspection_summary.json\", summary)\n        write_json(out / \"raw_examples.json\", samples)\n        write_csv(out / \"file_statistics.csv\", list(per_file[0]), per_file)\n        write_csv(out / \"raw_event_types.csv\", [\"event_type\", \"occurrences_before_dedup\"],\n                  ({\"event_type\": name, \"occurrences_before_dedup\": number} for name, number in sorted(types.items())))\n    return summary\n",
+      "functions": {
+        "inspect": {
+          "start": 8,
+          "end": 52
+        }
+      }
+    },
+    "gharchive_a/records.py": {
+      "text": "\"\"\"One authoritative validation rule set for Python and Spark ingestion.\n\nThe full raw event remains in the immutable archive. A canonical hash includes\npayload too, so conflicting IDs are not hidden by selecting only common fields.\n\"\"\"\nfrom __future__ import annotations\n\nimport gzip\nimport hashlib\nimport json\nfrom datetime import datetime, timezone\n\nMAX_ID = 2**63 - 1\n\n\ndef positive_id(value):\n    if type(value) is int:\n        number = value\n    elif isinstance(value, str) and value.isascii() and value.isdigit():\n        number = int(value)\n    else:\n        return None\n    return number if 0 < number <= MAX_ID else None\n\n\ndef nonempty_text(value):\n    if not isinstance(value, str) or not value.strip():\n        return None\n    try:\n        value.encode(\"utf-8\")\n    except UnicodeEncodeError:\n        return None\n    return value\n\n\ndef source_hour(name):\n    return datetime.strptime(name.removesuffix(\".json.gz\"), \"%Y-%m-%d-%H\").replace(tzinfo=timezone.utc)\n\n\ndef reject_constant(value):\n    raise ValueError(f\"Non-JSON constant: {value}\")\n\n\ndef normalize_line(raw, filename, line_number):\n    \"\"\"Returns an explicit status; no rejected or blank line silently disappears.\"\"\"\n    record = {\"status\": \"blank\", \"reason\": None, \"source_file\": filename,\n              \"source_line\": line_number, \"raw_line\": None, \"canonical_sha256\": None,\n              \"optional_field_issues\": [], \"time_outside_file_hour\": False}\n    try:\n        text = raw.decode(\"utf-8\") if isinstance(raw, bytes) else raw\n    except UnicodeDecodeError:\n        record.update(status=\"parse_error\", reason=\"invalid_utf8\", raw_line=raw.decode(\"utf-8\", errors=\"replace\"), raw_hex=raw.hex())\n        return record\n    if not text.strip():\n        return record\n    record[\"raw_line\"] = text.rstrip(\"\\r\\n\")\n    try:\n        event = json.loads(text, parse_constant=reject_constant)\n    except (json.JSONDecodeError, ValueError, RecursionError) as error:\n        record.update(status=\"parse_error\", reason=\"invalid_json\", parse_detail=str(error))\n        return record\n    if not isinstance(event, dict):\n        record.update(status=\"invalid\", reason=\"json_root_not_object\")\n        return record\n    event_id = positive_id(event.get(\"id\"))\n    event_type = nonempty_text(event.get(\"type\"))\n    repo = event.get(\"repo\") if isinstance(event.get(\"repo\"), dict) else {}\n    repo_id = positive_id(repo.get(\"id\"))\n    if event_id is None:\n        record.update(status=\"invalid\", reason=\"invalid_event_id\")\n        return record\n    if event_type is None:\n        record.update(status=\"invalid\", reason=\"invalid_event_type\")\n        return record\n    if repo_id is None:\n        record.update(status=\"invalid\", reason=\"invalid_repo_id\")\n        return record\n    try:\n        created = datetime.fromisoformat(event[\"created_at\"].replace(\"Z\", \"+00:00\"))\n        if created.tzinfo is None:\n            raise ValueError(\"Time must contain an explicit UTC offset\")\n        created = created.astimezone(timezone.utc)\n    except (KeyError, TypeError, AttributeError, ValueError, OverflowError):\n        record.update(status=\"invalid\", reason=\"invalid_event_time\")\n        return record\n    actor = event.get(\"actor\") if isinstance(event.get(\"actor\"), dict) else {}\n    values = {\"repo_name\": nonempty_text(repo.get(\"name\")),\n              \"actor_id\": positive_id(actor.get(\"id\")),\n              \"actor_login\": nonempty_text(actor.get(\"login\"))}\n    flags = [f\"missing_or_invalid_{key}\" for key, value in values.items() if value is None]\n    hour = source_hour(filename)\n    canonical = json.dumps(event, sort_keys=True, separators=(\",\", \":\"), ensure_ascii=True, allow_nan=False)\n    record.update(status=\"valid\", reason=None, event_id=str(event_id), event_type=event_type,\n                  event_time=created.isoformat(timespec=\"microseconds\").replace(\"+00:00\", \"Z\"),\n                  event_date=created.date().isoformat(), repo_id=repo_id, **values,\n                  source_hour=hour.isoformat().replace(\"+00:00\", \"Z\"),\n                  time_outside_file_hour=created.replace(minute=0, second=0, microsecond=0) != hour,\n                  optional_field_issues=flags,\n                  canonical_sha256=hashlib.sha256(canonical.encode(\"utf-8\")).hexdigest())\n    return record\n\n\ndef iter_records(path):\n    \"\"\"Streams bytes to detect invalid UTF-8 and lets truncated gzip fail the stage.\"\"\"\n    from pathlib import Path\n    path = Path(path)\n    with gzip.open(path, \"rb\") as handle:\n        for number, raw in enumerate(handle, 1):\n            yield normalize_line(raw, path.name, number)\n",
+      "functions": {
+        "positive_id": {
+          "start": 16,
+          "end": 23
+        },
+        "nonempty_text": {
+          "start": 26,
+          "end": 33
+        },
+        "source_hour": {
+          "start": 36,
+          "end": 37
+        },
+        "reject_constant": {
+          "start": 40,
+          "end": 41
+        },
+        "normalize_line": {
+          "start": 44,
+          "end": 100
+        },
+        "iter_records": {
+          "start": 103,
+          "end": 109
+        }
+      }
+    },
+    "gharchive_a/spark_clean.py": {
+      "text": "\"\"\"Local Spark execution: a partition reads one hourly archive, then Spark shuffles.\n\nParsing/field validation is deliberately shared with the reference pipeline.\nDeduplication, conflict handling and aggregation are independently performed with\nSpark DataFrames. This is a local filesystem pilot, not a cluster deployment.\n\"\"\"\nfrom __future__ import annotations\n\nimport os\nimport subprocess\nimport sys\nimport zipfile\nfrom pathlib import Path\n\nfrom .common import EVENT_COLUMNS, ROOT, select_inputs, stage_directory, write_csv, write_json\nfrom .export import export_daily, export_events\nfrom .records import iter_records\n\n\ndef parse_archive(path):\n    for record in iter_records(path):\n        if record[\"status\"] == \"valid\":\n            record[\"raw_line\"] = None  # Raw payload is retained in the input archive.\n        record[\"_corrupt_record\"] = record.get(\"raw_line\") if record[\"status\"] == \"parse_error\" else None\n        yield record\n\n\ndef configure_java():\n    if not os.environ.get(\"JAVA_HOME\"):\n        for candidate in (Path(sys.prefix) / \"lib/jvm\", Path(sys.prefix)):\n            if (candidate / \"bin/java\").is_file():\n                os.environ[\"JAVA_HOME\"] = str(candidate)\n                break\n    os.environ[\"PYSPARK_PYTHON\"] = sys.executable\n\n\ndef parsed_schema():\n    from pyspark.sql.types import ArrayType, BooleanType, LongType, StringType, StructField, StructType\n    types = {\"repo_id\": LongType(), \"actor_id\": LongType(), \"source_line\": LongType(),\n             \"time_outside_file_hour\": BooleanType(), \"optional_field_issues\": ArrayType(StringType())}\n    columns = EVENT_COLUMNS + [\"status\", \"reason\", \"canonical_sha256\", \"raw_line\", \"raw_hex\", \"parse_detail\", \"_corrupt_record\"]\n    return StructType([StructField(key, types.get(key, StringType()), True) for key in columns])\n\n\ndef rows_as_dict(frame):\n    for row in frame.toLocalIterator():\n        yield row.asDict(recursive=True)\n\n\ndef clean_spark(cfg, data_dir, output, allow_missing=False, master=\"local[2]\"):\n    if not (master == \"local\" or master.startswith(\"local[\")):\n        raise ValueError(\"This pilot accepts local Spark masters only; raw files live on this machine\")\n    from pyspark import StorageLevel\n    from pyspark.sql import SparkSession, Window, functions as F\n    files, manifest = select_inputs(cfg, data_dir, allow_missing)\n    configure_java()\n    with stage_directory(output, \"spark_clean\", cfg) as out:\n        write_json(out / \"input_manifest.json\", manifest)\n        with zipfile.ZipFile(out / \"worker_code.zip\", \"w\") as archive:\n            for path in (ROOT / \"gharchive_a\").glob(\"*.py\"):\n                archive.write(path, f\"gharchive_a/{path.name}\")\n        java_path = Path(os.environ.get(\"JAVA_HOME\", \"\")) / \"bin/java\"\n        java = subprocess.run([str(java_path) if java_path.is_file() else \"java\", \"-version\"], capture_output=True, text=True, timeout=10)\n        if java.returncode:\n            raise RuntimeError(f\"Java is unavailable: {java.stderr}\")\n        write_json(out / \"spark_environment.json\", {\"master\": master, \"java\": java.stderr.strip(),\n                   \"python\": sys.executable, \"java_home\": os.environ.get(\"JAVA_HOME\"),\n                   \"timezone\": \"UTC\", \"parquet_timestamp_type\": \"TIMESTAMP_MICROS\", \"hour_file_partitions\": len(files)})\n        spark = (SparkSession.builder.master(master).appName(\"CS5488-A-sample\")\n                 .config(\"spark.sql.session.timeZone\", \"UTC\")\n                 .config(\"spark.sql.parquet.outputTimestampType\", \"TIMESTAMP_MICROS\")\n                 .config(\"spark.sql.shuffle.partitions\", max(2, len(files) * 2))\n                 .config(\"spark.driver.host\", \"127.0.0.1\").config(\"spark.driver.bindAddress\", \"127.0.0.1\")\n                 .config(\"spark.ui.enabled\", \"false\").getOrCreate())\n        spark.sparkContext.setLogLevel(\"WARN\")\n        try:\n            spark.sparkContext.addPyFile(str(out / \"worker_code.zip\"))\n            parsed = spark.createDataFrame(spark.sparkContext.parallelize([str(p) for p in files], len(files)).flatMap(parse_archive), parsed_schema())\n            parsed = parsed.persist(StorageLevel.DISK_ONLY)\n            counts = {row[\"status\"]: row[\"count\"] for row in parsed.groupBy(\"status\").count().collect()}\n            valid = parsed.filter(F.col(\"status\") == \"valid\")\n            valid.select(*(EVENT_COLUMNS + [\"canonical_sha256\"])).write.parquet(str(out / \"valid_before_dedup.parquet\"))\n            rejected = parsed.filter(F.col(\"status\").isin(\"parse_error\", \"invalid\"))\n            rejected.write.json(str(out / \"rejected_records.jsonl\"))\n            parsed.filter((F.size(\"optional_field_issues\") > 0) | F.col(\"time_outside_file_hour\")).select(\n                \"event_id\", \"source_file\", \"source_line\", \"optional_field_issues\", \"time_outside_file_hour\").write.json(str(out / \"flagged_records.jsonl\"))\n            groups = valid.groupBy(\"event_id\").agg(F.count(\"*\").alias(\"occurrences\"), F.countDistinct(\"canonical_sha256\").alias(\"variants\"))\n            conflict = valid.join(groups.filter(\"variants > 1\").select(\"event_id\"), \"event_id\", \"inner\")\n            safe = valid.join(groups.filter(\"variants = 1\").select(\"event_id\"), \"event_id\", \"inner\")\n            ranked = safe.withColumn(\"occurrence_rank\", F.row_number().over(Window.partitionBy(\"event_id\").orderBy(\"source_hour\", \"source_line\")))\n            duplicates = ranked.filter(\"occurrence_rank > 1\")\n            cleaned = ranked.filter(\"occurrence_rank = 1\").select(*EVENT_COLUMNS).persist(StorageLevel.DISK_ONLY)\n            conflict.write.json(str(out / \"conflicting_records.jsonl\"))\n            duplicates.write.json(str(out / \"duplicate_records.jsonl\"))\n            clean_count = export_events(rows_as_dict(cleaned.orderBy(\"source_hour\", \"source_line\")), out, cfg[\"clean_preview_rows\"], parquet=False)\n            cleaned.withColumn(\"event_time\", F.to_timestamp(\"event_time\")).withColumn(\"source_hour\", F.to_timestamp(\"source_hour\")).withColumn(\n                \"event_date\", F.to_date(\"event_date\")).write.parquet(str(out / \"events_clean.parquet\"))\n            daily = cleaned.groupBy(\"repo_id\", \"event_date\", \"event_type\").agg(F.count(\"*\").alias(\"event_count\"))\n            grouped_total = export_daily(rows_as_dict(daily.orderBy(\"repo_id\", \"event_date\", \"event_type\")), out, parquet=False)\n            daily.withColumn(\"event_date\", F.to_date(\"event_date\")).write.parquet(str(out / \"repo_daily_counts.parquet\"))\n            names = cleaned.groupBy(\"repo_id\", \"repo_name\").agg(F.min(\"event_time\").alias(\"first_observed_at\"), F.max(\"event_time\").alias(\"last_observed_at\"), F.count(\"*\").alias(\"event_count\"))\n            write_csv(out / \"repo_name_history.csv\", [\"repo_id\", \"repo_name\", \"first_observed_at\", \"last_observed_at\", \"event_count\"], rows_as_dict(names.orderBy(\"repo_id\", \"repo_name\")))\n            name_window = Window.partitionBy(\"repo_id\").orderBy(F.col(\"event_time\").desc(), F.col(\"source_hour\").desc(), F.col(\"source_line\").desc())\n            last_name = cleaned.filter(F.col(\"repo_name\").isNotNull()).withColumn(\"name_rank\", F.row_number().over(name_window))\n            candidates = cleaned.groupBy(\"repo_id\").agg(F.min(\"event_time\").alias(\"first_observed_at\"), F.max(\"event_time\").alias(\"last_observed_at\"), F.count(\"*\").alias(\"event_count\"), F.countDistinct(\"repo_name\").alias(\"observed_name_count\"))\n            candidates = candidates.join(last_name.filter(\"name_rank = 1\").select(\"repo_id\", \"repo_name\"), \"repo_id\", \"left\")\n            write_csv(out / \"repo_candidates.csv\", [\"repo_id\", \"repo_name\", \"first_observed_at\", \"last_observed_at\", \"event_count\", \"observed_name_count\"], rows_as_dict(candidates.orderBy(\"repo_id\")))\n            duplicates_count, conflict_count = duplicates.count(), conflict.count()\n            checks = {\"valid_count_reconciles\": counts.get(\"valid\", 0) == clean_count + duplicates_count + conflict_count,\n                      \"grouped_count_reconciles\": grouped_total == clean_count,\n                      \"clean_ids_unique\": cleaned.select(\"event_id\").distinct().count() == clean_count}\n            summary = {\"rule_version\": manifest[\"rule_version\"], \"engine\": \"spark\", \"master\": master,\n                       \"line_status_counts\": counts, \"cleaned_events\": clean_count, \"duplicates_removed\": duplicates_count,\n                       \"nonempty_lines\": sum(counts.get(key, 0) for key in (\"valid\", \"invalid\", \"parse_error\")),\n                       \"time_outside_file_hour_before_dedup\": valid.filter(\"time_outside_file_hour\").count(),\n                       \"time_outside_file_hour_clean\": cleaned.filter(\"time_outside_file_hour\").count(),\n                       \"conflicting_ids\": groups.filter(\"variants > 1\").count(), \"conflict_occurrences_excluded\": conflict_count,\n                       \"conflict_policy\": \"exclude all occurrences of a conflicting event ID until reviewed\",\n                       \"rejection_reasons\": {r[\"reason\"]: r[\"count\"] for r in rejected.groupBy(\"reason\").count().collect()},\n                       \"clean_event_types\": {r[\"event_type\"]: r[\"count\"] for r in cleaned.groupBy(\"event_type\").count().collect()},\n                       \"clean_unique_repos\": cleaned.select(\"repo_id\").distinct().count(),\n                       \"grouped_event_count_sum\": grouped_total, \"checks\": checks, \"coverage\": manifest,\n                       \"formats\": [\"csv.gz\", \"parquet\"], \"parser\": \"shared strict Python parser with explicit Spark schema\"}\n            write_json(out / \"quality_summary.json\", summary)\n            if not all(checks.values()):\n                raise RuntimeError(\"Spark count reconciliation failed\")\n        finally:\n            spark.stop()\n    return summary\n",
+      "functions": {
+        "parse_archive": {
+          "start": 20,
+          "end": 25
+        },
+        "configure_java": {
+          "start": 28,
+          "end": 34
+        },
+        "parsed_schema": {
+          "start": 37,
+          "end": 42
+        },
+        "rows_as_dict": {
+          "start": 45,
+          "end": 47
+        },
+        "clean_spark": {
+          "start": 50,
+          "end": 129
+        }
+      }
+    },
+    "scripts/_bootstrap.py": {
+      "text": "\"\"\"Make the project package importable without an editable installation.\"\"\"\nimport sys\nfrom pathlib import Path\n\nsys.path.insert(0, str(Path(__file__).resolve().parents[1]))\n",
+      "functions": {}
+    },
+    "scripts/clean_sample.py": {
+      "text": "\"\"\"Reference cleaning with retained SQLite staging and typed exports.\"\"\"\nimport _bootstrap  # noqa: F401\nfrom gharchive_a.cli import main_stage\n\nif __name__ == \"__main__\":\n    main_stage(\"clean\")\n",
+      "functions": {}
+    },
+    "scripts/clean_sample_spark.py": {
+      "text": "\"\"\"Run the same validation rules with Spark deduplication and aggregation.\"\"\"\nimport _bootstrap  # noqa: F401\nfrom gharchive_a.cli import main_stage\n\nif __name__ == \"__main__\":\n    main_stage(\"spark\")\n",
+      "functions": {}
+    },
+    "scripts/compare_outputs.py": {
+      "text": "\"\"\"Compare input hashes, every event field and reconstructed daily counts.\"\"\"\nimport _bootstrap  # noqa: F401\nfrom gharchive_a.cli import main_stage\n\nif __name__ == \"__main__\":\n    main_stage(\"compare\")\n",
+      "functions": {}
+    },
+    "scripts/download_sample.py": {
+      "text": "\"\"\"Download and verify the configured hourly archives.\"\"\"\nimport _bootstrap  # noqa: F401\nfrom gharchive_a.cli import main_stage\n\nif __name__ == \"__main__\":\n    main_stage(\"download\")\n",
+      "functions": {}
+    },
+    "scripts/inspect_sample.py": {
+      "text": "\"\"\"Retain raw previews, distributions and anomaly examples.\"\"\"\nimport _bootstrap  # noqa: F401\nfrom gharchive_a.cli import main_stage\n\nif __name__ == \"__main__\":\n    main_stage(\"inspect\")\n",
+      "functions": {}
+    },
+    "scripts/run_sample.py": {
+      "text": "\"\"\"Run the complete sample workflow and produce an A-role handoff note.\"\"\"\nimport _bootstrap  # noqa: F401\nfrom gharchive_a.cli import main_run\n\nif __name__ == \"__main__\":\n    main_run()\n",
+      "functions": {}
+    }
+  },
+  "navigation_files": [
+    {
+      "path": "B_接手指南.md",
+      "category": "report",
+      "purpose": "B 的输入、首批范围、元数据与 AI 标签交付约定",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 8354,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "README.md",
+      "category": "report",
+      "purpose": "项目运行与交接入口",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 10817,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "config/sample.json",
+      "category": "config",
+      "purpose": "样本日期、小时、文件预算和预览行数",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 244,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "docs/data-guide-snapshot.json",
+      "category": "report",
+      "purpose": "生成本页时读取的数据与源码快照",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 166431,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "docs/data-guide.template.html",
+      "category": "code",
+      "purpose": "本页的版式、图形与交互模板",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 90527,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "docs/data_guide_model.py",
+      "category": "code",
+      "purpose": "读取实际样本、源码和文件清单，形成文档证据",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 26902,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "environment.lock.osx-arm64.yml",
+      "category": "config",
+      "purpose": "Apple Silicon 运行环境的版本记录",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 1980,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "environment.yml",
+      "category": "config",
+      "purpose": "新电脑创建 conda 环境的配置",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 141,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "gharchive_a/__init__.py",
+      "category": "code",
+      "purpose": "处理逻辑模块；可在本页源码查看器中阅读",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 107,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "gharchive_a/clean.py",
+      "category": "code",
+      "purpose": "处理逻辑模块；可在本页源码查看器中阅读",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 10145,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "gharchive_a/cli.py",
+      "category": "code",
+      "purpose": "处理逻辑模块；可在本页源码查看器中阅读",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 6620,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "gharchive_a/common.py",
+      "category": "code",
+      "purpose": "处理逻辑模块；可在本页源码查看器中阅读",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 7001,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "gharchive_a/compare.py",
+      "category": "code",
+      "purpose": "处理逻辑模块；可在本页源码查看器中阅读",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 8961,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "gharchive_a/download.py",
+      "category": "code",
+      "purpose": "处理逻辑模块；可在本页源码查看器中阅读",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 5277,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "gharchive_a/export.py",
+      "category": "code",
+      "purpose": "处理逻辑模块；可在本页源码查看器中阅读",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 4503,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "gharchive_a/inspect.py",
+      "category": "code",
+      "purpose": "处理逻辑模块；可在本页源码查看器中阅读",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 3282,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "gharchive_a/records.py",
+      "category": "code",
+      "purpose": "处理逻辑模块；可在本页源码查看器中阅读",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 4555,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "gharchive_a/spark_clean.py",
+      "category": "code",
+      "purpose": "处理逻辑模块；可在本页源码查看器中阅读",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 9618,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "scripts/_bootstrap.py",
+      "category": "code",
+      "purpose": "使命令入口能导入项目包",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 174,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "scripts/build_data_guide.py",
+      "category": "code",
+      "purpose": "读取已完成样本，生成本说明页",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 21952,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "scripts/clean_sample.py",
+      "category": "code",
+      "purpose": "Python 清洗、去重、汇总与导出",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 196,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "scripts/clean_sample_spark.py",
+      "category": "code",
+      "purpose": "Spark 从原始档案独立计算同样的结果",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 201,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "scripts/compare_outputs.py",
+      "category": "code",
+      "purpose": "核对两条计算路径及事件 Parquet 导出",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 203,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "scripts/download_sample.py",
+      "category": "code",
+      "purpose": "获取原始档案并验证可读性",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 184,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "scripts/inspect_sample.py",
+      "category": "code",
+      "purpose": "查看原始内容并形成检查报告",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 188,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "scripts/run_sample.py",
+      "category": "code",
+      "purpose": "按顺序调度整个样本管道",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 187,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "verification/README.md",
+      "category": "report",
+      "purpose": "数据管道与说明页的验证记录入口",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 1975,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "verification/RESULTS.md",
+      "category": "report",
+      "purpose": "已完成样本的运行与核对结果",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 2916,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "数据处理全解.html",
+      "category": "report",
+      "purpose": "正在阅读的可离线分享说明页",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 289561,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    },
+    {
+      "path": "数据说明_给组员.md",
+      "category": "report",
+      "purpose": "简短的数据说明入口",
+      "producer": "项目源码 / 文档",
+      "grain": "代码、配置或说明；不包含分析事件行",
+      "bytes": 7566,
+      "rows": null,
+      "is_directory": false,
+      "parts": [],
+      "stage": "support",
+      "support": true
+    }
+  ],
+  "other_runs": [
+    "runs/20240115_1hour",
+    "runs/20240115_1hour_final",
+    "runs/real_20240115_download"
+  ],
+  "comparison": {
+    "passed": true,
+    "checks": {
+      "same_input_hashes_and_rules": true,
+      "same_line_status_counts": true,
+      "same_rejection_reasons": true,
+      "same_duplicates_removed": true,
+      "same_conflicting_ids": true,
+      "same_conflict_occurrences_excluded": true,
+      "same_clean_unique_repos": true,
+      "same_clean_event_types": true,
+      "same_time_outside_file_hour_before_dedup": true,
+      "same_time_outside_file_hour_clean": true,
+      "left_ids_unique": true,
+      "left_daily_matches_events": true,
+      "left_daily_keys_unique": true,
+      "right_ids_unique": true,
+      "right_daily_matches_events": true,
+      "right_daily_keys_unique": true,
+      "left_parquet_matches_csv": true,
+      "right_parquet_matches_csv": true,
+      "same_parquet_types": true
+    },
+    "differences": {
+      "event_ids_left_only": 0,
+      "event_ids_right_only": 0,
+      "event_rows_left_only": 0,
+      "event_rows_right_only": 0,
+      "daily_counts_left_only": 0,
+      "daily_counts_right_only": 0
+    },
+    "left_events": 197313,
+    "right_events": 197313,
+    "note": "Compares ingestion and DataFrame results; shared parsing rules are also covered by adversarial fixture tests."
+  },
+  "parquet_validation": {
+    "left": {
+      "matches_csv": true,
+      "row_count": 197313,
+      "types": {
+        "event_id": "string",
+        "event_type": "string",
+        "event_time": "timestamp[us, tz=UTC]",
+        "repo_id": "int64",
+        "repo_name": "string",
+        "actor_id": "int64",
+        "actor_login": "string",
+        "event_date": "date32[day]",
+        "source_file": "string",
+        "source_line": "int64",
+        "source_hour": "timestamp[us, tz=UTC]",
+        "time_outside_file_hour": "bool",
+        "optional_field_issues": "list<element: string>"
+      }
+    },
+    "right": {
+      "matches_csv": true,
+      "row_count": 197313,
+      "types": {
+        "event_id": "string",
+        "event_type": "string",
+        "event_time": "timestamp[us, tz=UTC]",
+        "repo_id": "int64",
+        "repo_name": "string",
+        "actor_id": "int64",
+        "actor_login": "string",
+        "event_date": "date32[day]",
+        "source_file": "string",
+        "source_line": "int64",
+        "source_hour": "timestamp[us, tz=UTC]",
+        "time_outside_file_hour": "bool",
+        "optional_field_issues": "list<element: string>"
+      }
+    }
+  },
+  "spark_environment": {
+    "master": "local[2]",
+    "java": "openjdk version \"17.0.18\" 2026-01-20 LTS\nOpenJDK Runtime Environment Zulu17.64+17-CA (build 17.0.18+8-LTS)\nOpenJDK 64-Bit Server VM Zulu17.64+17-CA (build 17.0.18+8-LTS, mixed mode, sharing)",
+    "python": "/opt/homebrew/Caskroom/miniforge/base/envs/cs5488-data/bin/python",
+    "java_home": "/opt/homebrew/Caskroom/miniforge/base/envs/cs5488-data/lib/jvm",
+    "timezone": "UTC",
+    "parquet_timestamp_type": "TIMESTAMP_MICROS",
+    "hour_file_partitions": 1
+  },
+  "download_manifest": {
+    "date": "2024-01-15",
+    "requested_files": [
+      "2024-01-15-0.json.gz"
+    ],
+    "files": [
+      {
+        "name": "2024-01-15-0.json.gz",
+        "url": "https://data.gharchive.org/2024-01-15-0.json.gz",
+        "status": "cached_verified",
+        "attempts": [],
+        "bytes": 73709206,
+        "sha256": "019cd01bb263573ae1d633fd965cdc9869fa5eefc31bd409376d10052ed7acd8",
+        "checked_at": "2026-10-12T08:01:28+00:00"
+      }
+    ],
+    "failed_files": [],
+    "all_requested_archives_verified": true
+  },
+  "initial_acquisition": {
+    "date": "2024-01-15",
+    "requested_files": [
+      "2024-01-15-0.json.gz"
+    ],
+    "files": [
+      {
+        "name": "2024-01-15-0.json.gz",
+        "url": "https://data.gharchive.org/2024-01-15-0.json.gz",
+        "status": "downloaded_verified",
+        "attempts": [
+          {
+            "started_at": "2026-10-12T07:43:04+00:00",
+            "partial_file": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/data/raw/2024-01-15-0.json.gz.real_20240115_download.attempt-1.part",
+            "http_status": 200,
+            "content_type": "application/gzip",
+            "status": "completed",
+            "finished_at": "2026-10-12T07:43:33+00:00"
+          }
+        ],
+        "bytes": 73709206,
+        "sha256": "019cd01bb263573ae1d633fd965cdc9869fa5eefc31bd409376d10052ed7acd8"
+      }
+    ],
+    "failed_files": [],
+    "all_requested_archives_verified": true
+  },
+  "current_code_sha256": "4c868b129a70b430ed9e5cd4b1684fd6ecda8120017e0abeabac9da566d4b1f9",
+  "recorded_code_sha256": "4c868b129a70b430ed9e5cd4b1684fd6ecda8120017e0abeabac9da566d4b1f9",
+  "code_matches_run": true
+}

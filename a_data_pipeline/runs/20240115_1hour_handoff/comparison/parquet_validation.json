@@ -1,0 +1,40 @@
+{
+  "left": {
+    "matches_csv": true,
+    "row_count": 197313,
+    "types": {
+      "event_id": "string",
+      "event_type": "string",
+      "event_time": "timestamp[us, tz=UTC]",
+      "repo_id": "int64",
+      "repo_name": "string",
+      "actor_id": "int64",
+      "actor_login": "string",
+      "event_date": "date32[day]",
+      "source_file": "string",
+      "source_line": "int64",
+      "source_hour": "timestamp[us, tz=UTC]",
+      "time_outside_file_hour": "bool",
+      "optional_field_issues": "list<element: string>"
+    }
+  },
+  "right": {
+    "matches_csv": true,
+    "row_count": 197313,
+    "types": {
+      "event_id": "string",
+      "event_type": "string",
+      "event_time": "timestamp[us, tz=UTC]",
+      "repo_id": "int64",
+      "repo_name": "string",
+      "actor_id": "int64",
+      "actor_login": "string",
+      "event_date": "date32[day]",
+      "source_file": "string",
+      "source_line": "int64",
+      "source_hour": "timestamp[us, tz=UTC]",
+      "time_outside_file_hour": "bool",
+      "optional_field_issues": "list<element: string>"
+    }
+  }
+}

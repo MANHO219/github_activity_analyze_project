@@ -1,0 +1,11 @@
+{
+  "date": "2024-01-15",
+  "hours": [0],
+  "base_url": "https://data.gharchive.org",
+  "timeout_seconds": 60,
+  "retries": 2,
+  "max_file_bytes": 536870912,
+  "raw_preview_rows": 5,
+  "clean_preview_rows": 100,
+  "parquet_batch_rows": 10000
+}

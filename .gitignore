@@ -1,0 +1,17 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Machine-generated files
+.DS_Store
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Prepared sharing copies (generated outside the source tree by default)
+*_github_ready.zip

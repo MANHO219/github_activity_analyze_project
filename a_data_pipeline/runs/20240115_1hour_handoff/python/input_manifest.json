@@ -1,0 +1,20 @@
+{
+  "rule_version": "a-events-v1",
+  "timezone": "UTC",
+  "date": "2024-01-15",
+  "expected_files": [
+    "2024-01-15-0.json.gz"
+  ],
+  "missing_files": [],
+  "observed_files": [
+    {
+      "name": "2024-01-15-0.json.gz",
+      "path": "/Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/data/raw/2024-01-15-0.json.gz",
+      "bytes": 73709206,
+      "sha256": "019cd01bb263573ae1d633fd965cdc9869fa5eefc31bd409376d10052ed7acd8"
+    }
+  ],
+  "all_requested_archives_present": true,
+  "complete_utc_day_requested": false,
+  "capture_completeness": "not established by archive availability"
+}

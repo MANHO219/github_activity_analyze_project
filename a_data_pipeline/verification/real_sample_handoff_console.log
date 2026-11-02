@@ -1,0 +1,10 @@
+Starting download
+2024-01-15-0.json.gz: cached_verified
+Starting inspection
+Starting python
+Starting spark
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/12 16:01:56 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                [Stage 4:>                                                          (0 + 1) / 1]                                                                                [Stage 22:>                                                         (0 + 2) / 2]                                                                                [Stage 31:>                                                         (0 + 2) / 2]                                                                                [Stage 38:>                                                         (0 + 1) / 1][Stage 43:>                                                         (0 + 2) / 2]                                                                                Starting comparison
+Completed. Handoff: /Users/yipmanho/projects/cs5488/group_project/a_data_pipeline/runs/20240115_1hour_handoff/HANDOFF.md

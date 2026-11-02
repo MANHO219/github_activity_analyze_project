@@ -1,0 +1,27 @@
+{
+  "checked_at": "2026-11-02",
+  "scope": "B first-pilot handoff documentation",
+  "candidate_rows": 69768,
+  "unique_candidate_ids": 69768,
+  "blank_candidate_names": 0,
+  "ids_with_multiple_observed_names": 60,
+  "html_unique_ids": 48,
+  "file_location_targets_verified": 37,
+  "data_artifacts": 58,
+  "supporting_files": 30,
+  "html_and_b_guide_http_status": 200,
+  "browser_checks": {
+    "b_start_card_visible": true,
+    "candidate_node_opens_full_path": true,
+    "output_fields_details_expand": true,
+    "b_guide_in_directory_tree": true,
+    "console_errors": []
+  },
+  "processing_code_matches_original_run": true,
+  "screenshot": "b_handoff_20261102.jpg",
+  "limits": [
+    "B-machine API connectivity and B implementation remain for B to complete",
+    "AI scope, pilot size and output fields are proposed for A and B to confirm",
+    "No teammate read-through was conducted"
+  ]
+}

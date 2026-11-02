@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "url": "http://127.0.0.1:55871/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%85%A8%E8%A7%A3.html",
+  "summary": {
+    "fields": 13,
+    "examples": 3,
+    "artifacts": 58,
+    "overflow": false
+  },
+  "mobile": {
+    "width": 390,
+    "contentWidth": 390
+  },
+  "narrow": {
+    "width": 320,
+    "contentWidth": 320
+  },
+  "localLinksChecked": 68,
+  "consoleErrors": []
+}
