@@ -348,6 +348,13 @@ class JoinTests(unittest.TestCase):
         self.assertEqual(summary["events_covered_by_pilot"], 8)
         self.assertTrue(all(summary["checks"].values()))
 
+        joined = read_csv(self.root / "repo_labels_joined_events.csv")
+        by_id = {row["repo_id"]: row for row in joined}
+        # 5/10 是整个事件表的口径；5/8 是试点仓库内部的口径。
+        self.assertEqual(by_id["1"]["event_share_of_source"], "0.5")
+        self.assertEqual(by_id["1"]["event_share_of_pilot_events"], "0.625")
+        self.assertEqual(by_id["2"]["event_share_of_pilot_events"], "0.375")
+
     def test_missing_repo_fails_check(self):
         metadata_rows = [metadata(9, topics=["llm"])]
         labels = label_rows(metadata_rows, RULES)
@@ -381,6 +388,224 @@ class EvidenceTests(unittest.TestCase):
             raw = "# raw readme".encode()
 
         self.assertEqual(_readme_text(Response()), "# raw readme")
+
+
+class RulesV2Tests(unittest.TestCase):
+    """v0.2 的弱信号、课程作业、个人主页与旧分支保持已知结果。"""
+
+    RULES = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.2.json"))
+
+    def label(self, row):
+        return self.RULES.decide(row)
+
+    def test_strong_topic_still_included(self):
+        result = self.label(metadata(1, topics=["llm", "transformer"]))
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R4_topic_match")
+
+    def test_bare_ai_topic_without_corroboration_is_uncertain(self):
+        result = self.label(
+            metadata(2, description="Team collaboration software using markdown", topics=["ai"])
+        )
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R4b_weak_topic_only")
+
+    def test_bare_ai_topic_with_corroboration_is_included(self):
+        result = self.label(metadata(3, description="An AI SDK for Python", topics=["ai"]))
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R5b_weak_signal_corroborated")
+
+    def test_bare_ai_description_with_corroboration_is_included(self):
+        result = self.label(metadata(4, description="AI platform for model training"))
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R5b_weak_signal_corroborated")
+
+    def test_bare_ai_description_without_corroboration_is_uncertain(self):
+        result = self.label(metadata(5, description="An AI company website"))
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R5c_weak_signal_only")
+
+    def test_coursework_name_excluded(self):
+        for name in ("org/final-project-ai", "Openclassrooms-P11_Kasa", "org/cs933-lab"):
+            with self.subTest(name=name):
+                result = self.label(metadata(6, name=name, description="something"))
+                self.assertEqual(result["ai_label"], "excluded")
+                self.assertEqual(result["rule_id"], "R3b_coursework")
+
+    def test_coursework_description_excluded(self):
+        result = self.label(metadata(7, description="Machine learning course assignments"))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3b_coursework")
+
+    def test_lab_website_not_coursework(self):
+        result = self.label(metadata(8, name="someone/lab-webpage", description="Lab website"))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R8_no_ai_signal")
+
+    def test_profile_repository_excluded(self):
+        result = self.label(metadata(9, name="alice/alice"))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3c_profile_repository")
+
+    def test_profile_name_with_description_not_profile_rule(self):
+        result = self.label(metadata(10, name="alice/alice", description="My Github Profile"))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R8_no_ai_signal")
+
+    def test_resource_collection_still_wins(self):
+        result = self.label(
+            metadata(11, name="someone/awesome-llm", description="A curated list of LLM papers", topics=["llm"])
+        )
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3_resource_collection")
+
+    def test_name_only_remains_uncertain(self):
+        result = self.label(metadata(12, name="someone/ML-project"))
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R6_name_only_signal")
+
+    def test_missing_metadata_still_uncertain(self):
+        result = self.label(metadata(13, status="not_found", name="someone/ai-thing"))
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R1_metadata_unavailable")
+
+
+class FetchCachePolicyTests(unittest.TestCase):
+    """失败响应不应被默认缓存复用；成功响应仍应复用。"""
+
+    def setUp(self):
+        TEST_TMP_ROOT.mkdir(parents=True, exist_ok=True)
+        self.root = TEST_TMP_ROOT / uuid.uuid4().hex
+        self.root.mkdir(parents=True, exist_ok=True)
+
+    def tearDown(self):
+        shutil.rmtree(self.root, ignore_errors=True)
+
+    def client(self, responses):
+        calls = {"n": 0}
+
+        def transport(url, headers, timeout):
+            calls["n"] += 1
+            key = url.rsplit("/repos/", 1)[-1]
+            return responses[key]
+
+        client = GitHubRepoClient(token="", transport=transport, sleep=lambda _: None, now=lambda: 0.0)
+        client.test_calls = calls
+        return client
+
+    def test_404_cache_is_retried_by_default(self):
+        client = self.client({"acme/gone": (404, {}, b'{"message":"Not Found"}')})
+        cache_dir = self.root / "raw_api"
+        first, log1 = fetch_one(client, 7, "acme/gone", cache_dir)
+        self.assertEqual(first["fetch_status"], "not_found")
+        self.assertEqual(log1["cache_decision"], "requested")
+
+        second, log2 = fetch_one(client, 7, "acme/gone", cache_dir)
+        self.assertEqual(second["fetch_status"], "not_found")
+        self.assertEqual(log2["cache_decision"], "requested")
+        self.assertEqual(client.test_calls["n"], 2)
+
+    def test_404_cache_can_be_reused_explicitly(self):
+        client = self.client({"acme/gone": (404, {}, b'{"message":"Not Found"}')})
+        cache_dir = self.root / "raw_api"
+        fetch_one(client, 7, "acme/gone", cache_dir)
+
+        row, log = fetch_one(client, 7, "acme/gone", cache_dir, reuse_failed=True)
+        self.assertEqual(row["fetch_status"], "not_found")
+        self.assertEqual(log["cache_decision"], "reused_failure")
+        self.assertEqual(client.test_calls["n"], 1)
+
+    def test_success_cache_reused(self):
+        body = json.dumps(repo_body(8, "acme/ok")).encode()
+        client = self.client({"acme/ok": (200, {}, body)})
+        cache_dir = self.root / "raw_api"
+        fetch_one(client, 8, "acme/ok", cache_dir)
+        row, log = fetch_one(client, 8, "acme/ok", cache_dir)
+        self.assertEqual(row["fetch_status"], "ok_cached")
+        self.assertEqual(log["cache_decision"], "reused_success")
+        self.assertEqual(client.test_calls["n"], 1)
+
+
+class CompareAndHandoffTests(unittest.TestCase):
+    def setUp(self):
+        TEST_TMP_ROOT.mkdir(parents=True, exist_ok=True)
+        self.root = TEST_TMP_ROOT / uuid.uuid4().hex
+        self.root.mkdir(parents=True, exist_ok=True)
+        self.metadata = [
+            metadata(1, topics=["llm"], name="a/llm"),
+            metadata(2, description="AI SDK", name="b/sdk"),
+            metadata(3, description="proxy", name="c/proxy"),
+            metadata(4, status="not_found", name="d/gone"),
+        ]
+
+    def tearDown(self):
+        shutil.rmtree(self.root, ignore_errors=True)
+
+    def test_compare_produces_changes_and_human_scores(self):
+        from bmeta.compare import run as compare_run
+
+        old_rules = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.1.json"))
+        new_rules = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.2.json"))
+        old_labels = label_rows(self.metadata, old_rules)
+        new_labels = label_rows(self.metadata, new_rules)
+        write_csv(self.root / "old.csv", LABEL_FIELDS, old_labels)
+        write_csv(self.root / "new.csv", LABEL_FIELDS, new_labels)
+        write_csv(self.root / "meta.csv", METADATA_FIELDS, self.metadata)
+        review_rows = [
+            {"repo_id": "1", "human_label": "included", "human_reason": "llm", "ai_label_auto": "included"},
+            {"repo_id": "2", "human_label": "included", "human_reason": "ai sdk", "ai_label_auto": "uncertain"},
+            {"repo_id": "3", "human_label": "excluded", "human_reason": "proxy", "ai_label_auto": "excluded"},
+            {"repo_id": "4", "human_label": "uncertain", "human_reason": "404", "ai_label_auto": "uncertain"},
+        ]
+        write_csv(self.root / "review.csv", list(review_rows[0]), review_rows)
+
+        summary = compare_run(
+            old_labels_csv=self.root / "old.csv",
+            new_labels_csv=self.root / "new.csv",
+            metadata_csv=self.root / "meta.csv",
+            out_dir=self.root,
+            manual_review_csv=self.root / "review.csv",
+        )
+        # b/sdk：v0.1 只有裸 ai 描述 → included；v0.2 靠 sdk 佐证也是 included，规则理由变化
+        self.assertEqual(summary["changed_rows"], 1)
+        self.assertEqual(summary["rule_reason_changed_rows"], 1)
+        self.assertEqual(summary["human_review"]["new_version"]["disagree"], 0)
+        self.assertTrue((self.root / "label_changes.csv").exists())
+
+    def test_handoff_policies(self):
+        from bmeta.handoff import run as handoff_run
+
+        labels = label_rows(self.metadata, RULES)
+        write_csv(self.root / "labels.csv", LABEL_FIELDS, labels)
+        write_csv(self.root / "meta.csv", METADATA_FIELDS, self.metadata)
+        review_rows = [
+            {"repo_id": "1", "human_label": "excluded", "human_reason": "not ai", "ai_label_auto": "included"},
+        ]
+        write_csv(self.root / "review.csv", list(review_rows[0]), review_rows)
+
+        merged = handoff_run(
+            labels_csv=self.root / "labels.csv",
+            metadata_csv=self.root / "meta.csv",
+            out_dir=self.root,
+            review_csv=self.root / "review.csv",
+            policy="manual_override",
+        )
+        rows = {row["repo_id"]: row for row in read_csv(self.root / "repo_ai_labels_analysis.csv")}
+        self.assertEqual(rows["1"]["ai_label_final"], "excluded")
+        self.assertEqual(rows["1"]["label_source"], "manual_review")
+        self.assertEqual(rows["2"]["label_source"], "auto_rule")
+        self.assertEqual(merged["manual_differs_from_auto"], 1)
+
+        handoff_run(
+            labels_csv=self.root / "labels.csv",
+            metadata_csv=self.root / "meta.csv",
+            out_dir=self.root,
+            review_csv=self.root / "review.csv",
+            policy="auto_only",
+        )
+        rows = {row["repo_id"]: row for row in read_csv(self.root / "repo_ai_labels_analysis.csv")}
+        self.assertEqual(rows["1"]["ai_label_final"], "included")
+        self.assertEqual(rows["1"]["label_source"], "auto_rule")
 
 
 if __name__ == "__main__":

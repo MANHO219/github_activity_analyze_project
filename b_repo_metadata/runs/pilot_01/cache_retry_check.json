@@ -1,0 +1,26 @@
+{
+  "checked_at_utc": "2026-11-02T08:20:00Z",
+  "purpose": "确认临时/失败响应不会因为 raw_api 缓存而在重跑时被永久跳过",
+  "scenario": "把 pilot_01 的 pilot_candidates.csv 与 raw_api/ 复制到临时目录后重跑 fetch_metadata.py（默认缓存策略）",
+  "input": {
+    "pilot_rows": 50,
+    "cached_success_responses": 43,
+    "cached_failure_responses": 5,
+    "cached_id_mismatch_responses": 2
+  },
+  "expected": "43 个成功响应与 2 个 id 不一致（HTTP 200）命中缓存；5 个 404 重新请求",
+  "observed": {
+    "api_calls": 5,
+    "status_counts": {
+      "ok_cached": 43,
+      "id_mismatch": 2,
+      "not_found": 5
+    },
+    "pending_rows": 0,
+    "cache_policy": "只复用 HTTP 200 的缓存；失败响应会重试",
+    "reuse_failed_flag": false
+  },
+  "conclusion": "通过：失败响应默认不再被复用，重跑会重新请求；成功响应仍然命中缓存，避免重复消耗配额。",
+  "reuse_failed_option": "需要复现某次失败快照时，运行 fetch_metadata.py --reuse-failed，此时 5 个 404 也会命中缓存（api_calls=0）。",
+  "note": "本次核对在临时目录执行，未改动 runs/pilot_01 的正式元数据；pilot_01 的 repo_metadata.csv 仍是首轮抓取结果。"
+}

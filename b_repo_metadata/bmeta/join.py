@@ -23,7 +23,14 @@ from .common import (
     write_json,
 )
 
-JOIN_FIELDS = ["repo_id", "ai_label", "event_count", "event_share_of_pilot"]
+JOIN_FIELDS = [
+    "repo_id",
+    "observed_repo_name",
+    "ai_label",
+    "event_count",
+    "event_share_of_source",
+    "event_share_of_pilot_events",
+]
 
 
 def _event_counts_from_parquet(parquet_path: Path) -> tuple[dict[int, int], int, str]:
@@ -75,25 +82,32 @@ def run(
     if source in ("unavailable", "fallback:pyarrow_missing") and candidates_csv and Path(candidates_csv).exists():
         counts, total_events, source = _event_counts_from_candidates(Path(candidates_csv))
 
-    per_repo: list[dict[str, Any]] = []
+    # 先算出每个试点仓库的事件数，才能用“试点事件总数”作分母。
+    names = {row["repo_id"]: row.get("observed_repo_name", "") for row in metadata}
+    counts_by_repo: dict[str, int] = {}
     missing_from_events: list[str] = []
-    covered_events = 0
     for row in labels:
         repo_id = int(row["repo_id"])
         event_count = counts.get(repo_id)
         if event_count is None:
             missing_from_events.append(row["repo_id"])
             event_count = 0
-        covered_events += event_count
+        counts_by_repo[row["repo_id"]] = event_count
+    covered_events = sum(counts_by_repo.values())
+
+    per_repo: list[dict[str, Any]] = []
+    for row in labels:
+        event_count = counts_by_repo[row["repo_id"]]
         per_repo.append(
             {
                 "repo_id": row["repo_id"],
-                "observed_repo_name": next(
-                    (item["observed_repo_name"] for item in metadata if item["repo_id"] == row["repo_id"]), ""
-                ),
+                "observed_repo_name": names.get(row["repo_id"], ""),
                 "ai_label": row["ai_label"],
                 "event_count": event_count,
-                "event_share_of_pilot": round(event_count / total_events, 6) if total_events else 0.0,
+                # 分母是事件表里全部事件：这个仓库占整个样本事件的比例。
+                "event_share_of_source": round(event_count / total_events, 6) if total_events else 0.0,
+                # 分母是 50 个试点仓库的事件总数：这个仓库在试点内部的活动占比。
+                "event_share_of_pilot_events": round(event_count / covered_events, 6) if covered_events else 0.0,
             }
         )
 
@@ -109,7 +123,12 @@ def run(
         "pilot_repos_found_in_events": len(per_repo) - len(missing_from_events),
         "missing_from_events": missing_from_events,
         "events_covered_by_pilot": covered_events,
-        "events_uncovered_share": round((total_events - covered_events) / total_events, 6) if total_events else 0.0,
+        "events_covered_share_of_source": round(covered_events / total_events, 6) if total_events else 0.0,
+        "events_outside_pilot_share": round((total_events - covered_events) / total_events, 6) if total_events else 0.0,
+        "event_share_denominators": {
+            "event_share_of_source": "事件表全部事件数（events_total_in_source）",
+            "event_share_of_pilot_events": "50 个试点仓库的事件总数（events_covered_by_pilot）",
+        },
         "events_by_label": dict(sorted(by_label_events.items())),
         "checks": {
             "labels_have_unique_repo_ids": unique_labels,
@@ -127,6 +146,7 @@ def run(
         "limits": [
             "Only repo_id is used as the join key; repo names in the event table may be historical.",
             "The pilot covers a small sample, so covered/uncovered event shares describe this run only.",
+            "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events.",
         ]
         + ([] if source == "events_clean.parquet" else ["Full parquet join not executed; repo-level counts from candidates used."]),
     }

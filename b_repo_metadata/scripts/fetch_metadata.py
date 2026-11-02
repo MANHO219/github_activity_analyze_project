@@ -31,6 +31,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--interval", type=float, help="两次请求的最小间隔秒数；默认取配置")
     parser.add_argument("--max-repos", type=int, help="只处理前 N 个（调试用）")
     parser.add_argument("--force-refresh", action="store_true", help="忽略 raw_api 缓存重新请求")
+    parser.add_argument(
+        "--reuse-failed",
+        action="store_true",
+        help="复用失败响应的缓存（默认不使用：404/5xx 会在下次运行时重试）",
+    )
     return parser.parse_args(argv)
 
 
@@ -64,10 +69,12 @@ def main(argv: list[str] | None = None) -> int:
         out_dir,
         client=client,
         force_refresh=args.force_refresh,
+        reuse_failed=args.reuse_failed,
         max_repos=args.max_repos,
         progress=lambda message: print(message, flush=True),
     )
 
+    print(f"cache policy: {summary['cache_policy']}")
     print(f"processed={summary['processed_rows']} pending={summary['pending_rows']} calls={summary['api_calls']}")
     print(f"status_counts={summary['status_counts']}")
     if summary["pending_rows"]:

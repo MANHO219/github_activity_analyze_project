@@ -30,10 +30,11 @@ from bmeta.common import (
 
 UNRESOLVED = [
     "7 个候选仓库无法按名称取回元数据（5 个 404、2 个 id 不一致），标签保持 uncertain；不能据此推断删除或非 AI。",
-    "15 个仓库的 description 与 topics 都为空，规则只能判 uncertain；人工复核用 README 补证后部分改判，但 README 不是 v0.1 规则的输入。",
-    "规则 v0.1 未覆盖三类人工复核发现的模式：个人主页/作品集仓库、课程作业仓库、AI 只作为附加功能的仓库。",
+    "规则 v0.2 后仍有 19 个 uncertain：8 个是元数据缺失或空仓库（规则无法处理），11 个需要 README 才能判断（名称命中、弱信号、作品集等），而 v0.2 规则不读 README。",
+    "待统一口径：弱信号是否直接 excluded、仅集成 AI 功能是否纳入、README 能否作为规则输入、课程作业边界。见 rules/ai_rules_v0.2.md 第 6 节。",
     "仓库元数据是 2026-11-02 的快照，不是 2024-01-15 事件发生时的状态；描述与 topics 可能已经变化。",
     "首批 50 个仓库为“40 随机 + 10 名称关键词过采样”的分层样本，不能用来估计整个 GitHub 的 AI 仓库比例。",
+    "失败响应的缓存默认不复用，重跑会重新请求（已在 cache_retry_check.json 记录：5 个 404 重试、43 个成功响应命中缓存）。",
 ]
 
 
@@ -44,14 +45,20 @@ def build(run_dir: Path) -> dict:
     labels = summary.get("labels", {})
     join = summary.get("join", {})
     review = summary.get("manual_review", {})
+    comparison = summary.get("label_comparison", {})
+    analysis = summary.get("analysis_labels", {})
 
     metadata = read_csv(run_dir / "repo_metadata.csv")
     label_rows = read_csv(run_dir / "repo_ai_labels.csv")
     review_rows = read_csv(run_dir / "manual_review.csv")
+    analysis_csv = run_dir / "repo_ai_labels_analysis.csv"
+    analysis_rows = read_csv(analysis_csv) if analysis_csv.exists() else []
 
     metadata_ids = [row["repo_id"] for row in metadata]
     label_ids = [row["repo_id"] for row in label_rows]
+    analysis_ids = [row["repo_id"] for row in analysis_rows]
     by_label = labels.get("by_label", {})
+    final_labels = analysis.get("final_labels", {})
 
     checks = {
         "fetch_processed_plus_pending_equals_input": fetch.get("processed_rows", 0) + fetch.get("pending_rows", 0)
@@ -63,6 +70,9 @@ def build(run_dir: Path) -> dict:
         "join_checks_all_true": all(join.get("checks", {}).values()) if join.get("checks") else False,
         "manual_review_complete": review.get("pending_rows") == 0 and review.get("reviewed_rows", 0) > 0,
         "manual_review_covers_three_labels": len(review.get("reviewed_by_scope", {})) == 3,
+        "label_comparison_present": bool(comparison.get("old_rule_version")),
+        "analysis_labels_cover_metadata": sorted(analysis_ids) == sorted(metadata_ids),
+        "analysis_label_counts_sum": sum(final_labels.values()) == len(analysis_rows) if final_labels else False,
     }
 
     meta = {
@@ -70,6 +80,12 @@ def build(run_dir: Path) -> dict:
         "seed": pilot.get("seed"),
         "strata": pilot.get("strata_actual"),
         "rules_version": labels.get("rules_version"),
+        "rules_compared": [
+            version
+            for version in (comparison.get("old_rule_version"), comparison.get("new_rule_version"))
+            if version
+        ],
+        "analysis_label_policy": analysis.get("policy"),
         "generated_at_utc": utc_now(),
         "environment": environment_snapshot(),
         "inputs": {
@@ -78,6 +94,10 @@ def build(run_dir: Path) -> dict:
             "pilot_candidates_sha256": pilot.get("output", {}).get("sha256"),
             "repo_metadata_sha256": sha256_file(run_dir / "repo_metadata.csv"),
             "repo_ai_labels_sha256": sha256_file(run_dir / "repo_ai_labels.csv"),
+            "repo_ai_labels_v0_1_sha256": sha256_file(run_dir / "repo_ai_labels_v0.1.csv")
+            if (run_dir / "repo_ai_labels_v0.1.csv").exists()
+            else None,
+            "analysis_labels_sha256": sha256_file(analysis_csv) if analysis_csv.exists() else None,
             "rules_sha256": labels.get("rules_sha256"),
         },
         "outputs": {
@@ -86,17 +106,36 @@ def build(run_dir: Path) -> dict:
             "review_rows": len(review_rows),
             "labels": by_label,
             "fetch_status": fetch.get("status_counts"),
+            "label_changes": {
+                "changed_rows": comparison.get("changed_rows"),
+                "label_changed_rows": comparison.get("label_changed_rows"),
+                "rule_reason_changed_rows": comparison.get("rule_reason_changed_rows"),
+                "confusion_matrix": comparison.get("confusion_matrix"),
+            },
+            "human_agreement": {
+                "old": comparison.get("human_review", {}).get("old_version"),
+                "new": comparison.get("human_review", {}).get("new_version"),
+                "improved_repo_ids": comparison.get("human_review", {}).get("improved_repo_ids"),
+                "regressed_repo_ids": comparison.get("human_review", {}).get("regressed_repo_ids"),
+            },
+            "analysis_labels": {
+                "policy": analysis.get("policy"),
+                "final_labels": final_labels,
+                "label_source": analysis.get("label_source"),
+            },
             "join": {
                 "event_source": join.get("event_source"),
                 "events_total": join.get("events_total_in_source"),
                 "events_covered_by_pilot": join.get("events_covered_by_pilot"),
+                "events_covered_share_of_source": join.get("events_covered_share_of_source"),
             },
         },
         "unresolved_issues": UNRESOLVED,
         "checks": checks,
         "next_steps": [
-            "A、B 确认规则 v0.1 的纳入/排除口径后固定字段与版本号。",
-            "按复核差异起草 ai_rules_v0.2：裸 ai 词元降权、个人主页与课程作业排除、名称命中改查 README。",
+            "今晚统一口径：弱信号是否直接排除、AI 附加功能是否纳入、README 能否作为规则输入、课程作业边界。",
+            "口径确认后按第 7 节流程起草 ai_rules_v0.3，并用 compare_label_versions.py 再做一次变化对比。",
+            "确认标签交接口径：analysis_labels 默认 manual_override，可切换 auto_only。",
             "A 扩展事件时间窗后，B 在同一规则版本上重跑全部候选仓库，而不是只跑这 50 个。",
         ],
         "run_dir": project_relative(run_dir),

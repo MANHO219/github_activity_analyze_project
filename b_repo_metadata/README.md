@@ -10,12 +10,14 @@
 |---|---|
 | 试跑名单 | 50 个仓库：40 个随机抽样 + 10 个名称关键词过采样（固定种子 `5488`） |
 | 元数据获取 | 43 个成功（ID 一致）、2 个 ID 不一致、5 个 404；共 50 次 API 调用 |
-| AI 标签 | `included` 3、`excluded` 22、`uncertain` 25（规则 `ai_rules_v0.1`） |
-| 人工复核 | 33 条：included 全查 3、excluded 抽 5、uncertain 全查 25；自动与人工在已判定行一致率 6/8 |
+| AI 标签（规则 v0.2） | `included` 1、`excluded` 30、`uncertain` 19 |
+| 与 v0.1 对比 | 9 条标签变化 + 2 条仅规则理由变化；与人工结论的一致率从 75% 提升到 100%，无回退 |
+| 人工复核 | 33 条：included 全查 3、excluded 抽 5、uncertain 全查 25 |
+| 分析用标签 | 默认“人工优先”口径下：included 4、excluded 38、uncertain 8（人工 33 行、自动 17 行） |
 | 接回事件表 | 50/50 个试点仓库都能按 `repo_id` 匹配到 A 的 `events_clean.parquet`（197,313 条事件中 159 条属于这 50 个仓库） |
-| 离线测试 | 26 项全部通过（不联网） |
+| 离线测试 | 44 项全部通过（不联网） |
 
-详细数字、验收清单与未解决问题见 [RESULTS.md](RESULTS.md)；规则本身见 [rules/ai_rules_v0.1.md](rules/ai_rules_v0.1.md)。
+详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；规则见 [rules/ai_rules_v0.2.md](rules/ai_rules_v0.2.md)；标签交接口径见 [LABELS.md](LABELS.md)。
 
 ## 交付物结构
 
@@ -23,36 +25,43 @@
 b_repo_metadata/
 ├── README.md                          ← 本页
 ├── RESULTS.md                         ← 本次试跑的数字、验收清单、遗留问题
-├── config/pilot.json                  ← 种子、分层规模、API 参数、规则文件路径
+├── LABELS.md                          ← 自动标签、人工复核、分析用标签的区别与生成方式
+├── config/pilot.json                  ← 种子、分层规模、API 参数、当前规则文件
 ├── rules/
-│   ├── ai_rules_v0.1.md               ← 规则说明（人读）
-│   └── ai_rules_v0.1.json             ← 规则实现（机读，改规则只改这里）
+│   ├── ai_rules_v0.1.md / .json       ← 第一版规则（保留，用于对比）
+│   └── ai_rules_v0.2.md / .json       ← 当前版本：弱信号、课程作业、个人主页识别
 ├── reviews/pilot_01_decisions.json    ← 人工判断与理由（B 写）
 ├── bmeta/                             ← 实现包（与 A 的 gharchive_a 对应）
 │   ├── common.py                      ← 路径、CSV/JSON、UTC、run_summary 合并
 │   ├── select.py                      ← 分层抽样与名称粗筛
 │   ├── api.py                         ← GitHub REST 客户端（重试/限流/分类）
 │   ├── fetch.py                       ← 抓取、缓存、续跑、失败记录
-│   ├── rules.py                       ← 规则执行与理由生成
+│   ├── rules.py                       ← 规则引擎（v1/v2 两代）
 │   ├── label.py                       ← 标签表与标签摘要
+│   ├── compare.py                     ← 规则版本对比与人工一致率
+│   ├── handoff.py                     ← 自动标签 + 人工判断 → 分析用标签
 │   ├── review.py                      ← 复核清单生成与人工判断合并
 │   ├── evidence.py                    ← 复核用 README 证据
 │   └── join.py                        ← 按 repo_id 接回事件表
 ├── scripts/                           ← 命令入口（每个步骤一个）
-├── tests/test_b_pipeline.py           ← 26 项离线验证
+├── tests/test_b_pipeline.py           ← 44 项离线验证
 └── runs/
     ├── debug_api_sample/              ← 单仓库连通性样例（apache/superset）
-    │   ├── api_sample_check.json
-    │   └── raw_api/39464018.json
     └── pilot_01/
         ├── pilot_candidates.csv       ← 冻结的首批名单（含 sample_stratum）
         ├── selection.json             ← 选取方法、种子、输入/输出 SHA-256
         ├── raw_api/<repo_id>.json      ← 每个仓库的原始响应信封
         ├── repo_metadata.csv          ← 每仓库一行，失败行保留状态
-        ├── repo_ai_labels.csv         ← 每仓库一行的 AI 标签与理由
+        ├── repo_ai_labels.csv         ← 当前规则（v0.2）的标签
+        ├── repo_ai_labels_v0.1.csv    ← v0.1 原始标签（保留）
+        ├── label_changes.csv          ← v0.1 → v0.2 的逐条变化与原因
+        ├── label_comparison.json      ← 混淆矩阵、人工一致率、改进/回退清单
+        ├── repo_ai_labels_analysis.csv← 分析用标签（含来源与人工值）
+        ├── label_analysis_summary.json
         ├── manual_review.csv          ← 33 条复核对象、人工结论与一致率
         ├── manual_review_readmes.jsonl← 复核时看过的 README 摘要与哈希
         ├── repo_labels_joined_events.csv
+        ├── cache_retry_check.json     ← 失败缓存重试策略的核对记录
         ├── fetch_log.jsonl / fetch_summary.json / label_summary.json
         ├── join_check.json
         └── run_summary.json           ← 输入、版本、数量、检查与未解决问题
@@ -71,18 +80,24 @@ python scripts/build_pilot.py
 #    Windows:     set GITHUB_TOKEN=...
 python scripts/fetch_metadata.py
 
-# 3. 按规则打标签
+# 3. 按规则打标签（默认使用 config 里的 ai_rules_v0.2）
 python scripts/label_repositories.py
 
-# 4. 人工复核：先生成清单，再合并判断（本仓库已包含完成的判断文件）
+# 4. 与上一版规则对比（需要旧标签表 repo_ai_labels_v0.1.csv）
+python scripts/compare_label_versions.py --run-dir runs/pilot_01
+
+# 5. 生成分析用标签（人工优先；可换 --policy auto_only）
+python scripts/build_analysis_labels.py --run-dir runs/pilot_01
+
+# 6. 人工复核：先生成清单，再合并判断（本仓库已包含完成的判断文件）
 python scripts/manual_review.py --run-dir runs/pilot_01
 python scripts/manual_review.py --run-dir runs/pilot_01 \
     --decisions reviews/pilot_01_decisions.json
 
-# 5. 接回 A 的事件表并核对；没有 pyarrow 时自动回退到候选表计数
+# 7. 接回 A 的事件表并核对；没有 pyarrow 时自动回退到候选表计数
 python scripts/join_check.py
 
-# 6. 汇总与验收检查
+# 8. 汇总与验收检查
 python scripts/build_run_summary.py --run-dir runs/pilot_01
 ```
 
@@ -100,6 +115,13 @@ python scripts/fetch_readme_evidence.py --run-dir runs/pilot_01
 
 不带 token 也能跑，但匿名配额是每小时 60 次；配额用尽时脚本会停在当前仓库之前并保留已完成结果，重新执行同一命令即可续跑。
 
+## 缓存与重试（重要）
+
+- **只有 HTTP 200 的成功响应会被复用**。404、5xx、无效 JSON 会留在 `raw_api/` 作为证据，但下次运行会**重新请求**，避免一次临时故障被永久缓存成“查不到”。
+- 想复现某次失败快照（例如离线分析 404 名单），加 `--reuse-failed`，此时失败响应也命中缓存，`api_calls=0`。
+- 核对记录见 `runs/pilot_01/cache_retry_check.json`：在副本上重跑时，43 个成功响应命中缓存、2 个 ID 不一致命中缓存、5 个 404 重新请求，共 5 次 API 调用。
+- 配额用尽时整批停在当前仓库之前，已抓取结果已写盘；重新执行同一命令即可续跑。
+
 ## 输出字段
 
 `repo_metadata.csv`（与指南建议字段一致）：
@@ -116,20 +138,32 @@ python scripts/fetch_readme_evidence.py --run-dir runs/pilot_01
 | `http_status` | 最近一次 HTTP 状态码 |
 | `fetched_at_utc` | 获取成功时的时间；失败留空（失败时间在 `fetch_log.jsonl`） |
 
-`repo_ai_labels.csv`：`repo_id`、`ai_label`（`included`/`excluded`/`uncertain`）、`reason`、`rule_version`、`rule_id`（便于统计）、`metadata_fetched_at_utc`、`labelled_at_utc`。`reason` 以规则 ID 开头，后面是命中的 topic/关键词/状态，例如 `R4_topic_match:topics=llm`。
+`repo_ai_labels.csv`：`repo_id`、`ai_label`、`reason`、`rule_version`、`rule_id`、`metadata_fetched_at_utc`、`labelled_at_utc`。`reason` 以规则 ID 开头，例如 `R5b_weak_signal_corroborated:weak=ai_token;corroboration=sdk_api`。
+
+`repo_ai_labels_analysis.csv`：在自动标签基础上增加 `ai_label_manual`、`ai_label_final`、`label_source`、`policy`，用于交接给 C。字段与口径说明见 [LABELS.md](LABELS.md)。
+
+`repo_labels_joined_events.csv`：每个试点仓库一行，含 `event_count` 与两个不同分母的占比：
+
+- `event_share_of_source`：分母是事件表**全部事件**（197,313）；
+- `event_share_of_pilot_events`：分母是**50 个试点仓库的事件总数**（159）。
 
 ## 处理约定
 
 - **ID 一致性**：只有 API 返回 `id` 与 A 的 `repo_id` 相等时，才把响应内容当作该仓库的元数据；不一致时元数据列留空、状态写 `id_mismatch`。
 - **失败不猜**：404 只记录“无法获取”，不推断为删除、私有化或非 AI；这类仓库的标签保持 `uncertain`。
 - **快照语义**：描述、topics 是 2026-11-02 的状态，不是 2024-01-15 事件发生时的状态。
-- **缓存优先**：`raw_api/` 有可用的原始响应时不再重复请求，重跑是幂等的；需要强制刷新时加 `--force-refresh`。
 - **token 只走环境变量**：`config/pilot.json` 只写变量名 `GITHUB_TOKEN`，代码与运行产物都不落盘 token。
+
+## 规则版本
+
+- 当前规则 `ai_rules_v0.2`：裸 `ai`/`ml` 降为弱信号（需佐证词）、新增课程作业与个人主页识别。
+- 上一版 `ai_rules_v0.1` 与它的标签表都保留；两版的逐条差异在 `label_changes.csv`，汇总在 `label_comparison.json`。
+- 待统一确认的口径（弱信号是否直接排除、AI 附加功能是否纳入、README 能否作为规则输入等）列在 `rules/ai_rules_v0.2.md` 第 6 节，确认后再出 v0.3。
 
 ## 与 A、C 的接口
 
 - 对 A：只用 `repo_id` 作为连接键；事件表里仓库名可能是历史名，不能用来 join。
-- 对 C：`repo_ai_labels.csv` 一行一个仓库，可直接按 `repo_id` 合并到月度活动表；`join_check.json` 记录了本次试点覆盖的事件条数与未匹配情况。
+- 对 C：优先使用 `repo_ai_labels_analysis.csv`，其中 `label_source` 标明每行是规则判定还是人工判定；`join_check.json` 记录本次试点覆盖的事件条数与未匹配情况。
 
 ## 测试
 
@@ -137,11 +171,11 @@ python scripts/fetch_readme_evidence.py --run-dir runs/pilot_01
 python -m unittest discover -s tests -v
 ```
 
-测试覆盖名单抽样的确定性、规则各分支、抓取层的 200/404/ID 不一致/限流/缓存、复核合并的校验，以及接回事件表的计数与唯一性；全部离线，不需要 token。
+测试覆盖名单抽样的确定性、v0.1/v0.2 规则各分支、抓取层的 200/404/ID 不一致/限流/失败缓存策略、复核合并的校验、版本对比与口径合并，以及接回事件表的计数与两个占比分母；全部离线，不需要 token。
 
 ## 已知限制
 
 - 首批 50 个是分层样本（其中 10 个按名称过采样），**不能**用来估计整个 GitHub 的 AI 仓库比例。
-- 规则 v0.1 未覆盖个人主页仓库、课程作业与“AI 只是附加功能”的边界，复核差异已记录，留给 v0.2。
+- v0.2 仍有 19 个 `uncertain`：8 个元数据缺失/空仓库，11 个需要 README 才能判断，而规则不读 README。
 - 事件覆盖只有 2024-01-15 UTC 00:00–01:00 这一个小时，生命周期分析要等 A 扩展时间窗后重跑。
 - README 证据是复核辅助材料，会随时间变化；规则本身不依赖它。
