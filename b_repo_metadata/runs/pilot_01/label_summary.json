@@ -1,0 +1,61 @@
+{
+  "rules_version": "ai_rules_v0.1",
+  "rules_file": "b_repo_metadata/rules/ai_rules_v0.1.json",
+  "rules_sha256": "28487599372518417e34a0092ec6c195a5379298d9349aa157bc84b7fbcbb522",
+  "metadata_csv": "b_repo_metadata/runs/pilot_01/repo_metadata.csv",
+  "metadata_sha256": "374eabffca61553c824d751b61cf4667a6d775569a0654339f9dab366663caa6",
+  "labelled_at_utc": "2026-11-02T05:03:21Z",
+  "input_rows": 50,
+  "labelled_rows": 50,
+  "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
+  "labels_sha256": "8252f049b05eaae66f2ffd7b387fb82ce5539e4cdbb3e96c04155761078d55e9",
+  "total": 50,
+  "by_label": {
+    "included": 3,
+    "excluded": 22,
+    "uncertain": 25
+  },
+  "by_rule": {
+    "R1_metadata_unavailable": 5,
+    "R2_api_id_mismatch": 2,
+    "R3_resource_collection": 4,
+    "R4_topic_match": 1,
+    "R5_description_match": 2,
+    "R6_name_only_signal": 3,
+    "R7_insufficient_text_evidence": 15,
+    "R8_no_ai_signal": 18
+  },
+  "label_sum_equals_total": true,
+  "uncertain_repo_ids": [
+    "271994210",
+    "302309533",
+    "374770773",
+    "421217174",
+    "441317480",
+    "465991566",
+    "526345511",
+    "549894670",
+    "551162351",
+    "653701739",
+    "684223328",
+    "697973922",
+    "711869837",
+    "716775427",
+    "719391258",
+    "742748171",
+    "742995337",
+    "743146326",
+    "743305917",
+    "743319257",
+    "569927055",
+    "647729619",
+    "731867521",
+    "738759461",
+    "743310414"
+  ],
+  "counts_check": {
+    "included+excluded+uncertain": 50,
+    "equals_input_rows": true,
+    "unique_repo_ids": true
+  }
+}

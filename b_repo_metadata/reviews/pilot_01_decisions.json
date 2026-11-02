@@ -1,0 +1,172 @@
+{
+  "reviewer": "B",
+  "reviewed_at_utc": "2026-11-02T05:20:00Z",
+  "policy": "复核以 A 的 repo_id 为单位，先看 API 快照（描述、topics、语言、创建时间、archived），再看仓库 README 的前 4000 字符（见 runs/pilot_01/manual_review_readmes.jsonl）。人工判断不覆盖自动标签：两者都保留，差异作为规则 v0.2 的输入。判定口径：核心用途是 AI/机器学习才 included；资料集合、课程作业、个人主页/作品集等非项目仓库 excluded；证据不足以判断时保留 uncertain。",
+  "decisions": [
+    {
+      "repo_id": "82206054",
+      "human_label": "excluded",
+      "human_reason": "依据 README：GROWI 是 markdown 团队协作 wiki 平台，AI 只是其中一个附加能力。v0.1 把裸 ai topic 当强信号因此误判为 included；建议 v0.2 把单独 ai topic 降为弱信号，需描述或其它 topic 佐证。"
+    },
+    {
+      "repo_id": "665478404",
+      "human_label": "excluded",
+      "human_reason": "依据仓库命名与组织：ibm-developer-skills-network 课程体系的 final project 作业仓库（README 仅一句 Repository for final project）。属课程作业，按 v0.1 的排除口径应排除；规则只看到描述里的 ai 词元，未识别课程语境。"
+    },
+    {
+      "repo_id": "673960113",
+      "human_label": "included",
+      "human_reason": "依据 README：Epigos 是端到端的计算机视觉数据标注、训练与模型托管平台，本仓库是其 Python SDK。核心用途明确是 AI。"
+    },
+    {
+      "repo_id": "335433252",
+      "human_label": "excluded",
+      "human_reason": "依据 README：个人主页 README（Full-Stack Web & Mobile Developer 自我介绍），不是 AI 项目。"
+    },
+    {
+      "repo_id": "640315574",
+      "human_label": "excluded",
+      "human_reason": "依据 README：Go 写的代理抓取与可用性测试工具，与 AI 无关。"
+    },
+    {
+      "repo_id": "668966382",
+      "human_label": "excluded",
+      "human_reason": "依据 README：个人网站（我自己的网站 / ciji.lol），与 AI 无关。"
+    },
+    {
+      "repo_id": "738629066",
+      "human_label": "excluded",
+      "human_reason": "依据 README：微软相关活动的链接合集（Curated links），属资料集合，v0.1 的资源集合排除正确。"
+    },
+    {
+      "repo_id": "743320808",
+      "human_label": "excluded",
+      "human_reason": "依据 README 与语言：TypeScript 的宝可梦图鉴练习应用，与 AI 无关。"
+    },
+    {
+      "repo_id": "271994210",
+      "human_label": "uncertain",
+      "human_reason": "API 返回 id=744915488，与 A 的 repo_id=271994210 不一致（原 linagora/Twake 已迁移为 twake-workplace 且换号）。无法取得原仓库元数据，维持 uncertain。"
+    },
+    {
+      "repo_id": "302309533",
+      "human_label": "excluded",
+      "human_reason": "依据 README：owner/repo 同名的个人主页仓库（Backend Engineer 自我介绍），不是项目仓库，更不是 AI 项目。"
+    },
+    {
+      "repo_id": "374770773",
+      "human_label": "excluded",
+      "human_reason": "依据 README：owner/repo 同名的个人主页仓库（学生自我介绍），不是项目仓库。"
+    },
+    {
+      "repo_id": "421217174",
+      "human_label": "excluded",
+      "human_reason": "依据 README：HewDraw Remix 是游戏（Super Smash Bros 系）mod 源码，Rust 工程，与 AI 无关。"
+    },
+    {
+      "repo_id": "441317480",
+      "human_label": "excluded",
+      "human_reason": "依据 README：owner/repo 同名的个人主页仓库（含 GitHub 统计卡片），不是项目仓库。"
+    },
+    {
+      "repo_id": "465991566",
+      "human_label": "excluded",
+      "human_reason": "依据 README：/tg/station 游戏服务器代码库（Space Station 13 衍生），与 AI 无关。"
+    },
+    {
+      "repo_id": "526345511",
+      "human_label": "excluded",
+      "human_reason": "依据 README：owner/repo 同名的个人主页仓库（学生自我介绍），不是项目仓库。"
+    },
+    {
+      "repo_id": "549894670",
+      "human_label": "excluded",
+      "human_reason": "依据 README：owner/repo 同名的个人主页仓库（个人介绍与徽章），不是项目仓库。"
+    },
+    {
+      "repo_id": "551162351",
+      "human_label": "excluded",
+      "human_reason": "依据 README：owner/repo 同名的个人主页仓库（Java 后端开发者自我介绍），不是项目仓库。"
+    },
+    {
+      "repo_id": "569927055",
+      "human_label": "uncertain",
+      "human_reason": "API 404：Stability-AI/stablediffusion 已不可访问。名称指向知名扩散模型仓库，但无法核对 id 与创建时间，按指南不推断删除或私有化，维持 uncertain。"
+    },
+    {
+      "repo_id": "647729619",
+      "human_label": "excluded",
+      "human_reason": "依据 README：Manifold AI Learning 的 MLOps 课程配套仓库（含课程链接与招生信息），属课程资料，按 v0.1 资源集合口径排除。规则仅凭名称判 uncertain。"
+    },
+    {
+      "repo_id": "653701739",
+      "human_label": "included",
+      "human_reason": "依据 README：使用 Amazon Chime SDK call analytics、Amazon Transcribe 与 Cohere 大模型做近实时通话摘要的示例项目，核心是 LLM 应用；仓库已 archived（2024-01 时仍为活跃仓库）。规则因描述为空判 uncertain。"
+    },
+    {
+      "repo_id": "684223328",
+      "human_label": "excluded",
+      "human_reason": "依据 README：owner/repo 同名的个人主页仓库（仅 GitHub metrics 图），不是项目仓库。"
+    },
+    {
+      "repo_id": "697973922",
+      "human_label": "excluded",
+      "human_reason": "依据 README：Angular 个人作品集网站（portfolio-old），与 AI 无关。"
+    },
+    {
+      "repo_id": "711869837",
+      "human_label": "excluded",
+      "human_reason": "依据 README：实验室主页网站（基于 Lab Website Template 生成），与 AI 无关。"
+    },
+    {
+      "repo_id": "716775427",
+      "human_label": "uncertain",
+      "human_reason": "API 返回 id=794396236，与 A 的 repo_id=716775427 不一致（仓库已重建为 JoelLuna02/IdolAPI）。无法取得原仓库元数据，维持 uncertain。"
+    },
+    {
+      "repo_id": "719391258",
+      "human_label": "excluded",
+      "human_reason": "依据 README：Lenovo OEM 的 HCL 服务骨架（product-meta-oem-lenovo），与 AI 无关。"
+    },
+    {
+      "repo_id": "731867521",
+      "human_label": "included",
+      "human_reason": "依据 README：Active Calories Predictor，用 pandas + scikit-learn 预测活动消耗的机器学习项目（仓库已改名为 JaishnavK/Python-Machine-Learning-Project，API id 仍一致）。规则只看到名称信号，判 uncertain。"
+    },
+    {
+      "repo_id": "738759461",
+      "human_label": "uncertain",
+      "human_reason": "API 404：ShareZE/chatbot-193577 无法访问，名称暗示聊天机器人但无元数据可核对，维持 uncertain。"
+    },
+    {
+      "repo_id": "742748171",
+      "human_label": "uncertain",
+      "human_reason": "API 404：cjmDevelop/YouTube_Clone 无法访问，维持 uncertain，不推断为删除或非 AI。"
+    },
+    {
+      "repo_id": "742995337",
+      "human_label": "uncertain",
+      "human_reason": "API 404：lukefredrickson/untind-server 无法访问，维持 uncertain。"
+    },
+    {
+      "repo_id": "743146326",
+      "human_label": "uncertain",
+      "human_reason": "API 元数据可用但描述与 topics 为空，README 也不存在（仓库可能为空仓库），仅有语言 CSS。证据不足，维持 uncertain。"
+    },
+    {
+      "repo_id": "743305917",
+      "human_label": "excluded",
+      "human_reason": "依据 README 与命名：Openclassrooms 课程 P11 的 Kasa 项目作业（Create React App 脚手架），属课程作业，按 v0.1 排除口径应排除；规则因描述为空判 uncertain。"
+    },
+    {
+      "repo_id": "743310414",
+      "human_label": "included",
+      "human_reason": "依据 README：PrivateGPT 风格应用，用本地 LLM 对文档做离线问答（QnA chatbot），核心是 LLM 应用。规则只看到名称里的 gpt 信号，判 uncertain。"
+    },
+    {
+      "repo_id": "743319257",
+      "human_label": "uncertain",
+      "human_reason": "API 404：doeyeon/personal-website 无法访问，名称指向个人网站但无元数据，维持 uncertain。"
+    }
+  ]
+}

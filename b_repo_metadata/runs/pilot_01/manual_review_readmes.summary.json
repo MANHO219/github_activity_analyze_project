@@ -1,0 +1,22 @@
+{
+  "generated_at_utc": "2026-11-02T05:04:59Z",
+  "requested_rows": 33,
+  "evidence_rows": 26,
+  "skipped_repo_ids": [
+    "271994210",
+    "569927055",
+    "716775427",
+    "738759461",
+    "742748171",
+    "742995337",
+    "743319257"
+  ],
+  "status_counts": {
+    "ok": 25,
+    "skipped": 7,
+    "not_found": 1
+  },
+  "max_chars": 4000,
+  "evidence_file": "b_repo_metadata/runs/pilot_01/manual_review_readmes.jsonl",
+  "note": "README 仅作人工复核证据；v0.1 规则不读取该字段。"
+}
