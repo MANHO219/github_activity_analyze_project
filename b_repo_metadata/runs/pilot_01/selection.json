@@ -1,0 +1,86 @@
+{
+  "pilot_version": "pilot_01",
+  "generated_at_utc": "2026-11-02T05:02:28Z",
+  "method": "Sort candidates by repo_id; draw `random` stratum with random.Random(seed).sample; then draw `keyword_name` stratum from remaining rows whose owner/repo name matches the coarse AI name probe. The keyword stratum is deliberately oversampled for rule coverage and must not be used to estimate GitHub-wide AI share.",
+  "seed": 5488,
+  "strata_requested": {
+    "random": 40,
+    "keyword_name": 10
+  },
+  "strata_actual": {
+    "random": 40,
+    "keyword_name": 10
+  },
+  "input": {
+    "path": "a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv",
+    "rows": 69768,
+    "sha256": "e11f5c20990233b45fa8fabe4e0eeeed401baceaaf6f108e1d2d3c6d463c0b09"
+  },
+  "output": {
+    "path": "b_repo_metadata/runs/pilot_01/pilot_candidates.csv",
+    "rows": 50,
+    "sha256": "e9de060d26ded56bb841fe6a449bc409f55eb5a86125f279efa7bea170d3a9c8"
+  },
+  "repo_ids": [
+    "82206054",
+    "125461135",
+    "271994210",
+    "302309533",
+    "335433252",
+    "374770773",
+    "375573623",
+    "387080819",
+    "421217174",
+    "424973274",
+    "441317480",
+    "465991566",
+    "506838155",
+    "526345511",
+    "548282264",
+    "549894670",
+    "551162351",
+    "588726150",
+    "640315574",
+    "653701739",
+    "663460189",
+    "668966382",
+    "670312627",
+    "684223328",
+    "696751493",
+    "697973922",
+    "704952734",
+    "711869837",
+    "716775427",
+    "719391258",
+    "729561362",
+    "735490705",
+    "737999357",
+    "738629066",
+    "742748171",
+    "742995337",
+    "743146326",
+    "743305917",
+    "743319257",
+    "743320808",
+    "290350267",
+    "306977633",
+    "569927055",
+    "647729619",
+    "665478404",
+    "669837291",
+    "673960113",
+    "731867521",
+    "738759461",
+    "743310414"
+  ],
+  "debug_sample": {
+    "repo_id": 39464018,
+    "repo_name": "apache/superset",
+    "note": "B 接手指南指定的单仓库连通性样例；不计入 50 个试跑名单。",
+    "counted_in_pilot": false
+  },
+  "notes": [
+    "首批名单用于跑通流程与调规则，不能据此直接估计整个 GitHub 的 AI 仓库比例。",
+    "keyword_name 层来自名称粗筛，名称命中不等于 AI 判定；实际标签仍由 rules 决定。"
+  ]
+}

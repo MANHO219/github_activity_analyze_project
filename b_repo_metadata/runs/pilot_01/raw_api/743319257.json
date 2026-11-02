@@ -1,0 +1,23 @@
+{
+  "schema_version": "bmeta-raw-v1",
+  "requested_repo_id": 743319257,
+  "requested_name": "doeyeon/personal-website",
+  "fetched_at_utc": "2026-11-02T05:03:01Z",
+  "http_status": 404,
+  "final_url": "https://api.github.com/repos/doeyeon/personal-website",
+  "attempts": 1,
+  "elapsed_ms": 417,
+  "error": null,
+  "rate_limit": {
+    "x-ratelimit-limit": "5000",
+    "x-ratelimit-remaining": "4954",
+    "x-ratelimit-used": "46",
+    "x-ratelimit-reset": "1793599097"
+  },
+  "response": {
+    "message": "Not Found",
+    "documentation_url": "https://docs.github.com/rest/repos/repos#get-a-repository",
+    "status": "404"
+  },
+  "response_text": null
+}

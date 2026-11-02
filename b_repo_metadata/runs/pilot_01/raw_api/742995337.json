@@ -1,0 +1,23 @@
+{
+  "schema_version": "bmeta-raw-v1",
+  "requested_repo_id": 742995337,
+  "requested_name": "lukefredrickson/untind-server",
+  "fetched_at_utc": "2026-11-02T05:02:59Z",
+  "http_status": 404,
+  "final_url": "https://api.github.com/repos/lukefredrickson/untind-server",
+  "attempts": 1,
+  "elapsed_ms": 434,
+  "error": null,
+  "rate_limit": {
+    "x-ratelimit-limit": "5000",
+    "x-ratelimit-remaining": "4957",
+    "x-ratelimit-used": "43",
+    "x-ratelimit-reset": "1793599097"
+  },
+  "response": {
+    "message": "Not Found",
+    "documentation_url": "https://docs.github.com/rest/repos/repos#get-a-repository",
+    "status": "404"
+  },
+  "response_text": null
+}

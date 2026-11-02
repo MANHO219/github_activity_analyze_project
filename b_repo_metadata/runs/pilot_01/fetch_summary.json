@@ -1,0 +1,26 @@
+{
+  "started_at_utc": "2026-11-02T05:02:36Z",
+  "finished_at_utc": "2026-11-02T05:03:07Z",
+  "input_rows": 50,
+  "processed_rows": 50,
+  "pending_rows": 0,
+  "pending_repo_ids": [],
+  "status_counts": {
+    "ok": 43,
+    "id_mismatch": 2,
+    "not_found": 5
+  },
+  "api_calls": 50,
+  "token_present": true,
+  "token_env_var": "GITHUB_TOKEN",
+  "stopped_reason": null,
+  "last_rate_limit_headers": {
+    "x-ratelimit-limit": "5000",
+    "x-ratelimit-remaining": "4942",
+    "x-ratelimit-used": "58",
+    "x-ratelimit-reset": "1793599097"
+  },
+  "cache_dir": "b_repo_metadata/runs/pilot_01/raw_api",
+  "metadata_csv": "b_repo_metadata/runs/pilot_01/repo_metadata.csv",
+  "note": "失败行只记录状态，缺失元数据留空；pending 行尚未写入 repo_metadata.csv。"
+}

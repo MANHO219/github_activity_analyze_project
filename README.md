@@ -1,6 +1,6 @@
 # CS5488 小组项目：AI 相关 GitHub 仓库的生命周期
 
-从 GH Archive 的公开事件中整理仓库活动，补仓库元数据与 AI 标签，再研究仓库的生命周期。**当前完成一个真实小时的数据管道与正确性验证；AI 标签、正式观察期和生命周期结论待完成。**
+从 GH Archive 的公开事件中整理仓库活动，补仓库元数据与 AI 标签，再研究仓库的生命周期。**当前完成一个真实小时的数据管道与正确性验证，以及 B 的 50 仓库元数据/标签试跑（pilot_01）；正式观察期与生命周期结论待完成。**
 
 ## 第一次打开，按这个顺序看
 
@@ -9,6 +9,7 @@
 | 选题、分工、课程交付和研究边界 | [小组同步说明](CS5488_AI_Repository_Lifecycle_Project.md) |
 | 数据从哪里来、哪个脚本处理、每个文件在哪 | [数据处理全解 HTML](a_data_pipeline/数据处理全解.html) |
 | B 现在如何开始 | [B 接手指南](a_data_pipeline/B_接手指南.md) |
+| B 的实现、跑法与试跑结果 | [B 阶段 README](b_repo_metadata/README.md)、[试跑结果](b_repo_metadata/RESULTS.md) |
 | A 的实现和运行命令 | [数据管道 README](a_data_pipeline/README.md) |
 | 实际样本与核对结果 | [样本交接记录](a_data_pipeline/runs/20240115_1hour_handoff/HANDOFF.md)、[验证摘要](a_data_pipeline/verification/RESULTS.md) |
 
@@ -17,6 +18,8 @@ HTML 请在下载或 clone 后，用本地浏览器打开；在 GitHub 文件页
 ## B 可以立即使用的输入
 
 打开[仓库候选清单](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv)：69,768 个唯一仓库，每行一个 `repo_id`。第一轮先在自己电脑获取一个仓库，再固定一个小名单试跑；50 个是建议规模，AI 规则与最终字段由 A、B 确认。
+
+B 的第一轮已完成并留在 [b_repo_metadata/](b_repo_metadata/)：50 个仓库的元数据、AI 标签、33 条人工复核与按 `repo_id` 接回事件表的核对结果都可直接查看或重跑，规则草案见 [ai_rules_v0.1](b_repo_metadata/rules/ai_rules_v0.1.md)。
 
 其他现成输入：[名称历史](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_name_history.csv)、[事件预览](a_data_pipeline/runs/20240115_1hour_handoff/python/events_preview.csv)、[完整事件 Parquet](a_data_pipeline/runs/20240115_1hour_handoff/python/events_clean.parquet/)、[活动计数](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_daily_counts.csv)。
 
@@ -29,17 +32,27 @@ HTML 请在下载或 clone 后，用本地浏览器打开；在 GitHub 文件页
 ├── A_启动任务_最小数据样本.md
 ├── Project.pdf                     ← 课程项目要求
 ├── tools/prepare_github_share.py    ← 生成可分享副本
-└── a_data_pipeline/
-    ├── B_接手指南.md
-    ├── 数据处理全解.html
-    ├── config/                     ← 输入范围与参数
-    ├── scripts/                    ← 命令入口
-    ├── gharchive_a/                ← 处理实现
-    ├── docs/                      ← 文档模板与证据快照
-    ├── verification/              ← 验证记录
-    ├── tests/                     ← 已有测试代码
-    ├── data/                      ← 原始下载，本地保留，Git 忽略
-    └── runs/                      ← 只提交一份精选交接结果
+├── a_data_pipeline/
+│   ├── B_接手指南.md
+│   ├── 数据处理全解.html
+│   ├── config/                     ← 输入范围与参数
+│   ├── scripts/                    ← 命令入口
+│   ├── gharchive_a/                ← 处理实现
+│   ├── docs/                      ← 文档模板与证据快照
+│   ├── verification/              ← 验证记录
+│   ├── tests/                     ← 已有测试代码
+│   ├── data/                      ← 原始下载，本地保留，Git 忽略
+│   └── runs/                      ← 只提交一份精选交接结果
+└── b_repo_metadata/                ← B：元数据、AI 标签、复核与接回事件表
+    ├── README.md                   ← 跑法与字段说明
+    ├── RESULTS.md                  ← pilot_01 结果与验收清单
+    ├── config/                     ← 种子、分层规模、API 参数
+    ├── rules/                      ← ai_rules_v0.1（.md 说明 + .json 实现）
+    ├── bmeta/                      ← 抓取、规则、复核、接回的实现
+    ├── scripts/                    ← 每个步骤一个命令入口
+    ├── reviews/                    ← 人工判断与理由
+    ├── tests/                      ← 26 项离线验证
+    └── runs/                       ← debug_api_sample 与 pilot_01 结果
 ```
 
 ## 在新电脑复跑 A 的完整样本

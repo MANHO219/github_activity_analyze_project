@@ -1,0 +1,26 @@
+{
+  "pilot_version": "pilot_01",
+  "seed": 5488,
+  "strata": {
+    "random": 40,
+    "keyword_name": 10
+  },
+  "candidates_csv": "../../a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv",
+  "name_history_csv": "../../a_data_pipeline/runs/20240115_1hour_handoff/python/repo_name_history.csv",
+  "debug_sample": {
+    "repo_id": 39464018,
+    "repo_name": "apache/superset",
+    "note": "B 接手指南指定的单仓库连通性样例；不计入 50 个试跑名单。"
+  },
+  "api": {
+    "base_url": "https://api.github.com",
+    "accept": "application/vnd.github+json",
+    "user_agent": "cs5488-b-repo-metadata/0.1",
+    "token_env_var": "GITHUB_TOKEN",
+    "request_interval_seconds": 0.3,
+    "timeout_seconds": 30,
+    "max_attempts": 3,
+    "backoff_seconds": [1, 2, 4]
+  },
+  "rules_file": "../rules/ai_rules_v0.1.json"
+}

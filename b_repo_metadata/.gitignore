@@ -1,0 +1,4 @@
+# 测试与运行时产生的本地文件
+__pycache__/
+*.py[cod]
+.test_tmp/
