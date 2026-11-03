@@ -21,6 +21,17 @@
     "reuse_failed_flag": false
   },
   "conclusion": "通过：失败响应默认不再被复用，重跑会重新请求；成功响应仍然命中缓存，避免重复消耗配额。",
-  "reuse_failed_option": "需要复现某次失败快照时，运行 fetch_metadata.py --reuse-failed，此时 5 个 404 也会命中缓存（api_calls=0）。",
+  "reuse_failed_option": "需要复现某次失败快照时，运行 fetch_metadata.py --reuse-failed：404、5xx、以及没有 JSON 响应体的网络错误/超时都会命中缓存（api_calls=0），状态按缓存里的错误重建。",
+  "covered_failure_types": [
+    "http_404_json_body",
+    "http_5xx_without_json_body",
+    "network_error_without_response"
+  ],
+  "verified_by": [
+    "tests/test_b_pipeline.py::FetchCachePolicyTests.test_404_cache_is_retried_by_default",
+    "tests/test_b_pipeline.py::FetchCachePolicyTests.test_404_cache_can_be_reused_explicitly",
+    "tests/test_b_pipeline.py::FetchCachePolicyTests.test_network_error_cache_retried_by_default_then_reusable",
+    "tests/test_b_pipeline.py::FetchCachePolicyTests.test_server_error_without_json_body_can_be_reused"
+  ],
   "note": "本次核对在临时目录执行，未改动 runs/pilot_01 的正式元数据；pilot_01 的 repo_metadata.csv 仍是首轮抓取结果。"
 }

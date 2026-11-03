@@ -15,7 +15,7 @@
 | 人工复核 | 33 条：included 全查 3、excluded 抽 5、uncertain 全查 25 |
 | 分析用标签 | 默认“人工优先”口径下：included 4、excluded 38、uncertain 8（人工 33 行、自动 17 行） |
 | 接回事件表 | 50/50 个试点仓库都能按 `repo_id` 匹配到 A 的 `events_clean.parquet`（197,313 条事件中 159 条属于这 50 个仓库） |
-| 离线测试 | 44 项全部通过（不联网） |
+| 离线测试 | 50 项全部通过（不联网） |
 
 详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；规则见 [rules/ai_rules_v0.2.md](rules/ai_rules_v0.2.md)；标签交接口径见 [LABELS.md](LABELS.md)。
 
@@ -44,7 +44,7 @@ b_repo_metadata/
 │   ├── evidence.py                    ← 复核用 README 证据
 │   └── join.py                        ← 按 repo_id 接回事件表
 ├── scripts/                           ← 命令入口（每个步骤一个）
-├── tests/test_b_pipeline.py           ← 44 项离线验证
+├── tests/test_b_pipeline.py           ← 50 项离线验证
 └── runs/
     ├── debug_api_sample/              ← 单仓库连通性样例（apache/superset）
     └── pilot_01/
@@ -67,12 +67,14 @@ b_repo_metadata/
         └── run_summary.json           ← 输入、版本、数量、检查与未解决问题
 ```
 
-## 怎么重跑
+## 怎么重跑：先分清“复现”和“开新一轮”
 
-依赖：Python 3.10+（只用标准库；读取 A 的 Parquet 需要 pyarrow）。在 `b_repo_metadata/` 下执行：
+依赖：Python 3.10+（只用标准库；读取 A 的 Parquet 需要 pyarrow）。以下命令都在 `b_repo_metadata/` 下执行。
+
+### A. 复现本次成果（推荐；不覆盖已有复核记录）
 
 ```bash
-# 1. 固定首批名单（已存在时会拒绝覆盖，需要 --force）
+# 1. 固定首批名单。已存在会拒绝覆盖，直接跳过即可
 python scripts/build_pilot.py
 
 # 2. 取元数据：token 通过环境变量读取，不写进任何文件
@@ -89,8 +91,7 @@ python scripts/compare_label_versions.py --run-dir runs/pilot_01
 # 5. 生成分析用标签（人工优先；可换 --policy auto_only）
 python scripts/build_analysis_labels.py --run-dir runs/pilot_01
 
-# 6. 人工复核：先生成清单，再合并判断（本仓库已包含完成的判断文件）
-python scripts/manual_review.py --run-dir runs/pilot_01
+# 6. 合并已有复核记录（关键：带 --decisions，复用 runs/pilot_01 里现有的 33 行清单）
 python scripts/manual_review.py --run-dir runs/pilot_01 \
     --decisions reviews/pilot_01_decisions.json
 
@@ -100,6 +101,27 @@ python scripts/join_check.py
 # 8. 汇总与验收检查
 python scripts/build_run_summary.py --run-dir runs/pilot_01
 ```
+
+第 6 步只读取已有清单、把判断写回去，不会因为当前规则是 v0.2 就重新抽样。
+
+**不要**在这里先运行不带 `--decisions` 的 `manual_review.py`：那个命令是“生成新清单”，目标目录已有 `manual_review.csv` 时会直接报错退出（这是保护措施，加 `--force` 才会覆盖）。
+
+### B. 创建新一轮复核清单（换输出目录，不动 pilot_01）
+
+如果规则已更新、想按当前标签重新抽样核对，把清单写到新目录，输入显式指向已有运行目录：
+
+```bash
+python scripts/manual_review.py \
+    --run-dir runs/pilot_02_review \
+    --labels runs/pilot_01/repo_ai_labels.csv \
+    --metadata runs/pilot_01/repo_metadata.csv
+```
+
+生成 `runs/pilot_02_review/manual_review.csv` 与摘要，`runs/pilot_01/` 不受影响。清单写完后把判断存成新的 decisions 文件，再用同一命令加 `--decisions` 合并；如果判断文件的 `repo_id` 不在清单里，脚本会报错并提示换目录。
+
+只有明确要覆盖同一目录时才用 `--force` —— 它会丢掉该目录已有的复核记录。
+
+### C. 单仓库样例与复核证据
 
 单仓库连通性样例（指南要求的“先跑通 1 个仓库”，核对 `id=39464018`）：
 
@@ -117,8 +139,8 @@ python scripts/fetch_readme_evidence.py --run-dir runs/pilot_01
 
 ## 缓存与重试（重要）
 
-- **只有 HTTP 200 的成功响应会被复用**。404、5xx、无效 JSON 会留在 `raw_api/` 作为证据，但下次运行会**重新请求**，避免一次临时故障被永久缓存成“查不到”。
-- 想复现某次失败快照（例如离线分析 404 名单），加 `--reuse-failed`，此时失败响应也命中缓存，`api_calls=0`。
+- **只有 HTTP 200 且响应体是合法 JSON 的成功响应会被复用**。404、5xx、无效 JSON、以及没有响应体的网络错误/超时，都会留在 `raw_api/` 作为证据，但下次运行**重新请求**，避免一次临时故障被永久缓存成“查不到”。
+- 想复现某次失败快照（例如离线核对 404 名单），加 `--reuse-failed`：此时失败响应（含没有 JSON 响应体的网络错误）也命中缓存，`api_calls=0`，状态按缓存里的错误重建。
 - 核对记录见 `runs/pilot_01/cache_retry_check.json`：在副本上重跑时，43 个成功响应命中缓存、2 个 ID 不一致命中缓存、5 个 404 重新请求，共 5 次 API 调用。
 - 配额用尽时整批停在当前仓库之前，已抓取结果已写盘；重新执行同一命令即可续跑。
 

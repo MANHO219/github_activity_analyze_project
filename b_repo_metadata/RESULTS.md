@@ -17,7 +17,7 @@
 | 人工复核 | 33 条：included 3（全查）、excluded 5（抽样）、uncertain 25（全查） |
 | 与人工一致率（已判定行） | v0.1 6/8 = 75% → v0.2 14/14 = 100% |
 | 接回 A 的事件表 | 50/50 个试点仓库按 `repo_id` 匹配；197,313 条事件中 159 条属这 50 个仓库 |
-| 离线测试 | 44 项通过 |
+| 离线测试 | 50 项通过 |
 
 v0.2 的规则分布：
 
@@ -88,11 +88,11 @@ v0.2 仍存疑的 19 条分三类：
 
 ## 4. API 失败后的重跑行为
 
-- 缓存策略：**只复用 HTTP 200 的成功响应**；404、5xx、无效 JSON 会保留为证据但下次重新请求。
+- 缓存策略：**只复用 HTTP 200 且响应体为合法 JSON 的成功响应**；404、5xx、无效 JSON，以及没有响应体的网络错误/超时，都会保留为证据但下次重新请求。
 - 核对方式：把 `pilot_01` 的名单与 `raw_api/` 复制到临时目录重跑 `fetch_metadata.py`。
 - 实测：43 个成功响应 + 2 个 ID 不一致命中缓存，5 个 404 重新请求，共 **5 次 API 调用**、0 个 pending。
-- 需要复现失败快照时用 `--reuse-failed`，此时也命中缓存（0 次调用）。
-- 记录：[`cache_retry_check.json`](runs/pilot_01/cache_retry_check.json)。
+- 需要复现失败快照时用 `--reuse-failed`：失败响应（含没有 JSON 响应体的网络错误）也命中缓存，0 次调用；状态按缓存里的错误重建（`network_error` / `server_error` / `not_found`）。
+- 记录：[`cache_retry_check.json`](runs/pilot_01/cache_retry_check.json)，另有 50 项离线测试覆盖这些分支。
 
 ## 5. 事件占比的口径
 
@@ -126,7 +126,7 @@ v0.2 仍存疑的 19 条分三类：
 | 获取成功数 + 失败数 = 已处理仓库数；三种标签数量之和 = 结果仓库数；待处理项单列 | ✅ | 43+2+5=50；1+30+19=50；`pending_repo_ids` 为空 |
 | 规则、标签理由和人工复核记录齐全；入选/排除各复核 5 个，不足时全查；存疑案例单独复核 | ✅ | 两版规则 JSON/MD、每行 `reason`、`manual_review.csv`（33 条） |
 | 能按 `repo_id` 接回 A 的事件表；带标签的仓库表一仓库一行 | ✅ | `join_check.json`：50/50 命中，覆盖 159 条事件，唯一性检查通过 |
-| 交回代码、运行命令和依赖；另一位组员能按说明重跑 | ✅ | `README.md` 的“怎么重跑”；44 项离线测试；缓存策略可复跑 |
+| 交回代码、运行命令和依赖；另一位组员能按说明重跑 | ✅ | `README.md` 的“怎么重跑”分成复现与开新一轮两种；50 项离线测试；缓存策略可复跑 |
 
 ## 8. 未解决与待确认
 
@@ -137,6 +137,8 @@ v0.2 仍存疑的 19 条分三类：
 5. 事件覆盖仍只有 1 小时（197,313 条），试点仓库覆盖 159 条，无法支持生命周期结论。
 
 ## 9. 复跑记录
+
+复现本次成果（不碰已有复核记录；`manual_review.py` 只合并判断，不复用时会报错保护）：
 
 ```bash
 cd b_repo_metadata
@@ -150,5 +152,19 @@ python scripts/join_check.py
 python scripts/build_run_summary.py --run-dir runs/pilot_01
 python -m unittest discover -s tests -v
 ```
+
+要按当前规则重新抽样复核时，换输出目录并显式指向已有输入（不会覆盖 `runs/pilot_01/`）：
+
+```bash
+python scripts/manual_review.py --run-dir runs/pilot_02_review \
+    --labels runs/pilot_01/repo_ai_labels.csv \
+    --metadata runs/pilot_01/repo_metadata.csv
+```
+
+复核流程的保护已验证：
+
+- 按上面的复现顺序重跑后，`manual_review.csv` 与仓库中的版本逐字节一致（SHA-256 `07a92c95515dc159db39b91f34535cd7620506f2bf316f937ec6f2469514a693`）；
+- 误跑不带 `--decisions` 的 `manual_review.py` 会以退出码 3 拒绝覆盖，文件不变；
+- 把旧判断文件合并到另一轮清单时会以退出码 4 报错，并列出不在清单中的 `repo_id`。
 
 各阶段摘要（`fetch_summary.json`、`label_summary.json`、`label_comparison.json`、`label_analysis_summary.json`、`manual_review_summary.json`、`join_check.json`）与合并后的 `run_summary.json` 都在同一运行目录，可与上表逐项对照。

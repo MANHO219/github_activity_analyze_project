@@ -14,17 +14,23 @@ import json
 import shutil
 import sys
 import unittest
+import urllib.error
 import uuid
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from bmeta.api import GitHubRepoClient  # noqa: E402
-from bmeta.common import read_csv, write_csv  # noqa: E402
+from bmeta.common import read_csv, write_csv, write_json  # noqa: E402
 from bmeta.evidence import _readme_text  # noqa: E402
 from bmeta.fetch import METADATA_FIELDS, fetch_one, run as fetch_run  # noqa: E402
 from bmeta.join import run as join_run  # noqa: E402
-from bmeta.review import REVIEW_FIELDS, build_sheet, merge_decisions  # noqa: E402
+from bmeta.review import (  # noqa: E402
+    REVIEW_FIELDS,
+    build_sheet,
+    merge_decisions,
+    run as review_run,
+)
 from bmeta.rules import LABEL_FIELDS, RuleSet, label_rows, load_rules  # noqa: E402
 from bmeta.select import select_pilot  # noqa: E402
 
@@ -524,6 +530,140 @@ class FetchCachePolicyTests(unittest.TestCase):
         self.assertEqual(row["fetch_status"], "ok_cached")
         self.assertEqual(log["cache_decision"], "reused_success")
         self.assertEqual(client.test_calls["n"], 1)
+
+    def test_network_error_cache_retried_by_default_then_reusable(self):
+        def transport(url, headers, timeout):
+            transport.calls += 1
+            raise urllib.error.URLError("temporary network failure")
+
+        transport.calls = 0
+        client = GitHubRepoClient(token="", transport=transport, sleep=lambda _: None, now=lambda: 0.0)
+        cache_dir = self.root / "raw_api"
+
+        first, log1 = fetch_one(client, 9, "acme/flaky", cache_dir)
+        self.assertEqual(first["fetch_status"], "network_error")
+        self.assertEqual(log1["cache_decision"], "requested")
+        calls_after_first = transport.calls
+        self.assertGreaterEqual(calls_after_first, 1)
+
+        # 默认重跑：仍然重新请求，不会命中失败缓存
+        second, log2 = fetch_one(client, 9, "acme/flaky", cache_dir)
+        self.assertEqual(second["fetch_status"], "network_error")
+        self.assertEqual(log2["cache_decision"], "requested")
+        self.assertGreater(transport.calls, calls_after_first)
+
+        # 显式复用：不再发请求，状态由缓存里的错误重建
+        calls_before_reuse = transport.calls
+        reused, log3 = fetch_one(client, 9, "acme/flaky", cache_dir, reuse_failed=True)
+        self.assertEqual(reused["fetch_status"], "network_error")
+        self.assertEqual(log3["cache_decision"], "reused_failure")
+        self.assertEqual(transport.calls, calls_before_reuse)
+
+    def test_server_error_without_json_body_can_be_reused(self):
+        client = self.client({"acme/down": (503, {}, b"<html>maintenance</html>")})
+        cache_dir = self.root / "raw_api"
+        first, _ = fetch_one(client, 10, "acme/down", cache_dir)
+        self.assertEqual(first["fetch_status"], "server_error")
+
+        calls_before = client.test_calls["n"]
+        reused, log = fetch_one(client, 10, "acme/down", cache_dir, reuse_failed=True)
+        self.assertEqual(reused["fetch_status"], "server_error")
+        self.assertEqual(log["cache_decision"], "reused_failure")
+        self.assertEqual(client.test_calls["n"], calls_before)
+
+
+class ReviewSheetPreservationTests(unittest.TestCase):
+    """重跑复核时不能悄悄用新规则覆盖已有清单。"""
+
+    def setUp(self):
+        TEST_TMP_ROOT.mkdir(parents=True, exist_ok=True)
+        self.root = TEST_TMP_ROOT / uuid.uuid4().hex
+        self.root.mkdir(parents=True, exist_ok=True)
+        self.metadata = [
+            metadata(1, topics=["llm"], name="a/llm"),
+            metadata(2, description="proxy", name="a/proxy"),
+            metadata(3, status="not_found", name="a/gone"),
+            metadata(4, name="a/other"),
+        ]
+        write_csv(self.root / "repo_metadata.csv", METADATA_FIELDS, self.metadata)
+        self.labels_v1 = label_rows(self.metadata, RULES)
+        write_csv(self.root / "repo_ai_labels.csv", LABEL_FIELDS, self.labels_v1)
+
+    def tearDown(self):
+        shutil.rmtree(self.root, ignore_errors=True)
+
+    def decisions(self, repo_id="1"):
+        return {
+            "reviewer": "B",
+            "reviewed_at_utc": "2026-11-02T00:00:00Z",
+            "decisions": [{"repo_id": repo_id, "human_label": "uncertain", "human_reason": "looks ambiguous"}],
+        }
+
+    def test_sheet_generation_refuses_overwrite_without_force(self):
+        first = review_run(
+            labels_csv=self.root / "repo_ai_labels.csv",
+            metadata_csv=self.root / "repo_metadata.csv",
+            out_dir=self.root,
+        )
+        before = (self.root / "manual_review.csv").read_bytes()
+        with self.assertRaises(FileExistsError):
+            review_run(
+                labels_csv=self.root / "repo_ai_labels.csv",
+                metadata_csv=self.root / "repo_metadata.csv",
+                out_dir=self.root,
+            )
+        self.assertEqual((self.root / "manual_review.csv").read_bytes(), before)
+        self.assertEqual(first["status"], "sheet_only")
+
+    def test_force_regenerates_sheet(self):
+        review_run(
+            labels_csv=self.root / "repo_ai_labels.csv",
+            metadata_csv=self.root / "repo_metadata.csv",
+            out_dir=self.root,
+        )
+        forced = review_run(
+            labels_csv=self.root / "repo_ai_labels.csv",
+            metadata_csv=self.root / "repo_metadata.csv",
+            out_dir=self.root,
+            force=True,
+        )
+        self.assertEqual(forced["status"], "sheet_only")
+        self.assertFalse(forced["reused_existing_sheet"])
+
+    def test_merge_reuses_existing_sheet_even_when_labels_changed(self):
+        first = review_run(
+            labels_csv=self.root / "repo_ai_labels.csv",
+            metadata_csv=self.root / "repo_metadata.csv",
+            out_dir=self.root,
+        )
+        # 把标签换成 v0.2，模拟“规则已更新但历史复核记录必须保留”
+        v2_rules = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.2.json"))
+        write_csv(self.root / "repo_ai_labels.csv", LABEL_FIELDS, label_rows(self.metadata, v2_rules))
+        write_json(self.root / "decisions.json", self.decisions("1"))
+
+        merged = review_run(
+            labels_csv=self.root / "repo_ai_labels.csv",
+            metadata_csv=self.root / "repo_metadata.csv",
+            out_dir=self.root,
+            decisions_path=self.root / "decisions.json",
+        )
+        self.assertEqual(merged["sheet_source"], "existing_sheet")
+        self.assertTrue(merged["reused_existing_sheet"])
+        self.assertEqual(merged["sheet_rows"], first["sheet_rows"])
+        self.assertEqual(merged["reviewed_rows"], 1)
+        self.assertEqual(merged["status"], "partial")
+
+    def test_merge_generates_sheet_when_missing(self):
+        write_json(self.root / "decisions.json", self.decisions("1"))
+        merged = review_run(
+            labels_csv=self.root / "repo_ai_labels.csv",
+            metadata_csv=self.root / "repo_metadata.csv",
+            out_dir=self.root,
+            decisions_path=self.root / "decisions.json",
+        )
+        self.assertEqual(merged["sheet_source"], "generated_sheet")
+        self.assertFalse(merged["reused_existing_sheet"])
+        self.assertEqual(merged["reviewed_rows"], 1)
 
 
 class CompareAndHandoffTests(unittest.TestCase):

@@ -220,37 +220,71 @@ def run(
     per_label: int = 5,
     uncertain_limit: int | None = None,
     seed: int = 5488,
+    force: bool = False,
 ) -> dict[str, Any]:
+    """生成复核清单，或把人工判断合并进**已有**清单。
+
+    两种模式刻意分开，避免组员重跑时覆盖历史记录：
+
+    - 不给 ``decisions_path``：生成新一轮清单。目标文件已存在时抛
+      ``FileExistsError``，必须显式 ``force=True`` 或换一个 ``out_dir``；
+    - 给 ``decisions_path``：优先复用 ``out_dir/manual_review.csv`` 里**已有**的
+      清单，只把人工判断合并进去；清单不存在时才按当前标签新建。
+    """
     from .common import read_csv
 
     out_dir = Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
     labels = read_csv(labels_csv)
     metadata = read_csv(metadata_csv)
-    sheet = build_sheet(
-        labels, metadata, per_label=per_label, uncertain_limit=uncertain_limit, seed=seed
-    )
+    if not labels:
+        raise ValueError(f"no label rows in {labels_csv}")
+    rule_version = labels[0].get("rule_version", "")
+    sheet_path = out_dir / "manual_review.csv"
 
     if decisions_path is None:
-        write_csv(out_dir / "manual_review.csv", REVIEW_FIELDS, sheet)
+        if sheet_path.exists() and not force:
+            raise FileExistsError(str(sheet_path))
+        sheet = build_sheet(
+            labels, metadata, per_label=per_label, uncertain_limit=uncertain_limit, seed=seed
+        )
+        write_csv(sheet_path, REVIEW_FIELDS, sheet)
         summary = {
             "status": "sheet_only",
             "sheet_rows": len(sheet),
             "reviewed_rows": 0,
-            "sheet": project_relative(out_dir / "manual_review.csv"),
-            "note": "尚未提供人工判断；按 reviews/pilot_01_decisions.json 补写后重跑。",
+            "sheet": project_relative(sheet_path),
+            "rules_version_used": rule_version,
+            "reused_existing_sheet": False,
+            "note": "新清单已生成；按清单逐条判断后写入 decisions JSON，再用 --decisions 合并。",
         }
         write_json(out_dir / "manual_review_summary.json", summary)
         update_run_summary(out_dir / "run_summary.json", "manual_review", summary)
         return summary
+
+    # 合并模式：已有清单优先复用，保证历史复核记录不被当前规则覆盖。
+    if sheet_path.exists():
+        sheet = read_csv(sheet_path)
+        if not sheet:
+            raise ValueError(f"existing review sheet is empty: {sheet_path}")
+        sheet_source = "existing_sheet"
+    else:
+        sheet = build_sheet(
+            labels, metadata, per_label=per_label, uncertain_limit=uncertain_limit, seed=seed
+        )
+        sheet_source = "generated_sheet"
 
     decisions = read_json(decisions_path)
     if isinstance(decisions, list):
         decisions = {"decisions": decisions}
     decisions["_source"] = project_relative(decisions_path)
     rows, summary = merge_decisions(sheet, decisions)
-    write_csv(out_dir / "manual_review.csv", REVIEW_FIELDS, rows)
-    summary["sheet"] = project_relative(out_dir / "manual_review.csv")
+    write_csv(sheet_path, REVIEW_FIELDS, rows)
+    summary["sheet"] = project_relative(sheet_path)
     summary["status"] = "complete" if summary["pending_rows"] == 0 else "partial"
+    summary["sheet_source"] = sheet_source
+    summary["rules_version_used"] = rule_version
+    summary["reused_existing_sheet"] = sheet_source == "existing_sheet"
     write_json(out_dir / "manual_review_summary.json", summary)
     update_run_summary(out_dir / "run_summary.json", "manual_review", summary)
     return summary

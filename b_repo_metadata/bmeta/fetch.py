@@ -68,9 +68,12 @@ def _cache_path(cache_dir: Path, repo_id: int) -> Path:
 def _load_cache(path: Path, *, allow_failed: bool = False) -> dict[str, Any] | None:
     """读取原始响应缓存。
 
-    默认只复用**成功**响应（HTTP 200）。失败响应（404/5xx/无效 JSON）仍留在
-    ``raw_api/`` 作为证据，但下次运行会重新请求——避免一次临时故障被永久缓存成
-    “查不到”。要复现某次失败快照时，显式传 ``allow_failed=True``。
+    默认只复用**成功**响应（HTTP 200 且响应体是合法 JSON）。失败响应——
+    包括 404、5xx，以及没有 JSON 响应体的网络错误/超时——仍留在 ``raw_api/``
+    作为证据，但下次运行会重新请求，避免一次临时故障被永久缓存成“查不到”。
+
+    要复现某次失败快照（例如离线核对 404 名单），显式传 ``allow_failed=True``：
+    此时连没有响应体的网络错误也会被复用，状态按缓存里的错误重新构造。
     """
     if not path.exists():
         return None
@@ -80,9 +83,12 @@ def _load_cache(path: Path, *, allow_failed: bool = False) -> dict[str, Any] | N
         return None
     if envelope.get("schema_version") != RAW_SCHEMA_VERSION:
         return None
-    if not isinstance(envelope.get("response"), dict):
-        return None
-    if not allow_failed and envelope.get("http_status") != 200:
+
+    has_json_body = isinstance(envelope.get("response"), dict)
+    if allow_failed:
+        # 含网络错误：http_status 为空、response 为空，但 error 有记录。
+        return envelope
+    if envelope.get("http_status") != 200 or not has_json_body:
         return None
     return envelope
 
@@ -108,8 +114,9 @@ def _envelope_from_response(repo_id: int, name: str, response: ApiResponse, fetc
 
 def _status_from_envelope(envelope: dict[str, Any]) -> str:
     status = envelope.get("http_status")
-    if status == 200 and isinstance(envelope.get("response"), dict):
-        return "ok"
+    has_json_body = isinstance(envelope.get("response"), dict)
+    if status == 200:
+        return "ok" if has_json_body else "invalid_json"
     if status in (404, 410, 451):
         return "not_found"
     if isinstance(status, int) and 400 <= status < 500:

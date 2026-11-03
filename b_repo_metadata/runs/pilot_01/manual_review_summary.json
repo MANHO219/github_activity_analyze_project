@@ -163,5 +163,8 @@
   ],
   "decisions_file": "b_repo_metadata/reviews/pilot_01_decisions.json",
   "sheet": "b_repo_metadata/runs/pilot_01/manual_review.csv",
-  "status": "complete"
+  "status": "complete",
+  "sheet_source": "existing_sheet",
+  "rules_version_used": "ai_rules_v0.2",
+  "reused_existing_sheet": true
 }
