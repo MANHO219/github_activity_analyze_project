@@ -71,7 +71,7 @@ python scripts/run_sample.py --with-spark
 
 会下载/校验原始小时档案，并创建新的运行目录。需要联网及本机足够的存储；配置和数据覆盖见管道 README。组员使用已提交的 CSV 时可以直接开始，运行完整 Spark 管道是另一项工作。
 
-上面这条命令使用原来的**一小时默认样本**并运行 Spark；它不会把样本扩展到 24 小时。Git 中的一天汇总表可直接用于初步分析，见[汇总表文件](a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv)。若要在本机生成完整一天的逐条事件数据，或继续增加日期，请按 [A README「获取更长时间的数据」](a_data_pipeline/README.md#获取更长时间的数据) 操作；该流程默认跑 Python，不要求先跑 Spark。
+上面这条命令使用原来的**一小时默认样本**并运行 Spark；它不会把样本扩展到 24 小时。Git 中的一天汇总表可直接用于初步分析，见[汇总表文件](a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv)。若要在本机生成完整一天的逐条事件数据，请看 [A 数据管道 README](a_data_pipeline/README.md) 中“获取 24 小时数据”一节；这是单日入口。月级批处理尚未实现，扩展前需要专门改造。
 
 ## 哪些内容在 GitHub，哪些在本地
 
