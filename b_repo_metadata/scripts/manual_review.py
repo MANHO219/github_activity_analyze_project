@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
-"""人工复核：生成新清单，或把已有判断合并进已有清单。
+"""人工复核：生成新清单，或把人工判断合并进已有清单。
 
-两种用法刻意分开，避免重跑时覆盖历史复核记录。
+两种用法刻意分开，避免重跑时覆盖历史复核记录或把不同轮次的判断混在一起。
 
 A. 复现本次成果（复用已有清单，只合并判断，不重新抽样）：
 
        python scripts/manual_review.py --run-dir runs/pilot_01 \
            --decisions reviews/pilot_01_decisions.json
 
-   已有 ``runs/pilot_01/manual_review.csv`` 会被原样读取，只把人工判断写回去；
-   即使当前规则已经换成 v0.2，也不会用 v0.2 重新生成名单。
+   ``runs/pilot_01/manual_review.csv`` 必须已存在；它会被原样读取，只把人工判断
+   写回去。即使当前规则已经换成 v0.2，也不会用 v0.2 重新生成名单。清单不存在时
+   直接报错（退出码 5），避免临时按新规则生成后与旧判断混在一起；确实要这样做的
+   话加 ``--allow-new-sheet``。
 
 B. 创建新一轮复核清单（务必换输出目录，不要覆盖 pilot_01）：
 
@@ -43,6 +45,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--uncertain-limit", type=int, help="uncertain 最多复核几个；默认全查")
     parser.add_argument("--seed", type=int, help="抽样种子；默认取配置")
     parser.add_argument("--force", action="store_true", help="覆盖已有的 manual_review.csv（危险）")
+    parser.add_argument(
+        "--allow-new-sheet",
+        action="store_true",
+        help="带 --decisions 但清单不存在时，允许按当前标签临时生成清单再合并（会混轮次，谨慎）",
+    )
     return parser.parse_args(argv)
 
 
@@ -74,11 +81,18 @@ def main(argv: list[str] | None = None) -> int:
             uncertain_limit=args.uncertain_limit,
             seed=args.seed if args.seed is not None else int(config["seed"]),
             force=args.force,
+            allow_generate_sheet=args.allow_new_sheet,
         )
     except FileExistsError as error:
         print(f"refusing to overwrite existing review sheet: {project_relative(Path(str(error)))}")
         print("换一个 --run-dir 生成新清单，或加 --force 覆盖（会丢失该目录已有的复核记录）。")
         return 3
+    except FileNotFoundError as error:
+        print(f"review sheet not found, refusing to generate one implicitly: {project_relative(Path(str(error)))}")
+        print("复现请先恢复该清单（如从 git checkout 取回）；要按当前规则开新一轮，")
+        print("请在新的 --run-dir 里先生成清单，再加 --decisions 合并；")
+        print("确实需要临时生成后合并时，加 --allow-new-sheet。")
+        return 5
     except ValueError as error:
         print(f"cannot merge decisions: {error}")
         print("如果判断文件对应的是另一轮清单，请换 --run-dir 并带上对应的 --decisions。")
@@ -90,7 +104,14 @@ def main(argv: list[str] | None = None) -> int:
         print(f"auto_uncertain={summary['auto_uncertain_rows']}")
         print(f"disagreements={len(summary['disagreements'])}")
     if "sheet_source" in summary:
-        print(f"sheet_source={summary['sheet_source']} rules_version={summary['rules_version_used']}")
+        print(
+            "sheet_source={} labels_rule_version={} sheet_rule_version={} diff_from_current={}".format(
+                summary["sheet_source"],
+                summary.get("labels_rule_version", ""),
+                summary.get("sheet_rule_version", ""),
+                summary.get("sheet_auto_labels_differ_from_current", 0),
+            )
+        )
     print(f"sheet: {summary['sheet']}")
     return 0 if summary["status"] in ("complete", "sheet_only") else 2
 

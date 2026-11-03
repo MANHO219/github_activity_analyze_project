@@ -221,15 +221,21 @@ def run(
     uncertain_limit: int | None = None,
     seed: int = 5488,
     force: bool = False,
+    allow_generate_sheet: bool = False,
 ) -> dict[str, Any]:
     """生成复核清单，或把人工判断合并进**已有**清单。
 
-    两种模式刻意分开，避免组员重跑时覆盖历史记录：
+    两种模式刻意分开，避免组员重跑时覆盖历史记录或把不同轮次的判断混在一起：
 
     - 不给 ``decisions_path``：生成新一轮清单。目标文件已存在时抛
       ``FileExistsError``，必须显式 ``force=True`` 或换一个 ``out_dir``；
-    - 给 ``decisions_path``：优先复用 ``out_dir/manual_review.csv`` 里**已有**的
-      清单，只把人工判断合并进去；清单不存在时才按当前标签新建。
+    - 给 ``decisions_path``：**必须已有** ``out_dir/manual_review.csv``，只把判断
+      合并进去。清单不存在时默认抛 ``FileNotFoundError``，避免“按当前规则临时
+      生成清单、再合并旧判断”把两轮结果混在一起；确实要这样做时显式传
+      ``allow_generate_sheet=True``。
+
+    摘要里把“清单用的规则版本”和“本次读取的标签版本”分开记录，并统计清单里的
+    自动标签与当前标签有多少条不同，避免把对旧规则的人工一致率误读成对当前规则。
     """
     from .common import read_csv
 
@@ -239,7 +245,7 @@ def run(
     metadata = read_csv(metadata_csv)
     if not labels:
         raise ValueError(f"no label rows in {labels_csv}")
-    rule_version = labels[0].get("rule_version", "")
+    labels_rule_version = labels[0].get("rule_version", "")
     sheet_path = out_dir / "manual_review.csv"
 
     if decisions_path is None:
@@ -254,7 +260,9 @@ def run(
             "sheet_rows": len(sheet),
             "reviewed_rows": 0,
             "sheet": project_relative(sheet_path),
-            "rules_version_used": rule_version,
+            "labels_rule_version": labels_rule_version,
+            "sheet_rule_version": labels_rule_version,
+            "sheet_auto_labels_differ_from_current": 0,
             "reused_existing_sheet": False,
             "note": "新清单已生成；按清单逐条判断后写入 decisions JSON，再用 --decisions 合并。",
         }
@@ -262,29 +270,51 @@ def run(
         update_run_summary(out_dir / "run_summary.json", "manual_review", summary)
         return summary
 
-    # 合并模式：已有清单优先复用，保证历史复核记录不被当前规则覆盖。
-    if sheet_path.exists():
-        sheet = read_csv(sheet_path)
-        if not sheet:
-            raise ValueError(f"existing review sheet is empty: {sheet_path}")
-        sheet_source = "existing_sheet"
-    else:
+    # 合并模式：必须有已有清单，避免临时按当前规则生成后与旧判断混合。
+    if not sheet_path.exists():
+        if not allow_generate_sheet:
+            raise FileNotFoundError(str(sheet_path))
         sheet = build_sheet(
             labels, metadata, per_label=per_label, uncertain_limit=uncertain_limit, seed=seed
         )
         sheet_source = "generated_sheet"
+    else:
+        sheet = read_csv(sheet_path)
+        if not sheet:
+            raise ValueError(f"existing review sheet is empty: {sheet_path}")
+        sheet_source = "existing_sheet"
 
     decisions = read_json(decisions_path)
     if isinstance(decisions, list):
         decisions = {"decisions": decisions}
     decisions["_source"] = project_relative(decisions_path)
     rows, summary = merge_decisions(sheet, decisions)
+
+    # 清单里的自动标签来自生成清单时的规则；与本次读到的标签版本对比，避免混淆。
+    current_labels = {row["repo_id"]: row.get("ai_label", "") for row in labels}
+    differing = [
+        row["repo_id"]
+        for row in sheet
+        if row["repo_id"] in current_labels and row.get("ai_label_auto") != current_labels[row["repo_id"]]
+    ]
+
     write_csv(sheet_path, REVIEW_FIELDS, rows)
     summary["sheet"] = project_relative(sheet_path)
     summary["status"] = "complete" if summary["pending_rows"] == 0 else "partial"
     summary["sheet_source"] = sheet_source
-    summary["rules_version_used"] = rule_version
+    summary["labels_rule_version"] = labels_rule_version
+    summary["sheet_rule_version"] = (
+        labels_rule_version if sheet_source == "generated_sheet" else "unknown_existing_sheet"
+    )
+    summary["sheet_auto_labels_differ_from_current"] = len(differing)
+    summary["sheet_auto_labels_differ_repo_ids"] = differing
     summary["reused_existing_sheet"] = sheet_source == "existing_sheet"
+    summary["note"] = (
+        "合并使用的是已有清单；清单里的 ai_label_auto 由生成清单时的规则版本决定，"
+        "与当前标签版本的差异见 sheet_auto_labels_differ_from_current。"
+        if sheet_source == "existing_sheet"
+        else "清单是按当前标签临时生成的（allow_generate_sheet），可能与旧判断来自不同轮次。"
+    )
     write_json(out_dir / "manual_review_summary.json", summary)
     update_run_summary(out_dir / "run_summary.json", "manual_review", summary)
     return summary

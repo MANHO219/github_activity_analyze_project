@@ -28,6 +28,7 @@
 
 - `manual_review.csv` 的 `agrees_with_rule` 列是复核当时与 **v0.1** 的一致性，不是与 v0.2 的一致性；
 - 人工复核使用 README，而自动规则不读 README。两者证据范围不同，所以“不一致”不等于“规则错”，可能是规则看不到的信息。
+- `manual_review_summary.json` 把两个版本分开记录：`labels_rule_version` 是本次命令读取的标签版本（v0.2），`sheet_rule_version` 是生成清单时的版本（复用旧清单时记 `unknown_existing_sheet`），并用 `sheet_auto_labels_differ_from_current` 给出清单自动标签与当前标签的差异条数（本次 9 条）。人工一致率对应的是清单生成时的规则，不是当前规则。
 
 ## 3. 分析用标签怎么生成
 

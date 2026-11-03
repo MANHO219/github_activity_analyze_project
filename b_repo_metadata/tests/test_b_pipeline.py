@@ -583,7 +583,8 @@ class ReviewSheetPreservationTests(unittest.TestCase):
             metadata(1, topics=["llm"], name="a/llm"),
             metadata(2, description="proxy", name="a/proxy"),
             metadata(3, status="not_found", name="a/gone"),
-            metadata(4, name="a/other"),
+            # v0.1 会因 topic ai 判 included，v0.2 因无佐证词判 uncertain
+            metadata(4, description="team wiki", topics=["ai"], name="a/wiki"),
         ]
         write_csv(self.root / "repo_metadata.csv", METADATA_FIELDS, self.metadata)
         self.labels_v1 = label_rows(self.metadata, RULES)
@@ -652,16 +653,34 @@ class ReviewSheetPreservationTests(unittest.TestCase):
         self.assertEqual(merged["sheet_rows"], first["sheet_rows"])
         self.assertEqual(merged["reviewed_rows"], 1)
         self.assertEqual(merged["status"], "partial")
+        # 清单规则版本与本次读取的标签版本必须分开记录
+        self.assertEqual(merged["labels_rule_version"], "ai_rules_v0.2")
+        self.assertEqual(merged["sheet_rule_version"], "unknown_existing_sheet")
+        self.assertGreaterEqual(merged["sheet_auto_labels_differ_from_current"], 1)
 
-    def test_merge_generates_sheet_when_missing(self):
+    def test_merge_requires_existing_sheet_by_default(self):
+        """清单被删时不能临时按当前规则生成再合并旧判断。"""
+        write_json(self.root / "decisions.json", self.decisions("1"))
+        with self.assertRaises(FileNotFoundError):
+            review_run(
+                labels_csv=self.root / "repo_ai_labels.csv",
+                metadata_csv=self.root / "repo_metadata.csv",
+                out_dir=self.root,
+                decisions_path=self.root / "decisions.json",
+            )
+        self.assertFalse((self.root / "manual_review.csv").exists())
+
+    def test_merge_can_generate_sheet_with_explicit_flag(self):
         write_json(self.root / "decisions.json", self.decisions("1"))
         merged = review_run(
             labels_csv=self.root / "repo_ai_labels.csv",
             metadata_csv=self.root / "repo_metadata.csv",
             out_dir=self.root,
             decisions_path=self.root / "decisions.json",
+            allow_generate_sheet=True,
         )
         self.assertEqual(merged["sheet_source"], "generated_sheet")
+        self.assertEqual(merged["labels_rule_version"], merged["sheet_rule_version"])
         self.assertFalse(merged["reused_existing_sheet"])
         self.assertEqual(merged["reviewed_rows"], 1)
 

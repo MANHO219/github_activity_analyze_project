@@ -85,7 +85,7 @@
       "keyword_name 层来自名称粗筛，名称命中不等于 AI 判定；实际标签仍由 rules 决定。"
     ]
   },
-  "updated_at_utc": "2026-11-03T09:18:12Z",
+  "updated_at_utc": "2026-11-03T12:32:23Z",
   "fetch": {
     "started_at_utc": "2026-11-02T05:02:36Z",
     "finished_at_utc": "2026-11-02T05:03:07Z",
@@ -336,8 +336,22 @@
     "sheet": "b_repo_metadata/runs/pilot_01/manual_review.csv",
     "status": "complete",
     "sheet_source": "existing_sheet",
-    "rules_version_used": "ai_rules_v0.2",
-    "reused_existing_sheet": true
+    "labels_rule_version": "ai_rules_v0.2",
+    "sheet_rule_version": "unknown_existing_sheet",
+    "sheet_auto_labels_differ_from_current": 9,
+    "sheet_auto_labels_differ_repo_ids": [
+      "82206054",
+      "665478404",
+      "302309533",
+      "374770773",
+      "441317480",
+      "526345511",
+      "549894670",
+      "684223328",
+      "743305917"
+    ],
+    "reused_existing_sheet": true,
+    "note": "合并使用的是已有清单；清单里的 ai_label_auto 由生成清单时的规则版本决定，与当前标签版本的差异见 sheet_auto_labels_differ_from_current。"
   },
   "review_evidence": {
     "generated_at_utc": "2026-11-02T05:04:59Z",
@@ -413,7 +427,7 @@
       "ai_rules_v0.2"
     ],
     "analysis_label_policy": "manual_override",
-    "generated_at_utc": "2026-11-03T08:17:18Z",
+    "generated_at_utc": "2026-11-03T12:32:57Z",
     "environment": {
       "python_version": "3.12.14",
       "platform": "Windows-11-10.0.26200-SP0",

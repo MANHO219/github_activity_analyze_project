@@ -165,6 +165,8 @@ python scripts/manual_review.py --run-dir runs/pilot_02_review \
 
 - 按上面的复现顺序重跑后，`manual_review.csv` 与仓库中的版本逐字节一致（SHA-256 `07a92c95515dc159db39b91f34535cd7620506f2bf316f937ec6f2469514a693`）；
 - 误跑不带 `--decisions` 的 `manual_review.py` 会以退出码 3 拒绝覆盖，文件不变；
-- 把旧判断文件合并到另一轮清单时会以退出码 4 报错，并列出不在清单中的 `repo_id`。
+- 清单被删时带 `--decisions` 会以退出码 5 拒绝自动生成清单，不会把旧判断混进按新规则临时生成的名单；确实需要生成后合并时要显式加 `--allow-new-sheet`；
+- 把旧判断文件合并到另一轮清单时会以退出码 4 报错，并列出不在清单中的 `repo_id`；
+- 摘要区分 `labels_rule_version`（本次读取的标签版本，v0.2）与 `sheet_rule_version`（复用旧清单时为 `unknown_existing_sheet`），并记录清单自动标签与当前标签的差异：本次 9 条，与 v0.1→v0.2 的标签变化一致。人工一致率（6/8、17 条 resolve）是对**清单生成时的 v0.1 标签**算的；v0.2 与人工的对比见 `label_comparison.json`。
 
 各阶段摘要（`fetch_summary.json`、`label_summary.json`、`label_comparison.json`、`label_analysis_summary.json`、`manual_review_summary.json`、`join_check.json`）与合并后的 `run_summary.json` 都在同一运行目录，可与上表逐项对照。

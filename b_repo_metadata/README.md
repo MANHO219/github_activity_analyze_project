@@ -106,9 +106,11 @@ python scripts/join_check.py
 python scripts/build_run_summary.py --run-dir runs/pilot_01
 ```
 
-第 6 步只读取已有清单、把判断写回去，不会因为当前规则是 v0.2 就重新抽样。
+第 6 步有三个约束：只读取已有清单、把判断写回去，不会因为当前规则是 v0.2 就重新抽样；清单必须已存在，**缺失时直接以退出码 5 报错，不会自动生成**（复现时若误删，先用 `git checkout -- runs/pilot_01/manual_review.csv` 取回）；它会把清单里的自动标签与当前 v0.2 标签做差异统计，写进摘要的 `sheet_auto_labels_differ_from_current`（本次为 9 条，另有 2 条只是规则理由变化），提醒你人工一致率对应的是清单生成时的规则，而不是当前规则。
 
-**不要**在这里先运行不带 `--decisions` 的 `manual_review.py`：那个命令是“生成新清单”，目标目录已有 `manual_review.csv` 时会直接报错退出（这是保护措施，加 `--force` 才会覆盖）。
+**不要**在这里先运行不带 `--decisions` 的 `manual_review.py`：那个命令是“生成新清单”，目标目录已有 `manual_review.csv` 时会直接报错退出（这是保护措施，加 `--force` 才会覆盖）。确实需要在缺清单时临时生成再合并，得显式加 `--allow-new-sheet`，摘要会标记这次是“生成后合并”，提示可能混轮次。
+
+`manual_review_summary.json` 里版本字段分开记录：`labels_rule_version` 是本次读取的标签版本（v0.2），`sheet_rule_version` 是生成清单的版本（复用旧清单时记为 `unknown_existing_sheet`）。不要用后者之外的信息推断复核依据。
 
 ### B. 创建新一轮复核清单（换输出目录，不动 pilot_01）
 
@@ -121,7 +123,7 @@ python scripts/manual_review.py \
     --metadata runs/pilot_01/repo_metadata.csv
 ```
 
-生成 `runs/pilot_02_review/manual_review.csv` 与摘要，`runs/pilot_01/` 不受影响。清单写完后把判断存成新的 decisions 文件，再用同一命令加 `--decisions` 合并；如果判断文件的 `repo_id` 不在清单里，脚本会报错并提示换目录。
+生成 `runs/pilot_02_review/manual_review.csv` 与摘要，`runs/pilot_01/` 不受影响。清单写完后把判断存成新的 decisions 文件，再用同一命令加 `--decisions` 合并（这一次清单已存在，走的是合并模式）；如果判断文件的 `repo_id` 不在清单里，脚本会报错（退出码 4）并提示换目录。
 
 只有明确要覆盖同一目录时才用 `--force` —— 它会丢掉该目录已有的复核记录。
 
