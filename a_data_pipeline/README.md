@@ -6,12 +6,16 @@
 
 HTML 的字段、计数、真实例子和源码从实际运行读取并内嵌，单文件即可分享。后续更新文档可运行 `python scripts/build_data_guide.py --run-dir runs/20240115_1hour_handoff`；它只更新说明文件。
 
-按 [A 的启动计划](../A_启动任务_最小数据样本.md) 实现。默认读取 `2024-01-15` UTC 0 时；可逐步扩到 3 小时、24 小时。输出保留来源、清洗计数及异常记录，方便组员回查。
+按 [A 的启动计划](../A_启动任务_最小数据样本.md) 实现。默认读取 `2024-01-15` UTC 0 时；也支持指定多个小时。输出保留来源、清洗计数及异常记录，方便组员回查。
+
+**全天扩展：** 2024-01-15 的 24 小时档案和 Python 清洗结果已完成；全天 Spark 复算暂未完成。数量、交接包与限制见 [全天结果与交接](verification/20240115_1day/README.md)。完整数据保存在处理机本地，不随 Git 上传。
 
 ## 最快启动
 
+在项目仓库根目录执行：
+
 ```bash
-cd /Users/yipmanho/projects/cs5488/group_project/a_data_pipeline
+cd a_data_pipeline
 conda activate cs5488-data
 python scripts/run_sample.py --with-spark
 ```
@@ -31,6 +35,26 @@ python scripts/run_sample.py --with-spark
 `environment.yml` 用于跨平台创建环境；`environment.lock.osx-arm64.yml` 保存本次 Apple Silicon 环境的实际版本，已去除个人安装路径。
 
 真实样本及验证记录见 [验证摘要](verification/RESULTS.md)。
+
+## 获取更长时间的数据
+
+`run_sample.py` 每次处理 **一个 UTC 日期**。每个日期单独运行一次，即可逐日扩展时间范围。先在项目根目录进入 `a_data_pipeline/`，并按上面的步骤创建并激活环境，然后运行：
+
+```bash
+# 处理 2024-01-15 的完整 UTC 一天
+python scripts/run_sample.py --date 2024-01-15 --hours 0-23 --run-dir runs/20240115_python
+
+# 再处理紧接着的 2024-01-16
+python scripts/run_sample.py --date 2024-01-16 --hours 0-23 --run-dir runs/20240116_python
+```
+
+将日期和运行目录改成需要的值，即可继续处理其他日期。命令默认下载该日期 24 个 GH Archive 小时文件，校验后保存到 `data/raw/`，再运行原始检查和 Python 清洗；已有档案会验证后复用。每个 `--run-dir` 必须是**尚不存在的新目录**，以免覆盖旧结果。处理失败时保留失败目录，改用新目录重跑；已验证的原始档案可以复用。
+
+每个日期完成后，先看该运行目录里的 `HANDOFF.md`、`run_summary.json` 和 `python/quality_summary.json`；确认状态和小时覆盖后，再读取 `python/events_clean.parquet/`、`python/repo_daily_counts.csv` 和 `python/repo_candidates.csv`。原始档案与新的运行目录默认保留在本机，不会随 Git 自动共享。
+
+注意：每次运行只在该次输入内去重；多天结果合并时，还需检查**跨日期重复的 `event_id`**，不能直接假设每日结果相加就是全时间段的去重结果。所有日期按 UTC 处理，缺失小时不能当作没有活动。2024-01-15 全天原始压缩文件实测约 2.42 GiB，其他日期可能不同；扩大范围前请先确认网络与磁盘空间。
+
+以上是 Python 数据获取和处理流程。若需要复算 Spark，可在小样本命令后加 `--with-spark`；本机全天 Spark 尝试尚未通过，后续需单独处理和验证。
 
 ## 按检查点运行
 

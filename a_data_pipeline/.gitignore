@@ -1,4 +1,5 @@
 /data/
+/local_tools/
 
 # Keep one curated handoff snapshot. Other runs and large process databases stay local.
 /runs/*

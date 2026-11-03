@@ -1,0 +1,118 @@
+{
+  "generated_at_utc": "2026-11-03T11:58:49+00:00",
+  "date_utc": "2024-01-15",
+  "hours_utc": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23
+  ],
+  "rule_version": "a-events-v1",
+  "raw_archives": 24,
+  "raw_compressed_bytes": 2593554046,
+  "cleaned_events": 5528300,
+  "unique_repos": 852777,
+  "duplicates_removed": 1,
+  "conflicting_ids": 0,
+  "conflict_occurrences_excluded": 0,
+  "line_status_counts": {
+    "valid": 5528301
+  },
+  "quality_checks": {
+    "valid_count_reconciles": true,
+    "grouped_count_reconciles": true,
+    "clean_ids_unique": true
+  },
+  "python_spark_comparison_passed": null,
+  "comparison_checks": {},
+  "comparison_differences": {},
+  "candidate_comparison": {
+    "day_repos": 852777,
+    "first_hour_repos": 69768,
+    "seen_in_first_hour": 69768,
+    "new_since_first_hour": 783009,
+    "first_hour_not_in_day": 0,
+    "interpretation": "new_since_first_hour means newly observed in this day, not newly created on GitHub"
+  },
+  "stages": {
+    "pipeline": {
+      "state": "failed",
+      "started_at": "2026-11-03T11:35:27+00:00",
+      "finished_at": "2026-11-03T11:56:09+00:00",
+      "elapsed_seconds": 1242.027652
+    },
+    "download": {
+      "state": "completed",
+      "started_at": "2026-11-03T11:35:27+00:00",
+      "finished_at": "2026-11-03T11:41:04+00:00",
+      "elapsed_seconds": 336.524323
+    },
+    "inspection": {
+      "state": "completed",
+      "started_at": "2026-11-03T11:41:05+00:00",
+      "finished_at": "2026-11-03T11:44:14+00:00",
+      "elapsed_seconds": 189.395435
+    },
+    "python": {
+      "state": "completed",
+      "started_at": "2026-11-03T11:44:16+00:00",
+      "finished_at": "2026-11-03T11:50:15+00:00",
+      "elapsed_seconds": 359.407108,
+      "environment": {
+        "python": "3.11.17 (main, Oct  6 2026, 23:54:59) [Clang 21.1.8 ]",
+        "platform": "macOS-27.2-arm64-arm-64bit",
+        "cpu_count": 10,
+        "memory_bytes": 17179869184,
+        "packages": {
+          "pyarrow": "25.0.0",
+          "pyspark": "3.5.7",
+          "py4j": "0.10.9.7"
+        },
+        "code_sha256": "4c868b129a70b430ed9e5cd4b1684fd6ecda8120017e0abeabac9da566d4b1f9"
+      }
+    },
+    "spark": {
+      "state": "failed",
+      "started_at": "2026-11-03T11:50:16+00:00",
+      "finished_at": "2026-11-03T11:56:09+00:00",
+      "elapsed_seconds": 353.274095,
+      "settings": {
+        "master": "local[2]",
+        "java": "openjdk version \"17.0.18\" 2026-01-20 LTS\nOpenJDK Runtime Environment Zulu17.64+17-CA (build 17.0.18+8-LTS)\nOpenJDK 64-Bit Server VM Zulu17.64+17-CA (build 17.0.18+8-LTS, mixed mode, sharing)",
+        "timezone": "UTC",
+        "hour_file_partitions": 24
+      }
+    }
+  },
+  "inputs_sha256": {
+    "first_hour_candidates": "e11f5c20990233b45fa8fabe4e0eeeed401baceaaf6f108e1d2d3c6d463c0b09",
+    "day_candidates": "3b0ffd5a72723dd55e5889dacdf2b75febd607df9628d1000d7f1a371146c143"
+  },
+  "limits": [
+    "Archive availability does not establish complete GitHub event capture.",
+    "One day does not support repository lifecycle conclusions.",
+    "The full-day Spark run and cross-engine comparison are not verified.",
+    "Recorded pipeline durations include audit outputs and do not establish Spark speedup.",
+    "first_observed_at is the first event in this sample, not repository creation time."
+  ]
+}

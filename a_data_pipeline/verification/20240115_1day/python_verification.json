@@ -1,0 +1,22 @@
+{
+  "verified_at_utc": "2026-11-03T12:00:29+00:00",
+  "passed": true,
+  "checks": {
+    "parquet_event_count_matches_quality": true,
+    "daily_parquet_and_csv_group_counts_match": true,
+    "daily_parquet_and_csv_totals_match_events": true,
+    "daily_csv_event_types_match_quality": true,
+    "event_time_and_source_hour_are_utc_microseconds": true
+  },
+  "event_parquet_rows": 5528300,
+  "daily_parquet_groups": 1340785,
+  "daily_csv_groups": 1340785,
+  "daily_parquet_sum": 5528300,
+  "daily_csv_sum": 5528300,
+  "event_time_type": "timestamp[us, tz=UTC]",
+  "source_hour_type": "timestamp[us, tz=UTC]",
+  "limits": [
+    "This verifies counts, event-type totals and timestamp schema; it does not compare every CSV and Parquet row.",
+    "This does not verify the interrupted full-day Spark output."
+  ]
+}
