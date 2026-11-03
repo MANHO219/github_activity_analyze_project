@@ -8,7 +8,7 @@ HTML 的字段、计数、真实例子和源码从实际运行读取并内嵌，
 
 按 [A 的启动计划](../A_启动任务_最小数据样本.md) 实现。默认读取 `2024-01-15` UTC 0 时；也支持指定多个小时。输出保留来源、清洗计数及异常记录，方便组员回查。
 
-**全天扩展：** 2024-01-15 的 24 小时档案和 Python 清洗结果已完成；全天 Spark 复算暂未完成。数量、交接包与限制见 [全天结果与交接](verification/20240115_1day/README.md)。完整数据保存在处理机本地，不随 Git 上传。
+**全天扩展：** 2024-01-15 的 24 小时 Python 处理已完成；全天 Spark 复算暂未完成。Git 中提供一份可直接分析的[全天仓库活动汇总表](sample_data/20240115_24h/repo_daily_counts.csv)：1,340,785 行，字段为 `repo_id`、`event_date`、`event_type`、`event_count`，所有计数合计 5,528,300 条事件。它按仓库、UTC 日期和事件类型聚合，不包含逐条事件详情。其他数量与处理限制见[全天结果与交接](verification/20240115_1day/README.md)。完整事件表、原始档案和过程数据库保存在处理机本地；组员可按下文命令重新获取和生成。
 
 ## 最快启动
 
@@ -50,7 +50,7 @@ python scripts/run_sample.py --date 2024-01-16 --hours 0-23 --run-dir runs/20240
 
 将日期和运行目录改成需要的值，即可继续处理其他日期。命令默认下载该日期 24 个 GH Archive 小时文件，校验后保存到 `data/raw/`，再运行原始检查和 Python 清洗；已有档案会验证后复用。每个 `--run-dir` 必须是**尚不存在的新目录**，以免覆盖旧结果。处理失败时保留失败目录，改用新目录重跑；已验证的原始档案可以复用。
 
-每个日期完成后，先看该运行目录里的 `HANDOFF.md`、`run_summary.json` 和 `python/quality_summary.json`；确认状态和小时覆盖后，再读取 `python/events_clean.parquet/`、`python/repo_daily_counts.csv` 和 `python/repo_candidates.csv`。原始档案与新的运行目录默认保留在本机，不会随 Git 自动共享。
+每个日期完成后，先看该运行目录里的 `HANDOFF.md`、`run_summary.json` 和 `python/quality_summary.json`；确认状态和小时覆盖后，再读取 `python/events_clean.parquet/`、`python/repo_daily_counts.csv` 和 `python/repo_candidates.csv`。2024-01-15 的全天仓库活动汇总表已放在 `sample_data/20240115_24h/` 供组员直接使用；其他运行目录和逐条事件数据默认保留在本机，不会随 Git 自动共享。
 
 注意：每次运行只在该次输入内去重；多天结果合并时，还需检查**跨日期重复的 `event_id`**，不能直接假设每日结果相加就是全时间段的去重结果。所有日期按 UTC 处理，缺失小时不能当作没有活动。2024-01-15 全天原始压缩文件实测约 2.42 GiB，其他日期可能不同；扩大范围前请先确认网络与磁盘空间。
 
@@ -99,6 +99,7 @@ a_data_pipeline/
 │   ├── compare.py               # 两条路径的输入及输出核对
 │   └── cli.py                  # 分阶段命令与完整流程
 ├── tests/test_pipeline.py       # 已知结果的异常场景验证
+├── sample_data/                 # 精选共享数据；当前含 24 小时仓库活动汇总表
 ├── data/raw/                    # 原始 .json.gz 与失败下载 .part
 └── runs/<运行名>/               # 每次独立运行的全部过程和结果
 ```

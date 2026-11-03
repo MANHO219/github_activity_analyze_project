@@ -43,6 +43,7 @@ B 的第一轮已完成并留在 [b_repo_metadata/](b_repo_metadata/)：50 个�
 │   ├── docs/                      ← 文档模板与证据快照
 │   ├── verification/              ← 验证记录
 │   ├── tests/                     ← 已有测试代码
+│   ├── sample_data/                ← 一份精选的 24 小时仓库活动汇总表
 │   ├── data/                      ← 原始下载，本地保留，Git 忽略
 │   └── runs/                      ← 只提交一份精选交接结果
 └── b_repo_metadata/                ← B：元数据、AI 标签、复核与接回事件表
@@ -72,9 +73,9 @@ python scripts/run_sample.py --with-spark
 
 ## 哪些内容在 GitHub，哪些在本地
 
-仓库包含代码、环境文件、说明、验证记录，以及 `20240115_1hour_handoff` 中的一套 Python 最终分析表与关键报告。事件 Parquet、候选仓库和活动计数均为完整的这一个小时样本；`events_preview.csv` 是 100 行预览。
+仓库包含代码、环境文件、说明、验证记录，以及 `20240115_1hour_handoff` 中的一小时 Python 样本。另有一份 24 小时汇总表：[`repo_daily_counts.csv`](a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv)，按 `repo_id × UTC 日期 × event_type` 统计，共 1,340,785 行，约 48 MB，适合组员直接开始做汇总分析。它不是逐条事件表。
 
-原始 `.json.gz`、SQLite 中间数据库、Spark 复算输出、旧试跑目录和缓存由 `.gitignore` 排除。本机原件继续保留。需要回查完整 payload 或过程数据库时，可联系 A 取得，或复跑生成。HTML 中指向未提交产物的文件链接，需要拿到对应本地文件后才可打开。
+完整的 24 小时逐条事件表、原始 `.json.gz`、SQLite 中间数据库、Spark 复算输出、旧试跑目录和缓存由 `.gitignore` 排除。本机原件继续保留。需要这些完整数据时，可按 A 的说明下载原始档案并重新运行；需要回查完整 payload 或过程数据库时，也可联系 A。HTML 中指向未提交产物的文件链接，需要拿到对应本地文件后才可打开。
 
 重新生成完整 HTML 需要原始档案与完整交接运行（包括未提交的 SQLite 等文件）。clone 后可直接阅读已有 HTML；新电脑若要重新生成，可先复跑样本，再给 `scripts/build_data_guide.py` 指定新运行目录。
 
