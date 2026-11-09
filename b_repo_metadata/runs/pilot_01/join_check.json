@@ -1,5 +1,5 @@
 {
-  "checked_at_utc": "2026-11-09T03:52:21Z",
+  "checked_at_utc": "2026-11-09T07:20:04Z",
   "event_source": "repo_candidates.csv:event_count",
   "events_total_in_source": 197313,
   "pilot_repos": 50,

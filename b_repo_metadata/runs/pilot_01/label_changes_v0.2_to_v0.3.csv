@@ -1,0 +1,11 @@
+repo_id,observed_repo_name,old_label,old_rule,new_label,new_rule,change_type,explanation
+684223328,tannerhawkins/tannerhawkins,excluded,R3c_profile_repository,uncertain,R3c_profile_suspected,excluded->uncertain,v0.3 把个人主页改为疑似（需 README 确认）；README 无文字证据时维持 uncertain
+302309533,joaolucassilva/joaolucassilva,excluded,R3c_profile_repository,excluded,R11_readme_profile,rule_reason_only,v0.3 用 README 确认个人主页后排除：同名 + 无描述/topics/语言 + README 自我介绍
+374770773,PauloHenriqueJr/paulohenriquejr,excluded,R3c_profile_repository,excluded,R11_readme_profile,rule_reason_only,v0.3 用 README 确认个人主页后排除：同名 + 无描述/topics/语言 + README 自我介绍
+441317480,sidneyvmml/sidneyvmml,excluded,R3c_profile_repository,excluded,R11_readme_profile,rule_reason_only,v0.3 用 README 确认个人主页后排除：同名 + 无描述/topics/语言 + README 自我介绍
+526345511,NaiaraMorte/NaiaraMorte,excluded,R3c_profile_repository,excluded,R11_readme_profile,rule_reason_only,v0.3 用 README 确认个人主页后排除：同名 + 无描述/topics/语言 + README 自我介绍
+549894670,rafaelserpaa/rafaelserpaa,excluded,R3c_profile_repository,excluded,R11_readme_profile,rule_reason_only,v0.3 用 README 确认个人主页后排除：同名 + 无描述/topics/语言 + README 自我介绍
+647729619,manifoldailearning/mlops-with-aws-datascientists,uncertain,R6_name_only_signal,excluded,R10_readme_coursework,uncertain->excluded,v0.3 用 README 确认课程/训练营资料，由 uncertain 改判 excluded
+653701739,aws-samples/amazon-chime-sdk-call-analytics-real-time-summarizer,uncertain,R7_insufficient_text_evidence,included,R9_readme_ai,uncertain->included,v0.3 允许 README 辅助：描述为空但 README 有明确 AI 证据，由 uncertain 改判 included
+731867521,ThatIsUAlso123/ML-project,uncertain,R6_name_only_signal,included,R9_readme_ai,uncertain->included,v0.3 允许 README 辅助：README 出现明确 AI 技术证据，由 uncertain 改判 included
+743310414,AILEXGPT/nextjs-flask-starter,uncertain,R6_name_only_signal,included,R9_readme_ai,uncertain->included,v0.3 允许 README 辅助：README 出现明确 AI 技术证据，由 uncertain 改判 included

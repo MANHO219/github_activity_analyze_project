@@ -10,15 +10,16 @@
 |---|---|
 | 试跑名单 | 50 个仓库：40 个随机抽样 + 10 个名称关键词过采样（固定种子 `5488`） |
 | 元数据获取 | 43 个成功（ID 一致）、2 个 ID 不一致、5 个 404；共 50 次 API 调用 |
-| AI 标签（规则 v0.3） | `included` 4、`excluded` 30、`uncertain` 16 |
+| AI 标签（规则 v0.3.1） | `included` 4、`excluded` 30、`uncertain` 16 |
 | 与 v0.2 对比 | 5 条标签变化 + 5 条仅理由变化；README 补足 3 个 AI 项目、1 个课程仓库 |
+| v0.3 → v0.3.1 | 0 条标签变化：收紧 README 判 AI 与个人主页条件后，50 个仓库里没有两类误判样本 |
 | 与人工复核 | 本轮复核样本中自动已判定的 17 条全部与人工一致；这只代表 33 条复核样本，不代表整体分类准确率 |
 | 人工复核 | 33 条：included 全查 3、excluded 抽 5、uncertain 全查 25 |
 | 分析用标签 | 默认“人工优先”口径下：included 4、excluded 38、uncertain 8（人工 33 行、自动 17 行） |
 | 接回事件表 | 50/50 个试点仓库都能按 `repo_id` 匹配到 A 的 `events_clean.parquet`（197,313 条事件中 159 条属于这 50 个仓库） |
-| 离线测试 | 63 项全部通过（不联网） |
+| 离线测试 | 70 项全部通过（不联网） |
 
-详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.md](rules/ai_rules_v0.3.md)；标签交接口径见 [LABELS.md](LABELS.md)。
+详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.1.md](rules/ai_rules_v0.3.1.md)；标签交接口径见 [LABELS.md](LABELS.md)。
 
 ## 交付物结构
 
@@ -31,7 +32,8 @@ b_repo_metadata/
 ├── rules/
 │   ├── ai_rules_v0.1.md / .json       ← 第一版（保留，用于对比）
 │   ├── ai_rules_v0.2.md / .json       ← 第二版（保留，用于对比）
-│   └── ai_rules_v0.3.md / .json       ← 当前版本：五条口径、README 辅助、课程与个人主页收紧
+│   ├── ai_rules_v0.3.md / .json       ← 第三版：五条口径、README 辅助
+│   └── ai_rules_v0.3.1.md / .json     ← 当前版本：README 判 AI/个人主页收紧
 ├── reviews/pilot_01_decisions.json    ← 第一轮人工判断与理由（不覆盖）
 ├── reviews/pilot_01_revision_check_v0.3.json ← 新口径对旧判断的影响检查
 ├── bmeta/                             ← 实现包（与 A 的 gharchive_a 对应）
@@ -190,8 +192,8 @@ python scripts/fetch_readme_evidence.py --run-dir runs/pilot_01
 
 ## 规则版本
 
-- 当前规则 `ai_rules_v0.3`：按 A 确认的五条口径实现——弱信号维持 `uncertain`；只附加 AI 功能的项目排除；README 可辅助判断；课程作业需确认语义；个人主页先记疑似、README 确认才排除。
-- `ai_rules_v0.1`、`ai_rules_v0.2` 与各自的标签表都保留；v0.1→v0.2 的逐条差异在 `label_changes_v0.1_to_v0.2.csv`，v0.2→v0.3 在 `label_changes.csv`。
+- 当前规则 `ai_rules_v0.3.1`：在 v0.3 五条口径基础上，收紧 README 判 AI（强证据或多次弱词+佐证，未来意图行先剔除）与个人主页确认（必须先被判疑似，且 README 无工程章节）。
+- `ai_rules_v0.1`、`ai_rules_v0.2`、`ai_rules_v0.3` 与各自的标签表都保留；v0.1→v0.2 在 `label_changes_v0.1_to_v0.2.csv`，v0.2→v0.3 在 `label_changes_v0.2_to_v0.3.csv`，v0.3→v0.3.1 在 `label_changes.csv`（本次 0 条）。
 - 新口径对第一轮人工判断的影响检查见 `reviews/pilot_01_revision_check_v0.3.json`：无需改判，旧判断不覆盖。
 
 ## 与 A、C 的接口
@@ -205,12 +207,12 @@ python scripts/fetch_readme_evidence.py --run-dir runs/pilot_01
 python -m unittest discover -s tests -v
 ```
 
-测试覆盖名单抽样的确定性、v0.1/v0.2/v0.3 规则各分支、README 辅助判断（补足、不覆盖、无信号保留存疑）、抓取层的 200/404/ID 不一致/限流/失败缓存策略、复核合并的校验、版本对比与口径合并，以及接回事件表的计数与两个占比分母；全部离线，不需要 token。
+测试覆盖名单抽样的确定性与排除、v0.1/v0.2/v0.3/v0.3.1 规则各分支、README 辅助判断（强/弱证据、未来意图、个人主页与工程章节、补足但不覆盖）、抓取层的 200/404/ID 不一致/限流/失败缓存策略、复核合并的校验、版本对比与口径合并，以及接回事件表的计数与两个占比分母；全部离线，不需要 token。
 
 ## 已知限制
 
 - 首批 50 个是分层样本（其中 10 个按名称过采样），**不能**用来估计整个 GitHub 的 AI 仓库比例。
-- v0.3 仍有 16 个 `uncertain`：8 个元数据缺失/空仓库，其余是弱信号、个人主页无文字证据、README 也无判据的仓库。
+- v0.3.1 仍有 16 个 `uncertain`：8 个元数据缺失/空仓库，其余是弱信号、个人主页无文字证据、README 也无判据的仓库。
 - `17/17 = 100%` 只表示**当前复核样本中自动已判定的 17 条**与人工一致，不是整体分类准确率；复核只覆盖 33 个仓库。
 - 事件覆盖只有 2024-01-15 UTC 00:00–01:00 这一个小时，生命周期分析要等 A 扩展时间窗后重跑。
 - README 证据是复核与标注的辅助材料，会随时间变化；每行记录了快照时间与哈希，但 README 内容本身可能已变。

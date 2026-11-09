@@ -1,38 +1,37 @@
 {
-  "compared_at_utc": "2026-11-09T03:50:34Z",
-  "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.2.csv",
+  "compared_at_utc": "2026-11-09T07:20:04Z",
+  "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.csv",
   "new_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
-  "old_rule_version": "ai_rules_v0.2",
-  "new_rule_version": "ai_rules_v0.3",
+  "old_rule_version": "ai_rules_v0.3",
+  "new_rule_version": "ai_rules_v0.3.1",
   "rows": 50,
-  "changed_rows": 10,
-  "label_changed_rows": 5,
-  "rule_reason_changed_rows": 5,
+  "changed_rows": 0,
+  "label_changed_rows": 0,
+  "rule_reason_changed_rows": 0,
   "confusion_matrix": {
     "included": {
-      "included": 1
+      "included": 4
     },
     "excluded": {
-      "excluded": 29,
-      "uncertain": 1
+      "excluded": 30
     },
     "uncertain": {
-      "excluded": 1,
-      "included": 3,
-      "uncertain": 15
+      "uncertain": 16
     }
   },
   "per_rule_old": {
+    "R10_readme_coursework": 1,
+    "R11_readme_profile": 5,
     "R1_metadata_unavailable": 5,
     "R2_api_id_mismatch": 2,
     "R3_resource_collection": 3,
     "R3b_coursework": 3,
-    "R3c_profile_repository": 6,
+    "R3c_profile_suspected": 1,
     "R4b_weak_topic_only": 1,
     "R5b_weak_signal_corroborated": 1,
-    "R6_name_only_signal": 3,
-    "R7_insufficient_text_evidence": 8,
-    "R8_no_ai_signal": 18
+    "R7_insufficient_text_evidence": 7,
+    "R8_no_ai_signal": 18,
+    "R9_readme_ai": 3
   },
   "per_rule_new": {
     "R10_readme_coursework": 1,
@@ -53,9 +52,9 @@
     "reviewed_rows": 33,
     "old_version": {
       "reviewed_rows": 33,
-      "agree": 14,
+      "agree": 17,
       "disagree": 0,
-      "resolves": 11,
+      "resolves": 8,
       "kept_uncertain": 8,
       "agreement_rate_on_decided_rows": 1.0
     },
@@ -67,15 +66,8 @@
       "kept_uncertain": 8,
       "agreement_rate_on_decided_rows": 1.0
     },
-    "improved_repo_ids": [
-      "647729619",
-      "653701739",
-      "731867521",
-      "743310414"
-    ],
-    "regressed_repo_ids": [
-      "684223328"
-    ],
+    "improved_repo_ids": [],
+    "regressed_repo_ids": [],
     "still_uncertain_repo_ids": [
       "82206054",
       "271994210",

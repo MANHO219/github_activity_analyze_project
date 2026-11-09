@@ -39,6 +39,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--random-size", type=int, help="随机层大小；默认取配置")
     parser.add_argument("--keyword-size", type=int, help="关键词层大小；默认取配置")
     parser.add_argument("--force", action="store_true", help="覆盖已存在的 pilot_candidates.csv")
+    parser.add_argument(
+        "--exclude",
+        help="排除名单 CSV（读取 repo_id 列，如上一轮的 pilot_candidates.csv），用于扩大试跑时不重叠",
+    )
     return parser.parse_args(argv)
 
 
@@ -57,24 +61,37 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     candidates_rows = read_csv(candidates)
+    exclude_rows = read_csv(Path(args.exclude)) if args.exclude else []
+    exclude_ids = {int(row["repo_id"]) for row in exclude_rows}
     pilot_rows = select_pilot(
-        candidates_rows, seed=seed, random_size=random_size, keyword_size=keyword_size
+        candidates_rows,
+        seed=seed,
+        random_size=random_size,
+        keyword_size=keyword_size,
+        exclude_ids=exclude_ids,
     )
     write_csv(pilot_csv, SELECTED_FIELDS, pilot_rows)
 
     strata = stratum_counts(pilot_rows)
     selection = {
-        "pilot_version": config["pilot_version"],
+        "pilot_version": out_dir.name,
         "generated_at_utc": utc_now(),
         "method": (
-            "Sort candidates by repo_id; draw `random` stratum with random.Random(seed).sample; "
-            "then draw `keyword_name` stratum from remaining rows whose owner/repo name matches the "
-            "coarse AI name probe. The keyword stratum is deliberately oversampled for rule coverage "
-            "and must not be used to estimate GitHub-wide AI share."
+            "Sort candidates by repo_id (after removing excluded ids); draw `random` stratum with "
+            "random.Random(seed).sample; then draw `keyword_name` stratum from remaining rows whose "
+            "owner/repo name matches the coarse AI name probe. The keyword stratum is deliberately "
+            "oversampled for rule coverage and must not be used to estimate GitHub-wide AI share."
         ),
         "seed": seed,
         "strata_requested": {"random": random_size, "keyword_name": keyword_size},
         "strata_actual": strata,
+        "excluded": {
+            "path": project_relative(Path(args.exclude)),
+            "rows": len(exclude_ids),
+            "sha256": sha256_file(Path(args.exclude)),
+        }
+        if args.exclude
+        else None,
         "input": {
             "path": project_relative(candidates),
             "rows": len(candidates_rows),

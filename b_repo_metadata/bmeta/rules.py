@@ -104,7 +104,18 @@ class RuleSet:
                 readme_rules = dict(rules.get("readme_rules") or {})
                 self.readme_profile = _compile(readme_rules.get("profile_patterns", []))
                 self.readme_coursework = _compile(readme_rules.get("coursework_patterns", []))
-                self.readme_ai = _compile(readme_rules.get("ai_patterns", []))
+                # v0.3.1 起把 README 的 AI 证据拆成强/弱两档，并引入未来意图与工程章节过滤；
+                # 兼容只有 ai_patterns 的 v0.3 规则文件。
+                if readme_rules.get("ai_strong_patterns") or readme_rules.get("ai_weak_patterns"):
+                    self.readme_ai_strong = _compile(readme_rules.get("ai_strong_patterns", []))
+                    self.readme_ai_weak = _compile(readme_rules.get("ai_weak_patterns", []))
+                else:
+                    self.readme_ai_strong = _compile(readme_rules.get("ai_patterns", []))
+                    self.readme_ai_weak = []
+                self.readme_ai = self.readme_ai_strong
+                self.readme_future = _compile(readme_rules.get("future_markers", []))
+                self.readme_project_sections = _compile(readme_rules.get("project_sections", []))
+                self.min_weak_mentions = int(readme_rules.get("min_weak_mentions", 3) or 3)
         else:
             self.topic_terms = {term.lower() for term in rules.get("ai_topic_terms", [])}
             self.description = _compile(rules.get("ai_description_patterns", []))
@@ -247,20 +258,50 @@ class RuleSet:
             row["readme_fetched_at_utc"] = fetched
             return row
 
-        profile_hits = _matches(self.readme_profile, text)
-        if profile_hits:
-            return with_readme("excluded", "R11_readme_profile", "readme=" + ",".join(_dedupe(profile_hits)))
+        # 个人主页：只有规则本身已判为疑似（同名 + 无描述 + 无 topics + 无语言）时，
+        # 才用 README 确认；README 还必须没有工程章节，避免把 ML 项目的作者介绍当成个人主页。
+        if base["rule_id"] == "R3c_profile_suspected":
+            profile_hits = _matches(self.readme_profile, text)
+            if profile_hits and not _matches(self.readme_project_sections, text):
+                return with_readme("excluded", "R11_readme_profile", "readme=" + ",".join(_dedupe(profile_hits)))
+
         course_hits = _matches(self.readme_coursework, text)
         if course_hits:
             return with_readme("excluded", "R10_readme_coursework", "readme=" + ",".join(_dedupe(course_hits)))
-        ai_hits = _matches(self.readme_ai, text)
-        if ai_hits:
-            return with_readme("included", "R9_readme_ai", "readme=" + ",".join(_dedupe(ai_hits)))
+
+        # AI 证据：先剔除“计划/以后/roadmap”这类未来意图行；要求强证据，
+        # 或弱词出现至少 N 次且有佐证词，避免一句“以后打算加 AI”就被纳入。
+        usable = self._readme_without_future(text)
+        strong_hits = _matches(self.readme_ai_strong, usable)
+        if strong_hits:
+            return with_readme("included", "R9_readme_ai", "readme=" + ",".join(_dedupe(strong_hits)))
+
+        weak_count = self._count_weak_mentions(usable)
+        weak_hits = _matches(self.readme_ai_weak, usable)
+        corroboration = _matches(self.corroboration, usable)
+        if weak_count >= self.min_weak_mentions and corroboration and weak_hits:
+            return with_readme(
+                "included",
+                "R9_readme_ai",
+                f"readme={','.join(_dedupe(weak_hits))};mentions={weak_count};corroboration={','.join(_dedupe(corroboration))}",
+            )
 
         base["readme_evidence"] = "no_signal"
         base["readme_sha256"] = sha
         base["readme_fetched_at_utc"] = fetched
         return base
+
+    def _readme_without_future(self, text: str) -> str:
+        if not self.readme_future:
+            return text
+        kept = [line for line in text.splitlines() if not _matches(self.readme_future, line)]
+        return "\n".join(kept)
+
+    def _count_weak_mentions(self, text: str) -> int:
+        total = 0
+        for _, pattern in self.readme_ai_weak:
+            total += len(pattern.findall(text))
+        return total
 
     def _base_v3(self, result, description, full_name, topics, language):
         # 课程作业：强语义（final-project / openclassrooms / capstone）可直接判定；

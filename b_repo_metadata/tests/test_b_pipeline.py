@@ -108,6 +108,17 @@ class SelectTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             select_pilot(self.rows, seed=1, random_size=30, keyword_size=5)
 
+    def test_exclude_ids_are_not_selected(self):
+        excluded = {int(row["repo_id"]) for row in self.rows[:5]}
+        picked = select_pilot(
+            self.rows, seed=5488, random_size=10, keyword_size=5, exclude_ids=excluded
+        )
+        self.assertFalse(excluded & {int(row["repo_id"]) for row in picked})
+        again = select_pilot(
+            self.rows, seed=5488, random_size=10, keyword_size=5, exclude_ids=excluded
+        )
+        self.assertEqual(picked, again)
+
 
 class RulesTests(unittest.TestCase):
     def label(self, row):
@@ -764,6 +775,64 @@ class RulesV3Tests(unittest.TestCase):
         result = self.label(row, self.readme("Hi, I'm a student. About me: learning web dev."))
         self.assertEqual(result["ai_label"], "included")
         self.assertEqual(result["readme_evidence"], "")
+
+
+class RulesV31Tests(unittest.TestCase):
+    """v0.3.1：README 判 AI 要“核心证据”，个人主页要“整篇像主页”。"""
+
+    RULES = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.1.json"))
+
+    @staticmethod
+    def readme(text, sha="sha31", fetched="2026-11-02T00:00:00Z"):
+        return {"text": text, "sha256": sha, "fetched_at_utc": fetched}
+
+    def test_future_ai_plan_is_not_included(self):
+        row = metadata(21, name="someone/calendar")
+        result = self.RULES.decide(
+            row,
+            readme=self.readme("A calendar app for teams.\n## Roadmap\nWe plan to add AI features in 2027."),
+        )
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["readme_evidence"], "no_signal")
+
+    def test_single_weak_ai_mention_is_not_included(self):
+        row = metadata(22, name="someone/todo")
+        result = self.RULES.decide(row, readme=self.readme("A todo app. We use AI to sort tasks."))
+        self.assertEqual(result["ai_label"], "uncertain")
+
+    def test_repeated_weak_mentions_with_corroboration_included(self):
+        row = metadata(23, name="someone/tools")
+        result = self.RULES.decide(
+            row,
+            readme=self.readme("AI assistant for notes. The AI model runs locally. AI chat with your files."),
+        )
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R9_readme_ai")
+
+    def test_author_bio_in_real_project_does_not_exclude(self):
+        row = metadata(24, name="acme/ml-toolkit")
+        text = (
+            "# ML toolkit\n"
+            "## About me\nHi, I'm Alice, a researcher.\n"
+            "## Install\npip install ml-toolkit\n"
+            "## Usage\nA machine learning toolkit for training models.\n"
+        )
+        result = self.RULES.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R9_readme_ai")
+
+    def test_profile_suspected_with_plain_bio_excluded(self):
+        row = metadata(25, name="alice/alice", language="")
+        result = self.RULES.decide(row, readme=self.readme("Hi, I'm Alice.\n## About me\nBackend developer."))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R11_readme_profile")
+
+    def test_profile_suspected_with_engineering_sections_stays_uncertain(self):
+        row = metadata(26, name="bob/bob", language="")
+        text = "Hi, I'm Bob.\n## About me\nDeveloper.\n## Install\npip install bob\n## Usage\nA small library."
+        result = self.RULES.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R3c_profile_suspected")
 
 
 class CompareAndHandoffTests(unittest.TestCase):

@@ -1,0 +1,1034 @@
+{
+  "version": "ai_rules_v0.3.1",
+  "engine": "v3",
+  "status": "adopted_per_A_feedback",
+  "supersedes": "ai_rules_v0.3",
+  "updated_at_utc": "2026-11-09T08:00:00Z",
+  "owner": "B",
+  "changes_from_v0_1": [
+    "裸 ai/ml 信号降为弱信号：单独出现不再直接 included，需要描述中的佐证词，否则记 uncertain（R4b/R5c）。",
+    "新增课程作业识别 R3b：仓库名或描述含 course/final-project/assignment/openclassrooms 等。",
+    "新增个人主页仓库识别 R3c：owner/repo 同名且描述与 topics 都为空。",
+    "AI 关键词表拆分为 strong/weak 两组；加入佐证词表 corroboration_patterns。",
+    "名称命中仍保留 uncertain（R6），因为名称不足以区分课程作业、个人项目与真实 AI 项目。"
+  ],
+  "open_questions": [
+    "弱信号（裸 ai/ml）+ 非 AI 描述，是否应直接 excluded 而不是 uncertain？GROWI 案例。",
+    "仅集成 AI 功能、主体非 AI 的项目是否纳入？v0.2 仍沿用 v0.1 的纳入口径，未单独排除。",
+    "名称命中且描述为空的仓库是否允许抓 README 作为规则输入？v0.2 仍交给人工复核。"
+  ],
+  "scope": {
+    "included": "仓库的 topic 或描述表明其核心用途是 AI/机器学习：模型、训练/推理、数据集与评测、AI 应用或 AI 工程工具。",
+    "excluded": "命中资料集合、课程作业、个人主页仓库等排除模式；或元数据可读但没有任何 AI 信号。excluded 只表示“本轮规则未命中或明确不属于研究对象”，不是对仓库价值的判断。",
+    "resource_collection": "awesome 列表、教程、课程资料、学习笔记、题库、链接合集一律排除。",
+    "coursework": "学校课程、公开课、训练营作业采用同一标准排除，但必须确认是作业：仅命中 course、lab 等词不足以排除，需要明确的作业语义或描述佐证。",
+    "profile_repository": "owner/repo 同名 + 无描述 + 无 topics + 无语言只算疑似个人主页，记 uncertain；README 明确是个人主页时才排除。",
+    "ai_feature_only": "主体不是 AI、只附加 AI 功能（如 wiki 里的 AI 助手）的项目排除；以 AI 为核心功能的应用纳入，包括调用模型 API、不自己训练模型的应用。",
+    "metadata_missing": "取不到元数据或返回 id 与 A 的 repo_id 不一致时，一律 uncertain。",
+    "weak_signal": "裸 ai/ml 视为弱信号：单独出现维持 uncertain；描述里没有 AI 不代表一定不相关，只有明确证据表明不属于研究范围时才排除。",
+    "readme_assist": "README 可作为辅助证据，优先用于描述缺失、名称命中或证据冲突的仓库；保存快照时间、哈希与判定依据，规则与人工标签都不被覆盖。"
+  },
+  "strong_topic_terms": [
+    "artificial-intelligence",
+    "machine-learning",
+    "machinelearning",
+    "deep-learning",
+    "deeplearning",
+    "neural-network",
+    "neural-networks",
+    "llm",
+    "llms",
+    "large-language-model",
+    "large-language-models",
+    "gpt",
+    "chatgpt",
+    "generative-ai",
+    "genai",
+    "transformers",
+    "transformer",
+    "pytorch",
+    "tensorflow",
+    "keras",
+    "scikit-learn",
+    "sklearn",
+    "nlp",
+    "natural-language-processing",
+    "computer-vision",
+    "reinforcement-learning",
+    "rag",
+    "retrieval-augmented-generation",
+    "stable-diffusion",
+    "diffusion",
+    "diffusion-models",
+    "embedding",
+    "embeddings",
+    "vector-database",
+    "vector-search",
+    "semantic-search",
+    "llm-agents",
+    "ai-agents",
+    "chatbot",
+    "chatbots",
+    "prompt-engineering",
+    "fine-tuning",
+    "mlops",
+    "model-serving",
+    "openai",
+    "langchain",
+    "huggingface",
+    "llama",
+    "mistral",
+    "qwen",
+    "whisper",
+    "yolo",
+    "speech-recognition",
+    "text-to-speech",
+    "object-detection",
+    "image-classification",
+    "gans",
+    "gan"
+  ],
+  "weak_topic_terms": [
+    "ai",
+    "ml"
+  ],
+  "strong_description_patterns": [
+    {
+      "id": "machine_learning",
+      "regex": "\\bmachine[\\s-]?learning\\b"
+    },
+    {
+      "id": "deep_learning",
+      "regex": "\\bdeep[\\s-]?learning\\b"
+    },
+    {
+      "id": "artificial_intelligence",
+      "regex": "\\bartificial[\\s-]?intelligence\\b"
+    },
+    {
+      "id": "neural_network",
+      "regex": "\\bneural[\\s-]?networks?\\b"
+    },
+    {
+      "id": "computer_vision",
+      "regex": "\\bcomputer[\\s-]?vision\\b"
+    },
+    {
+      "id": "nlp",
+      "regex": "\\bnatural[\\s-]?language[\\s-]?processing\\b"
+    },
+    {
+      "id": "llm",
+      "regex": "\\bllms?\\b"
+    },
+    {
+      "id": "large_language_model",
+      "regex": "\\blarge[\\s-]?language[\\s-]?models?\\b"
+    },
+    {
+      "id": "language_model",
+      "regex": "\\blanguage[\\s-]?models?\\b"
+    },
+    {
+      "id": "gpt",
+      "regex": "\\bgpt[-\\s]?\\d*\\b"
+    },
+    {
+      "id": "chatgpt",
+      "regex": "\\bchatgpt\\b"
+    },
+    {
+      "id": "generative_ai",
+      "regex": "\\bgenerative[\\s-]?(ai|artificial[\\s-]?intelligence)\\b"
+    },
+    {
+      "id": "stable_diffusion",
+      "regex": "\\bstable[\\s-]?diffusion\\b"
+    },
+    {
+      "id": "diffusion_model",
+      "regex": "\\bdiffusion[\\s-]?models?\\b"
+    },
+    {
+      "id": "transformer",
+      "regex": "\\btransformer[s]?\\b"
+    },
+    {
+      "id": "pytorch",
+      "regex": "\\bpytorch\\b"
+    },
+    {
+      "id": "tensorflow",
+      "regex": "\\btensorflow\\b"
+    },
+    {
+      "id": "keras",
+      "regex": "\\bkeras\\b"
+    },
+    {
+      "id": "scikit_learn",
+      "regex": "\\bscikit[\\s-]?learn\\b"
+    },
+    {
+      "id": "reinforcement_learning",
+      "regex": "\\breinforcement[\\s-]?learning\\b"
+    },
+    {
+      "id": "rag",
+      "regex": "\\bretrieval[\\s-]?augmented[\\s-]?generation\\b|\\brag\\b"
+    },
+    {
+      "id": "fine_tuning",
+      "regex": "\\bfine[\\s-]?tun(e|ed|ing)\\b"
+    },
+    {
+      "id": "prompt_engineering",
+      "regex": "\\bprompt[\\s-]?engineering\\b"
+    },
+    {
+      "id": "vector_store",
+      "regex": "\\bvector[\\s-]?(database|db|store|search|embeddings?)\\b"
+    },
+    {
+      "id": "embedding",
+      "regex": "\\bembedding[s]?\\b"
+    },
+    {
+      "id": "huggingface",
+      "regex": "\\bhugging[\\s-]?face\\b"
+    },
+    {
+      "id": "langchain",
+      "regex": "\\blangchain\\b"
+    },
+    {
+      "id": "openai",
+      "regex": "\\bopenai\\b"
+    },
+    {
+      "id": "anthropic",
+      "regex": "\\banthropic\\b"
+    },
+    {
+      "id": "nlp_token",
+      "regex": "\\bnlp\\b"
+    },
+    {
+      "id": "chatbot",
+      "regex": "\\bchat[\\s-]?bots?\\b"
+    },
+    {
+      "id": "speech",
+      "regex": "\\bspeech[\\s-]?(recognition|synthesis)\\b"
+    },
+    {
+      "id": "text_to_speech",
+      "regex": "\\btext[\\s-]?to[\\s-]?speech\\b"
+    },
+    {
+      "id": "object_detection",
+      "regex": "\\bobject[\\s-]?detection\\b"
+    },
+    {
+      "id": "image_classification",
+      "regex": "\\bimage[\\s-]?classification\\b"
+    },
+    {
+      "id": "mlops",
+      "regex": "\\bmlops\\b"
+    },
+    {
+      "id": "zh_machine_learning",
+      "regex": "机器学习"
+    },
+    {
+      "id": "zh_deep_learning",
+      "regex": "深度学习"
+    },
+    {
+      "id": "zh_artificial_intelligence",
+      "regex": "人工智能"
+    },
+    {
+      "id": "zh_large_model",
+      "regex": "大模型|大语言模型"
+    },
+    {
+      "id": "zh_neural_network",
+      "regex": "神经网络"
+    },
+    {
+      "id": "zh_nlp",
+      "regex": "自然语言处理"
+    },
+    {
+      "id": "zh_computer_vision",
+      "regex": "计算机视觉"
+    },
+    {
+      "id": "zh_reinforcement",
+      "regex": "强化学习"
+    },
+    {
+      "id": "zh_generative",
+      "regex": "生成式"
+    },
+    {
+      "id": "zh_fine_tuning",
+      "regex": "微调"
+    },
+    {
+      "id": "zh_vector_db",
+      "regex": "向量数据库"
+    },
+    {
+      "id": "zh_agent",
+      "regex": "智能体"
+    },
+    {
+      "id": "zh_training",
+      "regex": "模型训练"
+    }
+  ],
+  "weak_description_patterns": [
+    {
+      "id": "ai_token",
+      "regex": "\\bai\\b"
+    },
+    {
+      "id": "ml_token",
+      "regex": "\\bml\\b"
+    }
+  ],
+  "corroboration_patterns": [
+    {
+      "id": "sdk_api",
+      "regex": "\\bsdk\\b|\\bapi(s)?\\b"
+    },
+    {
+      "id": "platform",
+      "regex": "\\bplatform\\b|\\bframework\\b|\\btoolkit\\b|\\bengine\\b"
+    },
+    {
+      "id": "model",
+      "regex": "\\bmodels?\\b|模型"
+    },
+    {
+      "id": "training",
+      "regex": "\\btraining\\b|\\btrain\\b|训练|推理|\\binference\\b"
+    },
+    {
+      "id": "dataset",
+      "regex": "\\bdatasets?\\b|\\bdata[\\s-]?set\\b|数据集"
+    },
+    {
+      "id": "vision_speech",
+      "regex": "\\bvision\\b|\\bspeech\\b|\\bdetection\\b|\\bclassification\\b|\\bsegmentation\\b|\\brecognition\\b|视觉|语音"
+    },
+    {
+      "id": "llm_terms",
+      "regex": "\\bllms?\\b|\\bgpt\\b|\\bchatgpt\\b|\\bprompt\\b|\\bagents?\\b|\\bchat\\b|\\bembeddings?\\b|\\brag\\b|\\btransformer\\b|\\bdiffusion\\b"
+    },
+    {
+      "id": "brand",
+      "regex": "\\bopenai\\b|\\banthropic\\b|\\bhugging[\\s-]?face\\b|\\blangchain\\b|\\bllama\\b|\\bmistral\\b|\\bqwen\\b"
+    },
+    {
+      "id": "research",
+      "regex": "\\bbenchmark\\b|\\bneural\\b|\\bpapers?\\b|\\bresearch\\b"
+    },
+    {
+      "id": "assistant",
+      "regex": "\\bcopilot\\b|\\bassistant\\b|\\bchatbot\\b"
+    }
+  ],
+  "resource_collection_patterns": [
+    {
+      "id": "awesome",
+      "regex": "\\bawesome\\b"
+    },
+    {
+      "id": "curated_list",
+      "regex": "\\bcurated\\b|\\ba\\s+list\\s+of\\b|\\bcollection\\s+of\\b|\\blinks?\\s+(to|for)\\b"
+    },
+    {
+      "id": "tutorial",
+      "regex": "\\btutorials?\\b|\\bwalkthrough\\b|\\bhow[\\s-]?to\\b"
+    },
+    {
+      "id": "learning_notes",
+      "regex": "\\bstudy\\s+notes?\\b|\\blearning\\s+notes?\\b|\\bcheat[\\s-]?sheets?\\b|\\breading\\s+list\\b"
+    },
+    {
+      "id": "roadmap",
+      "regex": "\\broadmap\\b|\\binterview\\s+questions?\\b|\\bquestion\\s+bank\\b"
+    },
+    {
+      "id": "zh_resource",
+      "regex": "教程|笔记|题库|大全|资料|入门指南|学习路线|面试题"
+    }
+  ],
+  "resource_name_patterns": [
+    {
+      "id": "name_awesome",
+      "regex": "(^|/)awesome[-_.]"
+    },
+    {
+      "id": "name_tutorial",
+      "regex": "tutorial|lecture|cheatsheet|cheat[-_]sheet|roadmap|interview|handbook|textbook"
+    },
+    {
+      "id": "name_notes_book",
+      "regex": "[\\/_.-](notes?|books?)($|[/_.-])"
+    }
+  ],
+  "coursework_description_patterns": [
+    {
+      "id": "assignment",
+      "regex": "\\bassignments?\\b|\\bhomework\\b"
+    },
+    {
+      "id": "final_project",
+      "regex": "\\bfinal[\\s-]?project\\b|\\bcapstone\\b|\\bcoursework\\b"
+    },
+    {
+      "id": "course_assignment",
+      "regex": "\\bcourse\\s+(assignment|project|work|materials?|lab)\\b"
+    },
+    {
+      "id": "lesson",
+      "regex": "\\blectures?\\b|\\blesson\\b|\\blab\\s+(exercise|session|work)\\b"
+    },
+    {
+      "id": "bootcamp",
+      "regex": "\\bbootcamp\\b|\\budemy\\b|\\bcoursera\\b|\\budacity\\b"
+    },
+    {
+      "id": "zh_course",
+      "regex": "课程作业|大作业|作业|实验课|课程设计|练习题"
+    }
+  ],
+  "coursework_name_patterns": [
+    {
+      "id": "name_final_project",
+      "regex": "final[-_]?project|openclassrooms|capstone"
+    }
+  ],
+  "profile_repository": {
+    "enabled": true,
+    "require_description_empty": true,
+    "require_topics_empty": true,
+    "require_language_empty": true,
+    "decision": "uncertain"
+  },
+  "name_signal_patterns": [
+    {
+      "id": "name_ai",
+      "regex": "(^|[/_.-])ai($|[/_.-])|ai[-_]|[-_]ai"
+    },
+    {
+      "id": "name_ml",
+      "regex": "(^|[/_.-])ml($|[/_.-])|machine[-_]?learning|deep[-_]?learning"
+    },
+    {
+      "id": "name_llm",
+      "regex": "llm|gpt|chatgpt|openai|langchain|llama|huggingface|transformer|diffusion|pytorch|tensorflow|keras|nlp|computer[-_]?vision|neural|chatbot|mlops|yolo|whisper"
+    }
+  ],
+  "rules": [
+    {
+      "id": "R1_metadata_unavailable",
+      "label": "uncertain"
+    },
+    {
+      "id": "R2_api_id_mismatch",
+      "label": "uncertain"
+    },
+    {
+      "id": "R3b_coursework",
+      "label": "excluded"
+    },
+    {
+      "id": "R3c_profile_suspected",
+      "label": "uncertain"
+    },
+    {
+      "id": "R3_resource_collection",
+      "label": "excluded"
+    },
+    {
+      "id": "R4_topic_match",
+      "label": "included"
+    },
+    {
+      "id": "R5_description_match",
+      "label": "included"
+    },
+    {
+      "id": "R5b_weak_signal_corroborated",
+      "label": "included"
+    },
+    {
+      "id": "R5d_ai_feature_only",
+      "label": "excluded"
+    },
+    {
+      "id": "R4b_weak_topic_only",
+      "label": "uncertain"
+    },
+    {
+      "id": "R5c_weak_signal_only",
+      "label": "uncertain"
+    },
+    {
+      "id": "R6_name_only_signal",
+      "label": "uncertain"
+    },
+    {
+      "id": "R7_insufficient_text_evidence",
+      "label": "uncertain"
+    },
+    {
+      "id": "R8_no_ai_signal",
+      "label": "excluded"
+    },
+    {
+      "id": "R9_readme_ai",
+      "label": "included"
+    },
+    {
+      "id": "R10_readme_coursework",
+      "label": "excluded"
+    },
+    {
+      "id": "R11_readme_profile",
+      "label": "excluded"
+    }
+  ],
+  "changes_from_v0_2": [
+    "弱信号 + 非 AI 描述维持 uncertain（A 口径 1），不因弱信号单独排除。",
+    "新增 R5d_ai_feature_only：描述明确把 AI 写成附加能力（with AI / AI plugin / integrates with OpenAI 等）时排除；以 AI 为核心、仅调用模型 API 的应用仍纳入。",
+    "课程作业收紧：只有 Openclassrooms、final-project、capstone 等明确作业语义可单独触发；course/lab/hw 等词必须同时有描述佐证，避免只命中关键词就排除。",
+    "个人主页由 excluded 改为 suspected（R3c_profile_suspected）：同名 + 无描述 + 无 topics + 无语言只算疑似，需 README 确认才排除，否则维持 uncertain。",
+    "允许 README 辅助判断（R9/R10/R11）：只作用于规则判为 uncertain 的仓库，记录 README 快照时间与哈希；信息不足仍 uncertain。"
+  ],
+  "coursework_generic_name_patterns": [
+    {
+      "id": "name_course",
+      "regex": "(^|[/_.-])(course|coursework|homework|assignment|bootcamp|udemy|coursera|udacity)([-_/.]|$)"
+    },
+    {
+      "id": "name_lab_hw",
+      "regex": "[-_](labs?\\d*|hw\\d*)$"
+    }
+  ],
+  "coursework_corroboration_patterns": [
+    {
+      "id": "desc_course",
+      "regex": "\\bcourses?\\b|\\bcoursework\\b|\\bhomework\\b|\\bassignments?\\b"
+    },
+    {
+      "id": "desc_final_project",
+      "regex": "\\bfinal[\\s-]?project\\b|\\bcapstone\\b"
+    },
+    {
+      "id": "desc_lesson",
+      "regex": "\\blesons?\\b|\\blectures?\\b|\\blab\\s+(exercise|session|work)\\b"
+    },
+    {
+      "id": "zh_course",
+      "regex": "课程|作业|实验课|练习题|大作业"
+    }
+  ],
+  "ai_feature_only_patterns": [
+    {
+      "id": "with_ai_feature",
+      "regex": "\\bwith\\s+(an?\\s+)?ai\\s+(assistant|assistants|feature|features|plugin|integration|chat|chatbot)\\b"
+    },
+    {
+      "id": "ai_feature_for",
+      "regex": "\\bai\\s+(assistant|feature|features|plugin|add[-\\s]?on|integration)\\s+(for|in|on)\\b"
+    },
+    {
+      "id": "optional_ai",
+      "regex": "\\b(optional|built[-\\s]?in|integrated)\\s+ai\\b"
+    },
+    {
+      "id": "integrates_ai",
+      "regex": "\\bintegrates?\\s+(with\\s+)?(openai|chatgpt|gpt|llm|ai)\\b"
+    }
+  ],
+  "readme_rules": {
+    "profile_patterns": [
+      {
+        "id": "readme_profile",
+        "regex": "\\bgithub\\s+profile\\b|\\bprofile\\s+readme\\b|\\babout\\s+me\\b|\\bhi[,!]?\\s+i'?m\\b|\\bhello[,!]?\\s+i'?m\\b|\\bhey[,!]?\\s+i'?m\\b|\\bi\\s+am\\s+a\\s+(student|developer|engineer|backend|frontend)\\b|\\bmy[+\\s]name[+\\s]is\\b"
+      },
+      {
+        "id": "readme_profile_pt",
+        "regex": "\\beu\\s+sou\\b|\\bol[aá]\\b"
+      }
+    ],
+    "coursework_patterns": [
+      {
+        "id": "readme_course",
+        "regex": "\\bthis is a repository for\\b[^.\\n]{0,80}\\bcourse\\b|\\bcourses?\\s+(by|link|materials?|assignments?|projects?)\\b|\\bfor\\s+(a|the)\\s+course\\b|\\bhands-on\\s+course\\b"
+      },
+      {
+        "id": "assignment",
+        "regex": "\\bassignments?\\b|\\bhomework\\b"
+      },
+      {
+        "id": "final_project",
+        "regex": "\\bfinal[\\s-]?project\\b|\\bcapstone\\b|\\bcoursework\\b"
+      },
+      {
+        "id": "course_assignment",
+        "regex": "\\bcourse\\s+(assignment|project|work|materials?|lab)\\b"
+      },
+      {
+        "id": "lesson",
+        "regex": "\\blectures?\\b|\\blesson\\b|\\blab\\s+(exercise|session|work)\\b"
+      },
+      {
+        "id": "bootcamp",
+        "regex": "\\bbootcamp\\b|\\budemy\\b|\\bcoursera\\b|\\budacity\\b"
+      },
+      {
+        "id": "zh_course",
+        "regex": "课程作业|大作业|作业|实验课|课程设计|练习题"
+      }
+    ],
+    "ai_patterns": [
+      {
+        "id": "machine_learning",
+        "regex": "\\bmachine[\\s-]?learning\\b"
+      },
+      {
+        "id": "deep_learning",
+        "regex": "\\bdeep[\\s-]?learning\\b"
+      },
+      {
+        "id": "artificial_intelligence",
+        "regex": "\\bartificial[\\s-]?intelligence\\b"
+      },
+      {
+        "id": "neural_network",
+        "regex": "\\bneural[\\s-]?networks?\\b"
+      },
+      {
+        "id": "computer_vision",
+        "regex": "\\bcomputer[\\s-]?vision\\b"
+      },
+      {
+        "id": "nlp",
+        "regex": "\\bnatural[\\s-]?language[\\s-]?processing\\b"
+      },
+      {
+        "id": "llm",
+        "regex": "\\bllms?\\b"
+      },
+      {
+        "id": "large_language_model",
+        "regex": "\\blarge[\\s-]?language[\\s-]?models?\\b"
+      },
+      {
+        "id": "language_model",
+        "regex": "\\blanguage[\\s-]?models?\\b"
+      },
+      {
+        "id": "gpt",
+        "regex": "\\bgpt[-\\s]?\\d*\\b"
+      },
+      {
+        "id": "chatgpt",
+        "regex": "\\bchatgpt\\b"
+      },
+      {
+        "id": "generative_ai",
+        "regex": "\\bgenerative[\\s-]?(ai|artificial[\\s-]?intelligence)\\b"
+      },
+      {
+        "id": "stable_diffusion",
+        "regex": "\\bstable[\\s-]?diffusion\\b"
+      },
+      {
+        "id": "diffusion_model",
+        "regex": "\\bdiffusion[\\s-]?models?\\b"
+      },
+      {
+        "id": "transformer",
+        "regex": "\\btransformer[s]?\\b"
+      },
+      {
+        "id": "pytorch",
+        "regex": "\\bpytorch\\b"
+      },
+      {
+        "id": "tensorflow",
+        "regex": "\\btensorflow\\b"
+      },
+      {
+        "id": "keras",
+        "regex": "\\bkeras\\b"
+      },
+      {
+        "id": "scikit_learn",
+        "regex": "\\bscikit[\\s-]?learn\\b"
+      },
+      {
+        "id": "reinforcement_learning",
+        "regex": "\\breinforcement[\\s-]?learning\\b"
+      },
+      {
+        "id": "rag",
+        "regex": "\\bretrieval[\\s-]?augmented[\\s-]?generation\\b|\\brag\\b"
+      },
+      {
+        "id": "fine_tuning",
+        "regex": "\\bfine[\\s-]?tun(e|ed|ing)\\b"
+      },
+      {
+        "id": "prompt_engineering",
+        "regex": "\\bprompt[\\s-]?engineering\\b"
+      },
+      {
+        "id": "vector_store",
+        "regex": "\\bvector[\\s-]?(database|db|store|search|embeddings?)\\b"
+      },
+      {
+        "id": "embedding",
+        "regex": "\\bembedding[s]?\\b"
+      },
+      {
+        "id": "huggingface",
+        "regex": "\\bhugging[\\s-]?face\\b"
+      },
+      {
+        "id": "langchain",
+        "regex": "\\blangchain\\b"
+      },
+      {
+        "id": "openai",
+        "regex": "\\bopenai\\b"
+      },
+      {
+        "id": "anthropic",
+        "regex": "\\banthropic\\b"
+      },
+      {
+        "id": "nlp_token",
+        "regex": "\\bnlp\\b"
+      },
+      {
+        "id": "chatbot",
+        "regex": "\\bchat[\\s-]?bots?\\b"
+      },
+      {
+        "id": "speech",
+        "regex": "\\bspeech[\\s-]?(recognition|synthesis)\\b"
+      },
+      {
+        "id": "text_to_speech",
+        "regex": "\\btext[\\s-]?to[\\s-]?speech\\b"
+      },
+      {
+        "id": "object_detection",
+        "regex": "\\bobject[\\s-]?detection\\b"
+      },
+      {
+        "id": "image_classification",
+        "regex": "\\bimage[\\s-]?classification\\b"
+      },
+      {
+        "id": "mlops",
+        "regex": "\\bmlops\\b"
+      },
+      {
+        "id": "zh_machine_learning",
+        "regex": "机器学习"
+      },
+      {
+        "id": "zh_deep_learning",
+        "regex": "深度学习"
+      },
+      {
+        "id": "zh_artificial_intelligence",
+        "regex": "人工智能"
+      },
+      {
+        "id": "zh_large_model",
+        "regex": "大模型|大语言模型"
+      },
+      {
+        "id": "zh_neural_network",
+        "regex": "神经网络"
+      },
+      {
+        "id": "zh_nlp",
+        "regex": "自然语言处理"
+      },
+      {
+        "id": "zh_computer_vision",
+        "regex": "计算机视觉"
+      },
+      {
+        "id": "zh_reinforcement",
+        "regex": "强化学习"
+      },
+      {
+        "id": "zh_generative",
+        "regex": "生成式"
+      },
+      {
+        "id": "zh_fine_tuning",
+        "regex": "微调"
+      },
+      {
+        "id": "zh_vector_db",
+        "regex": "向量数据库"
+      },
+      {
+        "id": "zh_agent",
+        "regex": "智能体"
+      },
+      {
+        "id": "zh_training",
+        "regex": "模型训练"
+      },
+      {
+        "id": "ai_token",
+        "regex": "\\bai\\b"
+      },
+      {
+        "id": "ml_token",
+        "regex": "\\bml\\b"
+      }
+    ],
+    "ai_strong_patterns": [
+      {
+        "id": "machine_learning",
+        "regex": "\\bmachine[\\s-]?learning\\b"
+      },
+      {
+        "id": "deep_learning",
+        "regex": "\\bdeep[\\s-]?learning\\b"
+      },
+      {
+        "id": "artificial_intelligence",
+        "regex": "\\bartificial[\\s-]?intelligence\\b"
+      },
+      {
+        "id": "neural_network",
+        "regex": "\\bneural[\\s-]?networks?\\b"
+      },
+      {
+        "id": "computer_vision",
+        "regex": "\\bcomputer[\\s-]?vision\\b"
+      },
+      {
+        "id": "nlp",
+        "regex": "\\bnatural[\\s-]?language[\\s-]?processing\\b"
+      },
+      {
+        "id": "llm",
+        "regex": "\\bllms?\\b"
+      },
+      {
+        "id": "large_language_model",
+        "regex": "\\blarge[\\s-]?language[\\s-]?models?\\b"
+      },
+      {
+        "id": "language_model",
+        "regex": "\\blanguage[\\s-]?models?\\b"
+      },
+      {
+        "id": "gpt",
+        "regex": "\\bgpt[-\\s]?\\d*\\b"
+      },
+      {
+        "id": "chatgpt",
+        "regex": "\\bchatgpt\\b"
+      },
+      {
+        "id": "generative_ai",
+        "regex": "\\bgenerative[\\s-]?(ai|artificial[\\s-]?intelligence)\\b"
+      },
+      {
+        "id": "stable_diffusion",
+        "regex": "\\bstable[\\s-]?diffusion\\b"
+      },
+      {
+        "id": "diffusion_model",
+        "regex": "\\bdiffusion[\\s-]?models?\\b"
+      },
+      {
+        "id": "transformer",
+        "regex": "\\btransformer[s]?\\b"
+      },
+      {
+        "id": "pytorch",
+        "regex": "\\bpytorch\\b"
+      },
+      {
+        "id": "tensorflow",
+        "regex": "\\btensorflow\\b"
+      },
+      {
+        "id": "keras",
+        "regex": "\\bkeras\\b"
+      },
+      {
+        "id": "scikit_learn",
+        "regex": "\\bscikit[\\s-]?learn\\b"
+      },
+      {
+        "id": "reinforcement_learning",
+        "regex": "\\breinforcement[\\s-]?learning\\b"
+      },
+      {
+        "id": "rag",
+        "regex": "\\bretrieval[\\s-]?augmented[\\s-]?generation\\b|\\brag\\b"
+      },
+      {
+        "id": "fine_tuning",
+        "regex": "\\bfine[\\s-]?tun(e|ed|ing)\\b"
+      },
+      {
+        "id": "prompt_engineering",
+        "regex": "\\bprompt[\\s-]?engineering\\b"
+      },
+      {
+        "id": "vector_store",
+        "regex": "\\bvector[\\s-]?(database|db|store|search|embeddings?)\\b"
+      },
+      {
+        "id": "embedding",
+        "regex": "\\bembedding[s]?\\b"
+      },
+      {
+        "id": "huggingface",
+        "regex": "\\bhugging[\\s-]?face\\b"
+      },
+      {
+        "id": "langchain",
+        "regex": "\\blangchain\\b"
+      },
+      {
+        "id": "openai",
+        "regex": "\\bopenai\\b"
+      },
+      {
+        "id": "anthropic",
+        "regex": "\\banthropic\\b"
+      },
+      {
+        "id": "nlp_token",
+        "regex": "\\bnlp\\b"
+      },
+      {
+        "id": "chatbot",
+        "regex": "\\bchat[\\s-]?bots?\\b"
+      },
+      {
+        "id": "speech",
+        "regex": "\\bspeech[\\s-]?(recognition|synthesis)\\b"
+      },
+      {
+        "id": "text_to_speech",
+        "regex": "\\btext[\\s-]?to[\\s-]?speech\\b"
+      },
+      {
+        "id": "object_detection",
+        "regex": "\\bobject[\\s-]?detection\\b"
+      },
+      {
+        "id": "image_classification",
+        "regex": "\\bimage[\\s-]?classification\\b"
+      },
+      {
+        "id": "mlops",
+        "regex": "\\bmlops\\b"
+      },
+      {
+        "id": "zh_machine_learning",
+        "regex": "机器学习"
+      },
+      {
+        "id": "zh_deep_learning",
+        "regex": "深度学习"
+      },
+      {
+        "id": "zh_artificial_intelligence",
+        "regex": "人工智能"
+      },
+      {
+        "id": "zh_large_model",
+        "regex": "大模型|大语言模型"
+      },
+      {
+        "id": "zh_neural_network",
+        "regex": "神经网络"
+      },
+      {
+        "id": "zh_nlp",
+        "regex": "自然语言处理"
+      },
+      {
+        "id": "zh_computer_vision",
+        "regex": "计算机视觉"
+      },
+      {
+        "id": "zh_reinforcement",
+        "regex": "强化学习"
+      },
+      {
+        "id": "zh_generative",
+        "regex": "生成式"
+      },
+      {
+        "id": "zh_fine_tuning",
+        "regex": "微调"
+      },
+      {
+        "id": "zh_vector_db",
+        "regex": "向量数据库"
+      },
+      {
+        "id": "zh_agent",
+        "regex": "智能体"
+      },
+      {
+        "id": "zh_training",
+        "regex": "模型训练"
+      }
+    ],
+    "ai_weak_patterns": [
+      {
+        "id": "ai_token",
+        "regex": "\\bai\\b"
+      },
+      {
+        "id": "ml_token",
+        "regex": "\\bml\\b"
+      }
+    ],
+    "min_weak_mentions": 3,
+    "future_markers": [
+      {
+        "id": "future_plan",
+        "regex": "\\b(plan|plans|planned|planning|will|future|roadmap|coming\\s+soon|intend|intends|todo|tbd)\\b|以后|计划|打算|未来|即将|待定"
+      }
+    ],
+    "project_sections": [
+      {
+        "id": "engineering_section",
+        "regex": "(?im)^#{1,4}\\s*(install|installation|setup|usage|quick\\s*start|getting\\s*started|features|api|configuration|config|build|examples?|tests?)\\b|```"
+      }
+    ]
+  },
+  "changes_from_v0_3": [
+    "README 判 AI 收紧：只有强 AI 证据，或弱词出现至少 3 次且伴随佐证词时才纳入；含“计划/以后/roadmap”等字样的行先剔除，避免“以后打算加 AI”被算作 AI 项目。",
+    "README 判个人主页收紧：只有规则已判为个人主页疑似（同名 + 无描述 + 无 topics + 无语言）时，才用 README 确认；且 README 不能有 Install/Usage/Features/API 等工程章节，避免把 ML 项目的作者介绍当成个人主页。"
+  ]
+}
