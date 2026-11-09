@@ -1,0 +1,45 @@
+{
+  "checked_at_utc": "2026-11-09T00:00:00Z",
+  "rule_version": "ai_rules_v0.3",
+  "decisions_file": "reviews/pilot_01_decisions.json",
+  "revision_needed": false,
+  "summary": "按 A 确认的五条口径逐类检查第一轮 33 条人工判断，没有需要改判的条目；第一轮 decisions 保持原样，不覆盖。",
+  "categories": [
+    {
+      "category": "个人主页仓库（6 条）",
+      "decisions": ["302309533", "374770773", "441317480", "526345511", "549894670", "684223328"],
+      "check": "v0.3 要求同名 + 无描述 + 无 topics + 无语言且 README 确认；6 条人工判断本身就是看过 README 后判为个人主页。",
+      "outcome": "规则侧 5 条由 README 确认并排除（R11），1 条（tannerhawkins/tannerhawkins，README 只有统计图片）规则保留存疑；人工判断维持 excluded。",
+      "manual_label_changed": false
+    },
+    {
+      "category": "仅附加 AI 功能（GROWI）",
+      "decisions": ["82206054"],
+      "check": "口径 2 明确“主体不是 AI、只附加 AI 功能的项目不纳入”，与第一轮人工的 excluded 一致。",
+      "outcome": "规则因描述未提 AI 仍记 uncertain；人工优先口径下最终 excluded，无需改判。",
+      "manual_label_changed": false
+    },
+    {
+      "category": "课程作业（2 条）",
+      "decisions": ["665478404", "743305917"],
+      "check": "口径 4 要求确认确实是作业；两条人工判断均基于仓库名与 README 的课程语境。v0.3 的课程规则也把两条判为 excluded。",
+      "outcome": "一致，无需改判。",
+      "manual_label_changed": false
+    },
+    {
+      "category": "名称命中但描述为空的 AI 项目（3 条）",
+      "decisions": ["653701739", "731867521", "743310414"],
+      "check": "口径 3 允许 README 辅助；三条人工判断基于 README 判为 included，v0.3 规则用同一份 README 证据也判为 included。",
+      "outcome": "一致，无需改判。",
+      "manual_label_changed": false
+    },
+    {
+      "category": "其余人工判断",
+      "decisions": ["其余 21 条"],
+      "check": "资源集合、非 AI 工程、404 等，v0.3 未改变判定口径。",
+      "outcome": "一致，无需改判。",
+      "manual_label_changed": false
+    }
+  ],
+  "note": "如果后续 A 要求把 tannerhawkins 一类“README 无文字证据”的仓库也改为 uncertain，应新建 reviews/pilot_01_decisions_v0.3_revision.json，不要修改第一轮文件。"
+}

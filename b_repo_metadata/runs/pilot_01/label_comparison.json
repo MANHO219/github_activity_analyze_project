@@ -1,38 +1,28 @@
 {
-  "compared_at_utc": "2026-11-02T07:58:45Z",
-  "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.1.csv",
+  "compared_at_utc": "2026-11-09T03:50:34Z",
+  "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.2.csv",
   "new_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
-  "old_rule_version": "ai_rules_v0.1",
-  "new_rule_version": "ai_rules_v0.2",
+  "old_rule_version": "ai_rules_v0.2",
+  "new_rule_version": "ai_rules_v0.3",
   "rows": 50,
-  "changed_rows": 11,
-  "label_changed_rows": 9,
-  "rule_reason_changed_rows": 2,
+  "changed_rows": 10,
+  "label_changed_rows": 5,
+  "rule_reason_changed_rows": 5,
   "confusion_matrix": {
     "included": {
-      "excluded": 1,
-      "included": 1,
-      "uncertain": 1
+      "included": 1
     },
     "excluded": {
-      "excluded": 22
+      "excluded": 29,
+      "uncertain": 1
     },
     "uncertain": {
-      "excluded": 7,
-      "uncertain": 18
+      "excluded": 1,
+      "included": 3,
+      "uncertain": 15
     }
   },
   "per_rule_old": {
-    "R1_metadata_unavailable": 5,
-    "R2_api_id_mismatch": 2,
-    "R3_resource_collection": 4,
-    "R4_topic_match": 1,
-    "R5_description_match": 2,
-    "R6_name_only_signal": 3,
-    "R7_insufficient_text_evidence": 15,
-    "R8_no_ai_signal": 18
-  },
-  "per_rule_new": {
     "R1_metadata_unavailable": 5,
     "R2_api_id_mismatch": 2,
     "R3_resource_collection": 3,
@@ -44,18 +34,24 @@
     "R7_insufficient_text_evidence": 8,
     "R8_no_ai_signal": 18
   },
+  "per_rule_new": {
+    "R10_readme_coursework": 1,
+    "R11_readme_profile": 5,
+    "R1_metadata_unavailable": 5,
+    "R2_api_id_mismatch": 2,
+    "R3_resource_collection": 3,
+    "R3b_coursework": 3,
+    "R3c_profile_suspected": 1,
+    "R4b_weak_topic_only": 1,
+    "R5b_weak_signal_corroborated": 1,
+    "R7_insufficient_text_evidence": 7,
+    "R8_no_ai_signal": 18,
+    "R9_readme_ai": 3
+  },
   "changes_csv": "b_repo_metadata/runs/pilot_01/label_changes.csv",
   "human_review": {
     "reviewed_rows": 33,
     "old_version": {
-      "reviewed_rows": 33,
-      "agree": 6,
-      "disagree": 2,
-      "resolves": 17,
-      "kept_uncertain": 8,
-      "agreement_rate_on_decided_rows": 0.75
-    },
-    "new_version": {
       "reviewed_rows": 33,
       "agree": 14,
       "disagree": 0,
@@ -63,17 +59,23 @@
       "kept_uncertain": 8,
       "agreement_rate_on_decided_rows": 1.0
     },
+    "new_version": {
+      "reviewed_rows": 33,
+      "agree": 17,
+      "disagree": 0,
+      "resolves": 8,
+      "kept_uncertain": 8,
+      "agreement_rate_on_decided_rows": 1.0
+    },
     "improved_repo_ids": [
-      "302309533",
-      "374770773",
-      "441317480",
-      "526345511",
-      "549894670",
-      "665478404",
-      "684223328",
-      "743305917"
+      "647729619",
+      "653701739",
+      "731867521",
+      "743310414"
     ],
-    "regressed_repo_ids": [],
+    "regressed_repo_ids": [
+      "684223328"
+    ],
     "still_uncertain_repo_ids": [
       "82206054",
       "271994210",
@@ -81,18 +83,15 @@
       "465991566",
       "551162351",
       "569927055",
-      "647729619",
-      "653701739",
+      "684223328",
       "697973922",
       "711869837",
       "716775427",
       "719391258",
-      "731867521",
       "738759461",
       "742748171",
       "742995337",
       "743146326",
-      "743310414",
       "743319257"
     ],
     "note": "人工判断来自 v0.1 复核（manual_review.csv），这里用于比较两个版本与人工结论的吻合度。"

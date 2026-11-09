@@ -10,14 +10,15 @@
 |---|---|
 | 试跑名单 | 50 个仓库：40 个随机抽样 + 10 个名称关键词过采样（固定种子 `5488`） |
 | 元数据获取 | 43 个成功（ID 一致）、2 个 ID 不一致、5 个 404；共 50 次 API 调用 |
-| AI 标签（规则 v0.2） | `included` 1、`excluded` 30、`uncertain` 19 |
-| 与 v0.1 对比 | 9 条标签变化 + 2 条仅规则理由变化；与人工结论的一致率从 75% 提升到 100%，无回退 |
+| AI 标签（规则 v0.3） | `included` 4、`excluded` 30、`uncertain` 16 |
+| 与 v0.2 对比 | 5 条标签变化 + 5 条仅理由变化；README 补足 3 个 AI 项目、1 个课程仓库 |
+| 与人工复核 | 本轮复核样本中自动已判定的 17 条全部与人工一致；这只代表 33 条复核样本，不代表整体分类准确率 |
 | 人工复核 | 33 条：included 全查 3、excluded 抽 5、uncertain 全查 25 |
 | 分析用标签 | 默认“人工优先”口径下：included 4、excluded 38、uncertain 8（人工 33 行、自动 17 行） |
 | 接回事件表 | 50/50 个试点仓库都能按 `repo_id` 匹配到 A 的 `events_clean.parquet`（197,313 条事件中 159 条属于这 50 个仓库） |
-| 离线测试 | 50 项全部通过（不联网） |
+| 离线测试 | 63 项全部通过（不联网） |
 
-详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；规则见 [rules/ai_rules_v0.2.md](rules/ai_rules_v0.2.md)；标签交接口径见 [LABELS.md](LABELS.md)。
+详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.md](rules/ai_rules_v0.3.md)；标签交接口径见 [LABELS.md](LABELS.md)。
 
 ## 交付物结构
 
@@ -28,9 +29,11 @@ b_repo_metadata/
 ├── LABELS.md                          ← 自动标签、人工复核、分析用标签的区别与生成方式
 ├── config/pilot.json                  ← 种子、分层规模、API 参数、当前规则文件
 ├── rules/
-│   ├── ai_rules_v0.1.md / .json       ← 第一版规则（保留，用于对比）
-│   └── ai_rules_v0.2.md / .json       ← 当前版本：弱信号、课程作业、个人主页识别
-├── reviews/pilot_01_decisions.json    ← 人工判断与理由（B 写）
+│   ├── ai_rules_v0.1.md / .json       ← 第一版（保留，用于对比）
+│   ├── ai_rules_v0.2.md / .json       ← 第二版（保留，用于对比）
+│   └── ai_rules_v0.3.md / .json       ← 当前版本：五条口径、README 辅助、课程与个人主页收紧
+├── reviews/pilot_01_decisions.json    ← 第一轮人工判断与理由（不覆盖）
+├── reviews/pilot_01_revision_check_v0.3.json ← 新口径对旧判断的影响检查
 ├── bmeta/                             ← 实现包（与 A 的 gharchive_a 对应）
 │   ├── common.py                      ← 路径、CSV/JSON、UTC、run_summary 合并
 │   ├── select.py                      ← 分层抽样与名称粗筛
@@ -44,7 +47,7 @@ b_repo_metadata/
 │   ├── evidence.py                    ← 复核用 README 证据
 │   └── join.py                        ← 按 repo_id 接回事件表
 ├── scripts/                           ← 命令入口（每个步骤一个）
-├── tests/test_b_pipeline.py           ← 50 项离线验证
+├── tests/test_b_pipeline.py           ← 63 项离线验证
 └── runs/
     ├── debug_api_sample/              ← 单仓库连通性样例（apache/superset）
     └── pilot_01/
@@ -52,14 +55,16 @@ b_repo_metadata/
         ├── selection.json             ← 选取方法、种子、输入/输出 SHA-256
         ├── raw_api/<repo_id>.json      ← 每个仓库的原始响应信封
         ├── repo_metadata.csv          ← 每仓库一行，失败行保留状态
-        ├── repo_ai_labels.csv         ← 当前规则（v0.2）的标签
-        ├── repo_ai_labels_v0.1.csv    ← v0.1 原始标签（保留）
-        ├── label_changes.csv          ← v0.1 → v0.2 的逐条变化与原因
+        ├── repo_ai_labels.csv         ← 当前规则（v0.3）的标签
+        ├── repo_ai_labels_v0.2.csv    ← v0.2 标签（保留）
+        ├── repo_ai_labels_v0.1.csv    ← v0.1 标签（保留）
+        ├── label_changes.csv          ← v0.2 → v0.3 的逐条变化与原因
+        ├── label_changes_v0.1_to_v0.2.csv ← 上一轮变化（保留）
         ├── label_comparison.json      ← 混淆矩阵、人工一致率、改进/回退清单
         ├── repo_ai_labels_analysis.csv← 分析用标签（含来源与人工值）
         ├── label_analysis_summary.json
         ├── manual_review.csv          ← 33 条复核对象、人工结论与一致率
-        ├── manual_review_readmes.jsonl← 复核时看过的 README 摘要与哈希
+        ├── manual_review_readmes.jsonl← 复核时看过的 README 摘要与哈希（v0.3 标注复用）
         ├── repo_labels_joined_events.csv
         ├── cache_retry_check.json     ← 失败缓存重试策略的核对记录
         ├── fetch_log.jsonl / fetch_summary.json / label_summary.json
@@ -86,11 +91,12 @@ python scripts/build_pilot.py
 #    Windows:     set GITHUB_TOKEN=...
 python scripts/fetch_metadata.py
 
-# 3. 按规则打标签（默认使用 config 里的 ai_rules_v0.2）
+# 3. 按规则打标签（默认 ai_rules_v0.3；存在复核 README 证据时自动用于补足 uncertain）
 python scripts/label_repositories.py
 
-# 4. 与上一版规则对比（需要旧标签表 repo_ai_labels_v0.1.csv）
-python scripts/compare_label_versions.py --run-dir runs/pilot_01
+# 4. 与上一版规则对比（需要旧标签表 repo_ai_labels_v0.2.csv）
+python scripts/compare_label_versions.py --run-dir runs/pilot_01 \
+    --old runs/pilot_01/repo_ai_labels_v0.2.csv --new runs/pilot_01/repo_ai_labels.csv
 
 # 5. 生成分析用标签（人工优先；可换 --policy auto_only）
 python scripts/build_analysis_labels.py --run-dir runs/pilot_01
@@ -106,7 +112,7 @@ python scripts/join_check.py
 python scripts/build_run_summary.py --run-dir runs/pilot_01
 ```
 
-第 6 步有三个约束：只读取已有清单、把判断写回去，不会因为当前规则是 v0.2 就重新抽样；清单必须已存在，**缺失时直接以退出码 5 报错，不会自动生成**（复现时若误删，先用 `git checkout -- runs/pilot_01/manual_review.csv` 取回）；它会把清单里的自动标签与当前 v0.2 标签做差异统计，写进摘要的 `sheet_auto_labels_differ_from_current`（本次为 9 条，另有 2 条只是规则理由变化），提醒你人工一致率对应的是清单生成时的规则，而不是当前规则。
+第 6 步有三个约束：只读取已有清单、把判断写回去，不会因为当前规则是 v0.3 就重新抽样；清单必须已存在，**缺失时直接以退出码 5 报错，不会自动生成**（复现时若误删，先用 `git checkout -- runs/pilot_01/manual_review.csv` 取回）；它会把清单里的自动标签与当前标签做差异统计，写进摘要的 `sheet_auto_labels_differ_from_current`，提醒你人工一致率对应的是清单生成时的规则，而不是当前规则。
 
 **不要**在这里先运行不带 `--decisions` 的 `manual_review.py`：那个命令是“生成新清单”，目标目录已有 `manual_review.csv` 时会直接报错退出（这是保护措施，加 `--force` 才会覆盖）。确实需要在缺清单时临时生成再合并，得显式加 `--allow-new-sheet`，摘要会标记这次是“生成后合并”，提示可能混轮次。
 
@@ -166,7 +172,7 @@ python scripts/fetch_readme_evidence.py --run-dir runs/pilot_01
 | `http_status` | 最近一次 HTTP 状态码 |
 | `fetched_at_utc` | 获取成功时的时间；失败留空（失败时间在 `fetch_log.jsonl`） |
 
-`repo_ai_labels.csv`：`repo_id`、`ai_label`、`reason`、`rule_version`、`rule_id`、`metadata_fetched_at_utc`、`labelled_at_utc`。`reason` 以规则 ID 开头，例如 `R5b_weak_signal_corroborated:weak=ai_token;corroboration=sdk_api`。
+`repo_ai_labels.csv`（v0.3）：`repo_id`、`ai_label`、`reason`、`rule_version`、`rule_id`、`metadata_fetched_at_utc`、`labelled_at_utc`，以及 README 辅助字段 `readme_evidence`（`used` / `no_signal` / 空）、`readme_sha256`、`readme_fetched_at_utc`。`reason` 以规则 ID 开头，例如 `R5b_weak_signal_corroborated:weak=ai_token;corroboration=sdk_api`，README 相关的一行形如 `R9_readme_ai:readme=llm,machine_learning`。
 
 `repo_ai_labels_analysis.csv`：在自动标签基础上增加 `ai_label_manual`、`ai_label_final`、`label_source`、`policy`，用于交接给 C。字段与口径说明见 [LABELS.md](LABELS.md)。
 
@@ -184,9 +190,9 @@ python scripts/fetch_readme_evidence.py --run-dir runs/pilot_01
 
 ## 规则版本
 
-- 当前规则 `ai_rules_v0.2`：裸 `ai`/`ml` 降为弱信号（需佐证词）、新增课程作业与个人主页识别。
-- 上一版 `ai_rules_v0.1` 与它的标签表都保留；两版的逐条差异在 `label_changes.csv`，汇总在 `label_comparison.json`。
-- 待统一确认的口径（弱信号是否直接排除、AI 附加功能是否纳入、README 能否作为规则输入等）列在 `rules/ai_rules_v0.2.md` 第 6 节，确认后再出 v0.3。
+- 当前规则 `ai_rules_v0.3`：按 A 确认的五条口径实现——弱信号维持 `uncertain`；只附加 AI 功能的项目排除；README 可辅助判断；课程作业需确认语义；个人主页先记疑似、README 确认才排除。
+- `ai_rules_v0.1`、`ai_rules_v0.2` 与各自的标签表都保留；v0.1→v0.2 的逐条差异在 `label_changes_v0.1_to_v0.2.csv`，v0.2→v0.3 在 `label_changes.csv`。
+- 新口径对第一轮人工判断的影响检查见 `reviews/pilot_01_revision_check_v0.3.json`：无需改判，旧判断不覆盖。
 
 ## 与 A、C 的接口
 
@@ -199,11 +205,12 @@ python scripts/fetch_readme_evidence.py --run-dir runs/pilot_01
 python -m unittest discover -s tests -v
 ```
 
-测试覆盖名单抽样的确定性、v0.1/v0.2 规则各分支、抓取层的 200/404/ID 不一致/限流/失败缓存策略、复核合并的校验、版本对比与口径合并，以及接回事件表的计数与两个占比分母；全部离线，不需要 token。
+测试覆盖名单抽样的确定性、v0.1/v0.2/v0.3 规则各分支、README 辅助判断（补足、不覆盖、无信号保留存疑）、抓取层的 200/404/ID 不一致/限流/失败缓存策略、复核合并的校验、版本对比与口径合并，以及接回事件表的计数与两个占比分母；全部离线，不需要 token。
 
 ## 已知限制
 
 - 首批 50 个是分层样本（其中 10 个按名称过采样），**不能**用来估计整个 GitHub 的 AI 仓库比例。
-- v0.2 仍有 19 个 `uncertain`：8 个元数据缺失/空仓库，11 个需要 README 才能判断，而规则不读 README。
+- v0.3 仍有 16 个 `uncertain`：8 个元数据缺失/空仓库，其余是弱信号、个人主页无文字证据、README 也无判据的仓库。
+- `17/17 = 100%` 只表示**当前复核样本中自动已判定的 17 条**与人工一致，不是整体分类准确率；复核只覆盖 33 个仓库。
 - 事件覆盖只有 2024-01-15 UTC 00:00–01:00 这一个小时，生命周期分析要等 A 扩展时间窗后重跑。
-- README 证据是复核辅助材料，会随时间变化；规则本身不依赖它。
+- README 证据是复核与标注的辅助材料，会随时间变化；每行记录了快照时间与哈希，但 README 内容本身可能已变。

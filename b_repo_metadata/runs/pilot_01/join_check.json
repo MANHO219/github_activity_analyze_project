@@ -1,6 +1,6 @@
 {
-  "checked_at_utc": "2026-11-02T08:00:36Z",
-  "event_source": "events_clean.parquet",
+  "checked_at_utc": "2026-11-09T03:52:21Z",
+  "event_source": "repo_candidates.csv:event_count",
   "events_total_in_source": 197313,
   "pilot_repos": 50,
   "pilot_repos_found_in_events": 50,
@@ -13,9 +13,9 @@
     "event_share_of_pilot_events": "50 个试点仓库的事件总数（events_covered_by_pilot）"
   },
   "events_by_label": {
-    "excluded": 70,
-    "included": 5,
-    "uncertain": 84
+    "excluded": 69,
+    "included": 14,
+    "uncertain": 76
   },
   "checks": {
     "labels_have_unique_repo_ids": true,
@@ -33,6 +33,7 @@
   "limits": [
     "Only repo_id is used as the join key; repo names in the event table may be historical.",
     "The pilot covers a small sample, so covered/uncovered event shares describe this run only.",
-    "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events."
+    "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events.",
+    "Full parquet join not executed; repo-level counts from candidates used."
   ]
 }
