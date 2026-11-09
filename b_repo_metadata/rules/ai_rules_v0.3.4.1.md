@@ -40,4 +40,6 @@ A 的复测：拿一份只有安装步骤的 README，原本是 `uncertain`，**
 
 ## 影响
 
+本版标签与 v0.3.4 **完全相同**（两个 pilot 都是 0 条变化），因此没有另存 `repo_ai_labels_v0.3.4.1.csv`；`label_changes.csv` 记录 0 条即可复现这个结论。
+
 重跑 pilot_01 / pilot_02，变化见各自的 `label_changes.csv`。凡是 R12 仅靠标题命中、且标题下方没有正文的仓库，会回退为 `uncertain`——这是把证据不足的排除撤回，不是新增排除。
