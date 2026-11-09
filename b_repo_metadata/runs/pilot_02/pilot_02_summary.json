@@ -1,6 +1,6 @@
 {
   "pilot": "pilot_02",
-  "rules_version": "ai_rules_v0.3.3",
+  "rules_version": "ai_rules_v0.3.3.1",
   "generated_at_utc": "2026-11-09T10:30:00Z",
   "source_data": {
     "note": "按 A README 的官方命令重建 2024-01-15 全天数据；数量与 A 的交接一致",
@@ -48,20 +48,20 @@
       "random": {
         "selected": 160,
         "included": 3,
-        "excluded": 86,
-        "uncertain": 71
+        "excluded": 70,
+        "uncertain": 87
       },
       "keyword_name": {
         "selected": 40,
         "included": 17,
-        "excluded": 10,
-        "uncertain": 13
+        "excluded": 9,
+        "uncertain": 14
       }
     },
     "by_rule": {
       "R10_readme_coursework": 1,
       "R11_readme_profile": 2,
-      "R12_readme_non_ai": 22,
+      "R12_readme_non_ai": 5,
       "R1_metadata_unavailable": 31,
       "R2_api_id_mismatch": 6,
       "R3_resource_collection": 7,
@@ -69,20 +69,20 @@
       "R3c_profile_suspected": 4,
       "R4_topic_match": 5,
       "R5_description_match": 11,
-      "R6_name_only_signal": 9,
-      "R7_insufficient_text_evidence": 34,
+      "R6_name_only_signal": 11,
+      "R7_insufficient_text_evidence": 49,
       "R8_no_ai_signal": 59,
       "R9_readme_ai": 4
     },
-    "readme_used": 29,
-    "readme_non_ai": 22
+    "readme_used": 12,
+    "readme_non_ai": 5
   },
   "analysis_labels": {
     "policy": "manual_override",
     "final": {
-      "excluded": 97,
+      "excluded": 80,
       "included": 19,
-      "uncertain": 84
+      "uncertain": 101
     },
     "source": {
       "auto_rule": 187,
@@ -96,9 +96,9 @@
     "events_covered": 1072,
     "events_total": 5528300,
     "events_by_label": {
-      "excluded": 358,
+      "excluded": 312,
       "included": 174,
-      "uncertain": 540
+      "uncertain": 586
     }
   },
   "manual_review": {
@@ -254,6 +254,7 @@
     "findings": [
       "v0.3.2 修复名称子串误判（Whispering-Origin-2D）与中文边界漏判（ResnetGPT）。",
       "v0.3.3 新增 README 主体非 AI 排除后，CoreELEC/xbmc 自动排除，与 A 的判定一致。",
+      "v0.3.3.1 收紧 R12：要求 README 能说明项目用途、只对 R7 生效、旧版本不触发；LDingLDing/langchain-js 由 excluded 恢复 uncertain，R12 命中从 22 降到 5。",
       "Etherscan-ML 规则仍判 included（描述直接命中机器学习），人工优先口径取 excluded；是否允许 README 课程证据覆盖 included 待 A 决定。"
     ]
   },

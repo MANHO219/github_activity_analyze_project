@@ -26,6 +26,6 @@
       4
     ]
   },
-  "rules_file": "../rules/ai_rules_v0.3.3.json",
-  "rules_file_previous": "../rules/ai_rules_v0.3.2.json"
+  "rules_file": "../rules/ai_rules_v0.3.3.1.json",
+  "rules_file_previous": "../rules/ai_rules_v0.3.3.json"
 }

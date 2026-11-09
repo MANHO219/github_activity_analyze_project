@@ -945,6 +945,65 @@ class RulesV33Tests(unittest.TestCase):
         self.assertEqual(result["rule_id"], "R12_readme_non_ai")
 
 
+class RulesV331Tests(unittest.TestCase):
+    """v0.3.3.1：R12 需要项目用途证据；旧版本不触发 R12。"""
+
+    V331 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.3.1.json"))
+    V32 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.2.json"))
+
+    @staticmethod
+    def readme(text):
+        return {"text": text, "sha256": "s", "fetched_at_utc": "t"}
+
+    def test_v032_never_triggers_r12(self):
+        self.assertIsNone(self.V32.readme_non_ai_rule)
+        row = metadata(51, name="CoreELEC/xbmc", language="C++")
+        text = "# Kodi media center\nKodi is a free and open source media player application.\n" * 5
+        result = self.V32.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "uncertain")
+
+    def test_purpose_statement_excluded(self):
+        row = metadata(52, name="CoreELEC/xbmc", language="C++")
+        text = (
+            "# Kodi media center\n"
+            "Kodi is a free and open source media player application. It plays videos and music.\n"
+        ) * 5
+        result = self.V331.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+        self.assertIn("purpose", result["reason"])
+
+    def test_install_only_readme_stays_uncertain(self):
+        row = metadata(53, name="someone/tool", language="")
+        text = (
+            "# Installation\n"
+            "Run npm install, then npm run build and npm run start. Configure the port in .env.\n"
+        ) * 5
+        result = self.V331.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "uncertain")
+
+    def test_template_readme_stays_uncertain(self):
+        row = metadata(54, name="LDingLDing/langchain-js")
+        text = (
+            "# nextjs app\nThis is a Next.js project bootstrapped with create-next-app.\n"
+            "## Getting Started\nFirst, run the development server: npm run dev\n"
+        ) * 5
+        result = self.V331.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "uncertain")
+
+    def test_name_signal_with_non_ai_readme_stays_uncertain(self):
+        row = metadata(55, name="someone/ML-project")
+        text = "# A notes app\nThis project is a note taking application for students.\n" * 5
+        result = self.V331.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "uncertain")
+
+    def test_weak_signal_with_non_ai_readme_stays_uncertain(self):
+        row = metadata(56, description="", topics=["ai"])
+        text = "# A notes app\nThis project is a note taking application for students.\n" * 5
+        result = self.V331.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "uncertain")
+
+
 class CompareAndHandoffTests(unittest.TestCase):
     def setUp(self):
         TEST_TMP_ROOT.mkdir(parents=True, exist_ok=True)

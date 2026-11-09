@@ -240,7 +240,7 @@
       "keyword_name 层来自名称粗筛，名称命中不等于 AI 判定；实际标签仍由 rules 决定。"
     ]
   },
-  "updated_at_utc": "2026-11-09T10:07:53Z",
+  "updated_at_utc": "2026-11-09T13:10:21Z",
   "fetch": {
     "started_at_utc": "2026-11-09T08:21:17Z",
     "finished_at_utc": "2026-11-09T08:23:16Z",
@@ -283,26 +283,26 @@
     "note": "README 仅作人工复核证据；v0.1 规则不读取该字段。"
   },
   "labels": {
-    "rules_version": "ai_rules_v0.3.3",
-    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.3.json",
-    "rules_sha256": "91127d91e6ce5c99b5796b9c5a593b7d337b027baca4cf81e81da6505ddb8d69",
+    "rules_version": "ai_rules_v0.3.3.1",
+    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.3.1.json",
+    "rules_sha256": "a7dc43c6bb56d2d5022b8754a2bb586dd067c8933ce9d9f821a2b3e98fd78543",
     "metadata_csv": "b_repo_metadata/runs/pilot_02/repo_metadata.csv",
     "metadata_sha256": "331bbcf70fa8cc0e834b1e7d05d08b8899ef805897ceef32fff31ed8282bcf7d",
-    "labelled_at_utc": "2026-11-09T10:07:50Z",
+    "labelled_at_utc": "2026-11-09T13:10:04Z",
     "input_rows": 200,
     "labelled_rows": 200,
     "labels_csv": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-    "labels_sha256": "be9c7a82c1d5ae32fc8ee5482d731ef902942a2638d276019f52430c00ad80ff",
+    "labels_sha256": "e93a4a9946156447ad2693752474bf985b023fa5d6ad5f24b7a73c07fd9a249c",
     "total": 200,
     "by_label": {
       "included": 20,
-      "excluded": 96,
-      "uncertain": 84
+      "excluded": 79,
+      "uncertain": 101
     },
     "by_rule": {
       "R10_readme_coursework": 1,
       "R11_readme_profile": 2,
-      "R12_readme_non_ai": 22,
+      "R12_readme_non_ai": 5,
       "R1_metadata_unavailable": 31,
       "R2_api_id_mismatch": 6,
       "R3_resource_collection": 7,
@@ -310,8 +310,8 @@
       "R3c_profile_suspected": 4,
       "R4_topic_match": 5,
       "R5_description_match": 11,
-      "R6_name_only_signal": 9,
-      "R7_insufficient_text_evidence": 34,
+      "R6_name_only_signal": 11,
+      "R7_insufficient_text_evidence": 49,
       "R8_no_ai_signal": 59,
       "R9_readme_ai": 4
     },
@@ -320,34 +320,45 @@
       "265892246",
       "336689935",
       "342791330",
+      "428634575",
       "436683962",
       "484986166",
       "490761340",
       "495140213",
       "547329222",
       "561242457",
+      "563877727",
       "603993783",
       "641796627",
       "652694200",
       "660610130",
       "668356168",
       "671364602",
+      "671391343",
+      "671866050",
+      "673230893",
+      "677975586",
       "692137990",
       "694786535",
       "697392269",
       "700214182",
+      "701654428",
       "702001765",
+      "714463832",
       "717791470",
       "723801246",
       "726308218",
       "727242013",
+      "730869939",
       "732741904",
       "734437833",
       "736245820",
       "737497350",
       "738964310",
+      "739338813",
       "739870044",
       "739929025",
+      "740335636",
       "741534501",
       "741552508",
       "741731337",
@@ -355,12 +366,15 @@
       "742033241",
       "742040287",
       "742372092",
+      "742393752",
       "743310433",
       "743331198",
       "743364300",
       "743379904",
       "743380269",
       "743389964",
+      "743397528",
+      "743402660",
       "743429274",
       "743432299",
       "743434981",
@@ -371,6 +385,7 @@
       "743506566",
       "743528706",
       "743531499",
+      "743538992",
       "743540696",
       "743541264",
       "743543077",
@@ -383,6 +398,7 @@
       "743604766",
       "743649948",
       "743662905",
+      "743671624",
       "743679194",
       "743693349",
       "743696419",
@@ -390,6 +406,7 @@
       "743749112",
       "259922583",
       "545634942",
+      "702505065",
       "722964238",
       "730187686",
       "731444928",
@@ -542,40 +559,23 @@
         "743671624",
         "743679194"
       ],
-      "used_rows": 29,
+      "used_rows": 12,
       "used_repo_ids": [
         "264460671",
-        "428634575",
         "450877869",
         "461271957",
-        "563877727",
         "571545608",
         "617157155",
         "636166691",
         "651107766",
-        "671391343",
-        "671866050",
-        "673230893",
-        "677975586",
-        "701654428",
         "713753213",
-        "714463832",
-        "730869939",
-        "739338813",
-        "740335636",
-        "742393752",
-        "743397528",
-        "743402660",
-        "743538992",
         "743621324",
-        "743671624",
         "611622512",
         "700400954",
-        "702505065",
         "743312420"
       ],
       "decisions": {
-        "R12_readme_non_ai": 22,
+        "R12_readme_non_ai": 5,
         "R11_readme_profile": 2,
         "R10_readme_coursework": 1,
         "R9_readme_ai": 4
@@ -589,7 +589,7 @@
     }
   },
   "join": {
-    "checked_at_utc": "2026-11-09T10:07:53Z",
+    "checked_at_utc": "2026-11-09T13:10:21Z",
     "event_source": "repo_daily_counts.csv:sum(event_count)",
     "events_total_in_source": 5528300,
     "pilot_repos": 200,
@@ -603,9 +603,9 @@
       "event_share_of_pilot_events": "50 个试点仓库的事件总数（events_covered_by_pilot）"
     },
     "events_by_label": {
-      "excluded": 358,
+      "excluded": 312,
       "included": 174,
-      "uncertain": 540
+      "uncertain": 586
     },
     "checks": {
       "labels_have_unique_repo_ids": true,
@@ -630,43 +630,28 @@
     "joined_csv": "b_repo_metadata/runs/pilot_02/repo_labels_joined_events.csv"
   },
   "label_comparison": {
-    "compared_at_utc": "2026-11-09T10:07:50Z",
-    "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.2.csv",
+    "compared_at_utc": "2026-11-09T13:10:05Z",
+    "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.3.csv",
     "new_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-    "old_rule_version": "ai_rules_v0.3.2",
-    "new_rule_version": "ai_rules_v0.3.3",
+    "old_rule_version": "ai_rules_v0.3.3",
+    "new_rule_version": "ai_rules_v0.3.3.1",
     "rows": 200,
-    "changed_rows": 22,
-    "label_changed_rows": 22,
+    "changed_rows": 17,
+    "label_changed_rows": 17,
     "rule_reason_changed_rows": 0,
     "confusion_matrix": {
       "included": {
         "included": 20
       },
       "excluded": {
-        "excluded": 74
+        "excluded": 79,
+        "uncertain": 17
       },
       "uncertain": {
-        "excluded": 22,
         "uncertain": 84
       }
     },
     "per_rule_old": {
-      "R10_readme_coursework": 1,
-      "R11_readme_profile": 2,
-      "R1_metadata_unavailable": 31,
-      "R2_api_id_mismatch": 6,
-      "R3_resource_collection": 7,
-      "R3b_coursework": 5,
-      "R3c_profile_suspected": 4,
-      "R4_topic_match": 5,
-      "R5_description_match": 11,
-      "R6_name_only_signal": 11,
-      "R7_insufficient_text_evidence": 54,
-      "R8_no_ai_signal": 59,
-      "R9_readme_ai": 4
-    },
-    "per_rule_new": {
       "R10_readme_coursework": 1,
       "R11_readme_profile": 2,
       "R12_readme_non_ai": 22,
@@ -682,17 +667,33 @@
       "R8_no_ai_signal": 59,
       "R9_readme_ai": 4
     },
+    "per_rule_new": {
+      "R10_readme_coursework": 1,
+      "R11_readme_profile": 2,
+      "R12_readme_non_ai": 5,
+      "R1_metadata_unavailable": 31,
+      "R2_api_id_mismatch": 6,
+      "R3_resource_collection": 7,
+      "R3b_coursework": 5,
+      "R3c_profile_suspected": 4,
+      "R4_topic_match": 5,
+      "R5_description_match": 11,
+      "R6_name_only_signal": 11,
+      "R7_insufficient_text_evidence": 49,
+      "R8_no_ai_signal": 59,
+      "R9_readme_ai": 4
+    },
     "changes_csv": "b_repo_metadata/runs/pilot_02/label_changes.csv"
   },
   "analysis_labels": {
-    "generated_at_utc": "2026-11-09T10:07:53Z",
+    "generated_at_utc": "2026-11-09T13:10:21Z",
     "policy": "manual_override",
     "policy_note": "人工复核优先：有人工判断的仓库采用人工标签，其余采用规则自动标签。",
     "rows": 200,
     "final_labels": {
-      "excluded": 97,
+      "excluded": 80,
       "included": 19,
-      "uncertain": 84
+      "uncertain": 101
     },
     "label_source": {
       "auto_rule": 187,

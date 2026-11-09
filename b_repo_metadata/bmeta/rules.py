@@ -143,9 +143,23 @@ class RuleSet:
                 self.readme_future = _compile(readme_rules.get("future_markers", []))
                 self.readme_project_sections = _compile(readme_rules.get("project_sections", []))
                 self.min_weak_mentions = int(readme_rules.get("min_weak_mentions", 3) or 3)
-                non_ai = dict(readme_rules.get("non_ai") or {})
-                self.readme_non_ai_min_chars = int(non_ai.get("min_meaningful_chars", 200) or 200)
-                self.readme_non_ai_rule = non_ai.get("rule_id", "R12_readme_non_ai")
+                # R12 只在规则文件显式配置 readme_rules.non_ai 时启用。
+                # v0.3.2 及更早版本没有这个配置，加载后不会触发 R12。
+                non_ai = readme_rules.get("non_ai")
+                if isinstance(non_ai, dict) and non_ai.get("enabled", True):
+                    self.readme_non_ai_rule = non_ai.get("rule_id", "R12_readme_non_ai")
+                    self.readme_non_ai_min_chars = int(non_ai.get("min_meaningful_chars", 200) or 200)
+                    self.readme_non_ai_require_purpose = bool(non_ai.get("require_purpose", False))
+                    self.readme_non_ai_allowed = set(non_ai.get("allowed_base_rules") or [])
+                    self.readme_non_ai_purpose = _compile(non_ai.get("purpose_patterns", []))
+                    self.readme_non_ai_template = _compile(non_ai.get("template_patterns", []))
+                else:
+                    self.readme_non_ai_rule = None
+                    self.readme_non_ai_min_chars = 0
+                    self.readme_non_ai_require_purpose = False
+                    self.readme_non_ai_allowed = set()
+                    self.readme_non_ai_purpose = []
+                    self.readme_non_ai_template = []
         else:
             self.topic_terms = {term.lower() for term in rules.get("ai_topic_terms", [])}
             self.description = _compile(rules.get("ai_description_patterns", []))
@@ -317,16 +331,29 @@ class RuleSet:
                 f"readme={','.join(_dedupe(weak_hits))};mentions={weak_count};corroboration={','.join(_dedupe(corroboration))}",
             )
 
-        # README 确认主体非 AI：正文足够长、完全没有 AI 证据、也没有课程/主页证据时排除。
-        # 短 README（只有标题或链接）不算“确认”，继续存疑。
-        if not weak_hits:
-            meaningful = self._meaningful_chars(usable)
-            if meaningful >= self.readme_non_ai_min_chars:
-                return with_readme(
-                    "excluded",
-                    self.readme_non_ai_rule,
-                    f"readme_chars={meaningful};no_ai_evidence",
-                )
+        # README 确认主体非 AI：正文明说项目用途、没有 AI/课程/主页证据，且只对
+        # 描述与 topics 都为空的仓库生效。模板、脚手架或只有安装说明的 README 不算确认。
+        if self.readme_non_ai_rule and not weak_hits:
+            allowed = self.readme_non_ai_allowed
+            if not allowed or base["rule_id"] in allowed:
+                meaningful = self._meaningful_chars(usable)
+                if meaningful >= self.readme_non_ai_min_chars:
+                    purpose = (
+                        _matches(self.readme_non_ai_purpose, usable)
+                        if self.readme_non_ai_require_purpose
+                        else ["legacy_no_purpose_check"]
+                    )
+                    template_hits = (
+                        _matches(self.readme_non_ai_template, usable)
+                        if self.readme_non_ai_require_purpose
+                        else []
+                    )
+                    if purpose and not template_hits:
+                        return with_readme(
+                            "excluded",
+                            self.readme_non_ai_rule,
+                            f"purpose={','.join(_dedupe(purpose))};readme_chars={meaningful};no_ai_evidence",
+                        )
 
         base["readme_evidence"] = "no_signal"
         base["readme_sha256"] = sha

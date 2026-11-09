@@ -1,5 +1,5 @@
 {
-  "checked_at_utc": "2026-11-09T10:07:53Z",
+  "checked_at_utc": "2026-11-09T13:10:21Z",
   "event_source": "repo_daily_counts.csv:sum(event_count)",
   "events_total_in_source": 5528300,
   "pilot_repos": 200,
@@ -13,9 +13,9 @@
     "event_share_of_pilot_events": "50 个试点仓库的事件总数（events_covered_by_pilot）"
   },
   "events_by_label": {
-    "excluded": 358,
+    "excluded": 312,
     "included": 174,
-    "uncertain": 540
+    "uncertain": 586
   },
   "checks": {
     "labels_have_unique_repo_ids": true,
