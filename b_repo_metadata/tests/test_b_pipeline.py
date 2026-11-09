@@ -25,6 +25,7 @@ from bmeta.common import read_csv, write_csv, write_json  # noqa: E402
 from bmeta.evidence import _readme_text  # noqa: E402
 from bmeta.fetch import METADATA_FIELDS, fetch_one, run as fetch_run  # noqa: E402
 from bmeta.join import run as join_run  # noqa: E402
+from bmeta.label import load_readme_evidence  # noqa: E402
 from bmeta.review import (  # noqa: E402
     REVIEW_FIELDS,
     build_sheet,
@@ -420,10 +421,19 @@ class JoinTests(unittest.TestCase):
 
 
 class EvidenceTests(unittest.TestCase):
+    def setUp(self):
+        TEST_TMP_ROOT.mkdir(parents=True, exist_ok=True)
+        self.root = TEST_TMP_ROOT / uuid.uuid4().hex
+        self.root.mkdir(parents=True, exist_ok=True)
+
+    def tearDown(self):
+        shutil.rmtree(self.root, ignore_errors=True)
+
     def test_base64_readme_decoded(self):
         payload = base64.b64encode("# Hello 世界".encode("utf-8")).decode()
 
         class Response:
+            http_status = 200
             body = {"content": payload, "encoding": "base64"}
             raw = b"{}"
 
@@ -431,10 +441,61 @@ class EvidenceTests(unittest.TestCase):
 
     def test_raw_readme_passthrough(self):
         class Response:
+            http_status = 200
             body = None
             raw = "# raw readme".encode()
 
         self.assertEqual(_readme_text(Response()), "# raw readme")
+
+    def test_404_body_is_not_readme(self):
+        """404 的 {"message": "Not Found"} 不能当成 README 正文。"""
+
+        class Response:
+            http_status = 404
+            body = {"message": "Not Found", "documentation_url": "https://docs.github.com/rest"}
+            raw = b'{"message": "Not Found"}'
+
+        self.assertEqual(_readme_text(Response()), "")
+
+    def test_empty_readme_returns_empty(self):
+        """size=0 的 README（content 为空）要判为无正文，而不是回退成文件信封。"""
+
+        class Response:
+            http_status = 200
+            body = {"name": "README.md", "path": "README.md", "size": 0, "content": "", "encoding": "base64"}
+            raw = b'{"name": "README.md", "path": "README.md", "size": 0}'
+
+        self.assertEqual(_readme_text(Response()), "")
+
+    def test_raw_error_json_is_not_readme(self):
+        """没有可解析 body 时，原始响应若是 JSON 错误信封也不当正文。"""
+
+        class Response:
+            http_status = 200
+            body = None
+            raw = b'{"message": "Not Found"}'
+
+        self.assertEqual(_readme_text(Response()), "")
+
+    def test_api_envelope_skipped_when_loading_evidence(self):
+        """历史证据里的错误信封在加载阶段被跳过，不参与规则判定。"""
+        path = self.root / "readme_evidence.jsonl"
+        rows = [
+            {
+                "repo_id": "1",
+                "status": "ok",
+                "readme_excerpt": '{"name":"README.md","path":"README.md","size":0}',
+                "readme_sha256": "x",
+                "fetched_at_utc": "t",
+            },
+            {"repo_id": "2", "status": "ok", "readme_excerpt": "# Real readme", "readme_sha256": "y", "fetched_at_utc": "t"},
+            {"repo_id": "3", "status": "not_found", "readme_excerpt": '{"message":"Not Found"}', "readme_sha256": "z", "fetched_at_utc": "t"},
+        ]
+        with open(path, "w", encoding="utf-8", newline="\n") as handle:
+            for row in rows:
+                handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+        evidence = load_readme_evidence(path)
+        self.assertEqual(sorted(evidence), ["2"])
 
 
 class RulesV2Tests(unittest.TestCase):
@@ -1057,6 +1118,95 @@ class RulesV34Tests(unittest.TestCase):
         text = "Made by X for the USC Viterbi Data Science Bootcamp."
         result = self.V331.decide(row, readme=self.readme(text))
         self.assertEqual(result["ai_label"], "included")
+
+
+class RulesV35Tests(unittest.TestCase):
+    """v0.3.5：抽样复核后只修明确判错的 5 处，不放宽 R12 门槛。"""
+
+    V35 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.5.json"))
+    V34 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.4.json"))
+
+    @staticmethod
+    def readme(text):
+        return {"text": text, "sha256": "s", "fetched_at_utc": "t"}
+
+    def test_paper_list_excluded(self):
+        row = metadata(71, description="ChatGPT-related papers")
+        result = self.V35.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3_resource_collection")
+        self.assertIn("paper_list", result["reason"])
+
+    def test_paper_implementation_not_treated_as_list(self):
+        row = metadata(72, description="PyTorch implementation of the paper Attention Is All You Need")
+        result = self.V35.decide(row)
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R5_description_match")
+
+    def test_course_on_excluded(self):
+        row = metadata(73, description="A practical course on natural language processing", topics=["nlp"])
+        result = self.V35.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3b_coursework")
+
+    def test_course_word_in_product_description_not_excluded(self):
+        row = metadata(74, description="Machine learning model serving for online courses")
+        result = self.V35.decide(row)
+        self.assertEqual(result["ai_label"], "included")
+
+    def test_profile_with_code_fence_still_uncertain(self):
+        """已知限制（待 A 确认）：代码围栏仍被当作工程章节，这类个人主页不自动排除。
+
+        pilot_02 的 ItsCryptic/ItsCryptic 在 13 条人工复核里就是保守记 uncertain，
+        规则不单方面推翻人工记录。
+        """
+        row = metadata(75, name="kevin/kevin", description="", topics=[], language="")
+        text = "```javascript\nconst kevin = { description = \"Hi, I'm Kevin, a developer\" }\n```\n"
+        result = self.V35.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "uncertain")
+
+    def test_profile_with_stats_widget_confirmed(self):
+        row = metadata(76, name="someone/someone", description="", topics=[], language="")
+        text = "### Bem vindo!\n<img src=\"https://github-readme-stats.vercel.app/api?username=someone\">"
+        result = self.V35.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R11_readme_profile")
+
+    def test_profile_phrase_with_install_section_stays_uncertain(self):
+        """README 有工程章节时仍不确认个人主页，避免把 ML 项目的作者介绍当主页。"""
+        row = metadata(77, name="someone/someone", description="", topics=[], language="")
+        text = "# My project\nHi, I'm the author.\n## Installation\npip install my-ml-tool\n" * 6
+        result = self.V35.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "uncertain")
+
+    def test_chai_not_ai_name_signal(self):
+        row = metadata(78, name="al3x/chai-expect", description="Frontend Mentor challenge with mocha and chai")
+        result = self.V35.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R8_no_ai_signal")
+
+    def test_ai_token_name_still_flagged(self):
+        row = metadata(79, name="someone/ai-tool", description="")
+        result = self.V35.decide(row)
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R6_name_only_signal")
+
+    def test_v034_keeps_previous_behaviour(self):
+        """版本隔离：旧规则文件加载后不触发 v0.3.5 的任何新行为。"""
+        paper = self.V34.decide(metadata(80, description="ChatGPT-related papers"))
+        self.assertEqual(paper["ai_label"], "included")
+
+        course = self.V34.decide(metadata(81, description="A practical course on natural language processing", topics=["nlp"]))
+        self.assertEqual(course["ai_label"], "included")
+
+        profile = self.V34.decide(
+            metadata(82, name="kevin/kevin", description="", topics=[], language=""),
+            readme=self.readme("```javascript\nconst kevin = { description = \"Hi, I'm Kevin\" }\n```\n"),
+        )
+        self.assertEqual(profile["ai_label"], "uncertain")
+
+        chai = self.V34.decide(metadata(83, name="al3x/chai-expect", description="Frontend Mentor challenge with mocha and chai"))
+        self.assertEqual(chai["rule_id"], "R6_name_only_signal")
 
 
 class CompareAndHandoffTests(unittest.TestCase):

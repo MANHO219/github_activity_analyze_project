@@ -1,7 +1,7 @@
 {
   "pilot": "pilot_02",
-  "rules_version": "ai_rules_v0.3.4",
-  "generated_at_utc": "2026-11-09T10:30:00Z",
+  "rules_version": "ai_rules_v0.3.5",
+  "generated_at_utc": "2026-11-09T13:42:09Z",
   "source_data": {
     "note": "按 A README 的官方命令重建 2024-01-15 全天数据；数量与 A 的交接一致",
     "candidates": "a_data_pipeline/runs/20240115_python/python/repo_candidates.csv",
@@ -48,42 +48,42 @@
       "random": {
         "selected": 160,
         "included": 2,
-        "excluded": 71,
-        "uncertain": 87
+        "excluded": 75,
+        "uncertain": 83
       },
       "keyword_name": {
         "selected": 40,
-        "included": 17,
-        "excluded": 9,
+        "included": 15,
+        "excluded": 11,
         "uncertain": 14
       }
     },
     "by_rule": {
       "R10_readme_coursework": 1,
-      "R11_readme_profile": 2,
+      "R11_readme_profile": 5,
       "R12_readme_non_ai": 5,
       "R13_course_override": 1,
       "R1_metadata_unavailable": 31,
       "R2_api_id_mismatch": 6,
-      "R3_resource_collection": 7,
-      "R3b_coursework": 5,
-      "R3c_profile_suspected": 4,
-      "R4_topic_match": 4,
-      "R5_description_match": 11,
-      "R6_name_only_signal": 11,
+      "R3_resource_collection": 8,
+      "R3b_coursework": 6,
+      "R3c_profile_suspected": 1,
+      "R4_topic_match": 3,
+      "R5_description_match": 10,
+      "R6_name_only_signal": 10,
       "R7_insufficient_text_evidence": 49,
-      "R8_no_ai_signal": 59,
+      "R8_no_ai_signal": 60,
       "R9_readme_ai": 4
     },
-    "readme_used": 13,
+    "readme_used": 16,
     "readme_non_ai": 5
   },
   "analysis_labels": {
     "policy": "manual_override",
     "final": {
-      "excluded": 80,
-      "included": 19,
-      "uncertain": 101
+      "excluded": 86,
+      "included": 17,
+      "uncertain": 97
     },
     "source": {
       "auto_rule": 187,
@@ -252,5 +252,11 @@
     "pilot_02 是分层样本，不能估计 GitHub 整体 AI 仓库比例。",
     "关键词层按名称粗筛，名称命中不等于 AI 判定。",
     "README 只用于补足 uncertain，快照时间与哈希已逐行记录。"
-  ]
+  ],
+  "label_comparison": {
+    "old": "ai_rules_v0.3.4",
+    "new": "ai_rules_v0.3.5",
+    "changed_rows": 6,
+    "label_changed_rows": 6
+  }
 }

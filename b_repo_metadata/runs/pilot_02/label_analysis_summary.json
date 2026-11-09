@@ -1,12 +1,12 @@
 {
-  "generated_at_utc": "2026-11-09T13:13:56Z",
+  "generated_at_utc": "2026-11-09T13:42:03Z",
   "policy": "manual_override",
   "policy_note": "人工复核优先：有人工判断的仓库采用人工标签，其余采用规则自动标签。",
   "rows": 200,
   "final_labels": {
-    "excluded": 80,
-    "included": 19,
-    "uncertain": 101
+    "excluded": 86,
+    "included": 17,
+    "uncertain": 97
   },
   "label_source": {
     "auto_rule": 187,
