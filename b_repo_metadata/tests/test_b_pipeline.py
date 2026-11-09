@@ -388,6 +388,36 @@ class JoinTests(unittest.TestCase):
         self.assertFalse(summary["checks"]["all_pilot_repos_present_in_events"])
         self.assertEqual(summary["missing_from_events"], ["9"])
 
+    def test_daily_counts_join_sums_event_types(self):
+        metadata_rows = [metadata(1, topics=["llm"]), metadata(2, description="proxy tool")]
+        labels = label_rows(metadata_rows, RULES)
+        write_csv(self.root / "repo_metadata.csv", METADATA_FIELDS, metadata_rows)
+        write_csv(self.root / "repo_ai_labels.csv", LABEL_FIELDS, labels)
+        write_csv(
+            self.root / "repo_daily_counts.csv",
+            ["repo_id", "event_date", "event_type", "event_count"],
+            [
+                {"repo_id": "1", "event_date": "2024-01-15", "event_type": "PushEvent", "event_count": "3"},
+                {"repo_id": "1", "event_date": "2024-01-15", "event_type": "WatchEvent", "event_count": "2"},
+                {"repo_id": "2", "event_date": "2024-01-15", "event_type": "PushEvent", "event_count": "1"},
+                {"repo_id": "99", "event_date": "2024-01-15", "event_type": "PushEvent", "event_count": "4"},
+            ],
+        )
+        summary = join_run(
+            metadata_csv=self.root / "repo_metadata.csv",
+            labels_csv=self.root / "repo_ai_labels.csv",
+            out_dir=self.root,
+            events_parquet=None,
+            candidates_csv=None,
+            daily_counts_csv=self.root / "repo_daily_counts.csv",
+        )
+        self.assertEqual(summary["event_source"], "repo_daily_counts.csv:sum(event_count)")
+        self.assertEqual(summary["events_total_in_source"], 10)
+        self.assertEqual(summary["events_covered_by_pilot"], 6)
+        joined = {row["repo_id"]: row for row in read_csv(self.root / "repo_labels_joined_events.csv")}
+        self.assertEqual(joined["1"]["event_count"], "5")
+        self.assertTrue(all(summary["checks"].values()))
+
 
 class EvidenceTests(unittest.TestCase):
     def test_base64_readme_decoded(self):

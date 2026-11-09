@@ -31,6 +31,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--run-dir", help="运行目录；默认 runs/<pilot_version>")
     parser.add_argument("--events-parquet", default=str(DEFAULT_EVENTS_PARQUET))
     parser.add_argument("--candidates", default=str(DEFAULT_CANDIDATES))
+    parser.add_argument(
+        "--daily-csv",
+        help="全天活动汇总表（repo_daily_counts.csv）；给了就按 repo_id 汇总 event_count，优先于 parquet",
+    )
     return parser.parse_args(argv)
 
 
@@ -51,6 +55,7 @@ def main(argv: list[str] | None = None) -> int:
         out_dir=out_dir,
         events_parquet=Path(args.events_parquet),
         candidates_csv=Path(args.candidates),
+        daily_counts_csv=Path(args.daily_csv) if args.daily_csv else None,
     )
     print(f"event source: {summary['event_source']} (events={summary['events_total_in_source']})")
     print(f"pilot repos: {summary['pilot_repos']} found={summary['pilot_repos_found_in_events']}")

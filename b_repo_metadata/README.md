@@ -17,7 +17,7 @@
 | 人工复核 | 33 条：included 全查 3、excluded 抽 5、uncertain 全查 25 |
 | 分析用标签 | 默认“人工优先”口径下：included 4、excluded 38、uncertain 8（人工 33 行、自动 17 行） |
 | 接回事件表 | 50/50 个试点仓库都能按 `repo_id` 匹配到 A 的 `events_clean.parquet`（197,313 条事件中 159 条属于这 50 个仓库） |
-| 离线测试 | 70 项全部通过（不联网） |
+| 离线测试 | 71 项全部通过（不联网） |
 
 详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.1.md](rules/ai_rules_v0.3.1.md)；标签交接口径见 [LABELS.md](LABELS.md)。
 

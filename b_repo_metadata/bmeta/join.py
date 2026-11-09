@@ -53,6 +53,15 @@ def _event_counts_from_candidates(candidates_csv: Path) -> tuple[dict[int, int],
     return counts, sum(counts.values()), "repo_candidates.csv:event_count"
 
 
+def _event_counts_from_daily_csv(daily_csv: Path) -> tuple[dict[int, int], int, str]:
+    """全天活动汇总表：repo × date × event_type 的行，按 repo_id 求和。"""
+    counts: dict[int, int] = {}
+    for row in read_csv(daily_csv):
+        repo_id = int(row["repo_id"])
+        counts[repo_id] = counts.get(repo_id, 0) + int(row["event_count"])
+    return counts, sum(counts.values()), "repo_daily_counts.csv:sum(event_count)"
+
+
 def run(
     *,
     metadata_csv: Path,
@@ -60,6 +69,7 @@ def run(
     out_dir: Path,
     events_parquet: Path | None = None,
     candidates_csv: Path | None = None,
+    daily_counts_csv: Path | None = None,
 ) -> dict[str, Any]:
     out_dir = Path(out_dir)
     metadata = read_csv(metadata_csv)
@@ -74,7 +84,9 @@ def run(
     counts: dict[int, int] = {}
     total_events = 0
     source = "unavailable"
-    if events_parquet and Path(events_parquet).exists():
+    if daily_counts_csv and Path(daily_counts_csv).exists():
+        counts, total_events, source = _event_counts_from_daily_csv(Path(daily_counts_csv))
+    elif events_parquet and Path(events_parquet).exists():
         try:
             counts, total_events, source = _event_counts_from_parquet(Path(events_parquet))
         except ImportError:
@@ -142,6 +154,7 @@ def run(
             "labels_csv": project_relative(labels_csv),
             "events_parquet": project_relative(events_parquet) if events_parquet else None,
             "candidates_csv": project_relative(candidates_csv) if candidates_csv else None,
+            "daily_counts_csv": project_relative(daily_counts_csv) if daily_counts_csv else None,
         },
         "limits": [
             "Only repo_id is used as the join key; repo names in the event table may be historical.",
