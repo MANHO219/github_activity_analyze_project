@@ -1,0 +1,72 @@
+{
+  "reviewer": "B + A",
+  "reviewed_at_utc": "2026-11-09T10:20:00Z",
+  "policy": "pilot_02 抽查 13 条；A 对 Etherscan-ML 与 CoreELEC/xbmc 两个边界案例给出人工判定，其余为 B 的复核结论。",
+  "decisions": [
+    {
+      "repo_id": "128369334",
+      "human_label": "excluded",
+      "human_reason": "A 判定：README 明确是为 USC Viterbi Data Science Bootcamp 制作，按训练营项目排除"
+    },
+    {
+      "repo_id": "202577283",
+      "human_label": "included",
+      "human_reason": "深度学习的语音表示包，一致"
+    },
+    {
+      "repo_id": "313407033",
+      "human_label": "included",
+      "human_reason": "CVPR 论文的 PyTorch 实现，一致"
+    },
+    {
+      "repo_id": "16875250",
+      "human_label": "excluded",
+      "human_reason": "Express 会话中间件，无 AI，一致"
+    },
+    {
+      "repo_id": "25988759",
+      "human_label": "excluded",
+      "human_reason": "AirPlay 库集合，资料集合口径一致"
+    },
+    {
+      "repo_id": "38228834",
+      "human_label": "excluded",
+      "human_reason": "Plotly 示例数据集，一致"
+    },
+    {
+      "repo_id": "56003806",
+      "human_label": "excluded",
+      "human_reason": "UIStackView 控制器，一致"
+    },
+    {
+      "repo_id": "83055800",
+      "human_label": "excluded",
+      "human_reason": "随机汽车名微库，一致"
+    },
+    {
+      "repo_id": "259922583",
+      "human_label": "uncertain",
+      "human_reason": "名称像 AI（org 名 ai-golf-carry），README 无 AI 证据；按口径保留存疑"
+    },
+    {
+      "repo_id": "264460671",
+      "human_label": "excluded",
+      "human_reason": "A 判定：README 明确核心功能是影音播放与管理（Kodi），主体非 AI，按 README 证据排除"
+    },
+    {
+      "repo_id": "265892246",
+      "human_label": "uncertain",
+      "human_reason": "README 只有标题，证据不足，保留存疑"
+    },
+    {
+      "repo_id": "336689935",
+      "human_label": "uncertain",
+      "human_reason": "API 404，无法获取，保留存疑"
+    },
+    {
+      "repo_id": "342791330",
+      "human_label": "uncertain",
+      "human_reason": "README 是个人主页式自我介绍，但用代码块展示，未触发主页确认；偏保守"
+    }
+  ]
+}

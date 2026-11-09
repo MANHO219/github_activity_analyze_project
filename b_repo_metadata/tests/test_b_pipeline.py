@@ -895,6 +895,56 @@ class RulesV32Tests(unittest.TestCase):
         self.assertEqual(result["rule_id"], "R3c_profile_suspected")
 
 
+class RulesV33Tests(unittest.TestCase):
+    """v0.3.3：README 证据充分且无冲突时，可确认主体非 AI 并排除。"""
+
+    RULES = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.3.json"))
+
+    @staticmethod
+    def readme(text):
+        return {"text": text, "sha256": "sha33", "fetched_at_utc": "2026-11-02T00:00:00Z"}
+
+    def test_long_non_ai_readme_excluded(self):
+        row = metadata(41, name="CoreELEC/xbmc", language="C++")
+        text = (
+            "# Kodi media center\n"
+            "Kodi is a free and open source media player application. It plays videos, music, "
+            "podcasts and other digital media files from local and network storage. "
+            "It supports many audio and video codecs, skins, add-ons, and remote controls. "
+        ) * 3
+        result = self.RULES.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+    def test_short_readme_stays_uncertain(self):
+        row = metadata(42, name="someone/feliix")
+        result = self.RULES.decide(row, readme=self.readme("# feliix"))
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["readme_evidence"], "no_signal")
+
+    def test_long_ai_readme_included(self):
+        row = metadata(43, name="someone/tool")
+        text = (
+            "# Deep learning toolkit\n"
+            "This library trains neural networks with PyTorch and provides model serving APIs. "
+            "It includes datasets, training scripts and evaluation benchmarks for computer vision. "
+        ) * 3
+        result = self.RULES.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R9_readme_ai")
+
+    def test_long_readme_with_only_future_ai_plan_excluded(self):
+        row = metadata(44, name="someone/calendar")
+        text = (
+            "# Team calendar\n"
+            "A calendar app for scheduling meetings, sharing availability and managing reminders.\n"
+            "## Roadmap\nWe plan to add AI features in 2027.\n"
+        ) * 3
+        result = self.RULES.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+
 class CompareAndHandoffTests(unittest.TestCase):
     def setUp(self):
         TEST_TMP_ROOT.mkdir(parents=True, exist_ok=True)

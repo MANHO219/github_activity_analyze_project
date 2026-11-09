@@ -1,13 +1,12 @@
 {
   "pilot": "pilot_02",
-  "rules_version": "ai_rules_v0.3.2",
-  "generated_at_utc": "2026-11-09T08:55:00Z",
+  "rules_version": "ai_rules_v0.3.3",
+  "generated_at_utc": "2026-11-09T10:30:00Z",
   "source_data": {
     "note": "按 A README 的官方命令重建 2024-01-15 全天数据；数量与 A 的交接一致",
     "candidates": "a_data_pipeline/runs/20240115_python/python/repo_candidates.csv",
     "candidate_rows": 852777,
     "events": 5528300,
-    "daily_counts": "a_data_pipeline/runs/20240115_python/python/repo_daily_counts.csv",
     "pipeline_timing": {
       "download_seconds": 284,
       "inspection_seconds": 1278,
@@ -49,19 +48,20 @@
       "random": {
         "selected": 160,
         "included": 3,
-        "excluded": 65,
-        "uncertain": 92
+        "excluded": 86,
+        "uncertain": 71
       },
       "keyword_name": {
         "selected": 40,
         "included": 17,
-        "excluded": 9,
-        "uncertain": 14
+        "excluded": 10,
+        "uncertain": 13
       }
     },
     "by_rule": {
       "R10_readme_coursework": 1,
       "R11_readme_profile": 2,
+      "R12_readme_non_ai": 22,
       "R1_metadata_unavailable": 31,
       "R2_api_id_mismatch": 6,
       "R3_resource_collection": 7,
@@ -69,12 +69,25 @@
       "R3c_profile_suspected": 4,
       "R4_topic_match": 5,
       "R5_description_match": 11,
-      "R6_name_only_signal": 11,
-      "R7_insufficient_text_evidence": 54,
+      "R6_name_only_signal": 9,
+      "R7_insufficient_text_evidence": 34,
       "R8_no_ai_signal": 59,
       "R9_readme_ai": 4
     },
-    "readme_used": 7
+    "readme_used": 29,
+    "readme_non_ai": 22
+  },
+  "analysis_labels": {
+    "policy": "manual_override",
+    "final": {
+      "excluded": 97,
+      "included": 19,
+      "uncertain": 84
+    },
+    "source": {
+      "auto_rule": 187,
+      "manual_review": 13
+    }
   },
   "join": {
     "source": "repo_daily_counts.csv:sum(event_count)",
@@ -83,23 +96,165 @@
     "events_covered": 1072,
     "events_total": 5528300,
     "events_by_label": {
-      "excluded": 294,
+      "excluded": 358,
       "included": 174,
-      "uncertain": 604
+      "uncertain": 540
     }
   },
   "manual_review": {
     "rows": 13,
-    "by_label": {
-      "included": 3,
-      "excluded": 5,
-      "uncertain": 5
+    "reviewers": {
+      "A": 2,
+      "B": 11
     },
+    "auto_vs_manual_differences": [
+      {
+        "repo_id": "128369334",
+        "observed_repo_name": "elyselam/Etherscan-ML",
+        "sample_stratum": "random",
+        "auto_label": "included",
+        "rule_id": "R4_topic_match",
+        "human_label": "excluded",
+        "reviewer": "A",
+        "human_reason": "A 判定：README 明确是为 USC Viterbi Data Science Bootcamp 制作，按训练营项目排除"
+      }
+    ],
+    "rows_detail": [
+      {
+        "repo_id": "128369334",
+        "observed_repo_name": "elyselam/Etherscan-ML",
+        "sample_stratum": "random",
+        "auto_label": "included",
+        "rule_id": "R4_topic_match",
+        "human_label": "excluded",
+        "reviewer": "A",
+        "human_reason": "A 判定：README 明确是为 USC Viterbi Data Science Bootcamp 制作，按训练营项目排除"
+      },
+      {
+        "repo_id": "202577283",
+        "observed_repo_name": "resemble-ai/Resemblyzer",
+        "sample_stratum": "keyword_name",
+        "auto_label": "included",
+        "rule_id": "R5_description_match",
+        "human_label": "included",
+        "reviewer": "B",
+        "human_reason": "深度学习的语音表示包，一致"
+      },
+      {
+        "repo_id": "313407033",
+        "observed_repo_name": "jiupinjia/stylized-neural-painting",
+        "sample_stratum": "keyword_name",
+        "auto_label": "included",
+        "rule_id": "R5_description_match",
+        "human_label": "included",
+        "reviewer": "B",
+        "human_reason": "CVPR 论文的 PyTorch 实现，一致"
+      },
+      {
+        "repo_id": "16875250",
+        "observed_repo_name": "expressjs/session",
+        "sample_stratum": "random",
+        "auto_label": "excluded",
+        "rule_id": "R8_no_ai_signal",
+        "human_label": "excluded",
+        "reviewer": "B",
+        "human_reason": "Express 会话中间件，无 AI，一致"
+      },
+      {
+        "repo_id": "25988759",
+        "observed_repo_name": "openairplay/open-airplay",
+        "sample_stratum": "keyword_name",
+        "auto_label": "excluded",
+        "rule_id": "R3_resource_collection",
+        "human_label": "excluded",
+        "reviewer": "B",
+        "human_reason": "AirPlay 库集合，资料集合口径一致"
+      },
+      {
+        "repo_id": "38228834",
+        "observed_repo_name": "plotly/datasets",
+        "sample_stratum": "random",
+        "auto_label": "excluded",
+        "rule_id": "R8_no_ai_signal",
+        "human_label": "excluded",
+        "reviewer": "B",
+        "human_reason": "Plotly 示例数据集，一致"
+      },
+      {
+        "repo_id": "56003806",
+        "observed_repo_name": "seedco/StackViewController",
+        "sample_stratum": "random",
+        "auto_label": "excluded",
+        "rule_id": "R8_no_ai_signal",
+        "human_label": "excluded",
+        "reviewer": "B",
+        "human_reason": "UIStackView 控制器，一致"
+      },
+      {
+        "repo_id": "83055800",
+        "observed_repo_name": "palashmon/car-names",
+        "sample_stratum": "random",
+        "auto_label": "excluded",
+        "rule_id": "R8_no_ai_signal",
+        "human_label": "excluded",
+        "reviewer": "B",
+        "human_reason": "随机汽车名微库，一致"
+      },
+      {
+        "repo_id": "259922583",
+        "observed_repo_name": "ai-golf-carry/openCarry",
+        "sample_stratum": "keyword_name",
+        "auto_label": "uncertain",
+        "rule_id": "R6_name_only_signal",
+        "human_label": "uncertain",
+        "reviewer": "B",
+        "human_reason": "名称像 AI（org 名 ai-golf-carry），README 无 AI 证据；按口径保留存疑"
+      },
+      {
+        "repo_id": "264460671",
+        "observed_repo_name": "CoreELEC/xbmc",
+        "sample_stratum": "random",
+        "auto_label": "excluded",
+        "rule_id": "R12_readme_non_ai",
+        "human_label": "excluded",
+        "reviewer": "A",
+        "human_reason": "A 判定：README 明确核心功能是影音播放与管理（Kodi），主体非 AI，按 README 证据排除"
+      },
+      {
+        "repo_id": "265892246",
+        "observed_repo_name": "dereckyin/feliix",
+        "sample_stratum": "random",
+        "auto_label": "uncertain",
+        "rule_id": "R7_insufficient_text_evidence",
+        "human_label": "uncertain",
+        "reviewer": "B",
+        "human_reason": "README 只有标题，证据不足，保留存疑"
+      },
+      {
+        "repo_id": "336689935",
+        "observed_repo_name": "hello6060/hello6060.github.io",
+        "sample_stratum": "random",
+        "auto_label": "uncertain",
+        "rule_id": "R1_metadata_unavailable",
+        "human_label": "uncertain",
+        "reviewer": "B",
+        "human_reason": "API 404，无法获取，保留存疑"
+      },
+      {
+        "repo_id": "342791330",
+        "observed_repo_name": "ItsCryptic/ItsCryptic",
+        "sample_stratum": "random",
+        "auto_label": "uncertain",
+        "rule_id": "R3c_profile_suspected",
+        "human_label": "uncertain",
+        "reviewer": "B",
+        "human_reason": "README 是个人主页式自我介绍，但用代码块展示，未触发主页确认；偏保守"
+      }
+    ],
     "findings": [
-      "发现名称规则子串误判：Whispering-Origin-2D 被当成 whisper，判为名称命中；已在 v0.3.2 用词边界修复（uncertain → excluded）。",
-      "发现中文边界漏判：用Resnet101+GPT搭建…的AI 因中文里 \\b 失效被排除；v0.3.2 在中英相邻处插入空格后，恢复 included。",
-      "边界案例：Etherscan-ML 是 bootcamp 产物但已作为 pip 包发布，是否按课程作业排除需要 A 确认。",
-      "偏保守：CoreELEC/xbmc 的 README 明确是 Kodi，但规则不因“README 无 AI”排除，仍为 uncertain；可作为下一版规则候选。"
+      "v0.3.2 修复名称子串误判（Whispering-Origin-2D）与中文边界漏判（ResnetGPT）。",
+      "v0.3.3 新增 README 主体非 AI 排除后，CoreELEC/xbmc 自动排除，与 A 的判定一致。",
+      "Etherscan-ML 规则仍判 included（描述直接命中机器学习），人工优先口径取 excluded；是否允许 README 课程证据覆盖 included 待 A 决定。"
     ]
   },
   "notes": [

@@ -1,1 +1,7 @@
 repo_id,observed_repo_name,old_label,old_rule,new_label,new_rule,change_type,explanation
+82206054,weseek/growi,uncertain,R4b_weak_topic_only,excluded,R12_readme_non_ai,uncertain->excluded,规则调整：R4b_weak_topic_only → R12_readme_non_ai
+421217174,HDR-Development/HewDraw-Remix,uncertain,R7_insufficient_text_evidence,excluded,R12_readme_non_ai,uncertain->excluded,规则调整：R7_insufficient_text_evidence → R12_readme_non_ai
+465991566,Wollywoger/MapleStationCode,uncertain,R7_insufficient_text_evidence,excluded,R12_readme_non_ai,uncertain->excluded,规则调整：R7_insufficient_text_evidence → R12_readme_non_ai
+551162351,matthewmatheus/matthewmatheus,uncertain,R7_insufficient_text_evidence,excluded,R12_readme_non_ai,uncertain->excluded,规则调整：R7_insufficient_text_evidence → R12_readme_non_ai
+697973922,M-Byte480/portfolio,uncertain,R7_insufficient_text_evidence,excluded,R12_readme_non_ai,uncertain->excluded,规则调整：R7_insufficient_text_evidence → R12_readme_non_ai
+719391258,yabaowang/yaml,uncertain,R7_insufficient_text_evidence,excluded,R12_readme_non_ai,uncertain->excluded,规则调整：R7_insufficient_text_evidence → R12_readme_non_ai

@@ -1,12 +1,12 @@
 {
-  "compared_at_utc": "2026-11-09T08:28:21Z",
-  "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.1.csv",
+  "compared_at_utc": "2026-11-09T10:07:41Z",
+  "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.2.csv",
   "new_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
-  "old_rule_version": "ai_rules_v0.3.1",
-  "new_rule_version": "ai_rules_v0.3.2",
+  "old_rule_version": "ai_rules_v0.3.2",
+  "new_rule_version": "ai_rules_v0.3.3",
   "rows": 50,
-  "changed_rows": 0,
-  "label_changed_rows": 0,
+  "changed_rows": 6,
+  "label_changed_rows": 6,
   "rule_reason_changed_rows": 0,
   "confusion_matrix": {
     "included": {
@@ -16,7 +16,8 @@
       "excluded": 30
     },
     "uncertain": {
-      "uncertain": 16
+      "excluded": 6,
+      "uncertain": 10
     }
   },
   "per_rule_old": {
@@ -36,14 +37,14 @@
   "per_rule_new": {
     "R10_readme_coursework": 1,
     "R11_readme_profile": 5,
+    "R12_readme_non_ai": 6,
     "R1_metadata_unavailable": 5,
     "R2_api_id_mismatch": 2,
     "R3_resource_collection": 3,
     "R3b_coursework": 3,
     "R3c_profile_suspected": 1,
-    "R4b_weak_topic_only": 1,
     "R5b_weak_signal_corroborated": 1,
-    "R7_insufficient_text_evidence": 7,
+    "R7_insufficient_text_evidence": 2,
     "R8_no_ai_signal": 18,
     "R9_readme_ai": 3
   },
@@ -60,26 +61,27 @@
     },
     "new_version": {
       "reviewed_rows": 33,
-      "agree": 17,
+      "agree": 23,
       "disagree": 0,
-      "resolves": 8,
+      "resolves": 2,
       "kept_uncertain": 8,
       "agreement_rate_on_decided_rows": 1.0
     },
-    "improved_repo_ids": [],
-    "regressed_repo_ids": [],
-    "still_uncertain_repo_ids": [
+    "improved_repo_ids": [
       "82206054",
-      "271994210",
       "421217174",
       "465991566",
       "551162351",
+      "697973922",
+      "719391258"
+    ],
+    "regressed_repo_ids": [],
+    "still_uncertain_repo_ids": [
+      "271994210",
       "569927055",
       "684223328",
-      "697973922",
       "711869837",
       "716775427",
-      "719391258",
       "738759461",
       "742748171",
       "742995337",

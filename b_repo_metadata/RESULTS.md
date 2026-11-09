@@ -4,22 +4,24 @@
 **规则迭代：** 2026-11-02（UTC 08:00–08:40），规则 `ai_rules_v0.2`，同一批 50 个仓库重跑标签
 **口径确认后更新：** 2026-11-09，规则 `ai_rules_v0.3`（A 确认五条口径），同一批 50 个仓库重跑
 **反馈修正：** 2026-11-09，规则 `ai_rules_v0.3.1`（README 判 AI / 个人主页收紧），同批重跑 0 条标签变化
+**边界案例：** 2026-11-09，规则 `ai_rules_v0.3.3`（README 确认主体非 AI），pilot_01 6 条、pilot_02 22 条 uncertain → excluded
 **环境：** Windows 11，Python 3.12.14，标准库 + pyarrow 26.0.0（仅用于读取 A 的 Parquet）
 **运行目录：** [`runs/pilot_01/`](runs/pilot_01/)，汇总见 [`run_summary.json`](runs/pilot_01/run_summary.json)
 
-## 0. 当前状态：v0.3.1（README 判据已收紧）
+## 0. 当前状态：v0.3.3（README 可确认主体非 AI）
 
 v0.3.1 修正两处 README 误判风险：AI 证据必须是“核心”证据（未来计划行先剔除，强证据或多次弱词+佐证才纳入）；个人主页必须先是规则判定的疑似，且 README 没有 Install/Usage 等工程章节才排除。
 
 用原元数据与 README 快照重跑 50 个仓库：**0 条标签变化、0 条理由变化**（这 50 个里没有两类误判样本）。两处修正由 7 项新测试覆盖，规则说明见 [`rules/ai_rules_v0.3.1.md`](rules/ai_rules_v0.3.1.md)。
 
-| 指标 | v0.2 | v0.3 | v0.3.1（当前） |
+| 指标 | v0.2 | v0.3 | v0.3.3（当前） |
 |---|---:|---:|---:|
 | `included` | 1 | 4 | 4 |
-| `excluded` | 30 | 30 | 30 |
-| `uncertain` | 19 | 16 | 16 |
+| `excluded` | 30 | 30 | 36 |
+| `uncertain` | 19 | 16 | 10 |
 | 与人工在已判定行的一致 | 14/14 | 17/17 | 17/17 |
 | 人工推翻 | 0 | 0 | 0 |
+| 人工优先与自动的差异 | 11 | 8 | 2 |
 
 v0.2 → v0.3 共 10 条变化：3 条 `uncertain → included`（README 证明是 AI 项目）、1 条 `uncertain → excluded`（README 确认 MLOps 课程资料）、1 条 `excluded → uncertain`（个人主页改为疑似，README 无文字证据）、5 条仅理由变化（个人主页改由 README 确认后排除）。逐条见 [`label_changes.csv`](runs/pilot_01/label_changes.csv)。
 
@@ -35,13 +37,13 @@ v0.2 → v0.3 共 10 条变化：3 条 `uncertain → included`（README 证明�
 |---|---|
 | 元数据 API | 200 次调用：163 成功、31 个 404、6 个 ID 不一致，120 秒 |
 | README 证据 | 200 次请求：138 可读、62 无 README 或 404，128 秒 |
-| 标签（160 随机） | included 3 / excluded 65 / uncertain 92 |
-| 标签（40 关键词） | included 17 / excluded 9 / uncertain 14 |
-| 全部 200 | included 20 / excluded 74 / uncertain 106 |
+| 标签（160 随机） | included 3 / excluded 86 / uncertain 71 |
+| 标签（40 关键词） | included 17 / excluded 10 / uncertain 13 |
+| 全部 200 | included 20 / excluded 96 / uncertain 84（22 条由 R12 排除） |
 | 接回全天活动表 | 200/200 命中，覆盖 1,072 / 5,528,300 条事件 |
 | 人工抽查 | 13 条（included 3、excluded 5、uncertain 5） |
 
-抽查发现并修复两处规则 bug（v0.3.2）：`Whispering-Origin-2D` 被子串当成 `whisper`；中文“用Resnet101+GPT搭建…的AI”因 `\b` 在中文里失效被漏判。另有两条边界记录：Etherscan-ML 是 bootcamp 产物但已发布为库；CoreELEC/xbmc 的 README 明确是 Kodi 但规则仍判 uncertain。明细见 `runs/pilot_02/manual_review_pilot02.csv` 与 `pilot_02_summary.json`。
+抽查发现并修复两处规则 bug（v0.3.2）：`Whispering-Origin-2D` 被子串当成 `whisper`；中文“用Resnet101+GPT搭建…的AI”因 `\b` 在中文里失效被漏判。A 判定两个边界案例：Etherscan-ML 按训练营项目人工排除（规则仍判 included，分析表取人工值）；CoreELEC/xbmc 由 v0.3.3 的 R12 自动排除（README 正文足够且无 AI 证据）。明细见 `runs/pilot_02/manual_review_pilot02.csv` 与 `pilot_02_summary.json`。
 
 ## 1. 本次数字
 
@@ -52,11 +54,11 @@ v0.2 → v0.3 共 10 条变化：3 条 `uncertain → included`（README 证明�
 | 元数据获取 | 43 `ok` + 2 `id_mismatch` + 5 `not_found` = 50；API 调用 50 次，pending 0 |
 | AI 标签 v0.1 | `included` 3 + `excluded` 22 + `uncertain` 25 = 50 |
 | AI 标签 v0.2 | `included` 1 + `excluded` 30 + `uncertain` 19 = 50 |
-| AI 标签 v0.3.2（当前） | `included` 4 + `excluded` 30 + `uncertain` 16 = 50 |
+| AI 标签 v0.3.3（当前） | `included` 4 + `excluded` 36 + `uncertain` 10 = 50 |
 | 人工复核 | 33 条：included 3（全查）、excluded 5（抽样）、uncertain 25（全查） |
 | 与人工一致率（已判定行） | v0.1 6/8 = 75% → v0.2 14/14 → v0.3 17/17 |
 | 接回 A 的事件表 | 50/50 个试点仓库按 `repo_id` 匹配；197,313 条事件中 159 条属这 50 个仓库 |
-| 离线测试 | 76 项通过 |
+| 离线测试 | 80 项通过 |
 
 v0.2 的规则分布（历史记录）：
 

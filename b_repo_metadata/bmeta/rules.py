@@ -143,6 +143,9 @@ class RuleSet:
                 self.readme_future = _compile(readme_rules.get("future_markers", []))
                 self.readme_project_sections = _compile(readme_rules.get("project_sections", []))
                 self.min_weak_mentions = int(readme_rules.get("min_weak_mentions", 3) or 3)
+                non_ai = dict(readme_rules.get("non_ai") or {})
+                self.readme_non_ai_min_chars = int(non_ai.get("min_meaningful_chars", 200) or 200)
+                self.readme_non_ai_rule = non_ai.get("rule_id", "R12_readme_non_ai")
         else:
             self.topic_terms = {term.lower() for term in rules.get("ai_topic_terms", [])}
             self.description = _compile(rules.get("ai_description_patterns", []))
@@ -314,6 +317,17 @@ class RuleSet:
                 f"readme={','.join(_dedupe(weak_hits))};mentions={weak_count};corroboration={','.join(_dedupe(corroboration))}",
             )
 
+        # README 确认主体非 AI：正文足够长、完全没有 AI 证据、也没有课程/主页证据时排除。
+        # 短 README（只有标题或链接）不算“确认”，继续存疑。
+        if not weak_hits:
+            meaningful = self._meaningful_chars(usable)
+            if meaningful >= self.readme_non_ai_min_chars:
+                return with_readme(
+                    "excluded",
+                    self.readme_non_ai_rule,
+                    f"readme_chars={meaningful};no_ai_evidence",
+                )
+
         base["readme_evidence"] = "no_signal"
         base["readme_sha256"] = sha
         base["readme_fetched_at_utc"] = fetched
@@ -330,6 +344,14 @@ class RuleSet:
         for _, pattern in self.readme_ai_weak:
             total += len(pattern.findall(text))
         return total
+
+    def _meaningful_chars(self, text: str) -> int:
+        """README 的有效正文字符数：去掉链接、图片、HTML 标签后的字母/数字/汉字数。"""
+        cleaned = re.sub(r"!\[[^\]]*\]\([^)]*\)", " ", text)
+        cleaned = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", cleaned)
+        cleaned = re.sub(r"https?://\S+", " ", cleaned)
+        cleaned = re.sub(r"<[^>]+>", " ", cleaned)
+        return len(re.findall(r"[A-Za-z0-9\u4e00-\u9fff]", cleaned))
 
     def _base_v3(self, result, description, full_name, topics, language, raw_name=""):
         # 课程作业：强语义（final-project / openclassrooms / capstone）可直接判定；
