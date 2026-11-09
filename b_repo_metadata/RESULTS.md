@@ -37,7 +37,7 @@ pilot_01 的 50 个仓库在 v0.3.4 → v0.3.5 之间**0 条标签变化、0 条
 
 注意：**19/19 = 100% 只代表复核样本中自动已判定的 19 条**与人工一致，不是整体分类准确率；人工复核只覆盖 33 个仓库。
 
-规则说明见 [`rules/ai_rules_v0.3.5.md`](rules/ai_rules_v0.3.5.md)；以下第 1–9 节保留早期过程记录，数字与表格以本节为准。
+规则说明见 [`rules/ai_rules_v0.3.5.md`](rules/ai_rules_v0.3.5.md)；抽查过程、改判依据与“维持 uncertain”的清单见 [`reviews/pilot_02_rule_review_v0.3.5.md`](reviews/pilot_02_rule_review_v0.3.5.md)。以下第 1–9 节保留早期过程记录，数字与表格以本节为准。
 
 ## 0.2 扩大试跑 pilot_02（200 个仓库）
 

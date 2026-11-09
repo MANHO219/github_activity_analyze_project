@@ -46,6 +46,7 @@ b_repo_metadata/
 │   └── ai_rules_v0.3.5.md / .json     ← 当前版本：论文清单、course on、个人主页组件、名称边界
 ├── reviews/pilot_01_decisions.json    ← 第一轮人工判断与理由（不覆盖）
 ├── reviews/pilot_01_revision_check_v0.3.json ← 新口径对旧判断的影响检查
+├── reviews/pilot_02_rule_review_v0.3.5.md ← 101 条 uncertain + 80 条 excluded 的抽查记录
 ├── bmeta/                             ← 实现包（与 A 的 gharchive_a 对应）
 │   ├── common.py                      ← 路径、CSV/JSON、UTC、run_summary 合并
 │   ├── select.py                      ← 分层抽样与名称粗筛
@@ -250,6 +251,7 @@ v0.3.5 是对这 200 个仓库的误判抽查：逐条看完 101 条 `uncertain`
 - 当前规则 `ai_rules_v0.3.5`：在 v0.3.4 基础上，只修抽样复核发现的 6 处明确判错——论文清单按资源合集排除、描述里的 `course on/about` 按课程资料排除、个人主页补充统计卡/贡献蛇/typing 头图措辞、名称信号修复 `ai` 词元边界。R12 的 200 字符阈值与 R5d、R13 的判定条件都未放宽。
 - 各版本规则与标签表都保留；pilot_01 的 `label_changes.csv` 是 v0.3.4→v0.3.5（0 条），pilot_02 的是 v0.3.4→v0.3.5（6 条），更早的对比另存为 `label_changes_v0.3.3.1_to_v0.3.4.csv`。
 - 新口径对第一轮人工判断的影响检查见 `reviews/pilot_01_revision_check_v0.3.json`：无需改判，旧判断不覆盖。
+- 抽查过程与逐条依据见 `reviews/pilot_02_rule_review_v0.3.5.md`。
 - 有一处已知问题**故意没改**：R11 仍把任意代码围栏当作“工程章节”，`ItsCryptic/ItsCryptic` 这类用代码块写自我介绍的个人主页无法自动确认，因为 13 条人工复核里人工选了保守的 `uncertain`；是否放开等 A 确认（见 `rules/ai_rules_v0.3.5.md` 第 6 节）。
 
 ## 与 A、C 的接口
