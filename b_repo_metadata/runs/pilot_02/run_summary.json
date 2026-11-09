@@ -747,5 +747,131 @@
     },
     "output_csv": "b_repo_metadata/runs/pilot_02/repo_ai_labels_analysis.csv",
     "decision_pending": "最终采用自动、人工还是混合口径，需 A、B 确认（见 LABELS.md）。"
+  },
+  "meta": {
+    "pilot_version": "pilot_02",
+    "seed": 5488,
+    "strata": {
+      "random": 160,
+      "keyword_name": 40
+    },
+    "rules_version": "ai_rules_v0.3.6",
+    "rules_compared": [
+      "ai_rules_v0.3.5",
+      "ai_rules_v0.3.6"
+    ],
+    "analysis_label_policy": "manual_override",
+    "generated_at_utc": "2026-11-09T17:03:34Z",
+    "environment": {
+      "python_version": "3.13.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "package_version": "0.1.0"
+    },
+    "inputs": {
+      "candidates_csv": "a_data_pipeline/runs/20240115_python/python/repo_candidates.csv",
+      "candidates_sha256": "3b0ffd5a72723dd55e5889dacdf2b75febd607df9628d1000d7f1a371146c143",
+      "pilot_candidates_sha256": "5393f838db735bdcfd788d74cbd24f3e7e10c71b4f92c50f228052a9a1ed6dab",
+      "repo_metadata_sha256": "331bbcf70fa8cc0e834b1e7d05d08b8899ef805897ceef32fff31ed8282bcf7d",
+      "repo_ai_labels_sha256": "fa54a784531afe1e6089cbcc5a380bf17ad73c56a0b5765b73768481294656f5",
+      "repo_ai_labels_v0_1_sha256": null,
+      "analysis_labels_sha256": "d7156628103acc87ea21c0349a83d6ae8af000c0b03d235012a818ec70a8546a",
+      "rules_sha256": "18fb1a3a3352dd5f9dc92f9de61f6bdf87a995defd40ddb20fa9adfa48be735a"
+    },
+    "outputs": {
+      "metadata_rows": 200,
+      "label_rows": 200,
+      "review_rows": 13,
+      "labels": {
+        "included": 17,
+        "excluded": 86,
+        "uncertain": 97
+      },
+      "fetch_status": {
+        "ok": 163,
+        "not_found": 31,
+        "id_mismatch": 6
+      },
+      "label_changes": {
+        "changed_rows": 0,
+        "label_changed_rows": 0,
+        "rule_reason_changed_rows": 0,
+        "confusion_matrix": {
+          "included": {
+            "included": 17
+          },
+          "excluded": {
+            "excluded": 86
+          },
+          "uncertain": {
+            "uncertain": 97
+          }
+        }
+      },
+      "human_agreement": {
+        "old": {
+          "reviewed_rows": 13,
+          "agree": 9,
+          "disagree": 0,
+          "resolves": 0,
+          "kept_uncertain": 4,
+          "agreement_rate_on_decided_rows": 1.0
+        },
+        "new": {
+          "reviewed_rows": 13,
+          "agree": 9,
+          "disagree": 0,
+          "resolves": 0,
+          "kept_uncertain": 4,
+          "agreement_rate_on_decided_rows": 1.0
+        },
+        "improved_repo_ids": [],
+        "regressed_repo_ids": []
+      },
+      "analysis_labels": {
+        "policy": "manual_override",
+        "final_labels": {
+          "excluded": 87,
+          "included": 17,
+          "uncertain": 96
+        },
+        "label_source": {
+          "auto_rule": 187,
+          "manual_review": 13
+        }
+      },
+      "join": {
+        "event_source": "repo_daily_counts.csv:sum(event_count)",
+        "events_total": 5528300,
+        "events_covered_by_pilot": 1072,
+        "events_covered_share_of_source": 0.000194
+      }
+    },
+    "unresolved_issues": [
+      "元数据缺失或 API 返回 id 不一致的仓库一律保持 uncertain，不能据此推断删除、私有化或非 AI。",
+      "README 证据是抓取时的快照，内容可能已变化；每行记录快照时间与 SHA-256，复核与判定都以此为准。",
+      "试点仓库按分层抽样（名称关键词层过采样），不能用来估计整个 GitHub 的 AI 仓库比例。",
+      "事件覆盖仍有限（pilot_01 一小时、pilot_02 全天），不足以支持生命周期结论，需等 A 扩展时间窗后重跑。",
+      "失败响应默认不复用，重跑会重新请求；只有 HTTP 200 且响应体合法的成功响应进入缓存。"
+    ],
+    "checks": {
+      "fetch_processed_plus_pending_equals_input": true,
+      "metadata_rows_equals_processed": true,
+      "metadata_ids_unique": true,
+      "labels_cover_metadata": true,
+      "label_counts_sum_equals_rows": true,
+      "join_checks_all_true": true,
+      "manual_review_complete": true,
+      "manual_review_covers_three_labels": true,
+      "label_comparison_present": true,
+      "analysis_labels_cover_metadata": true,
+      "analysis_label_counts_sum": true
+    },
+    "next_steps": [
+      "等 A 扩展事件时间窗后，在同一规则版本上重跑全部候选仓库，而不是只跑试点样本。",
+      "LLM API 辅助判断 uncertain：单独分支与 PR，先做 pilot_02 的小试验并记录成本。",
+      "月级扩展前先补批量调度、失败续跑、跨日去重与按日分区。",
+      "R12 的 purpose_patterns 与 R5d 的可选集成措辞仍缺真实样本，扩量后专门抽样验证。"
+    ],
+    "run_dir": "b_repo_metadata/runs/pilot_02"
   }
 }

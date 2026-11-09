@@ -133,7 +133,7 @@ python scripts/manual_review.py --run-dir runs/pilot_01 \
 # 7. 接回 A 的事件表并核对；没有 pyarrow 时自动回退到候选表计数
 python scripts/join_check.py
 
-# 8. 汇总与验收检查
+# 8. 汇总与验收检查（pilot_02 用 --review 指向它自己的复核表）
 python scripts/build_run_summary.py --run-dir runs/pilot_01
 ```
 
@@ -192,6 +192,8 @@ python scripts/label_repositories.py --run-dir runs/pilot_02 \
     --readme-evidence runs/pilot_02/readme_evidence.jsonl
 python scripts/join_check.py --run-dir runs/pilot_02 \
     --daily-csv ../a_data_pipeline/runs/20240115_python/python/repo_daily_counts.csv
+python scripts/build_run_summary.py --run-dir runs/pilot_02 \
+    --review runs/pilot_02/manual_review_pilot02.csv
 ```
 
 结果（全部在 `runs/pilot_02/pilot_02_summary.json`）：

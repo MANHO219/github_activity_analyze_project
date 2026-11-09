@@ -476,7 +476,7 @@
       "ai_rules_v0.3.6"
     ],
     "analysis_label_policy": "manual_override",
-    "generated_at_utc": "2026-11-09T16:53:43Z",
+    "generated_at_utc": "2026-11-09T17:03:33Z",
     "environment": {
       "python_version": "3.13.14",
       "platform": "Windows-11-10.0.26200-SP0",
@@ -562,12 +562,11 @@
       }
     },
     "unresolved_issues": [
-      "7 个候选仓库无法按名称取回元数据（5 个 404、2 个 id 不一致），标签保持 uncertain；不能据此推断删除或非 AI。",
-      "规则 v0.2 后仍有 19 个 uncertain：8 个是元数据缺失或空仓库（规则无法处理），11 个需要 README 才能判断（名称命中、弱信号、作品集等），而 v0.2 规则不读 README。",
-      "待统一口径：弱信号是否直接 excluded、仅集成 AI 功能是否纳入、README 能否作为规则输入、课程作业边界。见 rules/ai_rules_v0.2.md 第 6 节。",
-      "仓库元数据是 2026-11-02 的快照，不是 2024-01-15 事件发生时的状态；描述与 topics 可能已经变化。",
-      "首批 50 个仓库为“40 随机 + 10 名称关键词过采样”的分层样本，不能用来估计整个 GitHub 的 AI 仓库比例。",
-      "失败响应的缓存默认不复用，重跑会重新请求（已在 cache_retry_check.json 记录：5 个 404 重试、43 个成功响应命中缓存）。"
+      "元数据缺失或 API 返回 id 不一致的仓库一律保持 uncertain，不能据此推断删除、私有化或非 AI。",
+      "README 证据是抓取时的快照，内容可能已变化；每行记录快照时间与 SHA-256，复核与判定都以此为准。",
+      "试点仓库按分层抽样（名称关键词层过采样），不能用来估计整个 GitHub 的 AI 仓库比例。",
+      "事件覆盖仍有限（pilot_01 一小时、pilot_02 全天），不足以支持生命周期结论，需等 A 扩展时间窗后重跑。",
+      "失败响应默认不复用，重跑会重新请求；只有 HTTP 200 且响应体合法的成功响应进入缓存。"
     ],
     "checks": {
       "fetch_processed_plus_pending_equals_input": true,
@@ -583,10 +582,10 @@
       "analysis_label_counts_sum": true
     },
     "next_steps": [
-      "今晚统一口径：弱信号是否直接排除、AI 附加功能是否纳入、README 能否作为规则输入、课程作业边界。",
-      "口径确认后按第 7 节流程起草 ai_rules_v0.3，并用 compare_label_versions.py 再做一次变化对比。",
-      "确认标签交接口径：analysis_labels 默认 manual_override，可切换 auto_only。",
-      "A 扩展事件时间窗后，B 在同一规则版本上重跑全部候选仓库，而不是只跑这 50 个。"
+      "等 A 扩展事件时间窗后，在同一规则版本上重跑全部候选仓库，而不是只跑试点样本。",
+      "LLM API 辅助判断 uncertain：单独分支与 PR，先做 pilot_02 的小试验并记录成本。",
+      "月级扩展前先补批量调度、失败续跑、跨日去重与按日分区。",
+      "R12 的 purpose_patterns 与 R5d 的可选集成措辞仍缺真实样本，扩量后专门抽样验证。"
     ],
     "run_dir": "b_repo_metadata/runs/pilot_01"
   },

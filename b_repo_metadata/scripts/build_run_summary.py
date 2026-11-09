@@ -29,16 +29,15 @@ from bmeta.common import (
 )
 
 UNRESOLVED = [
-    "7 个候选仓库无法按名称取回元数据（5 个 404、2 个 id 不一致），标签保持 uncertain；不能据此推断删除或非 AI。",
-    "规则 v0.2 后仍有 19 个 uncertain：8 个是元数据缺失或空仓库（规则无法处理），11 个需要 README 才能判断（名称命中、弱信号、作品集等），而 v0.2 规则不读 README。",
-    "待统一口径：弱信号是否直接 excluded、仅集成 AI 功能是否纳入、README 能否作为规则输入、课程作业边界。见 rules/ai_rules_v0.2.md 第 6 节。",
-    "仓库元数据是 2026-11-02 的快照，不是 2024-01-15 事件发生时的状态；描述与 topics 可能已经变化。",
-    "首批 50 个仓库为“40 随机 + 10 名称关键词过采样”的分层样本，不能用来估计整个 GitHub 的 AI 仓库比例。",
-    "失败响应的缓存默认不复用，重跑会重新请求（已在 cache_retry_check.json 记录：5 个 404 重试、43 个成功响应命中缓存）。",
+    "元数据缺失或 API 返回 id 不一致的仓库一律保持 uncertain，不能据此推断删除、私有化或非 AI。",
+    "README 证据是抓取时的快照，内容可能已变化；每行记录快照时间与 SHA-256，复核与判定都以此为准。",
+    "试点仓库按分层抽样（名称关键词层过采样），不能用来估计整个 GitHub 的 AI 仓库比例。",
+    "事件覆盖仍有限（pilot_01 一小时、pilot_02 全天），不足以支持生命周期结论，需等 A 扩展时间窗后重跑。",
+    "失败响应默认不复用，重跑会重新请求；只有 HTTP 200 且响应体合法的成功响应进入缓存。",
 ]
 
 
-def build(run_dir: Path) -> dict:
+def build(run_dir: Path, review_file: Path | None = None) -> dict:
     summary = read_json(run_dir / "run_summary.json")
     pilot = summary.get("pilot", {})
     fetch = summary.get("fetch", {})
@@ -50,10 +49,12 @@ def build(run_dir: Path) -> dict:
 
     metadata = read_csv(run_dir / "repo_metadata.csv")
     label_rows = read_csv(run_dir / "repo_ai_labels.csv")
-    review_rows = read_csv(run_dir / "manual_review.csv")
+    review_rows = read_csv(review_file) if review_file and Path(review_file).exists() else read_csv(run_dir / "manual_review.csv")
     analysis_csv = run_dir / "repo_ai_labels_analysis.csv"
     analysis_rows = read_csv(analysis_csv) if analysis_csv.exists() else []
 
+    decided_review = [row for row in review_rows if (row.get("human_label") or "").strip()]
+    decided_review = [row for row in review_rows if (row.get("human_label") or "").strip()]
     metadata_ids = [row["repo_id"] for row in metadata]
     label_ids = [row["repo_id"] for row in label_rows]
     analysis_ids = [row["repo_id"] for row in analysis_rows]
@@ -68,8 +69,8 @@ def build(run_dir: Path) -> dict:
         "labels_cover_metadata": sorted(label_ids) == sorted(metadata_ids),
         "label_counts_sum_equals_rows": sum(by_label.values()) == len(label_rows) if by_label else False,
         "join_checks_all_true": all(join.get("checks", {}).values()) if join.get("checks") else False,
-        "manual_review_complete": review.get("pending_rows") == 0 and review.get("reviewed_rows", 0) > 0,
-        "manual_review_covers_three_labels": len(review.get("reviewed_by_scope", {})) == 3,
+        "manual_review_complete": len(decided_review) == len(review_rows) and len(review_rows) > 0,
+        "manual_review_covers_three_labels": len({row["human_label"] for row in decided_review}) == 3,
         "label_comparison_present": bool(comparison.get("old_rule_version")),
         "analysis_labels_cover_metadata": sorted(analysis_ids) == sorted(metadata_ids),
         "analysis_label_counts_sum": sum(final_labels.values()) == len(analysis_rows) if final_labels else False,
@@ -78,7 +79,7 @@ def build(run_dir: Path) -> dict:
     meta = {
         "pilot_version": pilot.get("pilot_version"),
         "seed": pilot.get("seed"),
-        "strata": pilot.get("strata_actual"),
+        "strata": pilot.get("strata_actual") or pilot.get("strata_requested"),
         "rules_version": labels.get("rules_version"),
         "rules_compared": [
             version
@@ -133,10 +134,10 @@ def build(run_dir: Path) -> dict:
         "unresolved_issues": UNRESOLVED,
         "checks": checks,
         "next_steps": [
-            "今晚统一口径：弱信号是否直接排除、AI 附加功能是否纳入、README 能否作为规则输入、课程作业边界。",
-            "口径确认后按第 7 节流程起草 ai_rules_v0.3，并用 compare_label_versions.py 再做一次变化对比。",
-            "确认标签交接口径：analysis_labels 默认 manual_override，可切换 auto_only。",
-            "A 扩展事件时间窗后，B 在同一规则版本上重跑全部候选仓库，而不是只跑这 50 个。",
+            "等 A 扩展事件时间窗后，在同一规则版本上重跑全部候选仓库，而不是只跑试点样本。",
+            "LLM API 辅助判断 uncertain：单独分支与 PR，先做 pilot_02 的小试验并记录成本。",
+            "月级扩展前先补批量调度、失败续跑、跨日去重与按日分区。",
+            "R12 的 purpose_patterns 与 R5d 的可选集成措辞仍缺真实样本，扩量后专门抽样验证。",
         ],
         "run_dir": project_relative(run_dir),
     }
@@ -149,6 +150,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="汇总并核对 B 的试跑结果")
     parser.add_argument("--config", default=str(B_ROOT / "config" / "pilot.json"))
     parser.add_argument("--run-dir", help="运行目录；默认 runs/<pilot_version>")
+    parser.add_argument("--review", help="人工复核表；默认 <run-dir>/manual_review.csv")
     return parser.parse_args(argv)
 
 
@@ -156,7 +158,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     config = load_config(args.config)
     run_dir = Path(args.run_dir or (B_ROOT / "runs" / config["pilot_version"]))
-    meta = build(run_dir)
+    review = Path(args.review) if args.review else run_dir / "manual_review.csv"
+    meta = build(run_dir, review)
     print(f"labels={meta['outputs']['labels']}")
     print(f"fetch_status={meta['outputs']['fetch_status']}")
     print(f"checks={meta['checks']}")
