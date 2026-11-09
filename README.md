@@ -1,6 +1,6 @@
 # CS5488 小组项目：AI 相关 GitHub 仓库的生命周期
 
-从 GH Archive 的公开事件中整理仓库活动，补仓库元数据与 AI 标签，再研究仓库的生命周期。**当前完成一个真实小时的数据管道与正确性验证，以及 B 的 50 仓库元数据/标签试跑（pilot_01，规则已迭代到 v0.3，五条口径已确认）；正式观察期与生命周期结论待完成。**
+从 GH Archive 的公开事件中整理仓库活动，补仓库元数据与 AI 标签，再研究仓库生命周期。**当前已有一小时完整试跑样本、2024-01-15 全天 Python 处理结果和 B 的 50 个仓库元数据/标签试跑（pilot_01，规则已迭代到 v0.2）；全天 Spark 复算、正式观察期与生命周期结论待完成。**
 
 ## 第一次打开，按这个顺序看
 
@@ -12,11 +12,12 @@
 | B 的实现、跑法与试跑结果 | [B 阶段 README](b_repo_metadata/README.md)、[试跑结果](b_repo_metadata/RESULTS.md) |
 | 自动标签 / 人工复核 / 分析用标签的区别 | [标签交接说明](b_repo_metadata/LABELS.md) |
 | A 的实现和运行命令 | [数据管道 README](a_data_pipeline/README.md) |
+| D 的单核、多核与虚拟机分布式实验，以及 A/D 分工边界 | [D 的实验计划](D_并行与分布式实验计划.md) |
 | 实际样本与核对结果 | [样本交接记录](a_data_pipeline/runs/20240115_1hour_handoff/HANDOFF.md)、[验证摘要](a_data_pipeline/verification/RESULTS.md) |
 
 HTML 请在下载或 clone 后，用本地浏览器打开；在 GitHub 文件页面也可以先下载。Markdown 说明可直接在 GitHub 阅读。仓库里的 HTML 已内嵌样本和源码，阅读主体内容不需要启动服务。
 
-## B 可以立即使用的输入
+## B 可以立即使用的一小时试跑输入
 
 打开[仓库候选清单](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv)：69,768 个唯一仓库，每行一个 `repo_id`。第一轮先在自己电脑获取一个仓库，再固定一个小名单试跑；50 个是建议规模，AI 规则与最终字段由 A、B 确认。
 
@@ -31,8 +32,8 @@ B 的第一轮已完成并留在 [b_repo_metadata/](b_repo_metadata/)：50 个�
 ├── README.md                       ← 小组入口
 ├── CS5488_AI_Repository_Lifecycle_Project.md
 ├── A_启动任务_最小数据样本.md
+├── D_并行与分布式实验计划.md         ← D 待实施的实验与交付要求
 ├── Project.pdf                     ← 课程项目要求
-├── tools/prepare_github_share.py    ← 生成可分享副本
 ├── a_data_pipeline/
 │   ├── B_接手指南.md
 │   ├── 数据处理全解.html
@@ -42,21 +43,23 @@ B 的第一轮已完成并留在 [b_repo_metadata/](b_repo_metadata/)：50 个�
 │   ├── docs/                      ← 文档模板与证据快照
 │   ├── verification/              ← 验证记录
 │   ├── tests/                     ← 已有测试代码
+│   ├── sample_data/                ← 一份精选的 24 小时仓库活动汇总表
 │   ├── data/                      ← 原始下载，本地保留，Git 忽略
 │   └── runs/                      ← 只提交一份精选交接结果
 └── b_repo_metadata/                ← B：元数据、AI 标签、复核与接回事件表
     ├── README.md                   ← 跑法与字段说明
+    ├── LABELS.md                   ← 自动、人工与分析用标签的交接口径
     ├── RESULTS.md                  ← pilot_01 结果与验收清单
     ├── config/                     ← 种子、分层规模、API 参数
-    ├── rules/                      ← ai_rules_v0.1（.md 说明 + .json 实现）
+    ├── rules/                      ← 当前 ai_rules_v0.2，保留 v0.1 供对比
     ├── bmeta/                      ← 抓取、规则、复核、接回的实现
     ├── scripts/                    ← 每个步骤一个命令入口
     ├── reviews/                    ← 人工判断与理由
-    ├── tests/                      ← 26 项离线验证
+    ├── tests/                      ← 51 项离线验证
     └── runs/                       ← debug_api_sample 与 pilot_01 结果
 ```
 
-## 在新电脑复跑 A 的完整样本
+## 一小时试跑：快速熟悉管道
 
 从 clone 后的仓库根目录运行：
 
@@ -67,26 +70,22 @@ conda activate cs5488-data
 python scripts/run_sample.py --with-spark
 ```
 
-会下载/校验原始小时档案，并创建新的运行目录。需要联网及本机足够的存储；配置和数据覆盖见管道 README。组员使用已提交的 CSV 时可以直接开始，运行完整 Spark 管道是另一项工作。
+这条命令使用原来的**一小时默认样本**，下载并处理一个小时的数据，同时运行 Spark，适合熟悉目录和验证管道。需要联网和本机存储；此命令不会处理 24 小时。
 
-## 哪些内容在 GitHub，哪些在本地
+## 24 小时扩展数据：现在能用什么，如何获取完整结果
 
-仓库包含代码、环境文件、说明、验证记录，以及 `20240115_1hour_handoff` 中的一套 Python 最终分析表与关键报告。事件 Parquet、候选仓库和活动计数均为完整的这一个小时样本；`events_preview.csv` 是 100 行预览。
+2024-01-15 全天的 Python 处理已完成，全天 Spark 复算尚未完成。
 
-原始 `.json.gz`、SQLite 中间数据库、Spark 复算输出、旧试跑目录和缓存由 `.gitignore` 排除。本机原件继续保留。需要回查完整 payload 或过程数据库时，可联系 A 取得，或复跑生成。HTML 中指向未提交产物的文件链接，需要拿到对应本地文件后才可打开。
+- **可直接分析：** Git 中的 [`repo_daily_counts.csv`](a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv) 按仓库、UTC 日期和事件类型汇总，共 1,340,785 行，合计 5,528,300 条事件。它是汇总表，不含逐条事件详情。
+- **生成完整事件数据：** 原始 `.json.gz` 和全天逐条事件表没有放进 Git。环境已创建并激活后，在仓库根目录运行：
 
-重新生成完整 HTML 需要原始档案与完整交接运行（包括未提交的 SQLite 等文件）。clone 后可直接阅读已有 HTML；新电脑若要重新生成，可先复跑样本，再给 `scripts/build_data_guide.py` 指定新运行目录。
+  ```bash
+  cd a_data_pipeline
+  conda activate cs5488-data
+  python scripts/run_sample.py --date 2024-01-15 --hours 0-23 --run-dir runs/20240115_python
+  ```
 
-## 准备上传
+  这会下载并清洗这一天的 24 个小时档案，结果保存在本机。详细步骤见 [A 数据管道 README](a_data_pipeline/README.md)。
+- **扩到一个月：** 当前脚本只有单日入口，没有日期范围批处理。月级扩展前需要实现批量调度、失败续跑、跨日 `event_id` 去重、按日分区和汇总校验；不能要求组员手动重复几十条命令或直接拼接每日结果。
 
-建议用一个小组私有仓库，并邀请组员加入。`Project.pdf` 是课程资料；若准备公开仓库，先确定它和其他课程材料是否适合公开。
-
-在本目录执行下面命令，可生成只包含 Git 未忽略文件的分享压缩包：
-
-```bash
-python tools/prepare_github_share.py
-```
-
-压缩包默认生成在本目录的上一级，解压得到独立的 `group_project_github_ready/` 分享目录。**上传这个分享目录里的项目文件**；把 ZIP 本身上传到代码仓库，不会自动展开成目录。使用 GitHub Desktop 或命令行提交时，先检查待提交清单：应包含 B 的输入 CSV，且不含 `data/raw`、SQLite 和旧运行。
-
-仓库根目录就是本页所在目录；上传分享版时可将这一层的内容放在仓库根目录，避免额外嵌套一个 `group_project/group_project/`。
+全天数据的数量、质量检查和限制见[全天结果与交接](a_data_pipeline/verification/20240115_1day/README.md)。

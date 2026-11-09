@@ -6,15 +6,21 @@
 
 HTML 的字段、计数、真实例子和源码从实际运行读取并内嵌，单文件即可分享。后续更新文档可运行 `python scripts/build_data_guide.py --run-dir runs/20240115_1hour_handoff`；它只更新说明文件。
 
-按 [A 的启动计划](../A_启动任务_最小数据样本.md) 实现。默认读取 `2024-01-15` UTC 0 时；可逐步扩到 3 小时、24 小时。输出保留来源、清洗计数及异常记录，方便组员回查。
+按 [A 的启动计划](../A_启动任务_最小数据样本.md) 实现。默认读取 `2024-01-15` UTC 0 时；也支持指定多个小时。输出保留来源、清洗计数及异常记录，方便组员回查。
+
+**全天扩展：** 2024-01-15 的 24 小时 Python 处理已完成；全天 Spark 复算暂未完成。Git 中提供一份可直接分析的[全天仓库活动汇总表](sample_data/20240115_24h/repo_daily_counts.csv)：1,340,785 行，字段为 `repo_id`、`event_date`、`event_type`、`event_count`，所有计数合计 5,528,300 条事件。它按仓库、UTC 日期和事件类型聚合，不包含逐条事件详情。其他数量与处理限制见[全天结果与交接](verification/20240115_1day/README.md)。完整事件表、原始档案和过程数据库保存在处理机本地；组员可按下文命令重新获取和生成。
 
 ## 最快启动
 
+在项目仓库根目录执行：
+
 ```bash
-cd /Users/yipmanho/projects/cs5488/group_project/a_data_pipeline
+cd a_data_pipeline
 conda activate cs5488-data
 python scripts/run_sample.py --with-spark
 ```
+
+这条命令使用原来的**一小时默认样本**，用于熟悉环境和验证流程；它不会处理全天数据。要获取完整 24 小时事件表，请看本 README 下方“获取 24 小时数据（当前为单日入口）”一节。
 
 每次自动建立 `runs/<UTC 时间>/`，完成后打开其中的 `HANDOFF.md`。如果原始档案已下载，程序会校验后复用。已有运行目录会被拒绝，不会覆盖此前结果或重复追加数据。
 
@@ -31,6 +37,25 @@ python scripts/run_sample.py --with-spark
 `environment.yml` 用于跨平台创建环境；`environment.lock.osx-arm64.yml` 保存本次 Apple Silicon 环境的实际版本，已去除个人安装路径。
 
 真实样本及验证记录见 [验证摘要](verification/RESULTS.md)。
+
+## 获取 24 小时数据（当前为单日入口）
+
+`run_sample.py` 当前是**单日验证入口**，一次处理一个 UTC 日期。下面的命令用于复现 2024-01-15 这一天；它不是月级批处理方案。先在项目根目录进入 `a_data_pipeline/`，并按上面的步骤创建并激活环境，然后运行：
+
+```bash
+# 处理 2024-01-15 的完整 UTC 一天
+python scripts/run_sample.py --date 2024-01-15 --hours 0-23 --run-dir runs/20240115_python
+```
+
+命令默认下载该日期 24 个 GH Archive 小时文件，校验后保存到 `data/raw/`，再运行原始检查和 Python 清洗；已有档案会验证后复用。每个 `--run-dir` 必须是**尚不存在的新目录**，以免覆盖旧结果。处理失败时保留失败目录，改用新目录重跑；已验证的原始档案可以复用。
+
+要换成另一个**单日**，修改日期和运行目录即可。当前脚本没有日期区间或批量调度入口。扩到一个月前，需要专门补上按日批处理、失败续跑、跨日 `event_id` 去重、按日分区和汇总校验；不应让组员手动重复几十条命令，也不能直接拼接每日结果。
+
+每个日期完成后，先看该运行目录里的 `HANDOFF.md`、`run_summary.json` 和 `python/quality_summary.json`；确认状态和小时覆盖后，再读取 `python/events_clean.parquet/`、`python/repo_daily_counts.csv` 和 `python/repo_candidates.csv`。2024-01-15 的全天仓库活动汇总表已放在 `sample_data/20240115_24h/` 供组员直接使用；其他运行目录和逐条事件数据默认保留在本机，不会随 Git 自动共享。
+
+注意：每次运行只在该次输入内去重；多天结果合并时，还需检查**跨日期重复的 `event_id`**，不能直接假设每日结果相加就是全时间段的去重结果。所有日期按 UTC 处理，缺失小时不能当作没有活动。2024-01-15 全天原始压缩文件实测约 2.42 GiB，其他日期可能不同；扩大范围前请先确认网络与磁盘空间。
+
+以上是 Python 数据获取和处理流程。若需要复算 Spark，可在小样本命令后加 `--with-spark`；本机全天 Spark 尝试尚未通过，后续需单独处理和验证。
 
 ## 按检查点运行
 
@@ -75,6 +100,7 @@ a_data_pipeline/
 │   ├── compare.py               # 两条路径的输入及输出核对
 │   └── cli.py                  # 分阶段命令与完整流程
 ├── tests/test_pipeline.py       # 已知结果的异常场景验证
+├── sample_data/                 # 精选共享数据；当前含 24 小时仓库活动汇总表
 ├── data/raw/                    # 原始 .json.gz 与失败下载 .part
 └── runs/<运行名>/               # 每次独立运行的全部过程和结果
 ```
@@ -133,6 +159,8 @@ Spark 的异常/重复/冲突 JSON 输出是带多个 `part-*` 文件的目录�
 两条路径的 Parquet 时间字段统一为 `timestamp[us, tz=UTC]`，Spark 显式使用 `TIMESTAMP_MICROS`；比较阶段会分批读回 Parquet，核对全部事件字段与 CSV 是否一致。[Spark Parquet 时间格式说明](https://spark.apache.org/docs/3.5.7/sql-data-sources-parquet.html)
 
 因此单个 gzip 输入的读取阶段只有一个文件任务；多个小时文件才有跨文件读取并行。这一版还保留大量审计输出，运行耗时不能直接当成 D 的正式性能实验。D 后续应固定输入、配置、计时边界及输出，再比较并行度。
+
+**后续责任归属：** 现有 Spark 是本机试跑入口，尚不支持跨虚拟机运行。正式实验代码、集群适配、虚拟机部署及单核/多核/多节点对比均由 D 在自己的分支实施，详见 [D 的实验计划](../D_并行与分布式实验计划.md)。A 继续扩展数据、维护清洗口径和参照结果，不提前完成 D 的实验工作。
 
 SQLite 和逐行 Python 适用于这一轮小时/一天试跑；扩展到多年时，应改为分批和分区任务，再评估存储、API 候选规模及 Spark 部署，不能直接把多年的文件都交给当前本地试跑入口。
 
