@@ -1,7 +1,7 @@
 {
   "pilot": "pilot_02",
-  "rules_version": "ai_rules_v0.3.5",
-  "generated_at_utc": "2026-11-09T13:42:09Z",
+  "rules_version": "ai_rules_v0.3.6",
+  "generated_at_utc": "2026-11-09T16:45:03Z",
   "source_data": {
     "note": "按 A README 的官方命令重建 2024-01-15 全天数据；数量与 A 的交接一致",
     "candidates": "a_data_pipeline/runs/20240115_python/python/repo_candidates.csv",
@@ -81,26 +81,28 @@
   "analysis_labels": {
     "policy": "manual_override",
     "final": {
-      "excluded": 86,
+      "excluded": 87,
       "included": 17,
-      "uncertain": 97
+      "uncertain": 96
     },
     "source": {
       "auto_rule": 187,
       "manual_review": 13
-    }
+    },
+    "manual_differs_from_auto": 1
   },
   "join": {
-    "source": "repo_daily_counts.csv:sum(event_count)",
-    "repos_matched": 200,
-    "repos_total": 200,
-    "events_covered": 1072,
-    "events_total": 5528300,
+    "event_source": "repo_daily_counts.csv:sum(event_count)",
+    "labels_csv": "b_repo_metadata/runs/pilot_02/repo_ai_labels_analysis.csv",
+    "label_field": "ai_label_final",
+    "pilot_repos_found_in_events": 200,
+    "events_covered_by_pilot": 1072,
     "events_by_label": {
-      "excluded": 313,
-      "included": 173,
-      "uncertain": 586
-    }
+      "excluded": 394,
+      "included": 109,
+      "uncertain": 569
+    },
+    "checks_all_true": true
   },
   "manual_review": {
     "rows": 13,
@@ -108,7 +110,9 @@
       "A": 2,
       "B": 11
     },
-    "auto_vs_manual_differences": [],
+    "auto_vs_manual_differences": [
+      "342791330"
+    ],
     "rows_detail": [
       {
         "repo_id": "128369334",
@@ -246,6 +250,15 @@
       "v0.3.3 新增 README 主体非 AI 排除后，CoreELEC/xbmc 自动排除，与 A 的判定一致。",
       "v0.3.3.1 收紧 R12：要求 README 能说明项目用途、只对 R7 生效、旧版本不触发；LDingLDing/langchain-js 由 excluded 恢复 uncertain，R12 命中从 22 降到 5。",
       "v0.3.4 新增可选 AI 集成排除与课程覆盖：Etherscan-ML 由 R13_course_override 自动 excluded，13 条人工复核与自动标签的差异降为 0。"
+    ],
+    "revisions": [
+      {
+        "repo_id": "342791330",
+        "observed_repo_name": "ItsCryptic/ItsCryptic",
+        "human_label": "excluded",
+        "reviewer": "A",
+        "supersedes": "manual_review_pilot02.csv#342791330"
+      }
     ]
   },
   "notes": [

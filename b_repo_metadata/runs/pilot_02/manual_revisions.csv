@@ -1,0 +1,2 @@
+repo_id,observed_repo_name,sample_stratum,ai_label,rule_id,human_label,human_reason,reviewer,decided_at_utc,supersedes
+342791330,ItsCryptic/ItsCryptic,random,uncertain,R3c_profile_suspected,excluded,A 复核修订：README 的代码块内容是个人自我介绍（姓名、所在地、联系方式、作品集），按个人主页仓库排除；通用规则是否放开代码块限制另行细化,A,2026-11-09T16:20:00Z,manual_review_pilot02.csv#342791330

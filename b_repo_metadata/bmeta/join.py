@@ -70,6 +70,7 @@ def run(
     events_parquet: Path | None = None,
     candidates_csv: Path | None = None,
     daily_counts_csv: Path | None = None,
+    label_field: str = "ai_label",
 ) -> dict[str, Any]:
     out_dir = Path(out_dir)
     metadata = read_csv(metadata_csv)
@@ -114,7 +115,7 @@ def run(
             {
                 "repo_id": row["repo_id"],
                 "observed_repo_name": names.get(row["repo_id"], ""),
-                "ai_label": row["ai_label"],
+                "ai_label": row.get(label_field) or row["ai_label"],
                 "event_count": event_count,
                 # 分母是事件表里全部事件：这个仓库占整个样本事件的比例。
                 "event_share_of_source": round(event_count / total_events, 6) if total_events else 0.0,
@@ -152,6 +153,8 @@ def run(
         "inputs": {
             "metadata_csv": project_relative(metadata_csv),
             "labels_csv": project_relative(labels_csv),
+            "label_field": label_field,
+            "label_field": label_field,
             "events_parquet": project_relative(events_parquet) if events_parquet else None,
             "candidates_csv": project_relative(candidates_csv) if candidates_csv else None,
             "daily_counts_csv": project_relative(daily_counts_csv) if daily_counts_csv else None,

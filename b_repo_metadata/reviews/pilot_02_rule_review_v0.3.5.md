@@ -58,3 +58,20 @@ python scripts/compare_label_versions.py --run-dir runs/pilot_02 \
     --old runs/pilot_02/repo_ai_labels_v0.3.4.csv --new runs/pilot_02/repo_ai_labels.csv \
     --review runs/pilot_02/manual_review_pilot02.csv
 ```
+
+## 7. A review 追加（2026-11-09）
+
+A 复测了 v0.3.5 新增的三个排除条件，各找到一个“讨论该主题就被排除”的反例：
+
+| 反例 | v0.3.5 的误判 | v0.3.6 的处理 |
+|---|---|---|
+| ML 工具的描述里推荐一门 `course on deployment` | 当成课程资料（R3b） | `course on` 只认描述开头的自述课程 |
+| 用 LLM 总结 `ChatGPT-related papers` 的工具 | 当成论文清单（R3） | `paper_list` 只认整段描述或“list of papers” |
+| 满足疑似主页条件的 ML 工具 + GitHub 统计卡 | 当成个人主页（R11） | 统计卡须“无 AI 强证据 + 正文 <200 字符”才确认 |
+
+同一轮 review 还确认了两件事：
+
+1. `ItsCryptic/ItsCryptic` 的代码块是个人自我介绍，**可人工判为 excluded**——已记入 `runs/pilot_02/manual_revisions.csv`，自动规则仍保持 uncertain；
+2. **不要**直接取消代码块限制：A 复测发现那样会让“带统计卡 + 真实安装命令”的 AI 项目也被判成主页，通用规则继续细化。
+
+另外，A 复测 R12 时发现“安装步骤 + 空 Overview 标题”会被误排除，已在 v0.3.4.1（PR #5）修掉：标题下方必须有说明正文。

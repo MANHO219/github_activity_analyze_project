@@ -1120,6 +1120,68 @@ class RulesV34Tests(unittest.TestCase):
         self.assertEqual(result["ai_label"], "included")
 
 
+class RulesV341Tests(unittest.TestCase):
+    """v0.3.4.1：R12 的用途标题必须有说明正文，空 Overview + 安装步骤不再排除。"""
+
+    V341 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.4.1.json"))
+    V34 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.4.json"))
+
+    @staticmethod
+    def readme(text):
+        return {"text": text, "sha256": "s", "fetched_at_utc": "t"}
+
+    INSTALL_ONLY = """# mytool
+
+## Overview
+
+npm install mytool
+cd mytool
+npm run build
+npm test
+""" * 12
+
+    MEDIA_CENTER = """# Kodi
+
+Kodi is a free and open source media player and entertainment hub for digital media.
+It can play videos, music and podcasts from local storage or from the network.
+Kodi runs on Linux, Windows, macOS, Android and iOS, and supports many plugins and skins.
+The project is maintained by the Kodi Foundation and has a large community of contributors.
+""" * 6
+
+    REAL_OVERVIEW = """# timeutil
+
+## Overview
+
+A small set of helpers for handling dates and times on embedded devices,
+including timezone conversion and calendar arithmetic.
+The code has no dependencies and can be copied into any project.
+""" * 8
+
+    def test_empty_overview_with_install_steps_stays_uncertain(self):
+        row = metadata(91, description="", topics=[])
+        result = self.V341.decide(row, readme=self.readme(self.INSTALL_ONLY))
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R7_insufficient_text_evidence")
+
+    def test_media_center_readme_still_excluded(self):
+        row = metadata(92, description="", topics=[])
+        result = self.V341.decide(row, readme=self.readme(self.MEDIA_CENTER))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+    def test_overview_with_real_body_still_excluded(self):
+        row = metadata(93, description="", topics=[])
+        result = self.V341.decide(row, readme=self.readme(self.REAL_OVERVIEW))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+    def test_v034_keeps_old_heading_only_behaviour(self):
+        row = metadata(94, description="", topics=[])
+        result = self.V34.decide(row, readme=self.readme(self.INSTALL_ONLY))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+
 class RulesV35Tests(unittest.TestCase):
     """v0.3.5：抽样复核后只修明确判错的 5 处，不放宽 R12 门槛。"""
 
@@ -1209,6 +1271,92 @@ class RulesV35Tests(unittest.TestCase):
         self.assertEqual(chai["rule_id"], "R6_name_only_signal")
 
 
+class RulesV36Tests(unittest.TestCase):
+    """v0.3.6：三个新增排除条件收紧到“仓库本身的用途”，并保留原有 6 条改判。"""
+
+    V36 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.6.json"))
+    V35 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.5.json"))
+
+    @staticmethod
+    def readme(text):
+        return {"text": text, "sha256": "s", "fetched_at_utc": "t"}
+
+    def test_course_recommendation_is_not_coursework(self):
+        row = metadata(
+            101,
+            description="An MLOps toolkit for model deployment. See the course on deployment for background.",
+        )
+        result = self.V36.decide(row)
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R5_description_match")
+
+    def test_course_self_description_still_excluded(self):
+        row = metadata(102, description="A practical course on natural language processing", topics=["nlp"])
+        result = self.V36.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3b_coursework")
+
+    def test_paper_summarizer_is_not_a_paper_list(self):
+        row = metadata(103, description="An LLM tool that summarizes ChatGPT-related papers")
+        result = self.V36.decide(row)
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R5_description_match")
+
+    def test_description_that_is_a_paper_list_still_excluded(self):
+        row = metadata(104, description="ChatGPT-related papers")
+        result = self.V36.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3_resource_collection")
+
+    def test_ml_tool_with_stats_card_is_not_a_profile(self):
+        row = metadata(105, name="someone/someone", description="", topics=[], language="")
+        text = """# myml
+
+A machine learning library for training small models on the edge.
+It wraps scikit-learn and exposes a simple command line interface.
+
+## Installation
+
+pip install myml
+
+<img src="https://github-readme-stats.vercel.app/api?username=someone">
+""" * 6
+        result = self.V36.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R9_readme_ai")
+
+    def test_profile_with_widgets_still_excluded(self):
+        row = metadata(106, name="someone/someone", description="", topics=[], language="")
+        text = '### Bem vindo!\n<img src="https://github-readme-stats.vercel.app/api?username=someone">'
+        result = self.V36.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R11_readme_profile")
+
+    def test_v036_keeps_r12_heading_body_requirement(self):
+        """v0.3.6 继承 v0.3.4.1：空 Overview + 安装步骤仍是 uncertain。"""
+        row = metadata(110, description="", topics=[])
+        text = "# mytool\n\n## Overview\n\n" + "npm install mytool\nnpm test\n" * 20
+        result = self.V36.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "uncertain")
+
+    def test_v035_still_excludes_the_three_false_cases(self):
+        """版本隔离：v0.3.5 仍会把这三个例子判成排除。"""
+        course = self.V35.decide(
+            metadata(107, description="An MLOps toolkit. See the course on deployment for background.")
+        )
+        self.assertEqual(course["rule_id"], "R3b_coursework")
+        papers = self.V35.decide(metadata(108, description="An LLM tool that summarizes ChatGPT-related papers"))
+        self.assertEqual(papers["rule_id"], "R3_resource_collection")
+        profile = self.V35.decide(
+            metadata(109, name="someone/someone", description="", topics=[], language=""),
+            readme=self.readme(
+                "A machine learning library for edge devices.\n"
+                '<img src="https://github-readme-stats.vercel.app/api?username=someone">\n' * 6
+            ),
+        )
+        self.assertEqual(profile["rule_id"], "R11_readme_profile")
+
+
 class CompareAndHandoffTests(unittest.TestCase):
     def setUp(self):
         TEST_TMP_ROOT.mkdir(parents=True, exist_ok=True)
@@ -1289,6 +1437,45 @@ class CompareAndHandoffTests(unittest.TestCase):
         rows = {row["repo_id"]: row for row in read_csv(self.root / "repo_ai_labels_analysis.csv")}
         self.assertEqual(rows["1"]["ai_label_final"], "included")
         self.assertEqual(rows["1"]["label_source"], "auto_rule")
+
+    def test_handoff_revisions_override_review(self):
+        """人工修订按 repo_id 覆盖原复核结论，原复核表不被改写。"""
+        from bmeta.handoff import run as handoff_run
+
+        labels = label_rows(self.metadata, RULES)
+        write_csv(self.root / "labels.csv", LABEL_FIELDS, labels)
+        write_csv(self.root / "meta.csv", METADATA_FIELDS, self.metadata)
+        review_rows = [
+            {"repo_id": "1", "human_label": "excluded", "human_reason": "original", "ai_label_auto": "included"},
+        ]
+        write_csv(self.root / "review.csv", list(review_rows[0]), review_rows)
+        revision_rows = [
+            {
+                "repo_id": "1",
+                "human_label": "included",
+                "human_reason": "A 复核修订",
+                "reviewer": "A",
+                "supersedes": "review.csv#1",
+            },
+        ]
+        write_csv(self.root / "revisions.csv", list(revision_rows[0]), revision_rows)
+        review_before = (self.root / "review.csv").read_bytes()
+
+        summary = handoff_run(
+            labels_csv=self.root / "labels.csv",
+            metadata_csv=self.root / "meta.csv",
+            out_dir=self.root,
+            review_csv=self.root / "review.csv",
+            revisions_csv=self.root / "revisions.csv",
+            policy="manual_override",
+        )
+        rows = {row["repo_id"]: row for row in read_csv(self.root / "repo_ai_labels_analysis.csv")}
+        self.assertEqual(rows["1"]["ai_label_final"], "included")
+        self.assertEqual(rows["1"]["label_source"], "manual_review")
+        self.assertEqual(rows["1"]["reason_human"], "A 复核修订")
+        self.assertEqual(summary["revision_rows"], 1)
+        self.assertEqual(summary["revision_repo_ids"], ["1"])
+        self.assertEqual((self.root / "review.csv").read_bytes(), review_before)
 
 
 if __name__ == "__main__":

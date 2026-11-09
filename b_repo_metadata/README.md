@@ -10,7 +10,7 @@
 |---|---|
 | 试跑名单 | pilot_01：50 个（40 随机 + 10 名称关键词）；pilot_02：200 个（160 随机 + 40 名称关键词，排除首轮 50） |
 | 元数据获取 | pilot_01：43 成功 / 2 ID 不一致 / 5 个 404；pilot_02：163 成功 / 6 ID 不一致 / 31 个 404（各 200 次调用） |
-| AI 标签（规则 v0.3.5） | pilot_01：`included` 4、`excluded` 32、`uncertain` 14；pilot_02：17 / 86 / 97 |
+| AI 标签（规则 v0.3.6） | pilot_01：`included` 4、`excluded` 32、`uncertain` 14；pilot_02 自动：17 / 86 / 97，最终（含人工修订）：17 / 87 / 96 |
 | pilot_02 分层分布 | 160 随机：2 / 75 / 83；40 关键词：15 / 11 / 14 |
 | 与 v0.2 对比 | pilot_01：5 条标签变化 + 5 条仅理由变化；README 补足 3 个 AI 项目、1 个课程仓库 |
 | v0.3.1 → v0.3.2 | pilot_01 0 条；pilot_02 2 条（修复 whisper 子串与中文边界） |
@@ -18,13 +18,14 @@
 | v0.3.3 → v0.3.3.1 | 4 条、17 条 `excluded → uncertain`（R12 要求用途说明、只对 R7 生效） |
 | v0.3.3.1 → v0.3.4 | pilot_01 0 条；pilot_02 1 条（Etherscan-ML 由 R13 课程覆盖改判 excluded） |
 | v0.3.4 → v0.3.5 | pilot_01 0 条；pilot_02 6 条（2 条误纳入改判 excluded、4 条个人主页与名称边界） |
+| v0.3.5 → v0.3.6 | pilot_01 0 条；pilot_02 0 条（收紧 course on / 论文清单 / 统计卡三个条件，样本未触发回退） |
 | 与人工复核 | pilot_01 复核样本中自动已判定的 19 条全部与人工一致；只代表 33 条复核样本 |
 | 人工复核 | pilot_01：33 条；pilot_02：抽查 13 条（included 3 / excluded 5 / uncertain 5） |
-| 分析用标签 | pilot_01 人工优先：4 / 38 / 8（人工 33 行、自动 17 行）；pilot_02 人工优先与自动完全一致 |
-| 接回事件表 | pilot_01：50/50 命中，覆盖 159 / 197,313 条；pilot_02：200/200 命中，覆盖 1,072 / 5,528,300 条 |
-| 离线测试 | 107 项全部通过（不联网） |
+| 分析用标签 | pilot_01 人工优先：4 / 38 / 8（人工 33 行、自动 17 行）；pilot_02 人工优先：17 / 87 / 96（13 条复核 + 1 条人工修订） |
+| 接回事件表 | pilot_01：50/50 命中，覆盖 159 / 197,313 条；pilot_02（最终标签）：200/200 命中，覆盖 1,072 / 5,528,300 条，excluded 394 / included 109 / uncertain 569 |
+| 离线测试 | 120 项全部通过（不联网） |
 
-详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.5.md](rules/ai_rules_v0.3.5.md)；标签交接口径见 [LABELS.md](LABELS.md)。
+详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.6.md](rules/ai_rules_v0.3.6.md)；标签交接口径见 [LABELS.md](LABELS.md)。
 
 ## 交付物结构
 
@@ -43,7 +44,8 @@ b_repo_metadata/
 │   ├── ai_rules_v0.3.3.md / .json     ← 第六版：README 确认主体非 AI
 │   ├── ai_rules_v0.3.3.1.md / .json   ← 第七版：R12 需用途证据、旧版本不触发
 │   ├── ai_rules_v0.3.4.md / .json     ← 第八版：可选 AI 集成排除、课程覆盖
-│   └── ai_rules_v0.3.5.md / .json     ← 当前版本：论文清单、course on、个人主页组件、名称边界
+│   ├── ai_rules_v0.3.5.md / .json     ← 第九版：论文清单、course on、个人主页组件、名称边界
+│   └── ai_rules_v0.3.6.md / .json     ← 当前版本：收紧三个新增排除条件
 ├── reviews/pilot_01_decisions.json    ← 第一轮人工判断与理由（不覆盖）
 ├── reviews/pilot_01_revision_check_v0.3.json ← 新口径对旧判断的影响检查
 ├── reviews/pilot_02_rule_review_v0.3.5.md ← 101 条 uncertain + 80 条 excluded 的抽查记录
@@ -60,7 +62,7 @@ b_repo_metadata/
 │   ├── evidence.py                    ← 复核用 README 证据
 │   └── join.py                        ← 按 repo_id 接回事件表
 ├── scripts/                           ← 命令入口（每个步骤一个）
-├── tests/test_b_pipeline.py           ← 107 项离线验证
+├── tests/test_b_pipeline.py           ← 120 项离线验证
 └── runs/
     ├── debug_api_sample/              ← 单仓库连通性样例（apache/superset）
     ├── pilot_01/                      ← 50 个仓库的首轮试跑
@@ -89,6 +91,7 @@ b_repo_metadata/
         ├── readme_evidence.jsonl      ← 200 个仓库的 README 响应（138 个有响应、134 个有正文）
         ├── label_changes.csv          ← v0.3.4 → v0.3.5 的 6 条变化
         ├── manual_review_pilot02.csv  ← 抽查 13 条的结论与备注
+        ├── manual_revisions.csv      ← 人工修订（ItsCryptic，按 repo_id 覆盖原结论）
         ├── repo_labels_joined_events.csv
         ├── join_check.json
         └── pilot_02_summary.json      ← 抽样、API、标签、接回、核对汇总
@@ -248,11 +251,13 @@ v0.3.5 是对这 200 个仓库的误判抽查：逐条看完 101 条 `uncertain`
 
 ## 规则版本
 
-- 当前规则 `ai_rules_v0.3.5`：在 v0.3.4 基础上，只修抽样复核发现的 6 处明确判错——论文清单按资源合集排除、描述里的 `course on/about` 按课程资料排除、个人主页补充统计卡/贡献蛇/typing 头图措辞、名称信号修复 `ai` 词元边界。R12 的 200 字符阈值与 R5d、R13 的判定条件都未放宽。
-- 各版本规则与标签表都保留；pilot_01 的 `label_changes.csv` 是 v0.3.4→v0.3.5（0 条），pilot_02 的是 v0.3.4→v0.3.5（6 条），更早的对比另存为 `label_changes_v0.3.3.1_to_v0.3.4.csv`。
+- 当前规则 `ai_rules_v0.3.6`：在 v0.3.5 基础上，按 A 的复测收紧三个新增排除条件——`course on` 只认“自述课程”、论文清单只认整段表述、统计卡只在没有 AI 证据且正文极短时才确认主页。v0.3.5 的 6 条改判全部保留，两个 pilot 都是 0 条回退。
+- R12 在 v0.3.4.1 补全：只出现 About/Overview 标题不再算“说明了用途”，标题下方必须有说明正文（≥40 个有效字符），安装命令与代码块不计入。
+- 各版本规则与标签表都保留；pilot_01 的 `label_changes.csv` 是 v0.3.5→v0.3.6（0 条），pilot_02 的也是 0 条；v0.3.4→v0.3.5 的 6 条另存为 `label_changes_v0.3.4_to_v0.3.5.csv`。
 - 新口径对第一轮人工判断的影响检查见 `reviews/pilot_01_revision_check_v0.3.json`：无需改判，旧判断不覆盖。
 - 抽查过程与逐条依据见 `reviews/pilot_02_rule_review_v0.3.5.md`。
-- 有一处已知问题**故意没改**：R11 仍把任意代码围栏当作“工程章节”，`ItsCryptic/ItsCryptic` 这类用代码块写自我介绍的个人主页无法自动确认，因为 13 条人工复核里人工选了保守的 `uncertain`；是否放开等 A 确认（见 `rules/ai_rules_v0.3.5.md` 第 6 节）。
+- 人工修订：`runs/pilot_02/manual_revisions.csv` 记录 A 对 `ItsCryptic/ItsCryptic` 的复核（代码块内容是自我介绍 → 个人主页），按 `repo_id` 覆盖原结论但不改动原复核表；分析用标签与接回表都采用这条修订。
+- R11 的代码围栏限制**仍保留**：A 复测过直接取消限制，会让带统计卡和真实安装命令的 AI 项目也被判成主页；通用规则继续细化。
 
 ## 与 A、C 的接口
 

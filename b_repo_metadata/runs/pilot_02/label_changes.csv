@@ -1,7 +1,1 @@
 repo_id,observed_repo_name,old_label,old_rule,new_label,new_rule,change_type,explanation
-578081952,pkeilbach/htwg-practical-nlp,included,R4_topic_match,excluded,R3b_coursework,included->excluded,v0.3.5 补充 course on/about 语义：描述自述为课程资料的仓库改判 excluded
-631568001,tomohideshibata/ChatGPT-related-papers,included,R5_description_match,excluded,R3_resource_collection,included->excluded,v0.3.5 补充论文清单识别：描述形如“X-related papers”的链接合集改判 excluded
-490761340,Pepestar/Pepestar,uncertain,R3c_profile_suspected,excluded,R11_readme_profile,uncertain->excluded,v0.3.5 补充个人主页组件措辞（统计卡/贡献蛇/typing 头图），README 确认后排除
-547329222,gaurav-shrestha/gaurav-shrestha,uncertain,R3c_profile_suspected,excluded,R11_readme_profile,uncertain->excluded,v0.3.5 补充个人主页组件措辞（统计卡/贡献蛇/typing 头图），README 确认后排除
-671364602,Speike-SHL/Speike-SHL,uncertain,R3c_profile_suspected,excluded,R11_readme_profile,uncertain->excluded,v0.3.5 补充个人主页组件措辞（统计卡/贡献蛇/typing 头图），README 确认后排除
-742393752,al3xback/fmentor-stats-preview-mocha-chai-expect,uncertain,R6_name_only_signal,excluded,R8_no_ai_signal,uncertain->excluded,v0.3.5 修复名称信号 ai 词元边界：chai 等词不再误命中，改判 excluded

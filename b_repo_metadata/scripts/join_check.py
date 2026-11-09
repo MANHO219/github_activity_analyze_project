@@ -29,6 +29,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="标签接回事件表并核对")
     parser.add_argument("--config", default=str(B_ROOT / "config" / "pilot.json"))
     parser.add_argument("--run-dir", help="运行目录；默认 runs/<pilot_version>")
+    parser.add_argument(
+        "--labels",
+        help="标签表；默认优先 <run-dir>/repo_ai_labels_analysis.csv（最终标签），缺失时用 repo_ai_labels.csv",
+    )
     parser.add_argument("--events-parquet", default=str(DEFAULT_EVENTS_PARQUET))
     parser.add_argument("--candidates", default=str(DEFAULT_CANDIDATES))
     parser.add_argument(
@@ -43,7 +47,12 @@ def main(argv: list[str] | None = None) -> int:
     config = load_config(args.config)
     out_dir = Path(args.run_dir or (B_ROOT / "runs" / config["pilot_version"]))
     metadata_csv = out_dir / "repo_metadata.csv"
-    labels_csv = out_dir / "repo_ai_labels.csv"
+    if args.labels:
+        labels_csv = Path(args.labels)
+    else:
+        final_labels = out_dir / "repo_ai_labels_analysis.csv"
+        labels_csv = final_labels if final_labels.exists() else out_dir / "repo_ai_labels.csv"
+    label_field = "ai_label_final" if labels_csv.name.endswith("_analysis.csv") else "ai_label"
     for path in (metadata_csv, labels_csv):
         if not path.exists():
             print(f"missing input: {project_relative(path)}")
@@ -56,7 +65,9 @@ def main(argv: list[str] | None = None) -> int:
         events_parquet=Path(args.events_parquet),
         candidates_csv=Path(args.candidates),
         daily_counts_csv=Path(args.daily_csv) if args.daily_csv else None,
+        label_field=label_field,
     )
+    print(f"label source: {summary['inputs']['labels_csv']} ({summary['inputs']['label_field']})")
     print(f"event source: {summary['event_source']} (events={summary['events_total_in_source']})")
     print(f"pilot repos: {summary['pilot_repos']} found={summary['pilot_repos_found_in_events']}")
     print(f"events covered by pilot: {summary['events_covered_by_pilot']}")
