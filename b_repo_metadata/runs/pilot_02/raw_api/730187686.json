@@ -1,0 +1,23 @@
+{
+  "schema_version": "bmeta-raw-v1",
+  "requested_repo_id": 730187686,
+  "requested_name": "onecx-apps/onecx-ai-svc",
+  "fetched_at_utc": "2026-11-09T08:23:07Z",
+  "http_status": 404,
+  "final_url": "https://api.github.com/repos/onecx-apps/onecx-ai-svc",
+  "attempts": 1,
+  "elapsed_ms": 409,
+  "error": null,
+  "rate_limit": {
+    "x-ratelimit-limit": "5000",
+    "x-ratelimit-remaining": "4800",
+    "x-ratelimit-used": "200",
+    "x-ratelimit-reset": "1794216081"
+  },
+  "response": {
+    "message": "Not Found",
+    "documentation_url": "https://docs.github.com/rest/repos/repos#get-a-repository",
+    "status": "404"
+  },
+  "response_text": null
+}

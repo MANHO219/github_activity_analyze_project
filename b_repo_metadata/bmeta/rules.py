@@ -72,6 +72,33 @@ def _matches(compiled: Sequence[tuple[str, re.Pattern[str]]], text: str) -> list
     return [name for name, pattern in compiled if pattern.search(text)]
 
 
+_CJK_ASCII_BOUNDARY = re.compile(
+    r"(?<=[\u4e00-\u9fff])(?=[A-Za-z0-9])|(?<=[A-Za-z0-9])(?=[\u4e00-\u9fff])"
+)
+
+
+def _normalize_text(text: str) -> str:
+    """在中英文/数字相邻处插入空格，让 ``\\b`` 在中文里也能正确判断词边界。
+
+    例如“用Resnet101+GPT搭建一个玩王者荣耀的AI”会变成“用 Resnet101+GPT 搭建一个玩王者荣耀的 AI”，
+    避免 ``\\bai\\b``、``\\bgpt\\b`` 因为中文是 Unicode 单词字符而匹配失败。
+    """
+    if not text:
+        return ""
+    return _CJK_ASCII_BOUNDARY.sub(" ", text)
+
+
+def _normalize_name(name: str) -> str:
+    """把 camelCase 拆成带分隔符的小写形式，供名称信号使用。
+
+    ``ResnetGPT`` → ``resnet-gpt``（能命中 gpt），``Whispering-Origin-2D`` 仍是
+    ``whispering-origin-2-d``（不会把 whispering 当成 whisper）。
+    """
+    if not name:
+        return ""
+    return re.sub(r"(?<=[a-z0-9])(?=[A-Z])", "-", name).lower()
+
+
 def _dedupe(values: Iterable[str]) -> list[str]:
     seen: dict[str, None] = {}
     for value in values:
@@ -156,8 +183,9 @@ class RuleSet:
         if status not in FETCHED_STATUSES:
             return result("uncertain", "R1_metadata_unavailable", f"fetch_status={status or 'missing'}")
 
-        description = (metadata.get("description") or "").strip()
-        full_name = (metadata.get("current_full_name") or metadata.get("observed_repo_name") or "").strip()
+        description = _normalize_text((metadata.get("description") or "").strip())
+        raw_name = (metadata.get("current_full_name") or metadata.get("observed_repo_name") or "").strip()
+        full_name = _normalize_name(raw_name)
         language = (metadata.get("language") or "").strip()
         try:
             topics = json.loads(metadata.get("topics_json") or "[]")
@@ -166,7 +194,7 @@ class RuleSet:
         topics = [str(topic).lower() for topic in topics if str(topic).strip()]
 
         if self.engine == "v3":
-            return self._decide_v3(result, description, full_name, topics, language, readme)
+            return self._decide_v3(result, description, full_name, topics, language, readme, raw_name)
         if self.engine == "v2":
             return self._decide_v2(result, description, full_name, topics)
         return self._decide_v1(result, description, full_name, topics)
@@ -242,12 +270,12 @@ class RuleSet:
         return result("excluded", "R8_no_ai_signal", "no_rule_matched")
 
     # -- v3 ------------------------------------------------------------
-    def _decide_v3(self, result, description, full_name, topics, language, readme):
-        base = self._base_v3(result, description, full_name, topics, language)
+    def _decide_v3(self, result, description, full_name, topics, language, readme, raw_name=""):
+        base = self._base_v3(result, description, full_name, topics, language, raw_name)
         # README 只用于补足规则判不确定的仓库，不覆盖规则已给出的 included/excluded。
         if base["ai_label"] != "uncertain" or not readme or not (readme.get("text") or "").strip():
             return base
-        text = readme["text"]
+        text = _normalize_text(readme["text"])
         sha = readme.get("sha256") or ""
         fetched = readme.get("fetched_at_utc") or ""
 
@@ -303,7 +331,7 @@ class RuleSet:
             total += len(pattern.findall(text))
         return total
 
-    def _base_v3(self, result, description, full_name, topics, language):
+    def _base_v3(self, result, description, full_name, topics, language, raw_name=""):
         # 课程作业：强语义（final-project / openclassrooms / capstone）可直接判定；
         # 泛词（course/lab/hw 等）必须同时有描述佐证，避免只命中关键词就排除。
         strong_course = _matches(self.coursework_name, full_name.lower())
@@ -324,11 +352,13 @@ class RuleSet:
                 )
 
         # 个人主页：只记疑似，交给 README 或人工确认。
-        if self._is_profile_repository(full_name, description, topics, language):
+        # 用原始名称判断 owner==repo，避免 camelCase 拆分后把同一个名字拆成两段。
+        profile_name = raw_name or full_name
+        if self._is_profile_repository(profile_name, description, topics, language):
             return result(
                 "uncertain",
                 "R3c_profile_suspected",
-                f"name={full_name};no_description;no_topics;no_language",
+                f"name={profile_name};no_description;no_topics;no_language",
             )
 
         resource_hits = _matches(self.resource_name, full_name) + _matches(self.resource_description, description)

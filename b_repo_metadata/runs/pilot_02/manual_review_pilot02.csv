@@ -1,0 +1,14 @@
+repo_id,observed_repo_name,sample_stratum,ai_label,rule_id,human_label,human_note
+128369334,elyselam/Etherscan-ML,random,included,R4_topic_match,included,ML 库，判定合理；README 提到 USC Viterbi Bootcamp，若按课程作业口径可能应排除，边界案例，待 A 确认
+202577283,resemble-ai/Resemblyzer,keyword_name,included,R5_description_match,included,深度学习的语音表示包，一致
+313407033,jiupinjia/stylized-neural-painting,keyword_name,included,R5_description_match,included,CVPR 论文的 PyTorch 实现，一致
+16875250,expressjs/session,random,excluded,R8_no_ai_signal,excluded,Express 会话中间件，无 AI，一致
+25988759,openairplay/open-airplay,keyword_name,excluded,R3_resource_collection,excluded,AirPlay 库集合，资料集合口径一致
+38228834,plotly/datasets,random,excluded,R8_no_ai_signal,excluded,Plotly 示例数据集，一致
+56003806,seedco/StackViewController,random,excluded,R8_no_ai_signal,excluded,UIStackView 控制器，一致
+83055800,palashmon/car-names,random,excluded,R8_no_ai_signal,excluded,随机汽车名微库，一致
+259922583,ai-golf-carry/openCarry,keyword_name,uncertain,R6_name_only_signal,uncertain,名称像 AI（org 名 ai-golf-carry），README 无 AI 证据；按口径保留存疑
+264460671,CoreELEC/xbmc,random,uncertain,R7_insufficient_text_evidence,uncertain,README 明确是 Kodi 媒体中心，规则不因“README 无 AI”排除；建议后续讨论是否允许 excluded
+265892246,dereckyin/feliix,random,uncertain,R7_insufficient_text_evidence,uncertain,README 只有标题，证据不足，保留存疑
+336689935,hello6060/hello6060.github.io,random,uncertain,R1_metadata_unavailable,uncertain,API 404，无法获取，保留存疑
+342791330,ItsCryptic/ItsCryptic,random,uncertain,R3c_profile_suspected,uncertain,README 是个人主页式自我介绍，但用代码块展示，未触发主页确认；偏保守

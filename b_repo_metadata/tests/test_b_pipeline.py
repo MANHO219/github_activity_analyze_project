@@ -865,6 +865,36 @@ class RulesV31Tests(unittest.TestCase):
         self.assertEqual(result["rule_id"], "R3c_profile_suspected")
 
 
+class RulesV32Tests(unittest.TestCase):
+    """v0.3.2：中英相邻与 camelCase 名称都要正确判断词边界。"""
+
+    RULES = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.2.json"))
+
+    def test_chinese_description_with_english_ai_tokens_included(self):
+        row = metadata(31, description="用Resnet101+GPT搭建一个玩王者荣耀的AI")
+        result = self.RULES.decide(row)
+        self.assertEqual(result["ai_label"], "included")
+
+    def test_chinese_weak_ai_with_corroboration_included(self):
+        row = metadata(32, description="一个用AI做模型训练的平台")
+        result = self.RULES.decide(row)
+        self.assertEqual(result["ai_label"], "included")
+
+    def test_camel_case_name_gpt_is_name_signal(self):
+        result = self.RULES.decide(metadata(33, name="someone/ResnetGPT"))
+        self.assertEqual(result["rule_id"], "R6_name_only_signal")
+
+    def test_whispering_is_not_whisper(self):
+        result = self.RULES.decide(metadata(34, name="someone/Whispering-Origin-2D", description="A 2D RPG game"))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R8_no_ai_signal")
+
+    def test_camel_case_profile_name_still_suspected(self):
+        row = metadata(35, name="PauloHenriqueJr/paulohenriquejr", language="")
+        result = self.RULES.decide(row)
+        self.assertEqual(result["rule_id"], "R3c_profile_suspected")
+
+
 class CompareAndHandoffTests(unittest.TestCase):
     def setUp(self):
         TEST_TMP_ROOT.mkdir(parents=True, exist_ok=True)

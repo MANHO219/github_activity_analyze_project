@@ -1,0 +1,110 @@
+{
+  "pilot": "pilot_02",
+  "rules_version": "ai_rules_v0.3.2",
+  "generated_at_utc": "2026-11-09T08:55:00Z",
+  "source_data": {
+    "note": "按 A README 的官方命令重建 2024-01-15 全天数据；数量与 A 的交接一致",
+    "candidates": "a_data_pipeline/runs/20240115_python/python/repo_candidates.csv",
+    "candidate_rows": 852777,
+    "events": 5528300,
+    "daily_counts": "a_data_pipeline/runs/20240115_python/python/repo_daily_counts.csv",
+    "pipeline_timing": {
+      "download_seconds": 284,
+      "inspection_seconds": 1278,
+      "python_clean_seconds": 1594,
+      "total_seconds": 3165
+    }
+  },
+  "sampling": {
+    "seed": 5488,
+    "excluded_first_pilot": 50,
+    "random": 160,
+    "keyword_name": 40,
+    "overlap_with_pilot_01": 0,
+    "selection_sha256": "5393f838db735bdcfd788d74cbd24f3e7e10c71b4f92c50f228052a9a1ed6dab"
+  },
+  "api": {
+    "metadata": {
+      "calls": 200,
+      "status": {
+        "ok": 163,
+        "not_found": 31,
+        "id_mismatch": 6
+      },
+      "started": "2026-11-09T08:21:17Z",
+      "finished": "2026-11-09T08:23:16Z",
+      "elapsed_seconds": 120,
+      "token_present": true
+    },
+    "readme": {
+      "requests": 200,
+      "ok": 138,
+      "not_found": 62,
+      "elapsed_seconds": 128
+    }
+  },
+  "labels": {
+    "total": 200,
+    "by_stratum": {
+      "random": {
+        "selected": 160,
+        "included": 3,
+        "excluded": 65,
+        "uncertain": 92
+      },
+      "keyword_name": {
+        "selected": 40,
+        "included": 17,
+        "excluded": 9,
+        "uncertain": 14
+      }
+    },
+    "by_rule": {
+      "R10_readme_coursework": 1,
+      "R11_readme_profile": 2,
+      "R1_metadata_unavailable": 31,
+      "R2_api_id_mismatch": 6,
+      "R3_resource_collection": 7,
+      "R3b_coursework": 5,
+      "R3c_profile_suspected": 4,
+      "R4_topic_match": 5,
+      "R5_description_match": 11,
+      "R6_name_only_signal": 11,
+      "R7_insufficient_text_evidence": 54,
+      "R8_no_ai_signal": 59,
+      "R9_readme_ai": 4
+    },
+    "readme_used": 7
+  },
+  "join": {
+    "source": "repo_daily_counts.csv:sum(event_count)",
+    "repos_matched": 200,
+    "repos_total": 200,
+    "events_covered": 1072,
+    "events_total": 5528300,
+    "events_by_label": {
+      "excluded": 294,
+      "included": 174,
+      "uncertain": 604
+    }
+  },
+  "manual_review": {
+    "rows": 13,
+    "by_label": {
+      "included": 3,
+      "excluded": 5,
+      "uncertain": 5
+    },
+    "findings": [
+      "发现名称规则子串误判：Whispering-Origin-2D 被当成 whisper，判为名称命中；已在 v0.3.2 用词边界修复（uncertain → excluded）。",
+      "发现中文边界漏判：用Resnet101+GPT搭建…的AI 因中文里 \\b 失效被排除；v0.3.2 在中英相邻处插入空格后，恢复 included。",
+      "边界案例：Etherscan-ML 是 bootcamp 产物但已作为 pip 包发布，是否按课程作业排除需要 A 确认。",
+      "偏保守：CoreELEC/xbmc 的 README 明确是 Kodi，但规则不因“README 无 AI”排除，仍为 uncertain；可作为下一版规则候选。"
+    ]
+  },
+  "notes": [
+    "pilot_02 是分层样本，不能估计 GitHub 整体 AI 仓库比例。",
+    "关键词层按名称粗筛，名称命中不等于 AI 判定。",
+    "README 只用于补足 uncertain，快照时间与哈希已逐行记录。"
+  ]
+}

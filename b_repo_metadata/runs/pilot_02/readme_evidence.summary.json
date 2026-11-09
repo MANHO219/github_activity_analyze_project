@@ -1,0 +1,13 @@
+{
+  "generated_at_utc": "2026-11-09T08:25:29Z",
+  "requested_rows": 200,
+  "evidence_rows": 200,
+  "skipped_repo_ids": [],
+  "status_counts": {
+    "ok": 138,
+    "not_found": 62
+  },
+  "max_chars": 4000,
+  "evidence_file": "b_repo_metadata/runs/pilot_02/readme_evidence.jsonl",
+  "note": "README 仅作人工复核证据；v0.1 规则不读取该字段。"
+}

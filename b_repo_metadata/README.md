@@ -8,18 +8,19 @@
 
 | 项目 | 结果 |
 |---|---|
-| 试跑名单 | 50 个仓库：40 个随机抽样 + 10 个名称关键词过采样（固定种子 `5488`） |
-| 元数据获取 | 43 个成功（ID 一致）、2 个 ID 不一致、5 个 404；共 50 次 API 调用 |
-| AI 标签（规则 v0.3.1） | `included` 4、`excluded` 30、`uncertain` 16 |
-| 与 v0.2 对比 | 5 条标签变化 + 5 条仅理由变化；README 补足 3 个 AI 项目、1 个课程仓库 |
-| v0.3 → v0.3.1 | 0 条标签变化：收紧 README 判 AI 与个人主页条件后，50 个仓库里没有两类误判样本 |
-| 与人工复核 | 本轮复核样本中自动已判定的 17 条全部与人工一致；这只代表 33 条复核样本，不代表整体分类准确率 |
-| 人工复核 | 33 条：included 全查 3、excluded 抽 5、uncertain 全查 25 |
-| 分析用标签 | 默认“人工优先”口径下：included 4、excluded 38、uncertain 8（人工 33 行、自动 17 行） |
-| 接回事件表 | 50/50 个试点仓库都能按 `repo_id` 匹配到 A 的 `events_clean.parquet`（197,313 条事件中 159 条属于这 50 个仓库） |
-| 离线测试 | 71 项全部通过（不联网） |
+| 试跑名单 | pilot_01：50 个（40 随机 + 10 名称关键词）；pilot_02：200 个（160 随机 + 40 名称关键词，排除首轮 50） |
+| 元数据获取 | pilot_01：43 成功 / 2 ID 不一致 / 5 个 404；pilot_02：163 成功 / 6 ID 不一致 / 31 个 404（各 200 次调用） |
+| AI 标签（规则 v0.3.2） | pilot_01：`included` 4、`excluded` 30、`uncertain` 16；pilot_02：20 / 74 / 106 |
+| pilot_02 分层分布 | 160 随机：3 / 65 / 92；40 关键词：17 / 9 / 14 |
+| 与 v0.2 对比 | pilot_01：5 条标签变化 + 5 条仅理由变化；README 补足 3 个 AI 项目、1 个课程仓库 |
+| v0.3.1 → v0.3.2 | pilot_01 0 条；pilot_02 2 条（修复 whisper 子串与中文边界） |
+| 与人工复核 | pilot_01 复核样本中自动已判定的 17 条全部与人工一致；只代表 33 条复核样本 |
+| 人工复核 | pilot_01：33 条；pilot_02：抽查 13 条（included 3 / excluded 5 / uncertain 5） |
+| 分析用标签 | pilot_01 人工优先：4 / 38 / 8（人工 33 行、自动 17 行） |
+| 接回事件表 | pilot_01：50/50 命中，覆盖 159 / 197,313 条；pilot_02：200/200 命中，覆盖 1,072 / 5,528,300 条 |
+| 离线测试 | 76 项全部通过（不联网） |
 
-详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.1.md](rules/ai_rules_v0.3.1.md)；标签交接口径见 [LABELS.md](LABELS.md)。
+详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.2.md](rules/ai_rules_v0.3.2.md)；标签交接口径见 [LABELS.md](LABELS.md)。
 
 ## 交付物结构
 
@@ -33,7 +34,8 @@ b_repo_metadata/
 │   ├── ai_rules_v0.1.md / .json       ← 第一版（保留，用于对比）
 │   ├── ai_rules_v0.2.md / .json       ← 第二版（保留，用于对比）
 │   ├── ai_rules_v0.3.md / .json       ← 第三版：五条口径、README 辅助
-│   └── ai_rules_v0.3.1.md / .json     ← 当前版本：README 判 AI/个人主页收紧
+│   ├── ai_rules_v0.3.1.md / .json     ← 第四版：README 判 AI/个人主页收紧
+│   └── ai_rules_v0.3.2.md / .json     ← 当前版本：名称词边界与中英相邻修复
 ├── reviews/pilot_01_decisions.json    ← 第一轮人工判断与理由（不覆盖）
 ├── reviews/pilot_01_revision_check_v0.3.json ← 新口径对旧判断的影响检查
 ├── bmeta/                             ← 实现包（与 A 的 gharchive_a 对应）
@@ -41,7 +43,7 @@ b_repo_metadata/
 │   ├── select.py                      ← 分层抽样与名称粗筛
 │   ├── api.py                         ← GitHub REST 客户端（重试/限流/分类）
 │   ├── fetch.py                       ← 抓取、缓存、续跑、失败记录
-│   ├── rules.py                       ← 规则引擎（v1/v2 两代）
+│   ├── rules.py                       ← 规则引擎（v1/v2/v3，含中英/名称规范化）
 │   ├── label.py                       ← 标签表与标签摘要
 │   ├── compare.py                     ← 规则版本对比与人工一致率
 │   ├── handoff.py                     ← 自动标签 + 人工判断 → 分析用标签
@@ -49,29 +51,37 @@ b_repo_metadata/
 │   ├── evidence.py                    ← 复核用 README 证据
 │   └── join.py                        ← 按 repo_id 接回事件表
 ├── scripts/                           ← 命令入口（每个步骤一个）
-├── tests/test_b_pipeline.py           ← 63 项离线验证
+├── tests/test_b_pipeline.py           ← 76 项离线验证
 └── runs/
     ├── debug_api_sample/              ← 单仓库连通性样例（apache/superset）
-    └── pilot_01/
-        ├── pilot_candidates.csv       ← 冻结的首批名单（含 sample_stratum）
-        ├── selection.json             ← 选取方法、种子、输入/输出 SHA-256
-        ├── raw_api/<repo_id>.json      ← 每个仓库的原始响应信封
-        ├── repo_metadata.csv          ← 每仓库一行，失败行保留状态
-        ├── repo_ai_labels.csv         ← 当前规则（v0.3）的标签
-        ├── repo_ai_labels_v0.2.csv    ← v0.2 标签（保留）
-        ├── repo_ai_labels_v0.1.csv    ← v0.1 标签（保留）
-        ├── label_changes.csv          ← v0.2 → v0.3 的逐条变化与原因
-        ├── label_changes_v0.1_to_v0.2.csv ← 上一轮变化（保留）
-        ├── label_comparison.json      ← 混淆矩阵、人工一致率、改进/回退清单
-        ├── repo_ai_labels_analysis.csv← 分析用标签（含来源与人工值）
-        ├── label_analysis_summary.json
-        ├── manual_review.csv          ← 33 条复核对象、人工结论与一致率
-        ├── manual_review_readmes.jsonl← 复核时看过的 README 摘要与哈希（v0.3 标注复用）
+    ├── pilot_01/                      ← 50 个仓库的首轮试跑
+    │   ├── pilot_candidates.csv       ← 冻结的首批名单（含 sample_stratum）
+    │   ├── selection.json             ← 选取方法、种子、输入/输出 SHA-256
+    │   ├── raw_api/<repo_id>.json      ← 每个仓库的原始响应信封
+    │   ├── repo_metadata.csv          ← 每仓库一行，失败行保留状态
+    │   ├── repo_ai_labels.csv         ← 当前规则（v0.3.2）的标签
+    │   ├── repo_ai_labels_v0.1/v0.2/v0.3/v0.3.1.csv ← 旧版标签（保留）
+    │   ├── label_changes.csv          ← v0.3.1 → v0.3.2 的逐条变化
+    │   ├── label_comparison.json      ← 混淆矩阵、人工一致率、改进/回退清单
+    │   ├── repo_ai_labels_analysis.csv← 分析用标签（含来源与人工值）
+    │   ├── manual_review.csv          ← 33 条复核对象、人工结论与一致率
+    │   ├── manual_review_readmes.jsonl← 复核时看过的 README 摘要与哈希
+    │   ├── repo_labels_joined_events.csv
+    │   ├── cache_retry_check.json     ← 失败缓存重试策略的核对记录
+    │   ├── fetch_log.jsonl / fetch_summary.json / label_summary.json
+    │   ├── join_check.json
+    │   └── run_summary.json           ← 输入、版本、数量、检查与未解决问题
+    └── pilot_02/                      ← 200 个仓库的扩大试跑（160 随机 + 40 关键词）
+        ├── pilot_candidates.csv       ← 排除首轮 50 后的抽样名单
+        ├── selection.json             ← 输入 852,777 行、种子 5488、排除 50
+        ├── raw_api/<repo_id>.json      ← 200 个仓库的原始响应
+        ├── repo_metadata.csv / repo_ai_labels.csv
+        ├── readme_evidence.jsonl      ← 200 个仓库的 README 快照（138 个可读）
+        ├── label_changes.csv          ← v0.3.1 → v0.3.2 的 2 条变化
+        ├── manual_review_pilot02.csv  ← 抽查 13 条的结论与备注
         ├── repo_labels_joined_events.csv
-        ├── cache_retry_check.json     ← 失败缓存重试策略的核对记录
-        ├── fetch_log.jsonl / fetch_summary.json / label_summary.json
         ├── join_check.json
-        └── run_summary.json           ← 输入、版本、数量、检查与未解决问题
+        └── pilot_02_summary.json      ← 抽样、API、标签、接回、核对汇总
 ```
 
 ## 怎么重跑：先分清“复现”和“开新一轮”
@@ -150,6 +160,39 @@ python scripts/fetch_readme_evidence.py --run-dir runs/pilot_01
 ```
 
 不带 token 也能跑，但匿名配额是每小时 60 次；配额用尽时脚本会停在当前仓库之前并保留已完成结果，重新执行同一命令即可续跑。
+
+## 扩大试跑 pilot_02（200 个仓库）
+
+数据来自 A README 的全天生成命令：`python scripts/run_sample.py --date 2024-01-15 --hours 0-23 --run-dir runs/20240115_python`（在 `a_data_pipeline/` 下，约 52 分钟：下载 4.7 分钟、inspection 21.3 分钟、清洗导出 26.6 分钟）。结果 5,528,300 条事件、852,777 个仓库，与 A 的交接数量一致。
+
+抽样：排除 pilot_01 的 50 个，从全天候选里用种子 5488 抽 160 个随机 + 40 个名称命中，共 200 个。命令：
+
+```bash
+python scripts/build_pilot.py --out-dir runs/pilot_02 \
+    --candidates ../a_data_pipeline/runs/20240115_python/python/repo_candidates.csv \
+    --exclude runs/pilot_01/pilot_candidates.csv \
+    --random-size 160 --keyword-size 40 --seed 5488
+python scripts/fetch_metadata.py --run-dir runs/pilot_02
+python scripts/fetch_readme_evidence.py --run-dir runs/pilot_02 \
+    --input runs/pilot_02/pilot_candidates.csv --out runs/pilot_02/readme_evidence.jsonl
+python scripts/label_repositories.py --run-dir runs/pilot_02 \
+    --readme-evidence runs/pilot_02/readme_evidence.jsonl
+python scripts/join_check.py --run-dir runs/pilot_02 \
+    --daily-csv ../a_data_pipeline/runs/20240115_python/python/repo_daily_counts.csv
+```
+
+结果（全部在 `runs/pilot_02/pilot_02_summary.json`）：
+
+| 项目 | 结果 |
+|---|---|
+| 元数据 API | 200 次调用、163 成功、31 个 404、6 个 ID 不一致、120 秒 |
+| README 证据 | 200 次请求、138 可读、62 无 README/404、128 秒 |
+| 标签分布（160 随机） | included 3 / excluded 65 / uncertain 92 |
+| 标签分布（40 关键词） | included 17 / excluded 9 / uncertain 14 |
+| 接回全天活动表 | 200/200 命中，覆盖 1,072 / 5,528,300 条事件 |
+| 人工抽查 | 13 条：included 3、excluded 5、uncertain 5 |
+
+抽查发现并修复了两处规则 bug（v0.3.2）：`Whispering-Origin-2D` 曾被当成 `whisper`（名称子串误判），中文“用Resnet101+GPT搭建…的AI”曾因 `\b` 在中文里失效被漏判。另外记录了两个边界案例：Etherscan-ML 是 bootcamp 产物但已发布为库，是否按课程作业排除待 A 确认；CoreELEC/xbmc 的 README 明确是 Kodi，但规则不会因“README 无 AI”而排除，仍为 uncertain。
 
 ## 缓存与重试（重要）
 

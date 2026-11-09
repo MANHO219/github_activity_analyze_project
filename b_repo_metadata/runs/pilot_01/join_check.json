@@ -1,6 +1,6 @@
 {
-  "checked_at_utc": "2026-11-09T07:20:04Z",
-  "event_source": "repo_candidates.csv:event_count",
+  "checked_at_utc": "2026-11-09T08:29:23Z",
+  "event_source": "events_clean.parquet",
   "events_total_in_source": 197313,
   "pilot_repos": 50,
   "pilot_repos_found_in_events": 50,
@@ -28,12 +28,12 @@
     "metadata_csv": "b_repo_metadata/runs/pilot_01/repo_metadata.csv",
     "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
     "events_parquet": "a_data_pipeline/runs/20240115_1hour_handoff/python/events_clean.parquet",
-    "candidates_csv": "a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv"
+    "candidates_csv": "a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv",
+    "daily_counts_csv": null
   },
   "limits": [
     "Only repo_id is used as the join key; repo names in the event table may be historical.",
     "The pilot covers a small sample, so covered/uncovered event shares describe this run only.",
-    "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events.",
-    "Full parquet join not executed; repo-level counts from candidates used."
+    "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events."
   ]
 }

@@ -27,6 +27,22 @@ v0.2 → v0.3 共 10 条变化：3 条 `uncertain → included`（README 证明�
 
 规则说明见 [`rules/ai_rules_v0.3.md`](rules/ai_rules_v0.3.md)；以下第 1–9 节保留 v0.1/v0.2 的过程记录，数字与表格以本节为准。
 
+## 0.2 扩大试跑 pilot_02（200 个仓库）
+
+2026-11-09 用 A README 的 24 小时命令重建全天数据（52 分钟，5,528,300 事件 / 852,777 仓库，与 A 的交接数量一致），排除 pilot_01 的 50 个后，用种子 5488 抽 160 随机 + 40 名称命中。
+
+| 项目 | 结果 |
+|---|---|
+| 元数据 API | 200 次调用：163 成功、31 个 404、6 个 ID 不一致，120 秒 |
+| README 证据 | 200 次请求：138 可读、62 无 README 或 404，128 秒 |
+| 标签（160 随机） | included 3 / excluded 65 / uncertain 92 |
+| 标签（40 关键词） | included 17 / excluded 9 / uncertain 14 |
+| 全部 200 | included 20 / excluded 74 / uncertain 106 |
+| 接回全天活动表 | 200/200 命中，覆盖 1,072 / 5,528,300 条事件 |
+| 人工抽查 | 13 条（included 3、excluded 5、uncertain 5） |
+
+抽查发现并修复两处规则 bug（v0.3.2）：`Whispering-Origin-2D` 被子串当成 `whisper`；中文“用Resnet101+GPT搭建…的AI”因 `\b` 在中文里失效被漏判。另有两条边界记录：Etherscan-ML 是 bootcamp 产物但已发布为库；CoreELEC/xbmc 的 README 明确是 Kodi 但规则仍判 uncertain。明细见 `runs/pilot_02/manual_review_pilot02.csv` 与 `pilot_02_summary.json`。
+
 ## 1. 本次数字
 
 | 项目 | 实测结果 |
@@ -36,11 +52,11 @@ v0.2 → v0.3 共 10 条变化：3 条 `uncertain → included`（README 证明�
 | 元数据获取 | 43 `ok` + 2 `id_mismatch` + 5 `not_found` = 50；API 调用 50 次，pending 0 |
 | AI 标签 v0.1 | `included` 3 + `excluded` 22 + `uncertain` 25 = 50 |
 | AI 标签 v0.2 | `included` 1 + `excluded` 30 + `uncertain` 19 = 50 |
-| AI 标签 v0.3（当前） | `included` 4 + `excluded` 30 + `uncertain` 16 = 50 |
+| AI 标签 v0.3.2（当前） | `included` 4 + `excluded` 30 + `uncertain` 16 = 50 |
 | 人工复核 | 33 条：included 3（全查）、excluded 5（抽样）、uncertain 25（全查） |
 | 与人工一致率（已判定行） | v0.1 6/8 = 75% → v0.2 14/14 → v0.3 17/17 |
 | 接回 A 的事件表 | 50/50 个试点仓库按 `repo_id` 匹配；197,313 条事件中 159 条属这 50 个仓库 |
-| 离线测试 | 70 项通过 |
+| 离线测试 | 76 项通过 |
 
 v0.2 的规则分布（历史记录）：
 

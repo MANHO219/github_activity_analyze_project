@@ -1,0 +1,28 @@
+{
+  "started_at_utc": "2026-11-09T08:21:17Z",
+  "finished_at_utc": "2026-11-09T08:23:16Z",
+  "input_rows": 200,
+  "processed_rows": 200,
+  "pending_rows": 0,
+  "pending_repo_ids": [],
+  "status_counts": {
+    "ok": 163,
+    "not_found": 31,
+    "id_mismatch": 6
+  },
+  "api_calls": 200,
+  "token_present": true,
+  "token_env_var": "GITHUB_TOKEN",
+  "stopped_reason": null,
+  "reuse_failed_cache": false,
+  "cache_policy": "只复用 HTTP 200 的缓存；失败响应会重试",
+  "last_rate_limit_headers": {
+    "x-ratelimit-limit": "5000",
+    "x-ratelimit-remaining": "4785",
+    "x-ratelimit-used": "215",
+    "x-ratelimit-reset": "1794216081"
+  },
+  "cache_dir": "b_repo_metadata/runs/pilot_02/raw_api",
+  "metadata_csv": "b_repo_metadata/runs/pilot_02/repo_metadata.csv",
+  "note": "失败行只记录状态，缺失元数据留空；pending 行尚未写入 repo_metadata.csv。"
+}

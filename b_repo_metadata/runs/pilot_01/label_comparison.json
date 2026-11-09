@@ -1,9 +1,9 @@
 {
-  "compared_at_utc": "2026-11-09T07:20:04Z",
-  "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.csv",
+  "compared_at_utc": "2026-11-09T08:28:21Z",
+  "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.1.csv",
   "new_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
-  "old_rule_version": "ai_rules_v0.3",
-  "new_rule_version": "ai_rules_v0.3.1",
+  "old_rule_version": "ai_rules_v0.3.1",
+  "new_rule_version": "ai_rules_v0.3.2",
   "rows": 50,
   "changed_rows": 0,
   "label_changed_rows": 0,
