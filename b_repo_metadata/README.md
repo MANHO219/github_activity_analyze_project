@@ -233,7 +233,7 @@ v0.3.5 是对这 200 个仓库的误判抽查：逐条看完 101 条 `uncertain`
 | `http_status` | 最近一次 HTTP 状态码 |
 | `fetched_at_utc` | 获取成功时的时间；失败留空（失败时间在 `fetch_log.jsonl`） |
 
-`repo_ai_labels.csv`（v0.3.5）：`repo_id`、`ai_label`、`reason`、`rule_version`、`rule_id`、`metadata_fetched_at_utc`、`labelled_at_utc`，以及 README 辅助字段 `readme_evidence`（`used` / `no_signal` / 空）、`readme_sha256`、`readme_fetched_at_utc`。`reason` 以规则 ID 开头，例如 `R5b_weak_signal_corroborated:weak=ai_token;corroboration=sdk_api`，README 相关的一行形如 `R9_readme_ai:readme=llm,machine_learning`。
+`repo_ai_labels.csv`（v0.3.6）：`repo_id`、`ai_label`、`reason`、`rule_version`、`rule_id`、`metadata_fetched_at_utc`、`labelled_at_utc`，以及 README 辅助字段 `readme_evidence`（`used` / `no_signal` / 空）、`readme_sha256`、`readme_fetched_at_utc`。`reason` 以规则 ID 开头，例如 `R5b_weak_signal_corroborated:weak=ai_token;corroboration=sdk_api`，README 相关的一行形如 `R9_readme_ai:readme=llm,machine_learning`。
 
 `repo_ai_labels_analysis.csv`：在自动标签基础上增加 `ai_label_manual`、`ai_label_final`、`label_source`、`policy`，用于交接给 C。字段与口径说明见 [LABELS.md](LABELS.md)。
 
@@ -241,6 +241,8 @@ v0.3.5 是对这 200 个仓库的误判抽查：逐条看完 101 条 `uncertain`
 
 - `event_share_of_source`：分母是事件表**全部事件**（197,313）；
 - `event_share_of_pilot_events`：分母是**50 个试点仓库的事件总数**（159）。
+
+标签列默认取**最终标签**（`ai_label_final`），`join_check.json` 的 `inputs.label_field` 会写明用的是哪一列。pilot_02 已按最终标签重跑；pilot_01 的标签在 v0.3.4 → v0.3.6 没有变化，保留原来基于 parquet 的记录（`label_field=ai_label`）。
 
 ## 处理约定
 
