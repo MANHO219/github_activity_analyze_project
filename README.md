@@ -11,6 +11,7 @@
 | B 现在如何开始 | [B 接手指南](a_data_pipeline/B_接手指南.md) |
 | B 的实现、跑法与试跑结果 | [B 阶段 README](b_repo_metadata/README.md)、[试跑结果](b_repo_metadata/RESULTS.md) |
 | A 的实现和运行命令 | [数据管道 README](a_data_pipeline/README.md) |
+| D 的单核、多核与虚拟机分布式实验，以及 A/D 分工边界 | [D 的实验计划](D_并行与分布式实验计划.md) |
 | 实际样本与核对结果 | [样本交接记录](a_data_pipeline/runs/20240115_1hour_handoff/HANDOFF.md)、[验证摘要](a_data_pipeline/verification/RESULTS.md) |
 
 HTML 请在下载或 clone 后，用本地浏览器打开；在 GitHub 文件页面也可以先下载。Markdown 说明可直接在 GitHub 阅读。仓库里的 HTML 已内嵌样本和源码，阅读主体内容不需要启动服务。
@@ -30,6 +31,7 @@ B 的第一轮已完成并留在 [b_repo_metadata/](b_repo_metadata/)：50 个�
 ├── README.md                       ← 小组入口
 ├── CS5488_AI_Repository_Lifecycle_Project.md
 ├── A_启动任务_最小数据样本.md
+├── D_并行与分布式实验计划.md         ← D 待实施的实验与交付要求
 ├── Project.pdf                     ← 课程项目要求
 ├── a_data_pipeline/
 │   ├── B_接手指南.md
