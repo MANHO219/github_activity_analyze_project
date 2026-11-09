@@ -22,5 +22,6 @@
     "max_attempts": 3,
     "backoff_seconds": [1, 2, 4]
   },
-  "rules_file": "../rules/ai_rules_v0.1.json"
+  "rules_file": "../rules/ai_rules_v0.2.json",
+  "rules_file_previous": "../rules/ai_rules_v0.1.json"
 }
