@@ -20,10 +20,10 @@
 | v0.3.4 → v0.3.5 | pilot_01 0 条；pilot_02 6 条（2 条误纳入改判 excluded、4 条个人主页与名称边界） |
 | v0.3.5 → v0.3.6 | pilot_01 0 条；pilot_02 0 条（收紧 course on / 论文清单 / 统计卡三个条件，样本未触发回退） |
 | 与人工复核 | pilot_01 复核样本中自动已判定的 19 条全部与人工一致；只代表 33 条复核样本 |
-| 人工复核 | pilot_01：33 条；pilot_02：抽查 13 条（included 3 / excluded 5 / uncertain 5） |
+| 人工复核 | pilot_01：33 条；pilot_02：抽查 13 条（included 3 / excluded 5 / uncertain 5）+ 1 条人工修订（ItsCryptic） |
 | 分析用标签 | pilot_01 人工优先：4 / 38 / 8（人工 33 行、自动 17 行）；pilot_02 人工优先：17 / 87 / 96（13 条复核 + 1 条人工修订） |
 | 接回事件表 | pilot_01：50/50 命中，覆盖 159 / 197,313 条；pilot_02（最终标签）：200/200 命中，覆盖 1,072 / 5,528,300 条，excluded 394 / included 109 / uncertain 569 |
-| 离线测试 | 120 项全部通过（不联网） |
+| 离线测试 | 123 项全部通过（不联网） |
 
 详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.6.md](rules/ai_rules_v0.3.6.md)；标签交接口径见 [LABELS.md](LABELS.md)。
 
@@ -62,7 +62,7 @@ b_repo_metadata/
 │   ├── evidence.py                    ← 复核用 README 证据
 │   └── join.py                        ← 按 repo_id 接回事件表
 ├── scripts/                           ← 命令入口（每个步骤一个）
-├── tests/test_b_pipeline.py           ← 120 项离线验证
+├── tests/test_b_pipeline.py           ← 123 项离线验证
 └── runs/
     ├── debug_api_sample/              ← 单仓库连通性样例（apache/superset）
     ├── pilot_01/                      ← 50 个仓库的首轮试跑

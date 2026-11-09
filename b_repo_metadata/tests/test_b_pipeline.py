@@ -373,6 +373,30 @@ class JoinTests(unittest.TestCase):
         self.assertEqual(by_id["1"]["event_share_of_pilot_events"], "0.625")
         self.assertEqual(by_id["2"]["event_share_of_pilot_events"], "0.375")
 
+    def test_join_uses_final_label_field(self):
+        """接回表可以用分析用标签的 ai_label_final，并在摘要里记录字段名。"""
+        metadata_rows = [metadata(1, topics=["llm"])]
+        labels = label_rows(metadata_rows, RULES)
+        rows = [dict(labels[0], ai_label_final="excluded")]
+        write_csv(self.root / "repo_metadata.csv", METADATA_FIELDS, metadata_rows)
+        write_csv(self.root / "repo_ai_labels_analysis.csv", list(rows[0]), rows)
+        write_csv(
+            self.root / "daily.csv",
+            ["repo_id", "event_date", "event_type", "event_count"],
+            [{"repo_id": "1", "event_date": "2024-01-15", "event_type": "PushEvent", "event_count": "3"}],
+        )
+        summary = join_run(
+            metadata_csv=self.root / "repo_metadata.csv",
+            labels_csv=self.root / "repo_ai_labels_analysis.csv",
+            out_dir=self.root,
+            daily_counts_csv=self.root / "daily.csv",
+            label_field="ai_label_final",
+        )
+        joined = read_csv(self.root / "repo_labels_joined_events.csv")
+        self.assertEqual(joined[0]["ai_label"], "excluded")
+        self.assertEqual(summary["inputs"]["label_field"], "ai_label_final")
+        self.assertEqual(summary["events_by_label"], {"excluded": 3})
+
     def test_missing_repo_fails_check(self):
         metadata_rows = [metadata(9, topics=["llm"])]
         labels = label_rows(metadata_rows, RULES)
@@ -1140,13 +1164,16 @@ npm run build
 npm test
 """ * 12
 
-    MEDIA_CENTER = """# Kodi
+    MEDIA_CENTER = """![Kodi Logo](docs/resources/banner.png)
 
-Kodi is a free and open source media player and entertainment hub for digital media.
-It can play videos, music and podcasts from local storage or from the network.
-Kodi runs on Linux, Windows, macOS, Android and iOS, and supports many plugins and skins.
-The project is maintained by the Kodi Foundation and has a large community of contributors.
-""" * 6
+<a href="https://kodi.tv/">website</a> • <a href="https://kodi.wiki/view/Main_Page">docs</a> • <a href="https://forum.kodi.tv/">community</a>
+
+Kodi is an award-winning **free and open source** software media player and entertainment hub for digital media.
+Available as a native application for **Android, Linux, BSD, macOS, iOS, tvOS and Windows operating systems**, Kodi runs on most common processor architectures.
+
+While Kodi functions very well as a standard media player application for your computer, it has been designed to be the perfect companion for your HTPC.
+With its **beautiful interface and powerful skinning engine**, Kodi feels very natural to use from the couch with a remote control.
+""" * 5
 
     REAL_OVERVIEW = """# timeutil
 
@@ -1307,6 +1334,18 @@ class RulesV36Tests(unittest.TestCase):
         result = self.V36.decide(row)
         self.assertEqual(result["ai_label"], "excluded")
         self.assertEqual(result["rule_id"], "R3_resource_collection")
+
+    def test_paper_list_with_trailing_period_still_excluded(self):
+        row = metadata(111, description="ChatGPT-related papers.")
+        result = self.V36.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3_resource_collection")
+
+    def test_course_without_article_still_excluded(self):
+        row = metadata(112, description="Practical course on natural language processing", topics=["nlp"])
+        result = self.V36.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3b_coursework")
 
     def test_ml_tool_with_stats_card_is_not_a_profile(self):
         row = metadata(105, name="someone/someone", description="", topics=[], language="")

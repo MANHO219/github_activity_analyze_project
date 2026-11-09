@@ -369,7 +369,7 @@
     },
     {
       "id": "paper_list",
-      "regex": "\\b(list|collection)\\s+of\\s+[\\w\\s.,+-]{0,40}?papers?\\b|^\\s*[\\w.+-]+[-\\s]related\\s+papers?\\s*$"
+      "regex": "\\b(list|collection)\\s+of\\s+[\\w\\s.,+-]{0,40}?papers?\\b|^\\s*[\\w.+-]+[-\\s]related\\s+papers?[.\\s]*$"
     }
   ],
   "resource_name_patterns": [
@@ -413,7 +413,7 @@
     },
     {
       "id": "course_on",
-      "regex": "^\\s*(this\\s+is\\s+)?(a|an)\\s+(practical\\s+|online\\s+|hands-on\\s+|introductory\\s+|university\\s+|graduate\\s+)?course\\s+on\\b|^\\s*course\\s+on\\b"
+      "regex": "^\\s*(this\\s+is\\s+)?(?:(?:a|an)\\s+)?(practical\\s+|online\\s+|hands-on\\s+|introductory\\s+|university\\s+|graduate\\s+)?course\\s+on\\b|^\\s*course\\s+on\\b"
     }
   ],
   "coursework_name_patterns": [

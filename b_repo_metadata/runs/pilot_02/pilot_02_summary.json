@@ -1,7 +1,7 @@
 {
   "pilot": "pilot_02",
   "rules_version": "ai_rules_v0.3.6",
-  "generated_at_utc": "2026-11-09T16:45:03Z",
+  "generated_at_utc": "2026-11-09T16:53:52Z",
   "source_data": {
     "note": "按 A README 的官方命令重建 2024-01-15 全天数据；数量与 A 的交接一致",
     "candidates": "a_data_pipeline/runs/20240115_python/python/repo_candidates.csv",
@@ -89,7 +89,19 @@
       "auto_rule": 187,
       "manual_review": 13
     },
-    "manual_differs_from_auto": 1
+    "manual_differs_from_auto": 1,
+    "by_stratum": {
+      "random": {
+        "included": 2,
+        "excluded": 76,
+        "uncertain": 82
+      },
+      "keyword_name": {
+        "included": 15,
+        "excluded": 11,
+        "uncertain": 14
+      }
+    }
   },
   "join": {
     "event_source": "repo_daily_counts.csv:sum(event_count)",

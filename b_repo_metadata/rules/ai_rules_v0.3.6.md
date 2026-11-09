@@ -31,7 +31,7 @@ v0.3.6 只保留两种形态：
 
 ```text
 \b(list|collection)\s+of\s+[\w\s.,+-]{0,40}?papers?\b
-|^\s*[\w.+-]+[-\s]related\s+papers?\s*$
+|^\s*[\w.+-]+[-\s]related\s+papers?[.\s]*$
 ```
 
 - 描述整段就是 `ChatGPT-related papers` → 仍排除（`tomohideshibata/ChatGPT-related-papers`）
@@ -48,7 +48,7 @@ v0.3.6 把这组组件证据拆到 `readme_rules.profile_widget_patterns`，并�
 1. README 里**没有 AI 强证据**（`ai_strong_patterns` 一条都不命中）；
 2. README 的有效正文 **< 200 字符**（`profile_widget_max_meaningful_chars`）。
 
-两条同时满足，才把组件当作主页证据。`profile_patterns` 只保留 v0.3.4 的自我介绍句式（`Hi, I'm …`、`About Me`、`Bem vindo` 之外的葡语问候等）。
+两条同时满足，才把组件当作主页证据。`profile_patterns` 只保留 v0.3.4 的自我介绍句式（`Hi, I'm …`、`About me`、`github profile` 等）；`Bem vindo` 属于组件表，不在这一组。
 
 - `Pepestar`、`gaurav-shrestha`、`Speike-SHL`：没有 AI 证据、正文极短 → 仍排除
 - ML 工具 + 统计卡 → 不再排除，继续走 README 的 AI 证据判定
