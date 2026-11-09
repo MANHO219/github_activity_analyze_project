@@ -1,30 +1,31 @@
 {
-  "rules_version": "ai_rules_v0.3.3.1",
-  "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.3.1.json",
-  "rules_sha256": "a7dc43c6bb56d2d5022b8754a2bb586dd067c8933ce9d9f821a2b3e98fd78543",
+  "rules_version": "ai_rules_v0.3.4",
+  "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.4.json",
+  "rules_sha256": "70e9719096d46a9c6087e392d526d8676e4c4b61012efadd94183c97af2c249d",
   "metadata_csv": "b_repo_metadata/runs/pilot_02/repo_metadata.csv",
   "metadata_sha256": "331bbcf70fa8cc0e834b1e7d05d08b8899ef805897ceef32fff31ed8282bcf7d",
-  "labelled_at_utc": "2026-11-09T13:10:04Z",
+  "labelled_at_utc": "2026-11-09T13:13:43Z",
   "input_rows": 200,
   "labelled_rows": 200,
   "labels_csv": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-  "labels_sha256": "e93a4a9946156447ad2693752474bf985b023fa5d6ad5f24b7a73c07fd9a249c",
+  "labels_sha256": "0da8390a4f529a319724734b0c49cae0c004de3336b97008f40212f56928742f",
   "total": 200,
   "by_label": {
-    "included": 20,
-    "excluded": 79,
+    "included": 19,
+    "excluded": 80,
     "uncertain": 101
   },
   "by_rule": {
     "R10_readme_coursework": 1,
     "R11_readme_profile": 2,
     "R12_readme_non_ai": 5,
+    "R13_course_override": 1,
     "R1_metadata_unavailable": 31,
     "R2_api_id_mismatch": 6,
     "R3_resource_collection": 7,
     "R3b_coursework": 5,
     "R3c_profile_suspected": 4,
-    "R4_topic_match": 5,
+    "R4_topic_match": 4,
     "R5_description_match": 11,
     "R6_name_only_signal": 11,
     "R7_insufficient_text_evidence": 49,
@@ -275,8 +276,9 @@
       "743671624",
       "743679194"
     ],
-    "used_rows": 12,
+    "used_rows": 13,
     "used_repo_ids": [
+      "128369334",
       "264460671",
       "450877869",
       "461271957",
@@ -291,6 +293,7 @@
       "743312420"
     ],
     "decisions": {
+      "R13_course_override": 1,
       "R12_readme_non_ai": 5,
       "R11_readme_profile": 2,
       "R10_readme_coursework": 1,

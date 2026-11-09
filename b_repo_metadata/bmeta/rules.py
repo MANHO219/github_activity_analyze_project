@@ -160,6 +160,19 @@ class RuleSet:
                     self.readme_non_ai_allowed = set()
                     self.readme_non_ai_purpose = []
                     self.readme_non_ai_template = []
+                # README 的“可选 AI 集成”排除与“课程覆盖”都只在规则文件显式配置时启用。
+                self.readme_feature_only = _compile(readme_rules.get("feature_only_patterns", []))
+                course_override = readme_rules.get("course_override")
+                if isinstance(course_override, dict) and course_override.get("enabled", True):
+                    self.readme_course_override_rule = course_override.get(
+                        "rule_id", "R13_course_override"
+                    )
+                    self.readme_course_positive = _compile(course_override.get("positive_patterns", []))
+                    self.readme_course_negative = _compile(course_override.get("negative_patterns", []))
+                else:
+                    self.readme_course_override_rule = None
+                    self.readme_course_positive = []
+                    self.readme_course_negative = []
         else:
             self.topic_terms = {term.lower() for term in rules.get("ai_topic_terms", [])}
             self.description = _compile(rules.get("ai_description_patterns", []))
@@ -289,12 +302,12 @@ class RuleSet:
     # -- v3 ------------------------------------------------------------
     def _decide_v3(self, result, description, full_name, topics, language, readme, raw_name=""):
         base = self._base_v3(result, description, full_name, topics, language, raw_name)
-        # README 只用于补足规则判不确定的仓库，不覆盖规则已给出的 included/excluded。
-        if base["ai_label"] != "uncertain" or not readme or not (readme.get("text") or "").strip():
+        if not readme or not (readme.get("text") or "").strip():
             return base
         text = _normalize_text(readme["text"])
         sha = readme.get("sha256") or ""
         fetched = readme.get("fetched_at_utc") or ""
+        usable = self._readme_without_future(text)
 
         def with_readme(label: str, rule_id: str, reason: str) -> dict[str, str]:
             row = result(label, rule_id, reason)
@@ -302,6 +315,31 @@ class RuleSet:
             row["readme_sha256"] = sha
             row["readme_fetched_at_utc"] = fetched
             return row
+
+        def course_override_hits() -> list[str]:
+            """README 明确“为课程/训练营制作”才算；仅参加或当作教学示例不算。"""
+            if not self.readme_course_override_rule:
+                return []
+            positive = _matches(self.readme_course_positive, usable)
+            if not positive:
+                return []
+            if _matches(self.readme_course_negative, usable):
+                return []
+            return positive
+
+        # 规则已判 included 时，README 的“为课程/训练营制作”证据可以覆盖为 excluded。
+        if base["ai_label"] == "included":
+            override = course_override_hits()
+            if override:
+                return with_readme(
+                    "excluded",
+                    self.readme_course_override_rule,
+                    "readme=" + ",".join(_dedupe(override)),
+                )
+            return base
+
+        if base["ai_label"] != "uncertain":
+            return base
 
         # 个人主页：只有规则本身已判为疑似（同名 + 无描述 + 无 topics + 无语言）时，
         # 才用 README 确认；README 还必须没有工程章节，避免把 ML 项目的作者介绍当成个人主页。
@@ -314,17 +352,36 @@ class RuleSet:
         if course_hits:
             return with_readme("excluded", "R10_readme_coursework", "readme=" + ",".join(_dedupe(course_hits)))
 
+        # README 里若明确写 AI 只是可选集成，先排除，避免被下面的 AI 关键词纳入。
+        if self.readme_feature_only:
+            feature_hits = _matches(self.readme_feature_only, usable)
+            if feature_hits:
+                return with_readme(
+                    "excluded",
+                    "R5d_ai_feature_only",
+                    "readme=" + ",".join(_dedupe(feature_hits)),
+                )
+
         # AI 证据：先剔除“计划/以后/roadmap”这类未来意图行；要求强证据，
         # 或弱词出现至少 N 次且有佐证词，避免一句“以后打算加 AI”就被纳入。
-        usable = self._readme_without_future(text)
         strong_hits = _matches(self.readme_ai_strong, usable)
         if strong_hits:
+            override = course_override_hits()
+            if override:
+                return with_readme(
+                    "excluded", self.readme_course_override_rule, "readme=" + ",".join(_dedupe(override))
+                )
             return with_readme("included", "R9_readme_ai", "readme=" + ",".join(_dedupe(strong_hits)))
 
         weak_count = self._count_weak_mentions(usable)
         weak_hits = _matches(self.readme_ai_weak, usable)
         corroboration = _matches(self.corroboration, usable)
         if weak_count >= self.min_weak_mentions and corroboration and weak_hits:
+            override = course_override_hits()
+            if override:
+                return with_readme(
+                    "excluded", self.readme_course_override_rule, "readme=" + ",".join(_dedupe(override))
+                )
             return with_readme(
                 "included",
                 "R9_readme_ai",

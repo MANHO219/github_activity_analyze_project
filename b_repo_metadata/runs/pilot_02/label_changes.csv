@@ -1,18 +1,2 @@
 repo_id,observed_repo_name,old_label,old_rule,new_label,new_rule,change_type,explanation
-428634575,project-ncl/pnc-api-types-ts,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-563877727,NeckBlick/NeckBlick,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-671391343,chiajing/nice,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-671866050,Pfery/vigilant-spork,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-673230893,world-wide-development/dynamic-jwks-spring-boot-starter,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-677975586,elomliuyong/elmliuyong,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-701654428,singhhdev/cs2-external-source-kernel,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-702505065,LDingLDing/langchain-js,excluded,R12_readme_non_ai,uncertain,R6_name_only_signal,excluded->uncertain,规则调整：R12_readme_non_ai → R6_name_only_signal
-714463832,nurulabsr/PHP,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-730869939,MiSArch/wishlist,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-739338813,andrejfras/SportConnect2.0,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-740335636,buithienphat/Portfolio,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-742393752,al3xback/fmentor-stats-preview-mocha-chai-expect,excluded,R12_readme_non_ai,uncertain,R6_name_only_signal,excluded->uncertain,规则调整：R12_readme_non_ai → R6_name_only_signal
-743397528,4857MAZHAR/emplive,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-743402660,sweet-poteto/notion-clone,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-743538992,sinuiloveyou/sinuiloveyou.github.io,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-743671624,Joy5k/univerisity-management-client,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
+128369334,elyselam/Etherscan-ML,included,R4_topic_match,excluded,R13_course_override,included->excluded,规则调整：R4_topic_match → R13_course_override

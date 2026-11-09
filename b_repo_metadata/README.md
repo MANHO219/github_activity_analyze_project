@@ -10,19 +10,20 @@
 |---|---|
 | 试跑名单 | pilot_01：50 个（40 随机 + 10 名称关键词）；pilot_02：200 个（160 随机 + 40 名称关键词，排除首轮 50） |
 | 元数据获取 | pilot_01：43 成功 / 2 ID 不一致 / 5 个 404；pilot_02：163 成功 / 6 ID 不一致 / 31 个 404（各 200 次调用） |
-| AI 标签（规则 v0.3.3.1） | pilot_01：`included` 4、`excluded` 32、`uncertain` 14；pilot_02：20 / 79 / 101 |
-| pilot_02 分层分布 | 160 随机：3 / 70 / 87；40 关键词：17 / 9 / 14 |
+| AI 标签（规则 v0.3.4） | pilot_01：`included` 4、`excluded` 32、`uncertain` 14；pilot_02：19 / 80 / 101 |
+| pilot_02 分层分布 | 160 随机：2 / 71 / 87；40 关键词：17 / 9 / 14 |
 | 与 v0.2 对比 | pilot_01：5 条标签变化 + 5 条仅理由变化；README 补足 3 个 AI 项目、1 个课程仓库 |
 | v0.3.1 → v0.3.2 | pilot_01 0 条；pilot_02 2 条（修复 whisper 子串与中文边界） |
 | v0.3.2 → v0.3.3 | pilot_01 6 条、pilot_02 22 条 `uncertain → excluded`（README 确认主体非 AI） |
 | v0.3.3 → v0.3.3.1 | 4 条、17 条 `excluded → uncertain`（R12 要求用途说明、只对 R7 生效） |
+| v0.3.3.1 → v0.3.4 | pilot_01 0 条；pilot_02 1 条（Etherscan-ML 由 R13 课程覆盖改判 excluded） |
 | 与人工复核 | pilot_01 复核样本中自动已判定的 17 条全部与人工一致；只代表 33 条复核样本 |
 | 人工复核 | pilot_01：33 条；pilot_02：抽查 13 条（included 3 / excluded 5 / uncertain 5） |
 | 分析用标签 | pilot_01 人工优先：4 / 38 / 8（人工 33 行、自动 17 行） |
 | 接回事件表 | pilot_01：50/50 命中，覆盖 159 / 197,313 条；pilot_02：200/200 命中，覆盖 1,072 / 5,528,300 条 |
-| 离线测试 | 86 项全部通过（不联网） |
+| 离线测试 | 93 项全部通过（不联网） |
 
-详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.3.1.md](rules/ai_rules_v0.3.3.1.md)；标签交接口径见 [LABELS.md](LABELS.md)。
+详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.4.md](rules/ai_rules_v0.3.4.md)；标签交接口径见 [LABELS.md](LABELS.md)。
 
 ## 交付物结构
 
@@ -39,7 +40,8 @@ b_repo_metadata/
 │   ├── ai_rules_v0.3.1.md / .json     ← 第四版：README 判 AI/个人主页收紧
 │   ├── ai_rules_v0.3.2.md / .json     ← 第五版：名称词边界与中英相邻修复
 │   ├── ai_rules_v0.3.3.md / .json     ← 第六版：README 确认主体非 AI
-│   └── ai_rules_v0.3.3.1.md / .json   ← 当前版本：R12 需用途证据、旧版本不触发
+│   ├── ai_rules_v0.3.3.1.md / .json   ← 第七版：R12 需用途证据、旧版本不触发
+│   └── ai_rules_v0.3.4.md / .json     ← 当前版本：可选 AI 集成排除、课程覆盖
 ├── reviews/pilot_01_decisions.json    ← 第一轮人工判断与理由（不覆盖）
 ├── reviews/pilot_01_revision_check_v0.3.json ← 新口径对旧判断的影响检查
 ├── bmeta/                             ← 实现包（与 A 的 gharchive_a 对应）
@@ -55,7 +57,7 @@ b_repo_metadata/
 │   ├── evidence.py                    ← 复核用 README 证据
 │   └── join.py                        ← 按 repo_id 接回事件表
 ├── scripts/                           ← 命令入口（每个步骤一个）
-├── tests/test_b_pipeline.py           ← 86 项离线验证
+├── tests/test_b_pipeline.py           ← 93 项离线验证
 └── runs/
     ├── debug_api_sample/              ← 单仓库连通性样例（apache/superset）
     ├── pilot_01/                      ← 50 个仓库的首轮试跑
@@ -63,7 +65,7 @@ b_repo_metadata/
     │   ├── selection.json             ← 选取方法、种子、输入/输出 SHA-256
     │   ├── raw_api/<repo_id>.json      ← 每个仓库的原始响应信封
     │   ├── repo_metadata.csv          ← 每仓库一行，失败行保留状态
-    │   ├── repo_ai_labels.csv         ← 当前规则（v0.3.3）的标签
+    │   ├── repo_ai_labels.csv         ← 当前规则（v0.3.4）的标签
     │   ├── repo_ai_labels_v0.1…v0.3.2.csv ← 旧版标签（保留）
     │   ├── label_changes.csv          ← v0.3.1 → v0.3.2 的逐条变化
     │   ├── label_comparison.json      ← 混淆矩阵、人工一致率、改进/回退清单
@@ -191,13 +193,13 @@ python scripts/join_check.py --run-dir runs/pilot_02 \
 |---|---|
 | 元数据 API | 200 次调用、163 成功、31 个 404、6 个 ID 不一致、120 秒 |
 | README 证据 | 200 次请求、138 可读、62 无 README/404、128 秒 |
-| 标签分布（160 随机） | included 3 / excluded 70 / uncertain 87 |
+| 标签分布（160 随机） | included 2 / excluded 71 / uncertain 87 |
 | 标签分布（40 关键词） | included 17 / excluded 9 / uncertain 14 |
 | 接回全天活动表 | 200/200 命中，覆盖 1,072 / 5,528,300 条事件 |
-| 全部 200 | included 20 / excluded 79 / uncertain 101（其中 5 条由 R12 排除） |
+| 全部 200 | included 19 / excluded 80 / uncertain 101（5 条由 R12、1 条由 R13 排除） |
 | 人工抽查 | 13 条：included 3、excluded 5、uncertain 5 |
 
-抽查发现并修复了两处规则 bug（v0.3.2）：`Whispering-Origin-2D` 曾被当成 `whisper`（名称子串误判），中文“用Resnet101+GPT搭建…的AI”曾因 `\b` 在中文里失效被漏判。A 对两个边界案例给出判定：Etherscan-ML 按训练营项目人工排除（规则仍判 included，分析表按人工优先）；CoreELEC/xbmc 由 R12 自动排除。R12 在 v0.3.3.1 收紧为“README 必须说明项目用途、只对描述为空的仓库生效”，模板与只有安装说明的 README 不再排除。
+抽查发现并修复了两处规则 bug（v0.3.2）：`Whispering-Origin-2D` 曾被当成 `whisper`（名称子串误判），中文“用Resnet101+GPT搭建…的AI”曾因 `\b` 在中文里失效被漏判。A 对两个边界案例给出判定：Etherscan-ML 按训练营项目排除，CoreELEC/xbmc 按 README 主体非 AI 排除。v0.3.3.1 把 R12 收紧为“README 必须说明项目用途、只对描述为空的仓库生效”；v0.3.4 新增 R13，README 明确“为课程/训练营制作”时自动覆盖 included——Etherscan-ML 现在由规则自动排除，13 条人工复核与自动标签的差异为 0。
 
 ## 缓存与重试（重要）
 
@@ -240,7 +242,7 @@ python scripts/join_check.py --run-dir runs/pilot_02 \
 
 ## 规则版本
 
-- 当前规则 `ai_rules_v0.3.3.1`：R12 要求 README 能说明项目用途（About/Overview 或“X is a …”），只对描述与 topics 都为空的仓库生效；模板、安装说明、名称或弱信号冲突都继续 uncertain。旧版规则文件没有 `readme_rules.non_ai` 时不会触发 R12。
+- 当前规则 `ai_rules_v0.3.4`：在 v0.3.3.1 基础上，可选 AI 集成（optional ChatGPT/OpenAI）不再纳入；README 明确“为课程/训练营制作”时可把 included 覆盖为 excluded（仅提到参加或用作教学示例不覆盖）。两个新行为都只在规则文件显式配置时启用。
 - 各版本规则与标签表都保留；pilot_01 的 `label_changes.csv` 是 v0.3.2→v0.3.3（6 条），pilot_02 的是同版本对比（22 条）。
 - 新口径对第一轮人工判断的影响检查见 `reviews/pilot_01_revision_check_v0.3.json`：无需改判，旧判断不覆盖。
 

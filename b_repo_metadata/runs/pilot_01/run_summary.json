@@ -85,7 +85,7 @@
       "keyword_name 层来自名称粗筛，名称命中不等于 AI 判定；实际标签仍由 rules 决定。"
     ]
   },
-  "updated_at_utc": "2026-11-09T13:10:18Z",
+  "updated_at_utc": "2026-11-09T13:13:52Z",
   "fetch": {
     "started_at_utc": "2026-11-02T05:02:36Z",
     "finished_at_utc": "2026-11-02T05:03:07Z",
@@ -113,16 +113,16 @@
     "note": "失败行只记录状态，缺失元数据留空；pending 行尚未写入 repo_metadata.csv。"
   },
   "labels": {
-    "rules_version": "ai_rules_v0.3.3.1",
-    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.3.1.json",
-    "rules_sha256": "a7dc43c6bb56d2d5022b8754a2bb586dd067c8933ce9d9f821a2b3e98fd78543",
+    "rules_version": "ai_rules_v0.3.4",
+    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.4.json",
+    "rules_sha256": "70e9719096d46a9c6087e392d526d8676e4c4b61012efadd94183c97af2c249d",
     "metadata_csv": "b_repo_metadata/runs/pilot_01/repo_metadata.csv",
     "metadata_sha256": "374eabffca61553c824d751b61cf4667a6d775569a0654339f9dab366663caa6",
-    "labelled_at_utc": "2026-11-09T13:10:04Z",
+    "labelled_at_utc": "2026-11-09T13:13:42Z",
     "input_rows": 50,
     "labelled_rows": 50,
     "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
-    "labels_sha256": "2b24f2e6508f0ac681471742ef9e70c5abf7e92dafa8d6619fd33cf15e035674",
+    "labels_sha256": "00d400331b3b58bdf528b2ef33165ea9dcc594dc33aa28edb2a4ee434d57d934",
     "total": 50,
     "by_label": {
       "included": 4,
@@ -425,7 +425,7 @@
     "note": "README 仅作人工复核证据；v0.1 规则不读取该字段。"
   },
   "join": {
-    "checked_at_utc": "2026-11-09T13:10:17Z",
+    "checked_at_utc": "2026-11-09T13:13:52Z",
     "event_source": "events_clean.parquet",
     "events_total_in_source": 197313,
     "pilot_repos": 50,
@@ -471,13 +471,13 @@
       "random": 40,
       "keyword_name": 10
     },
-    "rules_version": "ai_rules_v0.3.3.1",
+    "rules_version": "ai_rules_v0.3.4",
     "rules_compared": [
-      "ai_rules_v0.3.3",
-      "ai_rules_v0.3.3.1"
+      "ai_rules_v0.3.3.1",
+      "ai_rules_v0.3.4"
     ],
     "analysis_label_policy": "manual_override",
-    "generated_at_utc": "2026-11-09T13:10:59Z",
+    "generated_at_utc": "2026-11-09T13:13:52Z",
     "environment": {
       "python_version": "3.12.14",
       "platform": "Windows-11-10.0.26200-SP0",
@@ -488,10 +488,10 @@
       "candidates_sha256": "e11f5c20990233b45fa8fabe4e0eeeed401baceaaf6f108e1d2d3c6d463c0b09",
       "pilot_candidates_sha256": "e9de060d26ded56bb841fe6a449bc409f55eb5a86125f279efa7bea170d3a9c8",
       "repo_metadata_sha256": "374eabffca61553c824d751b61cf4667a6d775569a0654339f9dab366663caa6",
-      "repo_ai_labels_sha256": "2b24f2e6508f0ac681471742ef9e70c5abf7e92dafa8d6619fd33cf15e035674",
+      "repo_ai_labels_sha256": "00d400331b3b58bdf528b2ef33165ea9dcc594dc33aa28edb2a4ee434d57d934",
       "repo_ai_labels_v0_1_sha256": "8252f049b05eaae66f2ffd7b387fb82ce5539e4cdbb3e96c04155761078d55e9",
-      "analysis_labels_sha256": "0fd2e79358ab51753632ed564f21a72621dcb874cfefec5c1992bc659b8ab1a4",
-      "rules_sha256": "a7dc43c6bb56d2d5022b8754a2bb586dd067c8933ce9d9f821a2b3e98fd78543"
+      "analysis_labels_sha256": "9b455761c2b46572f35950e28122f1663bebedf048448ab6c44d5d5d6364eca4",
+      "rules_sha256": "70e9719096d46a9c6087e392d526d8676e4c4b61012efadd94183c97af2c249d"
     },
     "outputs": {
       "metadata_rows": 50,
@@ -508,28 +508,27 @@
         "not_found": 5
       },
       "label_changes": {
-        "changed_rows": 4,
-        "label_changed_rows": 4,
+        "changed_rows": 0,
+        "label_changed_rows": 0,
         "rule_reason_changed_rows": 0,
         "confusion_matrix": {
           "included": {
             "included": 4
           },
           "excluded": {
-            "excluded": 32,
-            "uncertain": 4
+            "excluded": 32
           },
           "uncertain": {
-            "uncertain": 10
+            "uncertain": 14
           }
         }
       },
       "human_agreement": {
         "old": {
           "reviewed_rows": 33,
-          "agree": 23,
+          "agree": 19,
           "disagree": 0,
-          "resolves": 2,
+          "resolves": 6,
           "kept_uncertain": 8,
           "agreement_rate_on_decided_rows": 1.0
         },
@@ -542,12 +541,7 @@
           "agreement_rate_on_decided_rows": 1.0
         },
         "improved_repo_ids": [],
-        "regressed_repo_ids": [
-          "82206054",
-          "421217174",
-          "551162351",
-          "719391258"
-        ]
+        "regressed_repo_ids": []
       },
       "analysis_labels": {
         "policy": "manual_override",
@@ -598,38 +592,38 @@
     "run_dir": "b_repo_metadata/runs/pilot_01"
   },
   "label_comparison": {
-    "compared_at_utc": "2026-11-09T13:10:04Z",
-    "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.3.csv",
+    "compared_at_utc": "2026-11-09T13:13:42Z",
+    "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.3.1.csv",
     "new_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
-    "old_rule_version": "ai_rules_v0.3.3",
-    "new_rule_version": "ai_rules_v0.3.3.1",
+    "old_rule_version": "ai_rules_v0.3.3.1",
+    "new_rule_version": "ai_rules_v0.3.4",
     "rows": 50,
-    "changed_rows": 4,
-    "label_changed_rows": 4,
+    "changed_rows": 0,
+    "label_changed_rows": 0,
     "rule_reason_changed_rows": 0,
     "confusion_matrix": {
       "included": {
         "included": 4
       },
       "excluded": {
-        "excluded": 32,
-        "uncertain": 4
+        "excluded": 32
       },
       "uncertain": {
-        "uncertain": 10
+        "uncertain": 14
       }
     },
     "per_rule_old": {
       "R10_readme_coursework": 1,
       "R11_readme_profile": 5,
-      "R12_readme_non_ai": 6,
+      "R12_readme_non_ai": 2,
       "R1_metadata_unavailable": 5,
       "R2_api_id_mismatch": 2,
       "R3_resource_collection": 3,
       "R3b_coursework": 3,
       "R3c_profile_suspected": 1,
+      "R4b_weak_topic_only": 1,
       "R5b_weak_signal_corroborated": 1,
-      "R7_insufficient_text_evidence": 2,
+      "R7_insufficient_text_evidence": 5,
       "R8_no_ai_signal": 18,
       "R9_readme_ai": 3
     },
@@ -653,9 +647,9 @@
       "reviewed_rows": 33,
       "old_version": {
         "reviewed_rows": 33,
-        "agree": 23,
+        "agree": 19,
         "disagree": 0,
-        "resolves": 2,
+        "resolves": 6,
         "kept_uncertain": 8,
         "agreement_rate_on_decided_rows": 1.0
       },
@@ -668,12 +662,7 @@
         "agreement_rate_on_decided_rows": 1.0
       },
       "improved_repo_ids": [],
-      "regressed_repo_ids": [
-        "82206054",
-        "421217174",
-        "551162351",
-        "719391258"
-      ],
+      "regressed_repo_ids": [],
       "still_uncertain_repo_ids": [
         "82206054",
         "271994210",
@@ -694,7 +683,7 @@
     }
   },
   "analysis_labels": {
-    "generated_at_utc": "2026-11-09T13:10:14Z",
+    "generated_at_utc": "2026-11-09T13:13:49Z",
     "policy": "manual_override",
     "policy_note": "人工复核优先：有人工判断的仓库采用人工标签，其余采用规则自动标签。",
     "rows": 50,

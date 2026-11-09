@@ -1004,6 +1004,61 @@ class RulesV331Tests(unittest.TestCase):
         self.assertEqual(result["ai_label"], "uncertain")
 
 
+class RulesV34Tests(unittest.TestCase):
+    """v0.3.4：可选 AI 集成不纳入；课程/训练营制作可覆盖 included。"""
+
+    V34 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.4.json"))
+    V331 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.3.1.json"))
+
+    @staticmethod
+    def readme(text):
+        return {"text": text, "sha256": "s", "fetched_at_utc": "t"}
+
+    def test_optional_chatgpt_integration_excluded(self):
+        row = metadata(61, description="Calendar app with optional ChatGPT integration")
+        result = self.V34.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R5d_ai_feature_only")
+
+    def test_chatgpt_assistant_core_included(self):
+        row = metadata(62, description="ChatGPT assistant that schedules your calendar and drafts events")
+        result = self.V34.decide(row)
+        self.assertEqual(result["ai_label"], "included")
+
+    def test_readme_optional_integration_excluded(self):
+        row = metadata(63, name="someone/calendar")
+        text = "A calendar app for teams.\nYou can optionally integrate ChatGPT to draft events.\n" * 3
+        result = self.V34.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R5d_ai_feature_only")
+
+    def test_made_for_bootcamp_overrides_included(self):
+        row = metadata(64, description="Machine Learning library for Ethereum")
+        text = "Made by X for the USC Viterbi Data Science Bootcamp. It wraps an API."
+        result = self.V34.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R13_course_override")
+
+    def test_author_attended_bootcamp_keeps_included(self):
+        row = metadata(65, description="Machine Learning library for Ethereum")
+        text = "The author attended a data science bootcamp and built this ML library."
+        result = self.V34.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "included")
+
+    def test_teaching_example_keeps_included(self):
+        row = metadata(66, description="Machine Learning library for Ethereum")
+        text = "This ML library is used as a course example in lectures."
+        result = self.V34.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "included")
+
+    def test_old_version_has_no_course_override(self):
+        self.assertIsNone(self.V331.readme_course_override_rule)
+        row = metadata(67, description="Machine Learning library for Ethereum")
+        text = "Made by X for the USC Viterbi Data Science Bootcamp."
+        result = self.V331.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "included")
+
+
 class CompareAndHandoffTests(unittest.TestCase):
     def setUp(self):
         TEST_TMP_ROOT.mkdir(parents=True, exist_ok=True)

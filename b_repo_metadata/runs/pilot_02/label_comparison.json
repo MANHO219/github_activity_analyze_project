@@ -1,42 +1,26 @@
 {
-  "compared_at_utc": "2026-11-09T13:10:05Z",
-  "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.3.csv",
+  "compared_at_utc": "2026-11-09T13:13:43Z",
+  "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.3.1.csv",
   "new_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-  "old_rule_version": "ai_rules_v0.3.3",
-  "new_rule_version": "ai_rules_v0.3.3.1",
+  "old_rule_version": "ai_rules_v0.3.3.1",
+  "new_rule_version": "ai_rules_v0.3.4",
   "rows": 200,
-  "changed_rows": 17,
-  "label_changed_rows": 17,
+  "changed_rows": 1,
+  "label_changed_rows": 1,
   "rule_reason_changed_rows": 0,
   "confusion_matrix": {
     "included": {
-      "included": 20
+      "excluded": 1,
+      "included": 19
     },
     "excluded": {
-      "excluded": 79,
-      "uncertain": 17
+      "excluded": 79
     },
     "uncertain": {
-      "uncertain": 84
+      "uncertain": 101
     }
   },
   "per_rule_old": {
-    "R10_readme_coursework": 1,
-    "R11_readme_profile": 2,
-    "R12_readme_non_ai": 22,
-    "R1_metadata_unavailable": 31,
-    "R2_api_id_mismatch": 6,
-    "R3_resource_collection": 7,
-    "R3b_coursework": 5,
-    "R3c_profile_suspected": 4,
-    "R4_topic_match": 5,
-    "R5_description_match": 11,
-    "R6_name_only_signal": 9,
-    "R7_insufficient_text_evidence": 34,
-    "R8_no_ai_signal": 59,
-    "R9_readme_ai": 4
-  },
-  "per_rule_new": {
     "R10_readme_coursework": 1,
     "R11_readme_profile": 2,
     "R12_readme_non_ai": 5,
@@ -46,6 +30,23 @@
     "R3b_coursework": 5,
     "R3c_profile_suspected": 4,
     "R4_topic_match": 5,
+    "R5_description_match": 11,
+    "R6_name_only_signal": 11,
+    "R7_insufficient_text_evidence": 49,
+    "R8_no_ai_signal": 59,
+    "R9_readme_ai": 4
+  },
+  "per_rule_new": {
+    "R10_readme_coursework": 1,
+    "R11_readme_profile": 2,
+    "R12_readme_non_ai": 5,
+    "R13_course_override": 1,
+    "R1_metadata_unavailable": 31,
+    "R2_api_id_mismatch": 6,
+    "R3_resource_collection": 7,
+    "R3b_coursework": 5,
+    "R3c_profile_suspected": 4,
+    "R4_topic_match": 4,
     "R5_description_match": 11,
     "R6_name_only_signal": 11,
     "R7_insufficient_text_evidence": 49,

@@ -3,7 +3,7 @@ repo_id,observed_repo_name,ai_label,event_count,event_share_of_source,event_shar
 38228834,plotly/datasets,excluded,1,0.0,0.000933
 56003806,seedco/StackViewController,excluded,1,0.0,0.000933
 83055800,palashmon/car-names,excluded,5,1e-06,0.004664
-128369334,elyselam/Etherscan-ML,included,1,0.0,0.000933
+128369334,elyselam/Etherscan-ML,excluded,1,0.0,0.000933
 152462175,Alkovych/Tower-Defence,excluded,1,0.0,0.000933
 162067862,chndzcl/k8s-mirro,excluded,1,0.0,0.000933
 170672421,buttons/buttons.github.io,excluded,5,1e-06,0.004664

@@ -1,5 +1,1 @@
 repo_id,observed_repo_name,old_label,old_rule,new_label,new_rule,change_type,explanation
-82206054,weseek/growi,excluded,R12_readme_non_ai,uncertain,R4b_weak_topic_only,excluded->uncertain,规则调整：R12_readme_non_ai → R4b_weak_topic_only
-421217174,HDR-Development/HewDraw-Remix,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-551162351,matthewmatheus/matthewmatheus,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence
-719391258,yabaowang/yaml,excluded,R12_readme_non_ai,uncertain,R7_insufficient_text_evidence,excluded->uncertain,规则调整：R12_readme_non_ai → R7_insufficient_text_evidence

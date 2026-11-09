@@ -1,6 +1,6 @@
 {
   "pilot": "pilot_02",
-  "rules_version": "ai_rules_v0.3.3.1",
+  "rules_version": "ai_rules_v0.3.4",
   "generated_at_utc": "2026-11-09T10:30:00Z",
   "source_data": {
     "note": "按 A README 的官方命令重建 2024-01-15 全天数据；数量与 A 的交接一致",
@@ -47,8 +47,8 @@
     "by_stratum": {
       "random": {
         "selected": 160,
-        "included": 3,
-        "excluded": 70,
+        "included": 2,
+        "excluded": 71,
         "uncertain": 87
       },
       "keyword_name": {
@@ -62,19 +62,20 @@
       "R10_readme_coursework": 1,
       "R11_readme_profile": 2,
       "R12_readme_non_ai": 5,
+      "R13_course_override": 1,
       "R1_metadata_unavailable": 31,
       "R2_api_id_mismatch": 6,
       "R3_resource_collection": 7,
       "R3b_coursework": 5,
       "R3c_profile_suspected": 4,
-      "R4_topic_match": 5,
+      "R4_topic_match": 4,
       "R5_description_match": 11,
       "R6_name_only_signal": 11,
       "R7_insufficient_text_evidence": 49,
       "R8_no_ai_signal": 59,
       "R9_readme_ai": 4
     },
-    "readme_used": 12,
+    "readme_used": 13,
     "readme_non_ai": 5
   },
   "analysis_labels": {
@@ -96,8 +97,8 @@
     "events_covered": 1072,
     "events_total": 5528300,
     "events_by_label": {
-      "excluded": 312,
-      "included": 174,
+      "excluded": 313,
+      "included": 173,
       "uncertain": 586
     }
   },
@@ -107,25 +108,14 @@
       "A": 2,
       "B": 11
     },
-    "auto_vs_manual_differences": [
-      {
-        "repo_id": "128369334",
-        "observed_repo_name": "elyselam/Etherscan-ML",
-        "sample_stratum": "random",
-        "auto_label": "included",
-        "rule_id": "R4_topic_match",
-        "human_label": "excluded",
-        "reviewer": "A",
-        "human_reason": "A 判定：README 明确是为 USC Viterbi Data Science Bootcamp 制作，按训练营项目排除"
-      }
-    ],
+    "auto_vs_manual_differences": [],
     "rows_detail": [
       {
         "repo_id": "128369334",
         "observed_repo_name": "elyselam/Etherscan-ML",
         "sample_stratum": "random",
-        "auto_label": "included",
-        "rule_id": "R4_topic_match",
+        "auto_label": "excluded",
+        "rule_id": "R13_course_override",
         "human_label": "excluded",
         "reviewer": "A",
         "human_reason": "A 判定：README 明确是为 USC Viterbi Data Science Bootcamp 制作，按训练营项目排除"
@@ -255,7 +245,7 @@
       "v0.3.2 修复名称子串误判（Whispering-Origin-2D）与中文边界漏判（ResnetGPT）。",
       "v0.3.3 新增 README 主体非 AI 排除后，CoreELEC/xbmc 自动排除，与 A 的判定一致。",
       "v0.3.3.1 收紧 R12：要求 README 能说明项目用途、只对 R7 生效、旧版本不触发；LDingLDing/langchain-js 由 excluded 恢复 uncertain，R12 命中从 22 降到 5。",
-      "Etherscan-ML 规则仍判 included（描述直接命中机器学习），人工优先口径取 excluded；是否允许 README 课程证据覆盖 included 待 A 决定。"
+      "v0.3.4 新增可选 AI 集成排除与课程覆盖：Etherscan-ML 由 R13_course_override 自动 excluded，13 条人工复核与自动标签的差异降为 0。"
     ]
   },
   "notes": [

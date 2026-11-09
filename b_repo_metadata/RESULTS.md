@@ -9,7 +9,7 @@
 **环境：** Windows 11，Python 3.12.14，标准库 + pyarrow 26.0.0（仅用于读取 A 的 Parquet）
 **运行目录：** [`runs/pilot_01/`](runs/pilot_01/)，汇总见 [`run_summary.json`](runs/pilot_01/run_summary.json)
 
-## 0. 当前状态：v0.3.3.1（R12 收紧并做版本隔离）
+## 0. 当前状态：v0.3.4（可选 AI 集成与课程覆盖）
 
 v0.3.1 修正两处 README 误判风险：AI 证据必须是“核心”证据（未来计划行先剔除，强证据或多次弱词+佐证才纳入）；个人主页必须先是规则判定的疑似，且 README 没有 Install/Usage 等工程章节才排除。
 
@@ -38,13 +38,13 @@ v0.2 → v0.3 共 10 条变化：3 条 `uncertain → included`（README 证明�
 |---|---|
 | 元数据 API | 200 次调用：163 成功、31 个 404、6 个 ID 不一致，120 秒 |
 | README 证据 | 200 次请求：138 可读、62 无 README 或 404，128 秒 |
-| 标签（160 随机） | included 3 / excluded 70 / uncertain 87 |
+| 标签（160 随机） | included 2 / excluded 71 / uncertain 87 |
 | 标签（40 关键词） | included 17 / excluded 9 / uncertain 14 |
-| 全部 200 | included 20 / excluded 79 / uncertain 101（5 条由 R12 排除） |
+| 全部 200 | included 19 / excluded 80 / uncertain 101（5 条由 R12、1 条由 R13 排除） |
 | 接回全天活动表 | 200/200 命中，覆盖 1,072 / 5,528,300 条事件 |
 | 人工抽查 | 13 条（included 3、excluded 5、uncertain 5） |
 
-抽查发现并修复两处规则 bug（v0.3.2）：`Whispering-Origin-2D` 被子串当成 `whisper`；中文“用Resnet101+GPT搭建…的AI”因 `\b` 在中文里失效被漏判。A 判定两个边界案例：Etherscan-ML 按训练营项目人工排除（规则仍判 included，分析表取人工值）；CoreELEC/xbmc 由 R12 自动排除。R12 在 v0.3.3.1 收紧为“README 必须说明项目用途、只对描述为空的仓库生效”，模板与安装说明不再排除。明细见 `runs/pilot_02/manual_review_pilot02.csv` 与 `pilot_02_summary.json`。
+抽查发现并修复两处规则 bug（v0.3.2）：`Whispering-Origin-2D` 被子串当成 `whisper`；中文“用Resnet101+GPT搭建…的AI”因 `\b` 在中文里失效被漏判。A 判定两个边界案例：Etherscan-ML 按训练营项目排除，CoreELEC/xbmc 按 README 主体非 AI 排除。v0.3.3.1 收紧 R12（需用途说明、只对 R7）；v0.3.4 新增 R13 课程覆盖，Etherscan-ML 由规则自动 excluded，13 条人工复核与自动标签差异为 0。明细见 `runs/pilot_02/manual_review_pilot02.csv` 与 `pilot_02_summary.json`。
 
 ## 1. 本次数字
 
@@ -55,11 +55,11 @@ v0.2 → v0.3 共 10 条变化：3 条 `uncertain → included`（README 证明�
 | 元数据获取 | 43 `ok` + 2 `id_mismatch` + 5 `not_found` = 50；API 调用 50 次，pending 0 |
 | AI 标签 v0.1 | `included` 3 + `excluded` 22 + `uncertain` 25 = 50 |
 | AI 标签 v0.2 | `included` 1 + `excluded` 30 + `uncertain` 19 = 50 |
-| AI 标签 v0.3.3.1（当前） | `included` 4 + `excluded` 32 + `uncertain` 14 = 50 |
+| AI 标签 v0.3.4（当前） | `included` 4 + `excluded` 32 + `uncertain` 14 = 50 |
 | 人工复核 | 33 条：included 3（全查）、excluded 5（抽样）、uncertain 25（全查） |
 | 与人工一致率（已判定行） | v0.1 6/8 = 75% → v0.2 14/14 → v0.3 17/17 |
 | 接回 A 的事件表 | 50/50 个试点仓库按 `repo_id` 匹配；197,313 条事件中 159 条属这 50 个仓库 |
-| 离线测试 | 86 项通过 |
+| 离线测试 | 93 项通过 |
 
 v0.2 的规则分布（历史记录）：
 
@@ -168,7 +168,7 @@ v0.2 仍存疑的 19 条分三类：
 | 获取成功数 + 失败数 = 已处理仓库数；三种标签数量之和 = 结果仓库数；待处理项单列 | ✅ | 43+2+5=50；1+30+19=50；`pending_repo_ids` 为空 |
 | 规则、标签理由和人工复核记录齐全；入选/排除各复核 5 个，不足时全查；存疑案例单独复核 | ✅ | 三版规则 JSON/MD、每行 `reason`、`manual_review.csv`（33 条） |
 | 能按 `repo_id` 接回 A 的事件表；带标签的仓库表一仓库一行 | ✅ | `join_check.json`：50/50 命中，覆盖 159 条事件，唯一性检查通过 |
-| 交回代码、运行命令和依赖；另一位组员能按说明重跑 | ✅ | `README.md` 的“怎么重跑”分成复现与开新一轮两种；63 项离线测试；缓存策略可复跑 |
+| 交回代码、运行命令和依赖；另一位组员能按说明重跑 | ✅ | `README.md` 的“怎么重跑”分成复现与开新一轮两种；93 项离线测试；缓存策略可复跑 |
 
 ## 8. 未解决与待确认
 
@@ -178,6 +178,8 @@ v0.2 仍存疑的 19 条分三类：
 4. 50 个仓库是分层小样本，不能估计 GitHub 整体 AI 仓库比例；17/17 只是复核样本内的一致率。
 5. 事件覆盖仍只有 1 小时（197,313 条），试点仓库覆盖 159 条，无法支持生命周期结论。
 6. 后续计划：用 LLM API 辅助判断 `uncertain`，单独 PR、先做小试验；模型与预算由组内确定。
+7. R5d 的“可选 AI 集成”措辞目前只有测试覆盖，pilot_02 没有真实样本；扩量后需要专门抽样验证。
+8. R12 的 200 字符阈值与 R13 的课程措辞都是启发式，扩大数据后要抽查误排除。
 
 ## 9. 复跑记录
 
