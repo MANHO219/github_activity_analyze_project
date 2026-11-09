@@ -10,20 +10,21 @@
 |---|---|
 | 试跑名单 | pilot_01：50 个（40 随机 + 10 名称关键词）；pilot_02：200 个（160 随机 + 40 名称关键词，排除首轮 50） |
 | 元数据获取 | pilot_01：43 成功 / 2 ID 不一致 / 5 个 404；pilot_02：163 成功 / 6 ID 不一致 / 31 个 404（各 200 次调用） |
-| AI 标签（规则 v0.3.4） | pilot_01：`included` 4、`excluded` 32、`uncertain` 14；pilot_02：19 / 80 / 101 |
+| AI 标签（规则 v0.3.4.1） | pilot_01：`included` 4、`excluded` 32、`uncertain` 14；pilot_02：19 / 80 / 101 |
 | pilot_02 分层分布 | 160 随机：2 / 71 / 87；40 关键词：17 / 9 / 14 |
 | 与 v0.2 对比 | pilot_01：5 条标签变化 + 5 条仅理由变化；README 补足 3 个 AI 项目、1 个课程仓库 |
 | v0.3.1 → v0.3.2 | pilot_01 0 条；pilot_02 2 条（修复 whisper 子串与中文边界） |
 | v0.3.2 → v0.3.3 | pilot_01 6 条、pilot_02 22 条 `uncertain → excluded`（README 确认主体非 AI） |
 | v0.3.3 → v0.3.3.1 | 4 条、17 条 `excluded → uncertain`（R12 要求用途说明、只对 R7 生效） |
 | v0.3.3.1 → v0.3.4 | pilot_01 0 条；pilot_02 1 条（Etherscan-ML 由 R13 课程覆盖改判 excluded） |
+| v0.3.4 → v0.3.4.1 | pilot_01 0 条；pilot_02 0 条（R12 用途标题需正文；样本里没有同类仓库） |
 | 与人工复核 | pilot_01 复核样本中自动已判定的 17 条全部与人工一致；只代表 33 条复核样本 |
 | 人工复核 | pilot_01：33 条；pilot_02：抽查 13 条（included 3 / excluded 5 / uncertain 5） |
 | 分析用标签 | pilot_01 人工优先：4 / 38 / 8（人工 33 行、自动 17 行） |
 | 接回事件表 | pilot_01：50/50 命中，覆盖 159 / 197,313 条；pilot_02：200/200 命中，覆盖 1,072 / 5,528,300 条 |
-| 离线测试 | 93 项全部通过（不联网） |
+| 离线测试 | 97 项全部通过（不联网） |
 
-详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.4.md](rules/ai_rules_v0.3.4.md)；标签交接口径见 [LABELS.md](LABELS.md)。
+详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.4.1.md](rules/ai_rules_v0.3.4.1.md)；标签交接口径见 [LABELS.md](LABELS.md)。
 
 ## 交付物结构
 
@@ -41,7 +42,8 @@ b_repo_metadata/
 │   ├── ai_rules_v0.3.2.md / .json     ← 第五版：名称词边界与中英相邻修复
 │   ├── ai_rules_v0.3.3.md / .json     ← 第六版：README 确认主体非 AI
 │   ├── ai_rules_v0.3.3.1.md / .json   ← 第七版：R12 需用途证据、旧版本不触发
-│   └── ai_rules_v0.3.4.md / .json     ← 当前版本：可选 AI 集成排除、课程覆盖
+│   ├── ai_rules_v0.3.4.md / .json     ← 第八版：可选 AI 集成排除、课程覆盖
+│   └── ai_rules_v0.3.4.1.md / .json   ← 当前版本：R12 用途标题需正文
 ├── reviews/pilot_01_decisions.json    ← 第一轮人工判断与理由（不覆盖）
 ├── reviews/pilot_01_revision_check_v0.3.json ← 新口径对旧判断的影响检查
 ├── bmeta/                             ← 实现包（与 A 的 gharchive_a 对应）
@@ -57,7 +59,7 @@ b_repo_metadata/
 │   ├── evidence.py                    ← 复核用 README 证据
 │   └── join.py                        ← 按 repo_id 接回事件表
 ├── scripts/                           ← 命令入口（每个步骤一个）
-├── tests/test_b_pipeline.py           ← 93 项离线验证
+├── tests/test_b_pipeline.py           ← 97 项离线验证
 └── runs/
     ├── debug_api_sample/              ← 单仓库连通性样例（apache/superset）
     ├── pilot_01/                      ← 50 个仓库的首轮试跑
@@ -65,7 +67,7 @@ b_repo_metadata/
     │   ├── selection.json             ← 选取方法、种子、输入/输出 SHA-256
     │   ├── raw_api/<repo_id>.json      ← 每个仓库的原始响应信封
     │   ├── repo_metadata.csv          ← 每仓库一行，失败行保留状态
-    │   ├── repo_ai_labels.csv         ← 当前规则（v0.3.4）的标签
+    │   ├── repo_ai_labels.csv         ← 当前规则（v0.3.4.1）的标签
     │   ├── repo_ai_labels_v0.1…v0.3.2.csv ← 旧版标签（保留）
     │   ├── label_changes.csv          ← v0.3.1 → v0.3.2 的逐条变化
     │   ├── label_comparison.json      ← 混淆矩阵、人工一致率、改进/回退清单
@@ -242,7 +244,8 @@ python scripts/join_check.py --run-dir runs/pilot_02 \
 
 ## 规则版本
 
-- 当前规则 `ai_rules_v0.3.4`：在 v0.3.3.1 基础上，可选 AI 集成（optional ChatGPT/OpenAI）不再纳入；README 明确“为课程/训练营制作”时可把 included 覆盖为 excluded（仅提到参加或用作教学示例不覆盖）。两个新行为都只在规则文件显式配置时启用。
+- 当前规则 `ai_rules_v0.3.4.1`：在 v0.3.4 基础上收紧 R12——只出现 About/Overview 等标题不再算“README 说明了项目用途”，标题下方必须有说明正文（≥40 个有效字符），安装命令与代码块不计入。A 用“安装步骤 + 空 Overview 标题”复测时该仓库被误排除，本版撤回此类排除。
+- v0.3.4 的行为保留：可选 AI 集成不纳入；README 明确“为课程/训练营制作”时可覆盖 included。两个行为仍只在规则文件显式配置时启用。
 - 各版本规则与标签表都保留；pilot_01 的 `label_changes.csv` 是 v0.3.2→v0.3.3（6 条），pilot_02 的是同版本对比（22 条）。
 - 新口径对第一轮人工判断的影响检查见 `reviews/pilot_01_revision_check_v0.3.json`：无需改判，旧判断不覆盖。
 

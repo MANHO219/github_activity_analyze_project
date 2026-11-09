@@ -153,6 +153,13 @@ class RuleSet:
                     self.readme_non_ai_allowed = set(non_ai.get("allowed_base_rules") or [])
                     self.readme_non_ai_purpose = _compile(non_ai.get("purpose_patterns", []))
                     self.readme_non_ai_template = _compile(non_ai.get("template_patterns", []))
+                    # v0.3.4.1 起：只命中 About/Overview 标题还不够，标题下方必须有说明正文。
+                    # 旧版本规则文件没有 purpose_requires_body，行为不变。
+                    self.readme_non_ai_require_body = bool(non_ai.get("purpose_requires_body", False))
+                    self.readme_non_ai_min_body_chars = int(non_ai.get("min_purpose_body_chars", 40) or 40)
+                    self.readme_non_ai_heading = [
+                        (name, pattern) for name, pattern in self.readme_non_ai_purpose if name == "purpose_heading"
+                    ]
                 else:
                     self.readme_non_ai_rule = None
                     self.readme_non_ai_min_chars = 0
@@ -160,6 +167,9 @@ class RuleSet:
                     self.readme_non_ai_allowed = set()
                     self.readme_non_ai_purpose = []
                     self.readme_non_ai_template = []
+                    self.readme_non_ai_require_body = False
+                    self.readme_non_ai_min_body_chars = 40
+                    self.readme_non_ai_heading = []
                 # README 的“可选 AI 集成”排除与“课程覆盖”都只在规则文件显式配置时启用。
                 self.readme_feature_only = _compile(readme_rules.get("feature_only_patterns", []))
                 course_override = readme_rules.get("course_override")
@@ -400,6 +410,10 @@ class RuleSet:
                         if self.readme_non_ai_require_purpose
                         else ["legacy_no_purpose_check"]
                     )
+                    # v0.3.4.1：标题命中必须伴随说明正文；空 Overview 标题 + 安装步骤不算用途证据。
+                    if self.readme_non_ai_require_body and "purpose_heading" in purpose:
+                        if not self._has_prose_body(self._purpose_heading_body(usable)):
+                            purpose = [name for name in purpose if name != "purpose_heading"]
                     template_hits = (
                         _matches(self.readme_non_ai_template, usable)
                         if self.readme_non_ai_require_purpose
@@ -428,6 +442,48 @@ class RuleSet:
         for _, pattern in self.readme_ai_weak:
             total += len(pattern.findall(text))
         return total
+
+    _COMMAND_LINE = re.compile(
+        r"^(npm|npx|yarn|pnpm|pip3?|git|docker(-compose)?|cargo|go|make|cmake|brew|apt(-get)?|sudo|curl|wget|"
+        r"python3?|node|java|mvn|gradle|bundle|composer|conda|poetry|uv|dotnet|terraform|kubectl|helm)\b",
+        re.IGNORECASE,
+    )
+
+    def _purpose_heading_body(self, text: str) -> str:
+        """取 About/Overview 类标题下方、到下一个标题之前的段落，去掉代码块。"""
+        if not self.readme_non_ai_heading:
+            return ""
+        collecting = False
+        in_code = False
+        parts: list[str] = []
+        for line in text.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("```") or stripped.startswith("~~~"):
+                in_code = not in_code
+                continue
+            if in_code:
+                continue
+            if _matches(self.readme_non_ai_heading, stripped):
+                collecting = True
+                parts = []
+                continue
+            if collecting and re.match(r"^#{1,6}\s", stripped):
+                break
+            if collecting:
+                parts.append(stripped)
+        return "\n".join(parts)
+
+    def _has_prose_body(self, body: str) -> bool:
+        """正文里是否真的有说明性文字：命令行、空行、纯列表符号都不算。"""
+        kept: list[str] = []
+        for line in body.splitlines():
+            stripped = line.strip()
+            if not stripped or stripped in ("-", "*", "+"):
+                continue
+            if stripped.startswith("$") or self._COMMAND_LINE.match(stripped):
+                continue
+            kept.append(stripped)
+        return self._meaningful_chars("\n".join(kept)) >= self.readme_non_ai_min_body_chars
 
     def _meaningful_chars(self, text: str) -> int:
         """README 的有效正文字符数：去掉链接、图片、HTML 标签后的字母/数字/汉字数。"""

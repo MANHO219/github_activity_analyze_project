@@ -1059,6 +1059,68 @@ class RulesV34Tests(unittest.TestCase):
         self.assertEqual(result["ai_label"], "included")
 
 
+class RulesV341Tests(unittest.TestCase):
+    """v0.3.4.1：R12 的用途标题必须有说明正文，空 Overview + 安装步骤不再排除。"""
+
+    V341 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.4.1.json"))
+    V34 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.4.json"))
+
+    @staticmethod
+    def readme(text):
+        return {"text": text, "sha256": "s", "fetched_at_utc": "t"}
+
+    INSTALL_ONLY = """# mytool
+
+## Overview
+
+npm install mytool
+cd mytool
+npm run build
+npm test
+""" * 12
+
+    MEDIA_CENTER = """# Kodi
+
+Kodi is a free and open source media player and entertainment hub for digital media.
+It can play videos, music and podcasts from local storage or from the network.
+Kodi runs on Linux, Windows, macOS, Android and iOS, and supports many plugins and skins.
+The project is maintained by the Kodi Foundation and has a large community of contributors.
+""" * 6
+
+    REAL_OVERVIEW = """# timeutil
+
+## Overview
+
+A small set of helpers for handling dates and times on embedded devices,
+including timezone conversion and calendar arithmetic.
+The code has no dependencies and can be copied into any project.
+""" * 8
+
+    def test_empty_overview_with_install_steps_stays_uncertain(self):
+        row = metadata(91, description="", topics=[])
+        result = self.V341.decide(row, readme=self.readme(self.INSTALL_ONLY))
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R7_insufficient_text_evidence")
+
+    def test_media_center_readme_still_excluded(self):
+        row = metadata(92, description="", topics=[])
+        result = self.V341.decide(row, readme=self.readme(self.MEDIA_CENTER))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+    def test_overview_with_real_body_still_excluded(self):
+        row = metadata(93, description="", topics=[])
+        result = self.V341.decide(row, readme=self.readme(self.REAL_OVERVIEW))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+    def test_v034_keeps_old_heading_only_behaviour(self):
+        row = metadata(94, description="", topics=[])
+        result = self.V34.decide(row, readme=self.readme(self.INSTALL_ONLY))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+
 class CompareAndHandoffTests(unittest.TestCase):
     def setUp(self):
         TEST_TMP_ROOT.mkdir(parents=True, exist_ok=True)
