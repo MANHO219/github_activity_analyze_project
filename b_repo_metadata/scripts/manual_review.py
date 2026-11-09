@@ -1,16 +1,26 @@
 #!/usr/bin/env python3
-"""人工复核：先出清单（sheet），补充判断后再合并。
+"""人工复核：生成新清单，或把人工判断合并进已有清单。
 
-1. 生成清单（不传 ``--decisions``）：
+两种用法刻意分开，避免重跑时覆盖历史复核记录或把不同轮次的判断混在一起。
 
-       python scripts/manual_review.py --run-dir runs/pilot_01
-
-2. 按清单逐条读数，把判断写进 ``reviews/pilot_01_decisions.json``；
-
-3. 合并并统计一致率：
+A. 复现本次成果（复用已有清单，只合并判断，不重新抽样）：
 
        python scripts/manual_review.py --run-dir runs/pilot_01 \
            --decisions reviews/pilot_01_decisions.json
+
+   ``runs/pilot_01/manual_review.csv`` 必须已存在；它会被原样读取，只把人工判断
+   写回去。即使当前规则已经换成 v0.2，也不会用 v0.2 重新生成名单。清单不存在时
+   直接报错（退出码 5），避免临时按新规则生成后与旧判断混在一起；确实要这样做的
+   话加 ``--allow-new-sheet``。
+
+B. 创建新一轮复核清单（务必换输出目录，不要覆盖 pilot_01）：
+
+       python scripts/manual_review.py --run-dir runs/pilot_02_review \
+           --labels runs/pilot_01/repo_ai_labels.csv \
+           --metadata runs/pilot_01/repo_metadata.csv
+
+   没有 ``--decisions`` 时只生成清单。目标目录里已有 ``manual_review.csv``
+   会直接报错退出；确实要覆盖同一目录时加 ``--force``。
 """
 
 from __future__ import annotations
@@ -27,11 +37,19 @@ from bmeta.review import run as review_run
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="生成/合并人工复核清单")
     parser.add_argument("--config", default=str(B_ROOT / "config" / "pilot.json"))
-    parser.add_argument("--run-dir", help="运行目录；默认 runs/<pilot_version>")
-    parser.add_argument("--decisions", help="人工判断 JSON；不给则只生成清单")
+    parser.add_argument("--run-dir", help="输出目录；默认 runs/<pilot_version>")
+    parser.add_argument("--labels", help="标签表；默认 <run-dir>/repo_ai_labels.csv")
+    parser.add_argument("--metadata", help="元数据表；默认 <run-dir>/repo_metadata.csv")
+    parser.add_argument("--decisions", help="人工判断 JSON；不给则只生成新清单")
     parser.add_argument("--per-label", type=int, default=5, help="included/excluded 各复核几个（默认 5）")
     parser.add_argument("--uncertain-limit", type=int, help="uncertain 最多复核几个；默认全查")
     parser.add_argument("--seed", type=int, help="抽样种子；默认取配置")
+    parser.add_argument("--force", action="store_true", help="覆盖已有的 manual_review.csv（危险）")
+    parser.add_argument(
+        "--allow-new-sheet",
+        action="store_true",
+        help="带 --decisions 但清单不存在时，允许按当前标签临时生成清单再合并（会混轮次，谨慎）",
+    )
     return parser.parse_args(argv)
 
 
@@ -39,8 +57,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     config = load_config(args.config)
     out_dir = Path(args.run_dir or (B_ROOT / "runs" / config["pilot_version"]))
-    labels_csv = out_dir / "repo_ai_labels.csv"
-    metadata_csv = out_dir / "repo_metadata.csv"
+    labels_csv = Path(args.labels) if args.labels else out_dir / "repo_ai_labels.csv"
+    metadata_csv = Path(args.metadata) if args.metadata else out_dir / "repo_metadata.csv"
     for path in (labels_csv, metadata_csv):
         if not path.exists():
             print(f"missing input: {project_relative(path)}")
@@ -49,20 +67,51 @@ def main(argv: list[str] | None = None) -> int:
     decisions = Path(args.decisions) if args.decisions else None
     if decisions is not None and not decisions.is_absolute():
         decisions = (Path.cwd() / decisions).resolve()
-    summary = review_run(
-        labels_csv=labels_csv,
-        metadata_csv=metadata_csv,
-        out_dir=out_dir,
-        decisions_path=decisions,
-        per_label=args.per_label,
-        uncertain_limit=args.uncertain_limit,
-        seed=args.seed if args.seed is not None else int(config["seed"]),
-    )
+    if decisions is not None and not decisions.exists():
+        print(f"missing decisions file: {project_relative(decisions)}")
+        return 1
+
+    try:
+        summary = review_run(
+            labels_csv=labels_csv,
+            metadata_csv=metadata_csv,
+            out_dir=out_dir,
+            decisions_path=decisions,
+            per_label=args.per_label,
+            uncertain_limit=args.uncertain_limit,
+            seed=args.seed if args.seed is not None else int(config["seed"]),
+            force=args.force,
+            allow_generate_sheet=args.allow_new_sheet,
+        )
+    except FileExistsError as error:
+        print(f"refusing to overwrite existing review sheet: {project_relative(Path(str(error)))}")
+        print("换一个 --run-dir 生成新清单，或加 --force 覆盖（会丢失该目录已有的复核记录）。")
+        return 3
+    except FileNotFoundError as error:
+        print(f"review sheet not found, refusing to generate one implicitly: {project_relative(Path(str(error)))}")
+        print("复现请先恢复该清单（如从 git checkout 取回）；要按当前规则开新一轮，")
+        print("请在新的 --run-dir 里先生成清单，再加 --decisions 合并；")
+        print("确实需要临时生成后合并时，加 --allow-new-sheet。")
+        return 5
+    except ValueError as error:
+        print(f"cannot merge decisions: {error}")
+        print("如果判断文件对应的是另一轮清单，请换 --run-dir 并带上对应的 --decisions。")
+        return 4
+
     print(f"status={summary['status']} sheet_rows={summary['sheet_rows']} reviewed={summary['reviewed_rows']}")
     if "auto_decided_rows" in summary:
         print(f"auto_decided={summary['auto_decided_rows']}")
         print(f"auto_uncertain={summary['auto_uncertain_rows']}")
         print(f"disagreements={len(summary['disagreements'])}")
+    if "sheet_source" in summary:
+        print(
+            "sheet_source={} labels_rule_version={} sheet_rule_version={} diff_from_current={}".format(
+                summary["sheet_source"],
+                summary.get("labels_rule_version", ""),
+                summary.get("sheet_rule_version", ""),
+                summary.get("sheet_auto_labels_differ_from_current", 0),
+            )
+        )
     print(f"sheet: {summary['sheet']}")
     return 0 if summary["status"] in ("complete", "sheet_only") else 2
 

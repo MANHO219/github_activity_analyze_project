@@ -65,7 +65,16 @@ def _cache_path(cache_dir: Path, repo_id: int) -> Path:
     return cache_dir / f"{repo_id}.json"
 
 
-def _load_cache(path: Path) -> dict[str, Any] | None:
+def _load_cache(path: Path, *, allow_failed: bool = False) -> dict[str, Any] | None:
+    """读取原始响应缓存。
+
+    默认只复用**成功**响应（HTTP 200 且响应体是合法 JSON）。失败响应——
+    包括 404、5xx，以及没有 JSON 响应体的网络错误/超时——仍留在 ``raw_api/``
+    作为证据，但下次运行会重新请求，避免一次临时故障被永久缓存成“查不到”。
+
+    要复现某次失败快照（例如离线核对 404 名单），显式传 ``allow_failed=True``：
+    此时连没有响应体的网络错误也会被复用，状态按缓存里的错误重新构造。
+    """
     if not path.exists():
         return None
     try:
@@ -74,7 +83,12 @@ def _load_cache(path: Path) -> dict[str, Any] | None:
         return None
     if envelope.get("schema_version") != RAW_SCHEMA_VERSION:
         return None
-    if not isinstance(envelope.get("response"), dict):
+
+    has_json_body = isinstance(envelope.get("response"), dict)
+    if allow_failed:
+        # 含网络错误：http_status 为空、response 为空，但 error 有记录。
+        return envelope
+    if envelope.get("http_status") != 200 or not has_json_body:
         return None
     return envelope
 
@@ -100,8 +114,9 @@ def _envelope_from_response(repo_id: int, name: str, response: ApiResponse, fetc
 
 def _status_from_envelope(envelope: dict[str, Any]) -> str:
     status = envelope.get("http_status")
-    if status == 200 and isinstance(envelope.get("response"), dict):
-        return "ok"
+    has_json_body = isinstance(envelope.get("response"), dict)
+    if status == 200:
+        return "ok" if has_json_body else "invalid_json"
     if status in (404, 410, 451):
         return "not_found"
     if isinstance(status, int) and 400 <= status < 500:
@@ -151,11 +166,20 @@ def fetch_one(
     *,
     now: Callable[[], str] = utc_now,
     force_refresh: bool = False,
+    reuse_failed: bool = False,
 ) -> tuple[dict[str, str], dict[str, Any]]:
-    """抓取或复用缓存，返回 (元数据行, 日志条目)。"""
+    """抓取或复用缓存，返回 (元数据行, 日志条目)。
+
+    失败缓存的取舍由 ``reuse_failed`` 控制：默认 ``False``，即失败会在下次运行时重试。
+    """
     cache_file = _cache_path(cache_dir, repo_id)
-    envelope = None if force_refresh else _load_cache(cache_file)
     started = time.time()
+    envelope = None
+    cache_decision = "requested"
+    if not force_refresh:
+        envelope = _load_cache(cache_file, allow_failed=reuse_failed)
+        if envelope is not None:
+            cache_decision = "reused_success" if envelope.get("http_status") == 200 else "reused_failure"
 
     if envelope is not None:
         fetch_status = _status_from_envelope(envelope)
@@ -181,6 +205,7 @@ def fetch_one(
         "fetch_status": row["fetch_status"],
         "http_status": row["http_status"],
         "cached": cached,
+        "cache_decision": cache_decision,
         "attempts": envelope.get("attempts"),
         "elapsed_ms": envelope.get("elapsed_ms"),
         "request_final_url": envelope.get("final_url"),
@@ -199,6 +224,7 @@ def run(
     *,
     client: GitHubRepoClient,
     force_refresh: bool = False,
+    reuse_failed: bool = False,
     max_repos: int | None = None,
     progress: Callable[[str], None] | None = None,
 ) -> dict[str, Any]:
@@ -221,7 +247,12 @@ def run(
         name = candidate["repo_name"]
         try:
             row, log_entry = fetch_one(
-                client, repo_id, name, cache_dir, force_refresh=force_refresh
+                client,
+                repo_id,
+                name,
+                cache_dir,
+                force_refresh=force_refresh,
+                reuse_failed=reuse_failed,
             )
         except RateLimitExhausted as error:
             stopped_reason = f"rate_limited: {error}"
@@ -260,6 +291,12 @@ def run(
         "token_present": client.has_token,
         "token_env_var": client.token_env,
         "stopped_reason": stopped_reason,
+        "reuse_failed_cache": reuse_failed,
+        "cache_policy": (
+            "只复用 HTTP 200 的缓存；失败响应会重试"
+            if not reuse_failed
+            else "复用全部缓存（含失败响应），用于复现某次运行"
+        ),
         "last_rate_limit_headers": quota,
         "cache_dir": project_relative(cache_dir),
         "metadata_csv": project_relative(out_dir / "repo_metadata.csv"),
