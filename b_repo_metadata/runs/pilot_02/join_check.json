@@ -1,0 +1,40 @@
+{
+  "checked_at_utc": "2026-11-09T08:28:39Z",
+  "event_source": "repo_daily_counts.csv:sum(event_count)",
+  "events_total_in_source": 5528300,
+  "pilot_repos": 200,
+  "pilot_repos_found_in_events": 200,
+  "missing_from_events": [],
+  "events_covered_by_pilot": 1072,
+  "events_covered_share_of_source": 0.000194,
+  "events_outside_pilot_share": 0.999806,
+  "event_share_denominators": {
+    "event_share_of_source": "事件表全部事件数（events_total_in_source）",
+    "event_share_of_pilot_events": "50 个试点仓库的事件总数（events_covered_by_pilot）"
+  },
+  "events_by_label": {
+    "excluded": 294,
+    "included": 174,
+    "uncertain": 604
+  },
+  "checks": {
+    "labels_have_unique_repo_ids": true,
+    "labels_cover_every_metadata_row": true,
+    "every_event_matches_at_most_one_label": true,
+    "all_pilot_repos_present_in_events": true,
+    "event_counts_non_negative": true
+  },
+  "inputs": {
+    "metadata_csv": "b_repo_metadata/runs/pilot_02/repo_metadata.csv",
+    "labels_csv": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
+    "events_parquet": "a_data_pipeline/runs/20240115_1hour_handoff/python/events_clean.parquet",
+    "candidates_csv": "a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv",
+    "daily_counts_csv": "a_data_pipeline/runs/20240115_python/python/repo_daily_counts.csv"
+  },
+  "limits": [
+    "Only repo_id is used as the join key; repo names in the event table may be historical.",
+    "The pilot covers a small sample, so covered/uncovered event shares describe this run only.",
+    "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events.",
+    "Full parquet join not executed; repo-level counts from candidates used."
+  ]
+}

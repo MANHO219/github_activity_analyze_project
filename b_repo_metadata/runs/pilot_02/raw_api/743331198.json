@@ -1,0 +1,23 @@
+{
+  "schema_version": "bmeta-raw-v1",
+  "requested_repo_id": 743331198,
+  "requested_name": "besictarik/quizgame-java",
+  "fetched_at_utc": "2026-11-09T08:22:26Z",
+  "http_status": 404,
+  "final_url": "https://api.github.com/repos/besictarik/quizgame-java",
+  "attempts": 1,
+  "elapsed_ms": 428,
+  "error": null,
+  "rate_limit": {
+    "x-ratelimit-limit": "5000",
+    "x-ratelimit-remaining": "4875",
+    "x-ratelimit-used": "125",
+    "x-ratelimit-reset": "1794216081"
+  },
+  "response": {
+    "message": "Not Found",
+    "documentation_url": "https://docs.github.com/rest/repos/repos#get-a-repository",
+    "status": "404"
+  },
+  "response_text": null
+}

@@ -21,7 +21,7 @@ HTML 请在下载或 clone 后，用本地浏览器打开；在 GitHub 文件页
 
 打开[仓库候选清单](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv)：69,768 个唯一仓库，每行一个 `repo_id`。第一轮先在自己电脑获取一个仓库，再固定一个小名单试跑；50 个是建议规模，AI 规则与最终字段由 A、B 确认。
 
-B 的第一轮已完成并留在 [b_repo_metadata/](b_repo_metadata/)：50 个仓库的元数据、AI 标签（规则 v0.2）、33 条人工复核与按 `repo_id` 接回事件表的核对结果都可直接查看或重跑。规则从 v0.1 到 v0.2 的变化有逐条记录（[对比表](b_repo_metadata/runs/pilot_01/label_changes.csv)），标签交接方式见 [LABELS.md](b_repo_metadata/LABELS.md)。
+B 的第一轮已完成并留在 [b_repo_metadata/](b_repo_metadata/)：50 个仓库的元数据、AI 标签（规则 v0.3）、33 条人工复核与按 `repo_id` 接回事件表的核对结果都可直接查看或重跑。规则从 v0.1 到 v0.3 的逐条变化都有记录（[v0.2→v0.3](b_repo_metadata/runs/pilot_01/label_changes.csv)、[v0.1→v0.2](b_repo_metadata/runs/pilot_01/label_changes_v0.1_to_v0.2.csv)），标签交接方式见 [LABELS.md](b_repo_metadata/LABELS.md)。
 
 其他现成输入：[名称历史](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_name_history.csv)、[事件预览](a_data_pipeline/runs/20240115_1hour_handoff/python/events_preview.csv)、[完整事件 Parquet](a_data_pipeline/runs/20240115_1hour_handoff/python/events_clean.parquet/)、[活动计数](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_daily_counts.csv)。
 

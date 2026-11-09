@@ -87,13 +87,19 @@ def select_pilot(
     seed: int,
     random_size: int,
     keyword_size: int,
+    exclude_ids: Iterable[int] | None = None,
 ) -> list[dict]:
-    """按“随机层 + 关键词层”固定名单；同样的输入与种子结果一致。"""
+    """按“随机层 + 关键词层”固定名单；同样的输入与种子结果一致。
+
+    ``exclude_ids`` 用于扩大试跑时剔除已有名单（例如 pilot_01 的 50 个仓库），
+    保证新一批与旧一批不重叠。
+    """
     if random_size < 0 or keyword_size < 0:
         raise ValueError("strata sizes must be non-negative")
-    rows = _sorted_keys(candidates)
+    excluded = {int(repo_id) for repo_id in (exclude_ids or ())}
+    rows = [row for row in _sorted_keys(candidates) if int(row["repo_id"]) not in excluded]
     if not rows:
-        raise ValueError("candidate list is empty")
+        raise ValueError("candidate list is empty after exclusions")
     if random_size + keyword_size > len(rows):
         raise ValueError("requested pilot larger than candidate list")
 

@@ -1,12 +1,1 @@
 repo_id,observed_repo_name,old_label,old_rule,new_label,new_rule,change_type,explanation
-665478404,ibm-developer-skills-network/oaqjp-final-project-emb-ai,included,R5_description_match,excluded,R3b_coursework,included->excluded,v0.2 新增课程作业识别：仓库名或描述命中 course/final-project/assignment 等，改判 excluded
-82206054,weseek/growi,included,R4_topic_match,uncertain,R4b_weak_topic_only,included->uncertain,裸 ai/ml topic 在 v0.2 降为弱信号且描述无佐证词，由 included 改判 uncertain，交人工复核
-673960113,Epigos-AI/epigos-python,included,R5_description_match,included,R5b_weak_signal_corroborated,rule_reason_only,ai/ml 词元由描述中的佐证词（如 sdk/platform/model）确认，标签仍为 included，仅规则理由变化
-704952734,Xanonymous-GitHub/cs933-lab,excluded,R3_resource_collection,excluded,R3b_coursework,rule_reason_only,课程/作业类仓库改由更具体的 R3b_coursework 记录理由，标签仍为 excluded
-302309533,joaolucassilva/joaolucassilva,uncertain,R7_insufficient_text_evidence,excluded,R3c_profile_repository,uncertain->excluded,v0.2 新增个人主页仓库识别（owner/repo 同名且描述与 topics 都为空），改判 excluded
-374770773,PauloHenriqueJr/paulohenriquejr,uncertain,R7_insufficient_text_evidence,excluded,R3c_profile_repository,uncertain->excluded,v0.2 新增个人主页仓库识别（owner/repo 同名且描述与 topics 都为空），改判 excluded
-441317480,sidneyvmml/sidneyvmml,uncertain,R7_insufficient_text_evidence,excluded,R3c_profile_repository,uncertain->excluded,v0.2 新增个人主页仓库识别（owner/repo 同名且描述与 topics 都为空），改判 excluded
-526345511,NaiaraMorte/NaiaraMorte,uncertain,R7_insufficient_text_evidence,excluded,R3c_profile_repository,uncertain->excluded,v0.2 新增个人主页仓库识别（owner/repo 同名且描述与 topics 都为空），改判 excluded
-549894670,rafaelserpaa/rafaelserpaa,uncertain,R7_insufficient_text_evidence,excluded,R3c_profile_repository,uncertain->excluded,v0.2 新增个人主页仓库识别（owner/repo 同名且描述与 topics 都为空），改判 excluded
-684223328,tannerhawkins/tannerhawkins,uncertain,R7_insufficient_text_evidence,excluded,R3c_profile_repository,uncertain->excluded,v0.2 新增个人主页仓库识别（owner/repo 同名且描述与 topics 都为空），改判 excluded
-743305917,bebill/Openclassrooms-P11_Kasa,uncertain,R7_insufficient_text_evidence,excluded,R3b_coursework,uncertain->excluded,v0.2 从仓库名识别出课程作业（如 Openclassrooms/P11），由 uncertain 改判 excluded

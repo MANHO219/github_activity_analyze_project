@@ -1,0 +1,23 @@
+{
+  "schema_version": "bmeta-raw-v1",
+  "requested_repo_id": 660610130,
+  "requested_name": "alexandra-stepanova/button-react-ds",
+  "fetched_at_utc": "2026-11-09T08:21:47Z",
+  "http_status": 404,
+  "final_url": "https://api.github.com/repos/alexandra-stepanova/button-react-ds",
+  "attempts": 1,
+  "elapsed_ms": 478,
+  "error": null,
+  "rate_limit": {
+    "x-ratelimit-limit": "5000",
+    "x-ratelimit-remaining": "4948",
+    "x-ratelimit-used": "52",
+    "x-ratelimit-reset": "1794216081"
+  },
+  "response": {
+    "message": "Not Found",
+    "documentation_url": "https://docs.github.com/rest",
+    "status": "404"
+  },
+  "response_text": null
+}

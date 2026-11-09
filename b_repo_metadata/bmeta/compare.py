@@ -55,6 +55,31 @@ EXPLANATIONS: dict[tuple[str, str], str] = {
     ("R6_name_only_signal", "R4b_weak_topic_only"): (
         "topic 中的 ai/ml 在 v0.2 为弱信号，标签仍为 uncertain，规则理由更具体"
     ),
+    # v0.3：README 辅助与个人主页口径调整
+    ("R3c_profile_repository", "R3c_profile_suspected"): (
+        "v0.3 把个人主页改为疑似（需 README 确认）；README 无文字证据时维持 uncertain"
+    ),
+    ("R3c_profile_repository", "R11_readme_profile"): (
+        "v0.3 用 README 确认个人主页后排除：同名 + 无描述/topics/语言 + README 自我介绍"
+    ),
+    ("R6_name_only_signal", "R9_readme_ai"): (
+        "v0.3 允许 README 辅助：README 出现明确 AI 技术证据，由 uncertain 改判 included"
+    ),
+    ("R7_insufficient_text_evidence", "R9_readme_ai"): (
+        "v0.3 允许 README 辅助：描述为空但 README 有明确 AI 证据，由 uncertain 改判 included"
+    ),
+    ("R6_name_only_signal", "R10_readme_coursework"): (
+        "v0.3 用 README 确认课程/训练营资料，由 uncertain 改判 excluded"
+    ),
+    ("R7_insufficient_text_evidence", "R10_readme_coursework"): (
+        "v0.3 用 README 确认课程/训练营资料，由 uncertain 改判 excluded"
+    ),
+    ("R4b_weak_topic_only", "R9_readme_ai"): (
+        "v0.3 用 README 补足弱信号：README 有明确 AI 证据，由 uncertain 改判 included"
+    ),
+    ("R5c_weak_signal_only", "R9_readme_ai"): (
+        "v0.3 用 README 补足弱信号：README 有明确 AI 证据，由 uncertain 改判 included"
+    ),
 }
 
 

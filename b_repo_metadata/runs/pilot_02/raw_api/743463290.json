@@ -1,0 +1,23 @@
+{
+  "schema_version": "bmeta-raw-v1",
+  "requested_repo_id": 743463290,
+  "requested_name": "Zanss/yuyu33-win.github.io",
+  "fetched_at_utc": "2026-11-09T08:22:36Z",
+  "http_status": 404,
+  "final_url": "https://api.github.com/repos/Zanss/yuyu33-win.github.io",
+  "attempts": 1,
+  "elapsed_ms": 411,
+  "error": null,
+  "rate_limit": {
+    "x-ratelimit-limit": "5000",
+    "x-ratelimit-remaining": "4857",
+    "x-ratelimit-used": "143",
+    "x-ratelimit-reset": "1794216081"
+  },
+  "response": {
+    "message": "Not Found",
+    "documentation_url": "https://docs.github.com/rest",
+    "status": "404"
+  },
+  "response_text": null
+}

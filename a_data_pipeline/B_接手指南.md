@@ -4,7 +4,7 @@
 
 更新：2026-11-02。当前输入来自 2024-01-15 UTC 00:00–01:00 的一个小时档案；这是流程原型，正式研究还要扩大观察范围。
 
-> **B 已完成第一轮（pilot_01，2026-11-02）**：实现、跑法与字段说明见 [b_repo_metadata/README.md](../b_repo_metadata/README.md)，结果与验收清单见 [RESULTS.md](../b_repo_metadata/RESULTS.md)，标签交接方式见 [LABELS.md](../b_repo_metadata/LABELS.md)。AI 规则已从 v0.1 迭代到 v0.2（弱信号、课程作业、个人主页识别），同一批 50 个仓库的标签变化与人工一致率对比都保留在运行目录。本指南继续作为任务定义与验收口径，第 5 节的完成条件已逐条核对。
+> **B 已完成第一轮（pilot_01，2026-11-02）**：实现、跑法与字段说明见 [b_repo_metadata/README.md](../b_repo_metadata/README.md)，结果与验收清单见 [RESULTS.md](../b_repo_metadata/RESULTS.md)，标签交接方式见 [LABELS.md](../b_repo_metadata/LABELS.md)。AI 规则已迭代到 v0.3（按 A 确认的五条口径：弱信号维持存疑、AI 附加功能排除、README 辅助、课程与个人主页收紧），同一批 50 个仓库的标签变化与人工一致率对比都保留在运行目录。本指南继续作为任务定义与验收口径，第 5 节的完成条件已逐条核对。
 
 ## 1. 从哪个文件开始？
 

@@ -18,11 +18,11 @@ repo_id,observed_repo_name,ai_label,event_count,event_share_of_source,event_shar
 551162351,matthewmatheus/matthewmatheus,uncertain,1,5e-06,0.006289
 588726150,MarkusThill/AdventOfCode,excluded,1,5e-06,0.006289
 640315574,d7emy/Proxy-Wizard,excluded,12,6.1e-05,0.075472
-653701739,aws-samples/amazon-chime-sdk-call-analytics-real-time-summarizer,uncertain,2,1e-05,0.012579
+653701739,aws-samples/amazon-chime-sdk-call-analytics-real-time-summarizer,included,2,1e-05,0.012579
 663460189,nais/krakend,excluded,1,5e-06,0.006289
 668966382,lxhguard/ciji.zhongguo,excluded,1,5e-06,0.006289
 670312627,aning09252/aning09252,excluded,1,5e-06,0.006289
-684223328,tannerhawkins/tannerhawkins,excluded,2,1e-05,0.012579
+684223328,tannerhawkins/tannerhawkins,uncertain,2,1e-05,0.012579
 696751493,jelliedbanana/ReIndev-GamerulesMod,excluded,3,1.5e-05,0.018868
 697973922,M-Byte480/portfolio,uncertain,5,2.5e-05,0.031447
 704952734,Xanonymous-GitHub/cs933-lab,excluded,1,5e-06,0.006289
@@ -42,10 +42,10 @@ repo_id,observed_repo_name,ai_label,event_count,event_share_of_source,event_shar
 290350267,chienhanlin/amazon-ecs-agent,excluded,5,2.5e-05,0.031447
 306977633,AMAI-GmbH/AI-Expert-Roadmap,excluded,2,1e-05,0.012579
 569927055,Stability-AI/stablediffusion,uncertain,1,5e-06,0.006289
-647729619,manifoldailearning/mlops-with-aws-datascientists,uncertain,1,5e-06,0.006289
+647729619,manifoldailearning/mlops-with-aws-datascientists,excluded,1,5e-06,0.006289
 665478404,ibm-developer-skills-network/oaqjp-final-project-emb-ai,excluded,1,5e-06,0.006289
 669837291,dimitarpg13/nlp_concepts,excluded,1,5e-06,0.006289
 673960113,Epigos-AI/epigos-python,included,5,2.5e-05,0.031447
-731867521,ThatIsUAlso123/ML-project,uncertain,2,1e-05,0.012579
+731867521,ThatIsUAlso123/ML-project,included,2,1e-05,0.012579
 738759461,ShareZE/chatbot-193577,uncertain,1,5e-06,0.006289
-743310414,AILEXGPT/nextjs-flask-starter,uncertain,5,2.5e-05,0.031447
+743310414,AILEXGPT/nextjs-flask-starter,included,5,2.5e-05,0.031447

@@ -6,7 +6,7 @@
 
 | 文件 | 谁产生 | 覆盖范围 | 含义 |
 |---|---|---|---|
-| `runs/pilot_01/repo_ai_labels.csv` | `label_repositories.py` + 规则 v0.2 | 全部 50 个仓库 | **自动标签**。规则读 API 快照计算，可重复生成，不含人的判断 |
+| `runs/pilot_01/repo_ai_labels.csv` | `label_repositories.py` + 规则 v0.3（README 辅助） | 全部 50 个仓库 | **自动标签**。规则读 API 快照计算，可重复生成；README 只补足 `uncertain`，并记录快照与哈希 |
 | `runs/pilot_01/manual_review.csv` | `manual_review.py` + B 的 `reviews/pilot_01_decisions.json` | 33 个被抽中的仓库 | **人工判断**。B 看过 API 字段和 README 证据后给出的标签与理由，覆盖不完整 |
 | `runs/pilot_01/repo_ai_labels_analysis.csv` | `build_analysis_labels.py` | 全部 50 个仓库 | **分析用标签**。把上面两张表按选定口径合并，一行一个仓库，同时保留自动值、人工值与最终值 |
 
@@ -44,7 +44,7 @@ python scripts/build_analysis_labels.py --run-dir runs/pilot_01 --policy auto_on
 |---|---|
 | `repo_id` | 与 A 的事件表连接的主键 |
 | `observed_repo_name` | 小时档案中的 `owner/repo` |
-| `ai_label_auto` | 规则 v0.2 的自动标签 |
+| `ai_label_auto` | 规则 v0.3 的自动标签 |
 | `rule_id` / `reason_auto` | 自动标签的规则与理由 |
 | `ai_label_manual` | 人工标签；没被复核的仓库为空 |
 | `ai_label_final` | 按当前口径采用的标签 |
@@ -56,26 +56,30 @@ python scripts/build_analysis_labels.py --run-dir runs/pilot_01 --policy auto_on
 
 | 口径 | 规则 | 适用场景 | 当前结果（50 个仓库） |
 |---|---|---|---|
-| `manual_override`（默认） | 有人工判断用人工，其余用自动 | 认可复核结论、同时接受未复核部分按规则走 | included 4 / excluded 38 / uncertain 8；来源：人工 33、自动 17 |
-| `auto_only` | 全部用规则 v0.2 | 需要完全可复现、不接受人工个案判断 | included 1 / excluded 30 / uncertain 19 |
+| `manual_override`（已确认采用） | 有人工判断用人工，其余用自动 | 认可复核结论、同时接受未复核部分按规则走 | included 4 / excluded 38 / uncertain 8；来源：人工 33、自动 17 |
+| `auto_only` | 全部用规则 v0.3 | 需要完全可复现、不接受人工个案判断 | included 4 / excluded 30 / uncertain 16 |
 
-注意：默认口径下 included 从 1 变成 4，是因为人工复核把 3 个“名称像 AI、描述为空、README 证明是 AI 项目”的仓库判为 included。这部分提升依赖人工，不能在不同批次之间直接外推。
+注意：默认口径下 included 为 4，其中 3 个“名称像 AI、描述为空、README 证明是 AI 项目”的仓库依赖人工判断（v0.3 规则也会用同一份 README 判为 included）。这部分提升不能在不同批次之间直接外推。
+
+新口径对第一轮人工判断的影响检查见 `reviews/pilot_01_revision_check_v0.3.json`：没有需要改判的条目，第一轮 `pilot_01_decisions.json` 保持原样；如果以后要改判，另存修订文件，不覆盖第一轮记录。
 
 ## 4. 建议的交接方式
 
 1. **给 C 的表里带上 `label_source`**，让分析能区分“规则判定”和“人工判定”；
-2. **`uncertain` 不要直接丢弃**：8 条存疑（404、ID 不一致、空仓库）应单列，说明它们没有足够信息；
+2. **`uncertain` 单列，不并入 `excluded`**（已由 A 确认）：8 条存疑（404、ID 不一致、空仓库等）应保留原标签，说明没有足够信息；
 3. 如果分析需要“只用可复现标签”，用 `auto_only` 版本，并在报告里说明口径；
 4. 正式阶段（A 扩展时间窗、B 跑全量候选）时，人工只复核抽样，其余仍由规则决定——这样标签质量与可复现性能同时交代清楚。
 
-## 5. 待统一确认的口径
+## 5. 口径确认结果（2026-11-09）
 
-| 待定问题 | 选项 A | 选项 B | 影响 |
-|---|---|---|---|
-| 最终采用哪种标签口径 | 自动 + 人工混合（`manual_override`） | 只用自动（`auto_only`） | 影响 included 数量（4 vs 1）与可复现性表述 |
-| `uncertain` 怎么处理 | 保留并单列 | 归入 `excluded` 参与统计 | 影响分母与“AI 仓库比例”口径 |
-| AI 附加功能是否纳入 | 纳入（当前） | 排除，交给人工或 v0.3 规则 | 影响 GROWI 这类仓库 |
-| 弱信号是否直接排除 | 维持 `uncertain` | 改 `excluded` | 影响不确定率 |
-| 人工复核是否继续用 README | 用（当前） | 只用 API 字段 | 影响复核成本与与规则的一致性 |
+| 问题 | 结论 |
+|---|---|
+| 最终标签口径 | **人工优先（`manual_override`）**，保留自动/人工/最终标签与来源 |
+| `uncertain` 处理 | **单列保留，不并入 `excluded`** |
+| AI 附加功能是否纳入 | **不纳入**；以 AI 为核心（含调用模型 API）纳入 |
+| 弱信号是否直接排除 | **不排除**，维持 `uncertain` |
+| 人工复核是否用 README | **允许**，优先描述缺失/名称命中/证据冲突，保存快照与依据 |
+| 课程作业边界 | 学校课程、公开课、训练营同一标准，但需确认确实是作业 |
+| 个人主页 | 同名 + 无描述 + 无 topics + 无语言 = 疑似，README 确认才排除 |
 
-这些问题今晚一起确认；确认后只改口径参数或规则 JSON，不需要重抓元数据，历史表继续保留。
+以上已落到 `ai_rules_v0.3` 与 `build_analysis_labels.py` 的默认参数；不需要重抓元数据，历史表继续保留。

@@ -1,0 +1,23 @@
+{
+  "schema_version": "bmeta-raw-v1",
+  "requested_repo_id": 743604766,
+  "requested_name": "gylmonteiro/studyAsync",
+  "fetched_at_utc": "2026-11-09T08:22:46Z",
+  "http_status": 404,
+  "final_url": "https://api.github.com/repos/gylmonteiro/studyAsync",
+  "attempts": 1,
+  "elapsed_ms": 408,
+  "error": null,
+  "rate_limit": {
+    "x-ratelimit-limit": "5000",
+    "x-ratelimit-remaining": "4837",
+    "x-ratelimit-used": "163",
+    "x-ratelimit-reset": "1794216081"
+  },
+  "response": {
+    "message": "Not Found",
+    "documentation_url": "https://docs.github.com/rest/repos/repos#get-a-repository",
+    "status": "404"
+  },
+  "response_text": null
+}

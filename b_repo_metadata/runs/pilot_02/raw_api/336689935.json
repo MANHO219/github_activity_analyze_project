@@ -1,0 +1,23 @@
+{
+  "schema_version": "bmeta-raw-v1",
+  "requested_repo_id": 336689935,
+  "requested_name": "hello6060/hello6060.github.io",
+  "fetched_at_utc": "2026-11-09T08:21:28Z",
+  "http_status": 404,
+  "final_url": "https://api.github.com/repos/hello6060/hello6060.github.io",
+  "attempts": 1,
+  "elapsed_ms": 407,
+  "error": null,
+  "rate_limit": {
+    "x-ratelimit-limit": "5000",
+    "x-ratelimit-remaining": "4982",
+    "x-ratelimit-used": "18",
+    "x-ratelimit-reset": "1794216081"
+  },
+  "response": {
+    "message": "Not Found",
+    "documentation_url": "https://docs.github.com/rest/repos/repos#get-a-repository",
+    "status": "404"
+  },
+  "response_text": null
+}

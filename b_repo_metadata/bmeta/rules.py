@@ -43,6 +43,9 @@ LABEL_FIELDS = [
     "rule_id",
     "metadata_fetched_at_utc",
     "labelled_at_utc",
+    "readme_evidence",
+    "readme_sha256",
+    "readme_fetched_at_utc",
 ]
 
 VALID_LABELS = ("included", "excluded", "uncertain")
@@ -69,6 +72,33 @@ def _matches(compiled: Sequence[tuple[str, re.Pattern[str]]], text: str) -> list
     return [name for name, pattern in compiled if pattern.search(text)]
 
 
+_CJK_ASCII_BOUNDARY = re.compile(
+    r"(?<=[\u4e00-\u9fff])(?=[A-Za-z0-9])|(?<=[A-Za-z0-9])(?=[\u4e00-\u9fff])"
+)
+
+
+def _normalize_text(text: str) -> str:
+    """在中英文/数字相邻处插入空格，让 ``\\b`` 在中文里也能正确判断词边界。
+
+    例如“用Resnet101+GPT搭建一个玩王者荣耀的AI”会变成“用 Resnet101+GPT 搭建一个玩王者荣耀的 AI”，
+    避免 ``\\bai\\b``、``\\bgpt\\b`` 因为中文是 Unicode 单词字符而匹配失败。
+    """
+    if not text:
+        return ""
+    return _CJK_ASCII_BOUNDARY.sub(" ", text)
+
+
+def _normalize_name(name: str) -> str:
+    """把 camelCase 拆成带分隔符的小写形式，供名称信号使用。
+
+    ``ResnetGPT`` → ``resnet-gpt``（能命中 gpt），``Whispering-Origin-2D`` 仍是
+    ``whispering-origin-2-d``（不会把 whispering 当成 whisper）。
+    """
+    if not name:
+        return ""
+    return re.sub(r"(?<=[a-z0-9])(?=[A-Z])", "-", name).lower()
+
+
 def _dedupe(values: Iterable[str]) -> list[str]:
     seen: dict[str, None] = {}
     for value in values:
@@ -85,7 +115,7 @@ class RuleSet:
         self.resource_description = _compile(rules.get("resource_collection_patterns", []))
         self.resource_name = _compile(rules.get("resource_name_patterns", []))
         self.name_signals = _compile(rules.get("name_signal_patterns", []))
-        if self.engine == "v2":
+        if self.engine in ("v2", "v3"):
             self.strong_topics = {term.lower() for term in rules.get("strong_topic_terms", [])}
             self.weak_topics = {term.lower() for term in rules.get("weak_topic_terms", [])}
             self.strong_description = _compile(rules.get("strong_description_patterns", []))
@@ -94,12 +124,37 @@ class RuleSet:
             self.coursework_description = _compile(rules.get("coursework_description_patterns", []))
             self.coursework_name = _compile(rules.get("coursework_name_patterns", []))
             self.profile_rule = dict(rules.get("profile_repository") or {})
+            if self.engine == "v3":
+                self.coursework_generic = _compile(rules.get("coursework_generic_name_patterns", []))
+                self.coursework_corroboration = _compile(rules.get("coursework_corroboration_patterns", []))
+                self.feature_only = _compile(rules.get("ai_feature_only_patterns", []))
+                readme_rules = dict(rules.get("readme_rules") or {})
+                self.readme_profile = _compile(readme_rules.get("profile_patterns", []))
+                self.readme_coursework = _compile(readme_rules.get("coursework_patterns", []))
+                # v0.3.1 起把 README 的 AI 证据拆成强/弱两档，并引入未来意图与工程章节过滤；
+                # 兼容只有 ai_patterns 的 v0.3 规则文件。
+                if readme_rules.get("ai_strong_patterns") or readme_rules.get("ai_weak_patterns"):
+                    self.readme_ai_strong = _compile(readme_rules.get("ai_strong_patterns", []))
+                    self.readme_ai_weak = _compile(readme_rules.get("ai_weak_patterns", []))
+                else:
+                    self.readme_ai_strong = _compile(readme_rules.get("ai_patterns", []))
+                    self.readme_ai_weak = []
+                self.readme_ai = self.readme_ai_strong
+                self.readme_future = _compile(readme_rules.get("future_markers", []))
+                self.readme_project_sections = _compile(readme_rules.get("project_sections", []))
+                self.min_weak_mentions = int(readme_rules.get("min_weak_mentions", 3) or 3)
         else:
             self.topic_terms = {term.lower() for term in rules.get("ai_topic_terms", [])}
             self.description = _compile(rules.get("ai_description_patterns", []))
 
     # -- 对外接口 ------------------------------------------------------
-    def decide(self, metadata: Mapping[str, Any], *, labelled_at: str | None = None) -> dict[str, str]:
+    def decide(
+        self,
+        metadata: Mapping[str, Any],
+        *,
+        labelled_at: str | None = None,
+        readme: Mapping[str, Any] | None = None,
+    ) -> dict[str, str]:
         status = (metadata.get("fetch_status") or "").strip()
         repo_id = str(metadata.get("repo_id", ""))
         fetched_at = metadata.get("fetched_at_utc") or ""
@@ -114,6 +169,9 @@ class RuleSet:
                 "rule_id": rule_id,
                 "metadata_fetched_at_utc": fetched_at,
                 "labelled_at_utc": labelled,
+                "readme_evidence": "",
+                "readme_sha256": "",
+                "readme_fetched_at_utc": "",
             }
 
         if status == "id_mismatch":
@@ -125,14 +183,18 @@ class RuleSet:
         if status not in FETCHED_STATUSES:
             return result("uncertain", "R1_metadata_unavailable", f"fetch_status={status or 'missing'}")
 
-        description = (metadata.get("description") or "").strip()
-        full_name = (metadata.get("current_full_name") or metadata.get("observed_repo_name") or "").strip()
+        description = _normalize_text((metadata.get("description") or "").strip())
+        raw_name = (metadata.get("current_full_name") or metadata.get("observed_repo_name") or "").strip()
+        full_name = _normalize_name(raw_name)
+        language = (metadata.get("language") or "").strip()
         try:
             topics = json.loads(metadata.get("topics_json") or "[]")
         except json.JSONDecodeError:
             topics = []
         topics = [str(topic).lower() for topic in topics if str(topic).strip()]
 
+        if self.engine == "v3":
+            return self._decide_v3(result, description, full_name, topics, language, readme, raw_name)
         if self.engine == "v2":
             return self._decide_v2(result, description, full_name, topics)
         return self._decide_v1(result, description, full_name, topics)
@@ -207,8 +269,147 @@ class RuleSet:
 
         return result("excluded", "R8_no_ai_signal", "no_rule_matched")
 
+    # -- v3 ------------------------------------------------------------
+    def _decide_v3(self, result, description, full_name, topics, language, readme, raw_name=""):
+        base = self._base_v3(result, description, full_name, topics, language, raw_name)
+        # README 只用于补足规则判不确定的仓库，不覆盖规则已给出的 included/excluded。
+        if base["ai_label"] != "uncertain" or not readme or not (readme.get("text") or "").strip():
+            return base
+        text = _normalize_text(readme["text"])
+        sha = readme.get("sha256") or ""
+        fetched = readme.get("fetched_at_utc") or ""
+
+        def with_readme(label: str, rule_id: str, reason: str) -> dict[str, str]:
+            row = result(label, rule_id, reason)
+            row["readme_evidence"] = "used"
+            row["readme_sha256"] = sha
+            row["readme_fetched_at_utc"] = fetched
+            return row
+
+        # 个人主页：只有规则本身已判为疑似（同名 + 无描述 + 无 topics + 无语言）时，
+        # 才用 README 确认；README 还必须没有工程章节，避免把 ML 项目的作者介绍当成个人主页。
+        if base["rule_id"] == "R3c_profile_suspected":
+            profile_hits = _matches(self.readme_profile, text)
+            if profile_hits and not _matches(self.readme_project_sections, text):
+                return with_readme("excluded", "R11_readme_profile", "readme=" + ",".join(_dedupe(profile_hits)))
+
+        course_hits = _matches(self.readme_coursework, text)
+        if course_hits:
+            return with_readme("excluded", "R10_readme_coursework", "readme=" + ",".join(_dedupe(course_hits)))
+
+        # AI 证据：先剔除“计划/以后/roadmap”这类未来意图行；要求强证据，
+        # 或弱词出现至少 N 次且有佐证词，避免一句“以后打算加 AI”就被纳入。
+        usable = self._readme_without_future(text)
+        strong_hits = _matches(self.readme_ai_strong, usable)
+        if strong_hits:
+            return with_readme("included", "R9_readme_ai", "readme=" + ",".join(_dedupe(strong_hits)))
+
+        weak_count = self._count_weak_mentions(usable)
+        weak_hits = _matches(self.readme_ai_weak, usable)
+        corroboration = _matches(self.corroboration, usable)
+        if weak_count >= self.min_weak_mentions and corroboration and weak_hits:
+            return with_readme(
+                "included",
+                "R9_readme_ai",
+                f"readme={','.join(_dedupe(weak_hits))};mentions={weak_count};corroboration={','.join(_dedupe(corroboration))}",
+            )
+
+        base["readme_evidence"] = "no_signal"
+        base["readme_sha256"] = sha
+        base["readme_fetched_at_utc"] = fetched
+        return base
+
+    def _readme_without_future(self, text: str) -> str:
+        if not self.readme_future:
+            return text
+        kept = [line for line in text.splitlines() if not _matches(self.readme_future, line)]
+        return "\n".join(kept)
+
+    def _count_weak_mentions(self, text: str) -> int:
+        total = 0
+        for _, pattern in self.readme_ai_weak:
+            total += len(pattern.findall(text))
+        return total
+
+    def _base_v3(self, result, description, full_name, topics, language, raw_name=""):
+        # 课程作业：强语义（final-project / openclassrooms / capstone）可直接判定；
+        # 泛词（course/lab/hw 等）必须同时有描述佐证，避免只命中关键词就排除。
+        strong_course = _matches(self.coursework_name, full_name.lower())
+        if strong_course:
+            return result("excluded", "R3b_coursework", "name=" + ",".join(_dedupe(strong_course)))
+        description_course = _matches(self.coursework_description, description)
+        if description_course:
+            return result("excluded", "R3b_coursework", "description=" + ",".join(_dedupe(description_course)))
+
+        generic_course = _matches(self.coursework_generic, full_name.lower())
+        if generic_course:
+            corroboration = _matches(self.coursework_corroboration, description)
+            if corroboration:
+                return result(
+                    "excluded",
+                    "R3b_coursework",
+                    f"name={','.join(_dedupe(generic_course))};description={','.join(_dedupe(corroboration))}",
+                )
+
+        # 个人主页：只记疑似，交给 README 或人工确认。
+        # 用原始名称判断 owner==repo，避免 camelCase 拆分后把同一个名字拆成两段。
+        profile_name = raw_name or full_name
+        if self._is_profile_repository(profile_name, description, topics, language):
+            return result(
+                "uncertain",
+                "R3c_profile_suspected",
+                f"name={profile_name};no_description;no_topics;no_language",
+            )
+
+        resource_hits = _matches(self.resource_name, full_name) + _matches(self.resource_description, description)
+        if resource_hits:
+            return result("excluded", "R3_resource_collection", ",".join(_dedupe(resource_hits)))
+
+        # 明确把 AI 写成附加能力时才排除；以 AI 为核心的应用仍可纳入。
+        feature_hits = _matches(self.feature_only, description)
+        if feature_hits:
+            return result("excluded", "R5d_ai_feature_only", "description=" + ",".join(_dedupe(feature_hits)))
+
+        strong_topic_hits = [topic for topic in topics if topic in self.strong_topics]
+        if strong_topic_hits:
+            return result("included", "R4_topic_match", "topics=" + ",".join(strong_topic_hits))
+
+        strong_hits = _matches(self.strong_description, description)
+        if strong_hits:
+            return result("included", "R5_description_match", "description=" + ",".join(_dedupe(strong_hits)))
+
+        weak_topic_hits = [topic for topic in topics if topic in self.weak_topics]
+        weak_description_hits = _matches(self.weak_description, description)
+        if weak_topic_hits or weak_description_hits:
+            corroboration = _matches(self.corroboration, description)
+            if corroboration:
+                signals = ",".join(weak_topic_hits + _dedupe(weak_description_hits))
+                return result(
+                    "included",
+                    "R5b_weak_signal_corroborated",
+                    f"weak={signals};corroboration={','.join(_dedupe(corroboration))}",
+                )
+            if weak_topic_hits:
+                return result("uncertain", "R4b_weak_topic_only", "topics=" + ",".join(weak_topic_hits))
+            return result("uncertain", "R5c_weak_signal_only", "description=" + ",".join(_dedupe(weak_description_hits)))
+
+        name_hits = _matches(self.name_signals, full_name.lower())
+        if name_hits:
+            return result("uncertain", "R6_name_only_signal", "name=" + ",".join(_dedupe(name_hits)))
+
+        if not description and not topics:
+            return result("uncertain", "R7_insufficient_text_evidence", "description_and_topics_empty")
+
+        return result("excluded", "R8_no_ai_signal", "no_rule_matched")
+
     # -- 工具 ----------------------------------------------------------
-    def _is_profile_repository(self, full_name: str, description: str, topics: Sequence[str]) -> bool:
+    def _is_profile_repository(
+        self,
+        full_name: str,
+        description: str,
+        topics: Sequence[str],
+        language: str = "",
+    ) -> bool:
         if not self.profile_rule.get("enabled"):
             return False
         owner, sep, repo = full_name.partition("/")
@@ -220,6 +421,8 @@ class RuleSet:
             return False
         if self.profile_rule.get("require_topics_empty", True) and topics:
             return False
+        if self.profile_rule.get("require_language_empty", False) and language:
+            return False
         return True
 
 
@@ -228,9 +431,18 @@ def label_rows(
     rules: RuleSet,
     *,
     labelled_at: str | None = None,
+    readme_evidence: Mapping[str, Mapping[str, Any]] | None = None,
 ) -> list[dict[str, str]]:
     moment = labelled_at or utc_now()
-    return [rules.decide(row, labelled_at=moment) for row in metadata_rows]
+    evidence = readme_evidence or {}
+    return [
+        rules.decide(
+            row,
+            labelled_at=moment,
+            readme=evidence.get(str(row.get("repo_id", ""))),
+        )
+        for row in metadata_rows
+    ]
 
 
 def summary_counts(labels: Sequence[Mapping[str, str]]) -> dict[str, Any]:

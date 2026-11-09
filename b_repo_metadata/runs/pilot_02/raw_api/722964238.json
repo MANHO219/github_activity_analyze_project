@@ -1,0 +1,23 @@
+{
+  "schema_version": "bmeta-raw-v1",
+  "requested_repo_id": 722964238,
+  "requested_name": "Rupesh4604/Transformer-in-Computer-Vision",
+  "fetched_at_utc": "2026-11-09T08:23:07Z",
+  "http_status": 404,
+  "final_url": "https://api.github.com/repos/Rupesh4604/Transformer-in-Computer-Vision",
+  "attempts": 1,
+  "elapsed_ms": 819,
+  "error": null,
+  "rate_limit": {
+    "x-ratelimit-limit": "5000",
+    "x-ratelimit-remaining": "4801",
+    "x-ratelimit-used": "199",
+    "x-ratelimit-reset": "1794216081"
+  },
+  "response": {
+    "message": "Not Found",
+    "documentation_url": "https://docs.github.com/rest/repos/repos#get-a-repository",
+    "status": "404"
+  },
+  "response_text": null
+}

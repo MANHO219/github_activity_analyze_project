@@ -1,5 +1,5 @@
 {
-  "checked_at_utc": "2026-11-02T08:00:36Z",
+  "checked_at_utc": "2026-11-09T08:29:23Z",
   "event_source": "events_clean.parquet",
   "events_total_in_source": 197313,
   "pilot_repos": 50,
@@ -13,9 +13,9 @@
     "event_share_of_pilot_events": "50 个试点仓库的事件总数（events_covered_by_pilot）"
   },
   "events_by_label": {
-    "excluded": 70,
-    "included": 5,
-    "uncertain": 84
+    "excluded": 69,
+    "included": 14,
+    "uncertain": 76
   },
   "checks": {
     "labels_have_unique_repo_ids": true,
@@ -28,7 +28,8 @@
     "metadata_csv": "b_repo_metadata/runs/pilot_01/repo_metadata.csv",
     "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
     "events_parquet": "a_data_pipeline/runs/20240115_1hour_handoff/python/events_clean.parquet",
-    "candidates_csv": "a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv"
+    "candidates_csv": "a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv",
+    "daily_counts_csv": null
   },
   "limits": [
     "Only repo_id is used as the join key; repo names in the event table may be historical.",

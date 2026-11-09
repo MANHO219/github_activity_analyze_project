@@ -51,7 +51,7 @@ def candidate(repo_id: int, name: str, events: int = 1) -> dict:
     }
 
 
-def metadata(repo_id: int, *, status="ok", description="", topics=(), name=None, api_id=None) -> dict:
+def metadata(repo_id: int, *, status="ok", description="", topics=(), name=None, api_id=None, language="Python") -> dict:
     return {
         "repo_id": str(repo_id),
         "observed_repo_name": name or f"owner{repo_id}/repo{repo_id}",
@@ -60,7 +60,7 @@ def metadata(repo_id: int, *, status="ok", description="", topics=(), name=None,
         "repo_created_at": "2020-01-01T00:00:00Z",
         "description": description,
         "topics_json": json.dumps(list(topics)),
-        "language": "Python",
+        "language": language,
         "archived": "false",
         "fetch_status": status,
         "http_status": "200" if status in ("ok", "ok_cached") else "404",
@@ -107,6 +107,17 @@ class SelectTests(unittest.TestCase):
     def test_insufficient_keyword_pool_raises(self):
         with self.assertRaises(ValueError):
             select_pilot(self.rows, seed=1, random_size=30, keyword_size=5)
+
+    def test_exclude_ids_are_not_selected(self):
+        excluded = {int(row["repo_id"]) for row in self.rows[:5]}
+        picked = select_pilot(
+            self.rows, seed=5488, random_size=10, keyword_size=5, exclude_ids=excluded
+        )
+        self.assertFalse(excluded & {int(row["repo_id"]) for row in picked})
+        again = select_pilot(
+            self.rows, seed=5488, random_size=10, keyword_size=5, exclude_ids=excluded
+        )
+        self.assertEqual(picked, again)
 
 
 class RulesTests(unittest.TestCase):
@@ -376,6 +387,36 @@ class JoinTests(unittest.TestCase):
         )
         self.assertFalse(summary["checks"]["all_pilot_repos_present_in_events"])
         self.assertEqual(summary["missing_from_events"], ["9"])
+
+    def test_daily_counts_join_sums_event_types(self):
+        metadata_rows = [metadata(1, topics=["llm"]), metadata(2, description="proxy tool")]
+        labels = label_rows(metadata_rows, RULES)
+        write_csv(self.root / "repo_metadata.csv", METADATA_FIELDS, metadata_rows)
+        write_csv(self.root / "repo_ai_labels.csv", LABEL_FIELDS, labels)
+        write_csv(
+            self.root / "repo_daily_counts.csv",
+            ["repo_id", "event_date", "event_type", "event_count"],
+            [
+                {"repo_id": "1", "event_date": "2024-01-15", "event_type": "PushEvent", "event_count": "3"},
+                {"repo_id": "1", "event_date": "2024-01-15", "event_type": "WatchEvent", "event_count": "2"},
+                {"repo_id": "2", "event_date": "2024-01-15", "event_type": "PushEvent", "event_count": "1"},
+                {"repo_id": "99", "event_date": "2024-01-15", "event_type": "PushEvent", "event_count": "4"},
+            ],
+        )
+        summary = join_run(
+            metadata_csv=self.root / "repo_metadata.csv",
+            labels_csv=self.root / "repo_ai_labels.csv",
+            out_dir=self.root,
+            events_parquet=None,
+            candidates_csv=None,
+            daily_counts_csv=self.root / "repo_daily_counts.csv",
+        )
+        self.assertEqual(summary["event_source"], "repo_daily_counts.csv:sum(event_count)")
+        self.assertEqual(summary["events_total_in_source"], 10)
+        self.assertEqual(summary["events_covered_by_pilot"], 6)
+        joined = {row["repo_id"]: row for row in read_csv(self.root / "repo_labels_joined_events.csv")}
+        self.assertEqual(joined["1"]["event_count"], "5")
+        self.assertTrue(all(summary["checks"].values()))
 
 
 class EvidenceTests(unittest.TestCase):
@@ -683,6 +724,175 @@ class ReviewSheetPreservationTests(unittest.TestCase):
         self.assertEqual(merged["labels_rule_version"], merged["sheet_rule_version"])
         self.assertFalse(merged["reused_existing_sheet"])
         self.assertEqual(merged["reviewed_rows"], 1)
+
+
+class RulesV3Tests(unittest.TestCase):
+    """v0.3：A 确认的五条口径（弱信号、AI 附加功能、README、课程、个人主页）。"""
+
+    RULES = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.json"))
+
+    def label(self, row, readme=None):
+        return self.RULES.decide(row, readme=readme)
+
+    @staticmethod
+    def readme(text, sha="abc123", fetched="2026-11-02T00:00:00Z"):
+        return {"text": text, "sha256": sha, "fetched_at_utc": fetched}
+
+    def test_weak_signal_without_ai_description_stays_uncertain(self):
+        row = metadata(1, description="Team wiki for engineers", topics=["ai"])
+        result = self.label(row)
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R4b_weak_topic_only")
+
+    def test_ai_core_api_app_is_included(self):
+        row = metadata(2, description="AI platform that calls OpenAI models for document Q&A")
+        self.assertEqual(self.label(row)["ai_label"], "included")
+
+    def test_ai_feature_only_is_excluded(self):
+        row = metadata(3, description="Project management tool with AI assistant")
+        result = self.label(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R5d_ai_feature_only")
+
+    def test_coursework_strong_name_excluded(self):
+        result = self.label(metadata(4, name="org/final-project-ml", description="something"))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3b_coursework")
+
+    def test_generic_course_word_alone_does_not_exclude(self):
+        result = self.label(metadata(5, name="org/course-notes", description="A small web tool"))
+        self.assertNotEqual(result["rule_id"], "R3b_coursework")
+
+    def test_courseword_with_description_evidence_excluded(self):
+        result = self.label(metadata(6, name="org/cs-course", description="Course materials for CS101 labs"))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3b_coursework")
+
+    def test_profile_suspected_is_uncertain(self):
+        row = metadata(7, name="alice/alice", language="")
+        result = self.label(row)
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R3c_profile_suspected")
+
+    def test_profile_with_readme_confirmation_excluded(self):
+        row = metadata(8, name="alice/alice", language="")
+        result = self.label(row, self.readme("Hi, I'm Alice. About me: backend developer."))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R11_readme_profile")
+        self.assertEqual(result["readme_evidence"], "used")
+        self.assertEqual(result["readme_sha256"], "abc123")
+
+    def test_readme_ai_resolves_name_only(self):
+        row = metadata(9, name="someone/ML-project")
+        result = self.label(row, self.readme("Machine learning model using scikit-learn to predict calories."))
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R9_readme_ai")
+
+    def test_readme_coursework_resolves_uncertain(self):
+        row = metadata(10, name="org/mlops-with-aws")
+        result = self.label(row, self.readme("This is a repository for MLOps course with hands-on handouts."))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R10_readme_coursework")
+
+    def test_readme_without_signal_keeps_uncertain(self):
+        row = metadata(11, name="someone/ML-project")
+        result = self.label(row, self.readme("Personal notes and random experiments."))
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["readme_evidence"], "no_signal")
+
+    def test_readme_does_not_override_decided_labels(self):
+        row = metadata(12, topics=["llm"], description="LLM inference engine")
+        result = self.label(row, self.readme("Hi, I'm a student. About me: learning web dev."))
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["readme_evidence"], "")
+
+
+class RulesV31Tests(unittest.TestCase):
+    """v0.3.1：README 判 AI 要“核心证据”，个人主页要“整篇像主页”。"""
+
+    RULES = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.1.json"))
+
+    @staticmethod
+    def readme(text, sha="sha31", fetched="2026-11-02T00:00:00Z"):
+        return {"text": text, "sha256": sha, "fetched_at_utc": fetched}
+
+    def test_future_ai_plan_is_not_included(self):
+        row = metadata(21, name="someone/calendar")
+        result = self.RULES.decide(
+            row,
+            readme=self.readme("A calendar app for teams.\n## Roadmap\nWe plan to add AI features in 2027."),
+        )
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["readme_evidence"], "no_signal")
+
+    def test_single_weak_ai_mention_is_not_included(self):
+        row = metadata(22, name="someone/todo")
+        result = self.RULES.decide(row, readme=self.readme("A todo app. We use AI to sort tasks."))
+        self.assertEqual(result["ai_label"], "uncertain")
+
+    def test_repeated_weak_mentions_with_corroboration_included(self):
+        row = metadata(23, name="someone/tools")
+        result = self.RULES.decide(
+            row,
+            readme=self.readme("AI assistant for notes. The AI model runs locally. AI chat with your files."),
+        )
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R9_readme_ai")
+
+    def test_author_bio_in_real_project_does_not_exclude(self):
+        row = metadata(24, name="acme/ml-toolkit")
+        text = (
+            "# ML toolkit\n"
+            "## About me\nHi, I'm Alice, a researcher.\n"
+            "## Install\npip install ml-toolkit\n"
+            "## Usage\nA machine learning toolkit for training models.\n"
+        )
+        result = self.RULES.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R9_readme_ai")
+
+    def test_profile_suspected_with_plain_bio_excluded(self):
+        row = metadata(25, name="alice/alice", language="")
+        result = self.RULES.decide(row, readme=self.readme("Hi, I'm Alice.\n## About me\nBackend developer."))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R11_readme_profile")
+
+    def test_profile_suspected_with_engineering_sections_stays_uncertain(self):
+        row = metadata(26, name="bob/bob", language="")
+        text = "Hi, I'm Bob.\n## About me\nDeveloper.\n## Install\npip install bob\n## Usage\nA small library."
+        result = self.RULES.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R3c_profile_suspected")
+
+
+class RulesV32Tests(unittest.TestCase):
+    """v0.3.2：中英相邻与 camelCase 名称都要正确判断词边界。"""
+
+    RULES = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.2.json"))
+
+    def test_chinese_description_with_english_ai_tokens_included(self):
+        row = metadata(31, description="用Resnet101+GPT搭建一个玩王者荣耀的AI")
+        result = self.RULES.decide(row)
+        self.assertEqual(result["ai_label"], "included")
+
+    def test_chinese_weak_ai_with_corroboration_included(self):
+        row = metadata(32, description="一个用AI做模型训练的平台")
+        result = self.RULES.decide(row)
+        self.assertEqual(result["ai_label"], "included")
+
+    def test_camel_case_name_gpt_is_name_signal(self):
+        result = self.RULES.decide(metadata(33, name="someone/ResnetGPT"))
+        self.assertEqual(result["rule_id"], "R6_name_only_signal")
+
+    def test_whispering_is_not_whisper(self):
+        result = self.RULES.decide(metadata(34, name="someone/Whispering-Origin-2D", description="A 2D RPG game"))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R8_no_ai_signal")
+
+    def test_camel_case_profile_name_still_suspected(self):
+        row = metadata(35, name="PauloHenriqueJr/paulohenriquejr", language="")
+        result = self.RULES.decide(row)
+        self.assertEqual(result["rule_id"], "R3c_profile_suspected")
 
 
 class CompareAndHandoffTests(unittest.TestCase):
