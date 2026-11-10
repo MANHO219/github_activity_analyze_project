@@ -11,6 +11,7 @@
 **R12 补全：** 2026-11-09，规则 `ai_rules_v0.3.4.1`（用途标题需正文），pilot_01 0 条、pilot_02 0 条
 **A review 收紧：** 2026-11-10，规则 `ai_rules_v0.3.6`（三个新增条件收紧到仓库自身用途），pilot_01 0 条、pilot_02 0 条
 **R12 收尾：** 2026-11-10，规则 `ai_rules_v0.3.4.2`（英文安装说明不算正文），pilot_01 0 条、pilot_02 0 条
+**R12 编号列表：** 2026-11-10，规则 `ai_rules_v0.3.4.3`（先剥列表标记），pilot_01 0 条、pilot_02 0 条
 **论文清单再收紧：** 2026-11-10，规则 `ai_rules_v0.3.7`（a list of 锚定整段），pilot_01 0 条、pilot_02 0 条
 **合集按主要用途：** 2026-11-10，规则 `ai_rules_v0.3.8`（curated / collection of / links to 降为线索），pilot_01 0 条、pilot_02 0 条
 **合集按主要用途：** 2026-11-10，规则 `ai_rules_v0.3.8`（curated / collection of / links to 降为线索），pilot_01 0 条、pilot_02 0 条

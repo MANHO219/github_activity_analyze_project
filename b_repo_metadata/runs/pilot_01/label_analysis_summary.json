@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-10T12:37:06Z",
+  "generated_at_utc": "2026-11-10T12:43:36Z",
   "policy": "manual_override",
   "policy_note": "人工复核优先：有人工判断的仓库采用人工标签，其余采用规则自动标签。",
   "rows": 50,

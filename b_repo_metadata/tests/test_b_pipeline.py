@@ -1667,6 +1667,72 @@ class RulesV38Tests(unittest.TestCase):
         self.assertEqual(result["rule_id"], "R12_readme_non_ai")
 
 
+class RulesV343Tests(unittest.TestCase):
+    """v0.3.4.3：编号安装步骤要先剥列表标记，不能当成用途正文。"""
+
+    V343 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.4.3.json"))
+    V342 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.4.2.json"))
+
+    @staticmethod
+    def readme(text):
+        return {"text": text, "sha256": "s", "fetched_at_utc": "t"}
+
+    NUMBERED_INSTALL = (
+        "# mytool\n\n## Overview\n\n"
+        + (
+            "1. Download the release archive for your platform\n"
+            "2. Add the extracted folder to your PATH\n"
+            "3. Run mytool --serve to start the service\n"
+            "4. Open http://localhost:8080 in your browser\n"
+        )
+        * 4
+    )
+
+    NUMBERED_PURPOSE = (
+        "# timeutil\n\n## Overview\n\n"
+        + (
+            "1. This library converts timestamps between timezones on embedded devices.\n"
+            "2. It has no external dependencies and can be copied into any project.\n"
+            "3. The API mirrors the standard library, so migration is a single import change.\n"
+        )
+        * 4
+    )
+
+    def test_numbered_install_steps_stay_uncertain(self):
+        row = metadata(171, description="", topics=[])
+        result = self.V343.decide(row, readme=self.readme(self.NUMBERED_INSTALL))
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R7_insufficient_text_evidence")
+
+    def test_bulleted_install_steps_stay_uncertain(self):
+        text = "# mytool\n\n## Overview\n\n" + (
+            "- Install the package with pip\n"
+            "- Add the binary to your PATH\n"
+            "- Run mytool --serve\n"
+        ) * 12
+        row = metadata(172, description="", topics=[])
+        result = self.V343.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "uncertain")
+
+    def test_numbered_purpose_still_excluded(self):
+        row = metadata(173, description="", topics=[])
+        result = self.V343.decide(row, readme=self.readme(self.NUMBERED_PURPOSE))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+    def test_media_center_still_excluded(self):
+        row = metadata(174, description="", topics=[])
+        result = self.V343.decide(row, readme=self.readme(RulesV341Tests.MEDIA_CENTER))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+    def test_v342_still_treats_numbered_install_as_prose(self):
+        """版本隔离：v0.3.4.2 没有剥列表标记。"""
+        row = metadata(175, description="", topics=[])
+        result = self.V342.decide(row, readme=self.readme(self.NUMBERED_INSTALL))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
 class CompareAndHandoffTests(unittest.TestCase):
     def setUp(self):
         TEST_TMP_ROOT.mkdir(parents=True, exist_ok=True)

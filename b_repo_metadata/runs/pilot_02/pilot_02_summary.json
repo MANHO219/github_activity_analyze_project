@@ -1,7 +1,7 @@
 {
   "pilot": "pilot_02",
   "rules_version": "ai_rules_v0.3.8",
-  "generated_at_utc": "2026-11-10T12:37:25Z",
+  "generated_at_utc": "2026-11-10T12:43:50Z",
   "source_data": {
     "note": "按 A README 的官方命令重建 2024-01-15 全天数据；数量与 A 的交接一致",
     "candidates": "a_data_pipeline/runs/20240115_python/python/repo_candidates.csv",

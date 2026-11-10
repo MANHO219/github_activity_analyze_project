@@ -85,7 +85,7 @@
       "keyword_name 层来自名称粗筛，名称命中不等于 AI 判定；实际标签仍由 rules 决定。"
     ]
   },
-  "updated_at_utc": "2026-11-10T12:37:09Z",
+  "updated_at_utc": "2026-11-10T12:43:39Z",
   "fetch": {
     "started_at_utc": "2026-11-02T05:02:36Z",
     "finished_at_utc": "2026-11-02T05:03:07Z",
@@ -118,11 +118,11 @@
     "rules_sha256": "9a85ca627c68ba35106f62ccd6e8cc7eaacf4e6c128304d884798d38dd7d1245",
     "metadata_csv": "b_repo_metadata/runs/pilot_01/repo_metadata.csv",
     "metadata_sha256": "5965ac967c9aaecf29e3699f46b457228058d7fb1104360b492e636c31edabff",
-    "labelled_at_utc": "2026-11-10T12:37:00Z",
+    "labelled_at_utc": "2026-11-10T12:43:31Z",
     "input_rows": 50,
     "labelled_rows": 50,
     "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
-    "labels_sha256": "19328434eb91e7fd4e6fd411334e2f3a619b6b58549759147f0ff253bb42d064",
+    "labels_sha256": "611c0704740f4e973f8b39c1c99f0fab5c2ff4870aa43d8149b956063602b221",
     "total": 50,
     "by_label": {
       "included": 4,
@@ -425,7 +425,7 @@
     "note": "README 仅作人工复核证据；v0.1 规则不读取该字段。"
   },
   "join": {
-    "checked_at_utc": "2026-11-10T12:37:09Z",
+    "checked_at_utc": "2026-11-10T12:43:39Z",
     "event_source": "repo_daily_counts.csv:sum(event_count)",
     "events_total_in_source": 5528300,
     "pilot_repos": 50,
@@ -479,7 +479,7 @@
       "ai_rules_v0.3.8"
     ],
     "analysis_label_policy": "manual_override",
-    "generated_at_utc": "2026-11-10T12:37:20Z",
+    "generated_at_utc": "2026-11-10T12:43:43Z",
     "environment": {
       "python_version": "3.13.14",
       "platform": "Windows-11-10.0.26200-SP0",
@@ -490,9 +490,9 @@
       "candidates_sha256": "e11f5c20990233b45fa8fabe4e0eeeed401baceaaf6f108e1d2d3c6d463c0b09",
       "pilot_candidates_sha256": "e9de060d26ded56bb841fe6a449bc409f55eb5a86125f279efa7bea170d3a9c8",
       "repo_metadata_sha256": "5965ac967c9aaecf29e3699f46b457228058d7fb1104360b492e636c31edabff",
-      "repo_ai_labels_sha256": "19328434eb91e7fd4e6fd411334e2f3a619b6b58549759147f0ff253bb42d064",
+      "repo_ai_labels_sha256": "611c0704740f4e973f8b39c1c99f0fab5c2ff4870aa43d8149b956063602b221",
       "repo_ai_labels_v0_1_sha256": "8e4c28686464cc8bc8676cf34b91eb9b465007c224cd6a2f38983f943f8188b5",
-      "analysis_labels_sha256": "8e6579f5caea3ee62ce7a3d8fc98fdb5e33bb9a94c50ca6091f744788ce5673b",
+      "analysis_labels_sha256": "4a3cf5810e53ee612d97c8d7c88572ecd264fe03c30f97f5aae1767e5ad758fe",
       "rules_sha256": "9a85ca627c68ba35106f62ccd6e8cc7eaacf4e6c128304d884798d38dd7d1245"
     },
     "outputs": {
@@ -593,7 +593,7 @@
     "run_dir": "b_repo_metadata/runs/pilot_01"
   },
   "label_comparison": {
-    "compared_at_utc": "2026-11-10T12:37:01Z",
+    "compared_at_utc": "2026-11-10T12:43:32Z",
     "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.7.csv",
     "new_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
     "old_rule_version": "ai_rules_v0.3.7",
@@ -684,7 +684,7 @@
     }
   },
   "analysis_labels": {
-    "generated_at_utc": "2026-11-10T12:37:06Z",
+    "generated_at_utc": "2026-11-10T12:43:36Z",
     "policy": "manual_override",
     "policy_note": "人工复核优先：有人工判断的仓库采用人工标签，其余采用规则自动标签。",
     "rows": 50,
