@@ -85,7 +85,7 @@
       "keyword_name 层来自名称粗筛，名称命中不等于 AI 判定；实际标签仍由 rules 决定。"
     ]
   },
-  "updated_at_utc": "2026-11-10T05:47:59Z",
+  "updated_at_utc": "2026-11-10T05:50:38Z",
   "fetch": {
     "started_at_utc": "2026-11-02T05:02:36Z",
     "finished_at_utc": "2026-11-02T05:03:07Z",
@@ -425,8 +425,8 @@
     "note": "README 仅作人工复核证据；v0.1 规则不读取该字段。"
   },
   "join": {
-    "checked_at_utc": "2026-11-09T13:13:52Z",
-    "event_source": "events_clean.parquet",
+    "checked_at_utc": "2026-11-10T05:50:38Z",
+    "event_source": "repo_candidates.csv:event_count",
     "events_total_in_source": 197313,
     "pilot_repos": 50,
     "pilot_repos_found_in_events": 50,
@@ -439,9 +439,9 @@
       "event_share_of_pilot_events": "50 个试点仓库的事件总数（events_covered_by_pilot）"
     },
     "events_by_label": {
-      "excluded": 75,
+      "excluded": 120,
       "included": 14,
-      "uncertain": 70
+      "uncertain": 25
     },
     "checks": {
       "labels_have_unique_repo_ids": true,
@@ -452,7 +452,8 @@
     },
     "inputs": {
       "metadata_csv": "b_repo_metadata/runs/pilot_01/repo_metadata.csv",
-      "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
+      "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels_analysis.csv",
+      "label_field": "ai_label_final",
       "events_parquet": "a_data_pipeline/runs/20240115_1hour_handoff/python/events_clean.parquet",
       "candidates_csv": "a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv",
       "daily_counts_csv": null
@@ -460,8 +461,10 @@
     "limits": [
       "Only repo_id is used as the join key; repo names in the event table may be historical.",
       "The pilot covers a small sample, so covered/uncovered event shares describe this run only.",
-      "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events."
-    ]
+      "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events.",
+      "Full parquet join not executed; repo-level counts from candidates used."
+    ],
+    "joined_csv": "b_repo_metadata/runs/pilot_01/repo_labels_joined_events.csv"
   },
   "meta": {
     "pilot_version": "pilot_01",
@@ -476,7 +479,7 @@
       "ai_rules_v0.3.7"
     ],
     "analysis_label_policy": "manual_override",
-    "generated_at_utc": "2026-11-10T05:48:15Z",
+    "generated_at_utc": "2026-11-10T05:50:39Z",
     "environment": {
       "python_version": "3.13.14",
       "platform": "Windows-11-10.0.26200-SP0",
@@ -555,7 +558,7 @@
         }
       },
       "join": {
-        "event_source": "events_clean.parquet",
+        "event_source": "repo_candidates.csv:event_count",
         "events_total": 197313,
         "events_covered_by_pilot": 159,
         "events_covered_share_of_source": 0.000806

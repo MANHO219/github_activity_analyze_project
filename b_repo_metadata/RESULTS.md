@@ -76,7 +76,7 @@ v0.3.5 的 6 条变化全部来自 101 条 `uncertain` 与 80 条 `excluded` 的
 | AI 标签 v0.3.7（当前） | `included` 4 + `excluded` 32 + `uncertain` 14 = 50 |
 | 人工复核 | 33 条：included 3（全查）、excluded 5（抽样）、uncertain 25（全查） |
 | 与人工一致率（已判定行） | v0.1 6/8 = 75% → v0.2 14/14 → v0.3 17/17 → v0.3.6 19/19 |
-| 接回 A 的事件表 | 50/50 个试点仓库按 `repo_id` 匹配；197,313 条事件中 159 条属这 50 个仓库 |
+| 接回 A 的事件表 | 50/50 个试点仓库按 `repo_id` 匹配；197,313 条事件中 159 条属这 50 个仓库（最终标签：excluded 120 / included 14 / uncertain 25） |
 | 离线测试 | 134 项通过 |
 
 v0.2 的规则分布（历史记录）：
@@ -200,7 +200,7 @@ v0.2 仍存疑的 19 条分三类：
 8. R12 的 200 字符阈值与 `purpose_patterns` 仍是启发式，**未放宽**：`auto-green` 克隆、`MiSArch/wishlist` 等 README 已写明非 AI 的仓库仍是 `uncertain`，留给 LLM 试验与人工判断。A 指出的“空标题即排除”已在 v0.3.4.1 修掉。
 9. R11 仍把任意代码围栏当作“工程章节”。A 明确：`ItsCryptic/ItsCryptic` 可人工判为 excluded，已记入 `manual_revisions.csv`；通用规则暂不放开——A 复测发现直接取消限制会让带统计卡和真实安装命令的 AI 项目也被判成主页。
 10. `readme_evidence.jsonl` 里有 2 条空 README 记录（`srecops/srecops`、`cyx2016/agent`）的 `readme_chars` 是历史错误信封的长度，v0.3.5 已修抓取代码并在加载时跳过这类文本，但旧文件未回写；下次抓取会自动修正。
-11. 接回表改用最终标签：`join_check.py` 默认读取 `repo_ai_labels_analysis.csv`；pilot_02 已按此重跑，pilot_01 没有标签变化，保留原来基于 parquet 的记录。
+11. 接回表改用最终标签：`join_check.py` 默认读取 `repo_ai_labels_analysis.csv`，两批都已按此重跑。pilot_01 因本机没有 pyarrow，事件源回退为 `repo_candidates.csv:event_count`（197,313 条、覆盖 159 条，与 parquet 聚合一致）。
 
 ## 9. 复跑记录
 

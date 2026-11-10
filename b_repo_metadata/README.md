@@ -252,7 +252,7 @@ v0.3.5 是对这 200 个仓库的误判抽查：逐条看完 101 条 `uncertain`
 - `event_share_of_source`：分母是事件表**全部事件**（197,313）；
 - `event_share_of_pilot_events`：分母是**50 个试点仓库的事件总数**（159）。
 
-标签列默认取**最终标签**（`ai_label_final`），`join_check.json` 的 `inputs.label_field` 会写明用的是哪一列。pilot_02 已按最终标签重跑；pilot_01 的标签在 v0.3.4 → v0.3.6 没有变化，保留原来基于 parquet 的记录（`label_field=ai_label`）。
+标签列默认取**最终标签**（`ai_label_final`），`join_check.json` 的 `inputs.label_field` 会写明用的是哪一列。两批都已按最终标签重跑；pilot_01 因本机没有 pyarrow，事件源回退为候选表的 `event_count`（与 parquet 逐条聚合结果一致：197,313 条、覆盖 159 条）。
 
 ## 处理约定
 
