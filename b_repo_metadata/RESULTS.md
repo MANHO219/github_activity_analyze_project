@@ -10,10 +10,12 @@
 **误判抽查：** 2026-11-09，规则 `ai_rules_v0.3.5`（论文清单、course on、个人主页组件、名称边界），pilot_01 0 条、pilot_02 6 条
 **R12 补全：** 2026-11-09，规则 `ai_rules_v0.3.4.1`（用途标题需正文），pilot_01 0 条、pilot_02 0 条
 **A review 收紧：** 2026-11-10，规则 `ai_rules_v0.3.6`（三个新增条件收紧到仓库自身用途），pilot_01 0 条、pilot_02 0 条
+**R12 收尾：** 2026-11-10，规则 `ai_rules_v0.3.4.2`（英文安装说明不算正文），pilot_01 0 条、pilot_02 0 条
+**论文清单再收紧：** 2026-11-10，规则 `ai_rules_v0.3.7`（a list of 锚定整段），pilot_01 0 条、pilot_02 0 条
 **环境：** Windows 11，Python 3.12.14（v0.3.4 及以前）/ 3.13.14（v0.3.5 重跑），标准库 + pyarrow 26.0.0（仅用于读取 A 的 Parquet）
 **运行目录：** [`runs/pilot_01/`](runs/pilot_01/)，汇总见 [`run_summary.json`](runs/pilot_01/run_summary.json)
 
-## 0. 当前状态：v0.3.6（A review 后的收紧）
+## 0. 当前状态：v0.3.7（论文清单再收紧 + R12 收尾）
 
 对 pilot_02 的 101 条 `uncertain` 与 80 条 `excluded` 逐条复查后，只把 6 个**明确判错**的仓库改判；A 复测又发现三处“讨论该主题就被排除”的误伤，v0.3.6 收紧。
 
@@ -41,7 +43,7 @@ A 的复测集中在三个新增条件：推荐 `course on deployment` 的 ML �
 
 注意：**19/19 = 100% 只代表复核样本中自动已判定的 19 条**与人工一致，不是整体分类准确率；人工复核只覆盖 33 个仓库。
 
-规则说明见 [`rules/ai_rules_v0.3.6.md`](rules/ai_rules_v0.3.6.md)、[`rules/ai_rules_v0.3.4.1.md`](rules/ai_rules_v0.3.4.1.md)；抽查过程、改判依据与“维持 uncertain”的清单见 [`reviews/pilot_02_rule_review_v0.3.5.md`](reviews/pilot_02_rule_review_v0.3.5.md)。以下第 1–9 节保留早期过程记录，数字与表格以本节为准。
+规则说明见 [`rules/ai_rules_v0.3.7.md`](rules/ai_rules_v0.3.7.md)、[`rules/ai_rules_v0.3.4.2.md`](rules/ai_rules_v0.3.4.2.md)；抽查过程、改判依据与“维持 uncertain”的清单见 [`reviews/pilot_02_rule_review_v0.3.5.md`](reviews/pilot_02_rule_review_v0.3.5.md)。以下第 1–9 节保留早期过程记录，数字与表格以本节为准。
 
 ## 0.2 扩大试跑 pilot_02（200 个仓库）
 
@@ -71,11 +73,11 @@ v0.3.5 的 6 条变化全部来自 101 条 `uncertain` 与 80 条 `excluded` 的
 | 元数据获取 | 43 `ok` + 2 `id_mismatch` + 5 `not_found` = 50；API 调用 50 次，pending 0 |
 | AI 标签 v0.1 | `included` 3 + `excluded` 22 + `uncertain` 25 = 50 |
 | AI 标签 v0.2 | `included` 1 + `excluded` 30 + `uncertain` 19 = 50 |
-| AI 标签 v0.3.6（当前） | `included` 4 + `excluded` 32 + `uncertain` 14 = 50 |
+| AI 标签 v0.3.7（当前） | `included` 4 + `excluded` 32 + `uncertain` 14 = 50 |
 | 人工复核 | 33 条：included 3（全查）、excluded 5（抽样）、uncertain 25（全查） |
 | 与人工一致率（已判定行） | v0.1 6/8 = 75% → v0.2 14/14 → v0.3 17/17 → v0.3.6 19/19 |
 | 接回 A 的事件表 | 50/50 个试点仓库按 `repo_id` 匹配；197,313 条事件中 159 条属这 50 个仓库 |
-| 离线测试 | 123 项通过 |
+| 离线测试 | 134 项通过 |
 
 v0.2 的规则分布（历史记录）：
 
@@ -184,7 +186,7 @@ v0.2 仍存疑的 19 条分三类：
 | 获取成功数 + 失败数 = 已处理仓库数；三种标签数量之和 = 结果仓库数；待处理项单列 | ✅ | 43+2+5=50；1+30+19=50；`pending_repo_ids` 为空 |
 | 规则、标签理由和人工复核记录齐全；入选/排除各复核 5 个，不足时全查；存疑案例单独复核 | ✅ | 三版规则 JSON/MD、每行 `reason`、`manual_review.csv`（33 条） |
 | 能按 `repo_id` 接回 A 的事件表；带标签的仓库表一仓库一行 | ✅ | `join_check.json`：50/50 命中，覆盖 159 条事件，唯一性检查通过 |
-| 交回代码、运行命令和依赖；另一位组员能按说明重跑 | ✅ | `README.md` 的“怎么重跑”分成复现与开新一轮两种；123 项离线测试；缓存策略可复跑 |
+| 交回代码、运行命令和依赖；另一位组员能按说明重跑 | ✅ | `README.md` 的“怎么重跑”分成复现与开新一轮两种；134 项离线测试；缓存策略可复跑 |
 
 ## 8. 未解决与待确认
 

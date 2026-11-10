@@ -75,14 +75,14 @@ def run(
     summary = {
         "rules_version": rules.version,
         "rules_file": project_relative(rules_path),
-        "rules_sha256": sha256_file(rules_path),
+        "rules_sha256": sha256_file(rules_path, normalize_newlines=True),
         "metadata_csv": project_relative(metadata_csv),
-        "metadata_sha256": sha256_file(metadata_csv),
+        "metadata_sha256": sha256_file(metadata_csv, normalize_newlines=True),
         "labelled_at_utc": labels[0]["labelled_at_utc"] if labels else utc_now(),
         "input_rows": len(metadata_rows),
         "labelled_rows": len(labels),
         "labels_csv": project_relative(out_dir / "repo_ai_labels.csv"),
-        "labels_sha256": sha256_file(out_dir / "repo_ai_labels.csv"),
+        "labels_sha256": sha256_file(out_dir / "repo_ai_labels.csv", normalize_newlines=True),
         **counts,
         "uncertain_repo_ids": [row["repo_id"] for row in uncertain],
         "readme_evidence": {

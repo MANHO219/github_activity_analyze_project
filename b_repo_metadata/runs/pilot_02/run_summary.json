@@ -240,7 +240,7 @@
       "keyword_name 层来自名称粗筛，名称命中不等于 AI 判定；实际标签仍由 rules 决定。"
     ]
   },
-  "updated_at_utc": "2026-11-09T16:53:46Z",
+  "updated_at_utc": "2026-11-10T05:48:06Z",
   "fetch": {
     "started_at_utc": "2026-11-09T08:21:17Z",
     "finished_at_utc": "2026-11-09T08:23:16Z",
@@ -283,16 +283,16 @@
     "note": "README 仅作人工复核证据；v0.1 规则不读取该字段。"
   },
   "labels": {
-    "rules_version": "ai_rules_v0.3.6",
-    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.6.json",
-    "rules_sha256": "18fb1a3a3352dd5f9dc92f9de61f6bdf87a995defd40ddb20fa9adfa48be735a",
+    "rules_version": "ai_rules_v0.3.7",
+    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.7.json",
+    "rules_sha256": "78ad80f98d4ad9a64063dbac4ea1cddb16f267088172ff3d4db10851fa2a2769",
     "metadata_csv": "b_repo_metadata/runs/pilot_02/repo_metadata.csv",
-    "metadata_sha256": "331bbcf70fa8cc0e834b1e7d05d08b8899ef805897ceef32fff31ed8282bcf7d",
-    "labelled_at_utc": "2026-11-09T16:53:41Z",
+    "metadata_sha256": "01ba533476f75f6fadeb510f9207c30f1ccc23904b671a5445484c8386afb86d",
+    "labelled_at_utc": "2026-11-10T05:47:52Z",
     "input_rows": 200,
     "labelled_rows": 200,
     "labels_csv": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-    "labels_sha256": "fa54a784531afe1e6089cbcc5a380bf17ad73c56a0b5765b73768481294656f5",
+    "labels_sha256": "bcd25a308720071dba6a15585065d1e4c2dcdbcba8fe77eb5b2cc7c53edc2fc2",
     "total": 200,
     "by_label": {
       "included": 17,
@@ -589,7 +589,7 @@
     }
   },
   "join": {
-    "checked_at_utc": "2026-11-09T16:53:46Z",
+    "checked_at_utc": "2026-11-10T05:48:06Z",
     "event_source": "repo_daily_counts.csv:sum(event_count)",
     "events_total_in_source": 5528300,
     "pilot_repos": 200,
@@ -631,11 +631,11 @@
     "joined_csv": "b_repo_metadata/runs/pilot_02/repo_labels_joined_events.csv"
   },
   "label_comparison": {
-    "compared_at_utc": "2026-11-09T16:53:42Z",
-    "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.5.csv",
+    "compared_at_utc": "2026-11-10T05:47:54Z",
+    "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.6.csv",
     "new_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-    "old_rule_version": "ai_rules_v0.3.5",
-    "new_rule_version": "ai_rules_v0.3.6",
+    "old_rule_version": "ai_rules_v0.3.6",
+    "new_rule_version": "ai_rules_v0.3.7",
     "rows": 200,
     "changed_rows": 0,
     "label_changed_rows": 0,
@@ -716,7 +716,7 @@
     }
   },
   "analysis_labels": {
-    "generated_at_utc": "2026-11-09T16:53:43Z",
+    "generated_at_utc": "2026-11-10T05:48:00Z",
     "policy": "manual_override",
     "policy_note": "人工复核优先：有人工判断的仓库采用人工标签，其余采用规则自动标签。",
     "rows": 200,
@@ -755,13 +755,13 @@
       "random": 160,
       "keyword_name": 40
     },
-    "rules_version": "ai_rules_v0.3.6",
+    "rules_version": "ai_rules_v0.3.7",
     "rules_compared": [
-      "ai_rules_v0.3.5",
-      "ai_rules_v0.3.6"
+      "ai_rules_v0.3.6",
+      "ai_rules_v0.3.7"
     ],
     "analysis_label_policy": "manual_override",
-    "generated_at_utc": "2026-11-09T17:03:34Z",
+    "generated_at_utc": "2026-11-10T05:48:15Z",
     "environment": {
       "python_version": "3.13.14",
       "platform": "Windows-11-10.0.26200-SP0",
@@ -771,11 +771,11 @@
       "candidates_csv": "a_data_pipeline/runs/20240115_python/python/repo_candidates.csv",
       "candidates_sha256": "3b0ffd5a72723dd55e5889dacdf2b75febd607df9628d1000d7f1a371146c143",
       "pilot_candidates_sha256": "5393f838db735bdcfd788d74cbd24f3e7e10c71b4f92c50f228052a9a1ed6dab",
-      "repo_metadata_sha256": "331bbcf70fa8cc0e834b1e7d05d08b8899ef805897ceef32fff31ed8282bcf7d",
-      "repo_ai_labels_sha256": "fa54a784531afe1e6089cbcc5a380bf17ad73c56a0b5765b73768481294656f5",
+      "repo_metadata_sha256": "01ba533476f75f6fadeb510f9207c30f1ccc23904b671a5445484c8386afb86d",
+      "repo_ai_labels_sha256": "bcd25a308720071dba6a15585065d1e4c2dcdbcba8fe77eb5b2cc7c53edc2fc2",
       "repo_ai_labels_v0_1_sha256": null,
-      "analysis_labels_sha256": "d7156628103acc87ea21c0349a83d6ae8af000c0b03d235012a818ec70a8546a",
-      "rules_sha256": "18fb1a3a3352dd5f9dc92f9de61f6bdf87a995defd40ddb20fa9adfa48be735a"
+      "analysis_labels_sha256": "b40e193b7f4454fac271d8fbb87a92a555bd5ef16c2e0fb6c4c59d5fcc33abe2",
+      "rules_sha256": "78ad80f98d4ad9a64063dbac4ea1cddb16f267088172ff3d4db10851fa2a2769"
     },
     "outputs": {
       "metadata_rows": 200,

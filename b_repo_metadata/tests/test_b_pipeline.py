@@ -501,6 +501,20 @@ class EvidenceTests(unittest.TestCase):
 
         self.assertEqual(_readme_text(Response()), "")
 
+    def test_sha256_normalizes_line_endings(self):
+        """入库文件以 LF 存储：记录 SHA 时要归一换行，避免平台差异。"""
+        from bmeta.common import sha256_file
+
+        crlf = self.root / "crlf.txt"
+        lf = self.root / "lf.txt"
+        crlf.write_bytes(b"a" + bytes([13, 10]) + b"b" + bytes([13, 10]))
+        lf.write_bytes(b"a" + bytes([10]) + b"b" + bytes([10]))
+        self.assertEqual(
+            sha256_file(crlf, normalize_newlines=True),
+            sha256_file(lf, normalize_newlines=True),
+        )
+        self.assertNotEqual(sha256_file(crlf), sha256_file(lf))
+
     def test_api_envelope_skipped_when_loading_evidence(self):
         """历史证据里的错误信封在加载阶段被跳过，不参与规则判定。"""
         path = self.root / "readme_evidence.jsonl"
@@ -1209,6 +1223,55 @@ The code has no dependencies and can be copied into any project.
         self.assertEqual(result["rule_id"], "R12_readme_non_ai")
 
 
+class RulesV342Tests(unittest.TestCase):
+    """v0.3.4.2：Overview 下只有英文安装说明时仍为 uncertain。"""
+
+    V342 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.4.2.json"))
+    V341 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.4.1.json"))
+
+    @staticmethod
+    def readme(text):
+        return {"text": text, "sha256": "s", "fetched_at_utc": "t"}
+
+    INSTALL_EN = """# mytool
+
+## Overview
+
+Install the package with pip:
+
+pip install mytool
+
+Then run the following command to start the service:
+
+mytool --help
+""" * 6
+
+    def test_english_install_overview_stays_uncertain(self):
+        row = metadata(121, description="", topics=[])
+        result = self.V342.decide(row, readme=self.readme(self.INSTALL_EN))
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R7_insufficient_text_evidence")
+
+    def test_v341_still_excludes_english_install_overview(self):
+        """版本隔离：v0.3.4.1 仍把安装说明当成用途正文。"""
+        row = metadata(122, description="", topics=[])
+        result = self.V341.decide(row, readme=self.readme(self.INSTALL_EN))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+    def test_media_center_still_excluded_in_v342(self):
+        row = metadata(123, description="", topics=[])
+        result = self.V342.decide(row, readme=self.readme(RulesV341Tests.MEDIA_CENTER))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+    def test_real_overview_still_excluded_in_v342(self):
+        row = metadata(124, description="", topics=[])
+        result = self.V342.decide(row, readme=self.readme(RulesV341Tests.REAL_OVERVIEW))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+
 class RulesV35Tests(unittest.TestCase):
     """v0.3.5：抽样复核后只修明确判错的 5 处，不放宽 R12 门槛。"""
 
@@ -1394,6 +1457,53 @@ pip install myml
             ),
         )
         self.assertEqual(profile["rule_id"], "R11_readme_profile")
+
+
+class RulesV37Tests(unittest.TestCase):
+    """v0.3.7：paper_list 只认整段是清单的描述；并继承 v0.3.4.2 的 R12 收尾。"""
+
+    V37 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.7.json"))
+    V36 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.6.json"))
+
+    @staticmethod
+    def readme(text):
+        return {"text": text, "sha256": "s", "fetched_at_utc": "t"}
+
+    def test_paper_summarizer_with_list_phrase_not_excluded(self):
+        row = metadata(131, description="A tool that uses an LLM to summarize a list of papers.")
+        result = self.V37.decide(row)
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R5_description_match")
+
+    def test_curated_paper_list_still_excluded(self):
+        row = metadata(132, description="A curated list of LLM papers.")
+        result = self.V37.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3_resource_collection")
+
+    def test_paper_list_about_topic_still_excluded(self):
+        row = metadata(133, description="A list of papers about large language models.")
+        result = self.V37.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3_resource_collection")
+
+    def test_related_papers_title_still_excluded(self):
+        row = metadata(134, description="ChatGPT-related papers.")
+        result = self.V37.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3_resource_collection")
+
+    def test_v036_still_excludes_list_summarizer(self):
+        """版本隔离：v0.3.6 仍把它当论文清单。"""
+        row = metadata(135, description="A tool that uses an LLM to summarize a list of papers.")
+        result = self.V36.decide(row)
+        self.assertEqual(result["rule_id"], "R3_resource_collection")
+
+    def test_v037_inherits_install_only_overview(self):
+        """v0.3.7 继承 v0.3.4.2：Overview 只有安装说明仍是 uncertain。"""
+        row = metadata(136, description="", topics=[])
+        result = self.V37.decide(row, readme=self.readme(RulesV342Tests.INSTALL_EN))
+        self.assertEqual(result["ai_label"], "uncertain")
 
 
 class CompareAndHandoffTests(unittest.TestCase):

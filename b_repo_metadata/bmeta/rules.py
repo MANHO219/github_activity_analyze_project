@@ -163,6 +163,8 @@ class RuleSet:
                     # 旧版本规则文件没有 purpose_requires_body，行为不变。
                     self.readme_non_ai_require_body = bool(non_ai.get("purpose_requires_body", False))
                     self.readme_non_ai_min_body_chars = int(non_ai.get("min_purpose_body_chars", 40) or 40)
+                    # v0.3.4.2：Overview 下只有英文安装说明时不算“说明了用途”。
+                    self.readme_non_ai_ignore_install = bool(non_ai.get("ignore_install_lines", False))
                     self.readme_non_ai_heading = [
                         (name, pattern) for name, pattern in self.readme_non_ai_purpose if name == "purpose_heading"
                     ]
@@ -175,6 +177,7 @@ class RuleSet:
                     self.readme_non_ai_template = []
                     self.readme_non_ai_require_body = False
                     self.readme_non_ai_min_body_chars = 40
+                    self.readme_non_ai_ignore_install = False
                     self.readme_non_ai_heading = []
                 # README 的“可选 AI 集成”排除与“课程覆盖”都只在规则文件显式配置时启用。
                 self.readme_feature_only = _compile(readme_rules.get("feature_only_patterns", []))
@@ -487,8 +490,23 @@ class RuleSet:
                 parts.append(stripped)
         return "\n".join(parts)
 
+    _INSTRUCTION_LINE = re.compile(
+        r"^(to\s+)?(install|installation|set\s*up|setup|run|execute|launch|start|build|compile|clone|download|"
+        r"configure|usage|quick\s*start|getting\s+started|requirements?|prerequisites?|dependencies)\b",
+        re.IGNORECASE,
+    )
+    _INSTRUCTION_HINT = re.compile(
+        r"\bthe\s+following\s+(commands?|steps?)\b"
+        r"|^(then|next|afterwards?|finally)\b[^.]{0,30}\b(run|install|execute|start|launch|build|clone|download)\b",
+        re.IGNORECASE,
+    )
+
     def _has_prose_body(self, body: str) -> bool:
-        """正文里是否真的有说明性文字：命令行、空行、纯列表符号都不算。"""
+        """正文里是否真的有说明性文字：命令行、空行、纯列表符号都不算。
+
+        v0.3.4.2 起，英文安装说明（Install/Run/Setup 开头，或以冒号收尾的引导句）
+        也不算用途说明——A 的复测里“Overview + 安装步骤”仍被误判为说明了用途。
+        """
         kept: list[str] = []
         for line in body.splitlines():
             stripped = line.strip()
@@ -496,6 +514,14 @@ class RuleSet:
                 continue
             if stripped.startswith("$") or self._COMMAND_LINE.match(stripped):
                 continue
+            # 形如 “mytool --help” 的调用行也不当正文。
+            if self.readme_non_ai_ignore_install and re.match(r"^[\w./@+-]+\s+--?\w", stripped):
+                continue
+            if self.readme_non_ai_ignore_install:
+                if self._INSTRUCTION_LINE.match(stripped) or self._INSTRUCTION_HINT.search(stripped):
+                    continue
+                if stripped.endswith(":") and len(stripped) <= 80:
+                    continue
             kept.append(stripped)
         return self._meaningful_chars("\n".join(kept)) >= self.readme_non_ai_min_body_chars
 

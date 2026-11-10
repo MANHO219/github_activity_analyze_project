@@ -32,8 +32,20 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).strftime(UTC_FORMAT)
 
 
-def sha256_file(path: os.PathLike[str] | str, chunk_size: int = 1 << 20) -> str:
-    """文件 SHA-256；用于记录输入名单的来源与可复现性。"""
+def sha256_file(
+    path: os.PathLike[str] | str,
+    chunk_size: int = 1 << 20,
+    *,
+    normalize_newlines: bool = False,
+) -> str:
+    """文件 SHA-256；用于记录输入名单的来源与可复现性。
+
+    ``normalize_newlines=True`` 时先把 CRLF 归一成 LF 再哈希，保证记录的是
+    **入库内容**（Git blob 以 LF 存储）而不是某个平台工作区的换行形式。
+    """
+    if normalize_newlines:
+        data = Path(path).read_bytes().replace(b"\r\n", b"\n")
+        return hashlib.sha256(data).hexdigest()
     digest = hashlib.sha256()
     with open(path, "rb") as handle:
         for chunk in iter(lambda: handle.read(chunk_size), b""):
