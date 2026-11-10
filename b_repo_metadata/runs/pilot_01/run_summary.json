@@ -85,7 +85,7 @@
       "keyword_name 层来自名称粗筛，名称命中不等于 AI 判定；实际标签仍由 rules 决定。"
     ]
   },
-  "updated_at_utc": "2026-11-10T05:42:17Z",
+  "updated_at_utc": "2026-11-10T12:39:48Z",
   "fetch": {
     "started_at_utc": "2026-11-02T05:02:36Z",
     "finished_at_utc": "2026-11-02T05:03:07Z",
@@ -113,16 +113,16 @@
     "note": "失败行只记录状态，缺失元数据留空；pending 行尚未写入 repo_metadata.csv。"
   },
   "labels": {
-    "rules_version": "ai_rules_v0.3.4.2",
-    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.4.2.json",
-    "rules_sha256": "5a4af92d94047ab03db0a15f833175de945772b804bec3fa17186cd7da4cb2e4",
+    "rules_version": "ai_rules_v0.3.4.3",
+    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.4.3.json",
+    "rules_sha256": "b4aafd5c2b273721d4ce4ab7d44a8d1a665bdc22451f5219d462914c88721215",
     "metadata_csv": "b_repo_metadata/runs/pilot_01/repo_metadata.csv",
     "metadata_sha256": "5965ac967c9aaecf29e3699f46b457228058d7fb1104360b492e636c31edabff",
-    "labelled_at_utc": "2026-11-10T05:42:14Z",
+    "labelled_at_utc": "2026-11-10T12:39:39Z",
     "input_rows": 50,
     "labelled_rows": 50,
     "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
-    "labels_sha256": "4c9dea18ebc1e3c040a966f8f5d474f64b567465dec782dc87000e297e4c6805",
+    "labels_sha256": "2fc1913649381ab0746430f0e1caff75305b224cbc7df9bb75418edca22f5c3f",
     "total": 50,
     "by_label": {
       "included": 4,
@@ -425,23 +425,23 @@
     "note": "README 仅作人工复核证据；v0.1 规则不读取该字段。"
   },
   "join": {
-    "checked_at_utc": "2026-11-09T13:13:52Z",
-    "event_source": "events_clean.parquet",
-    "events_total_in_source": 197313,
+    "checked_at_utc": "2026-11-10T12:39:48Z",
+    "event_source": "repo_daily_counts.csv:sum(event_count)",
+    "events_total_in_source": 5528300,
     "pilot_repos": 50,
     "pilot_repos_found_in_events": 50,
     "missing_from_events": [],
-    "events_covered_by_pilot": 159,
-    "events_covered_share_of_source": 0.000806,
-    "events_outside_pilot_share": 0.999194,
+    "events_covered_by_pilot": 656,
+    "events_covered_share_of_source": 0.000119,
+    "events_outside_pilot_share": 0.999881,
     "event_share_denominators": {
       "event_share_of_source": "事件表全部事件数（events_total_in_source）",
-      "event_share_of_pilot_events": "50 个试点仓库的事件总数（events_covered_by_pilot）"
+      "event_share_of_pilot_events": "本次试点仓库的事件总数（events_covered_by_pilot）"
     },
     "events_by_label": {
-      "excluded": 75,
-      "included": 14,
-      "uncertain": 70
+      "excluded": 579,
+      "included": 17,
+      "uncertain": 60
     },
     "checks": {
       "labels_have_unique_repo_ids": true,
@@ -452,15 +452,17 @@
     },
     "inputs": {
       "metadata_csv": "b_repo_metadata/runs/pilot_01/repo_metadata.csv",
-      "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
+      "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels_analysis.csv",
+      "label_field": "ai_label_final",
       "events_parquet": "a_data_pipeline/runs/20240115_1hour_handoff/python/events_clean.parquet",
       "candidates_csv": "a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv",
-      "daily_counts_csv": null
+      "daily_counts_csv": "a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv"
     },
     "limits": [
       "Only repo_id is used as the join key; repo names in the event table may be historical.",
       "The pilot covers a small sample, so covered/uncovered event shares describe this run only.",
-      "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events."
+      "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events.",
+      "Event counts come from repo_daily_counts.csv (repo-level sums), not per-event rows."
     ],
     "joined_csv": "b_repo_metadata/runs/pilot_01/repo_labels_joined_events.csv"
   },
@@ -471,13 +473,13 @@
       "random": 40,
       "keyword_name": 10
     },
-    "rules_version": "ai_rules_v0.3.4.2",
+    "rules_version": "ai_rules_v0.3.4.3",
     "rules_compared": [
-      "ai_rules_v0.3.4.1",
-      "ai_rules_v0.3.4.2"
+      "ai_rules_v0.3.4.2",
+      "ai_rules_v0.3.4.3"
     ],
     "analysis_label_policy": "manual_override",
-    "generated_at_utc": "2026-11-10T05:42:19Z",
+    "generated_at_utc": "2026-11-10T12:39:51Z",
     "environment": {
       "python_version": "3.13.14",
       "platform": "Windows-11-10.0.26200-SP0",
@@ -488,10 +490,10 @@
       "candidates_sha256": "e11f5c20990233b45fa8fabe4e0eeeed401baceaaf6f108e1d2d3c6d463c0b09",
       "pilot_candidates_sha256": "e9de060d26ded56bb841fe6a449bc409f55eb5a86125f279efa7bea170d3a9c8",
       "repo_metadata_sha256": "5965ac967c9aaecf29e3699f46b457228058d7fb1104360b492e636c31edabff",
-      "repo_ai_labels_sha256": "4c9dea18ebc1e3c040a966f8f5d474f64b567465dec782dc87000e297e4c6805",
+      "repo_ai_labels_sha256": "2fc1913649381ab0746430f0e1caff75305b224cbc7df9bb75418edca22f5c3f",
       "repo_ai_labels_v0_1_sha256": "8e4c28686464cc8bc8676cf34b91eb9b465007c224cd6a2f38983f943f8188b5",
-      "analysis_labels_sha256": "23f59ba99ae0e1cab922b9849cdef2dbac49947acc6bd53fef69e74f009f6040",
-      "rules_sha256": "5a4af92d94047ab03db0a15f833175de945772b804bec3fa17186cd7da4cb2e4"
+      "analysis_labels_sha256": "1c13bdde1e45e533495fc790998c99ccd0686c8eea90c771cd5119ce2001727c",
+      "rules_sha256": "b4aafd5c2b273721d4ce4ab7d44a8d1a665bdc22451f5219d462914c88721215"
     },
     "outputs": {
       "metadata_rows": 50,
@@ -556,10 +558,10 @@
         }
       },
       "join": {
-        "event_source": "events_clean.parquet",
-        "events_total": 197313,
-        "events_covered_by_pilot": 159,
-        "events_covered_share_of_source": 0.000806
+        "event_source": "repo_daily_counts.csv:sum(event_count)",
+        "events_total": 5528300,
+        "events_covered_by_pilot": 656,
+        "events_covered_share_of_source": 0.000119
       }
     },
     "unresolved_issues": [
@@ -592,11 +594,11 @@
     "run_dir": "b_repo_metadata/runs/pilot_01"
   },
   "label_comparison": {
-    "compared_at_utc": "2026-11-10T05:42:16Z",
-    "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.4.1.csv",
+    "compared_at_utc": "2026-11-10T12:39:40Z",
+    "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.4.2.csv",
     "new_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
-    "old_rule_version": "ai_rules_v0.3.4.1",
-    "new_rule_version": "ai_rules_v0.3.4.2",
+    "old_rule_version": "ai_rules_v0.3.4.2",
+    "new_rule_version": "ai_rules_v0.3.4.3",
     "rows": 50,
     "changed_rows": 0,
     "label_changed_rows": 0,
@@ -683,7 +685,7 @@
     }
   },
   "analysis_labels": {
-    "generated_at_utc": "2026-11-10T05:42:17Z",
+    "generated_at_utc": "2026-11-10T12:39:45Z",
     "policy": "manual_override",
     "policy_note": "人工复核优先：有人工判断的仓库采用人工标签，其余采用规则自动标签。",
     "rows": 50,

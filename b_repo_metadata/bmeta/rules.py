@@ -159,6 +159,8 @@ class RuleSet:
                     self.readme_non_ai_min_body_chars = int(non_ai.get("min_purpose_body_chars", 40) or 40)
                     # v0.3.4.2：Overview 下只有英文安装说明时不算“说明了用途”。
                     self.readme_non_ai_ignore_install = bool(non_ai.get("ignore_install_lines", False))
+                    # v0.3.4.3：编号列表（1. Download…）要先剥标记再判断正文。
+                    self.readme_non_ai_strip_markers = bool(non_ai.get("strip_list_markers", False))
                     self.readme_non_ai_heading = [
                         (name, pattern) for name, pattern in self.readme_non_ai_purpose if name == "purpose_heading"
                     ]
@@ -172,6 +174,7 @@ class RuleSet:
                     self.readme_non_ai_require_body = False
                     self.readme_non_ai_min_body_chars = 40
                     self.readme_non_ai_ignore_install = False
+                    self.readme_non_ai_strip_markers = False
                     self.readme_non_ai_heading = []
                 # README 的“可选 AI 集成”排除与“课程覆盖”都只在规则文件显式配置时启用。
                 self.readme_feature_only = _compile(readme_rules.get("feature_only_patterns", []))
@@ -478,14 +481,28 @@ class RuleSet:
 
     _INSTRUCTION_LINE = re.compile(
         r"^(to\s+)?(install|installation|set\s*up|setup|run|execute|launch|start|build|compile|clone|download|"
-        r"configure|usage|quick\s*start|getting\s+started|requirements?|prerequisites?|dependencies)\b",
+        r"copy|move|add|open|extract|edit|select|choose|click|navigate|chmod|export|source|configure|"
+        r"usage|quick\s*start|getting\s+started|requirements?|prerequisites?|dependencies)\b",
         re.IGNORECASE,
     )
+    # 有序/无序列表标记与 checkbox：A 的复测里 “1. Download…” 这类编号步骤
+    # 因为开头是 “1.” 绕过了指令行判断，被当成正文。先剥标记再判断。
+    _LIST_MARKER = re.compile(r"^(?:[-*+]\s+(?:\[[ xX]\]\s+)?|\(?\d{1,2}[.)]\s+)")
     _INSTRUCTION_HINT = re.compile(
         r"\bthe\s+following\s+(commands?|steps?)\b"
         r"|^(then|next|afterwards?|finally)\b[^.]{0,30}\b(run|install|execute|start|launch|build|clone|download)\b",
         re.IGNORECASE,
     )
+
+    def _strip_list_marker(self, line: str) -> str:
+        """去掉列表标记与 checkbox，最多剥两层（``1. - item``）。"""
+        text = line
+        for _ in range(2):
+            new = self._LIST_MARKER.sub("", text, count=1).strip()
+            if new == text:
+                break
+            text = new
+        return text
 
     def _has_prose_body(self, body: str) -> bool:
         """正文里是否真的有说明性文字：命令行、空行、纯列表符号都不算。
@@ -496,6 +513,10 @@ class RuleSet:
         kept: list[str] = []
         for line in body.splitlines():
             stripped = line.strip()
+            if not stripped:
+                continue
+            if self.readme_non_ai_strip_markers:
+                stripped = self._strip_list_marker(stripped)
             if not stripped or stripped in ("-", "*", "+"):
                 continue
             if stripped.startswith("$") or self._COMMAND_LINE.match(stripped):

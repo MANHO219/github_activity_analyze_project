@@ -1,21 +1,21 @@
 {
-  "checked_at_utc": "2026-11-09T13:13:52Z",
-  "event_source": "events_clean.parquet",
-  "events_total_in_source": 197313,
+  "checked_at_utc": "2026-11-10T12:39:48Z",
+  "event_source": "repo_daily_counts.csv:sum(event_count)",
+  "events_total_in_source": 5528300,
   "pilot_repos": 50,
   "pilot_repos_found_in_events": 50,
   "missing_from_events": [],
-  "events_covered_by_pilot": 159,
-  "events_covered_share_of_source": 0.000806,
-  "events_outside_pilot_share": 0.999194,
+  "events_covered_by_pilot": 656,
+  "events_covered_share_of_source": 0.000119,
+  "events_outside_pilot_share": 0.999881,
   "event_share_denominators": {
     "event_share_of_source": "事件表全部事件数（events_total_in_source）",
-    "event_share_of_pilot_events": "50 个试点仓库的事件总数（events_covered_by_pilot）"
+    "event_share_of_pilot_events": "本次试点仓库的事件总数（events_covered_by_pilot）"
   },
   "events_by_label": {
-    "excluded": 75,
-    "included": 14,
-    "uncertain": 70
+    "excluded": 579,
+    "included": 17,
+    "uncertain": 60
   },
   "checks": {
     "labels_have_unique_repo_ids": true,
@@ -26,14 +26,16 @@
   },
   "inputs": {
     "metadata_csv": "b_repo_metadata/runs/pilot_01/repo_metadata.csv",
-    "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
+    "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels_analysis.csv",
+    "label_field": "ai_label_final",
     "events_parquet": "a_data_pipeline/runs/20240115_1hour_handoff/python/events_clean.parquet",
     "candidates_csv": "a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv",
-    "daily_counts_csv": null
+    "daily_counts_csv": "a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv"
   },
   "limits": [
     "Only repo_id is used as the join key; repo names in the event table may be historical.",
     "The pilot covers a small sample, so covered/uncovered event shares describe this run only.",
-    "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events."
+    "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events.",
+    "Event counts come from repo_daily_counts.csv (repo-level sums), not per-event rows."
   ]
 }

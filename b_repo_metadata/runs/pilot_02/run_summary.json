@@ -240,7 +240,7 @@
       "keyword_name 层来自名称粗筛，名称命中不等于 AI 判定；实际标签仍由 rules 决定。"
     ]
   },
-  "updated_at_utc": "2026-11-10T05:42:18Z",
+  "updated_at_utc": "2026-11-10T12:39:50Z",
   "fetch": {
     "started_at_utc": "2026-11-09T08:21:17Z",
     "finished_at_utc": "2026-11-09T08:23:16Z",
@@ -283,16 +283,16 @@
     "note": "README 仅作人工复核证据；v0.1 规则不读取该字段。"
   },
   "labels": {
-    "rules_version": "ai_rules_v0.3.4.2",
-    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.4.2.json",
-    "rules_sha256": "5a4af92d94047ab03db0a15f833175de945772b804bec3fa17186cd7da4cb2e4",
+    "rules_version": "ai_rules_v0.3.4.3",
+    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.4.3.json",
+    "rules_sha256": "b4aafd5c2b273721d4ce4ab7d44a8d1a665bdc22451f5219d462914c88721215",
     "metadata_csv": "b_repo_metadata/runs/pilot_02/repo_metadata.csv",
     "metadata_sha256": "01ba533476f75f6fadeb510f9207c30f1ccc23904b671a5445484c8386afb86d",
-    "labelled_at_utc": "2026-11-10T05:42:15Z",
+    "labelled_at_utc": "2026-11-10T12:39:40Z",
     "input_rows": 200,
     "labelled_rows": 200,
     "labels_csv": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-    "labels_sha256": "6d20ae4cd3adf814728661030f6e39ea1344fac3a1b9c11c9d0abd1c9f70613e",
+    "labels_sha256": "314df9dafadb9bceb445efbfbb605980ca0445999e1c3fc2d20c9b8cccfa44e2",
     "total": 200,
     "by_label": {
       "included": 19,
@@ -592,7 +592,7 @@
     }
   },
   "join": {
-    "checked_at_utc": "2026-11-09T13:13:55Z",
+    "checked_at_utc": "2026-11-10T12:39:50Z",
     "event_source": "repo_daily_counts.csv:sum(event_count)",
     "events_total_in_source": 5528300,
     "pilot_repos": 200,
@@ -603,7 +603,7 @@
     "events_outside_pilot_share": 0.999806,
     "event_share_denominators": {
       "event_share_of_source": "事件表全部事件数（events_total_in_source）",
-      "event_share_of_pilot_events": "50 个试点仓库的事件总数（events_covered_by_pilot）"
+      "event_share_of_pilot_events": "本次试点仓库的事件总数（events_covered_by_pilot）"
     },
     "events_by_label": {
       "excluded": 313,
@@ -619,25 +619,26 @@
     },
     "inputs": {
       "metadata_csv": "b_repo_metadata/runs/pilot_02/repo_metadata.csv",
-      "labels_csv": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
+      "labels_csv": "b_repo_metadata/runs/pilot_02/repo_ai_labels_analysis.csv",
+      "label_field": "ai_label_final",
       "events_parquet": "a_data_pipeline/runs/20240115_1hour_handoff/python/events_clean.parquet",
       "candidates_csv": "a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv",
-      "daily_counts_csv": "a_data_pipeline/runs/20240115_python/python/repo_daily_counts.csv"
+      "daily_counts_csv": "a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv"
     },
     "limits": [
       "Only repo_id is used as the join key; repo names in the event table may be historical.",
       "The pilot covers a small sample, so covered/uncovered event shares describe this run only.",
       "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events.",
-      "Full parquet join not executed; repo-level counts from candidates used."
+      "Event counts come from repo_daily_counts.csv (repo-level sums), not per-event rows."
     ],
     "joined_csv": "b_repo_metadata/runs/pilot_02/repo_labels_joined_events.csv"
   },
   "label_comparison": {
-    "compared_at_utc": "2026-11-10T05:42:17Z",
-    "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.4.1.csv",
+    "compared_at_utc": "2026-11-10T12:39:41Z",
+    "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.4.2.csv",
     "new_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-    "old_rule_version": "ai_rules_v0.3.4.1",
-    "new_rule_version": "ai_rules_v0.3.4.2",
+    "old_rule_version": "ai_rules_v0.3.4.2",
+    "new_rule_version": "ai_rules_v0.3.4.3",
     "rows": 200,
     "changed_rows": 0,
     "label_changed_rows": 0,
@@ -718,7 +719,7 @@
     }
   },
   "analysis_labels": {
-    "generated_at_utc": "2026-11-10T05:42:18Z",
+    "generated_at_utc": "2026-11-10T12:39:45Z",
     "policy": "manual_override",
     "policy_note": "人工复核优先：有人工判断的仓库采用人工标签，其余采用规则自动标签。",
     "rows": 200,
