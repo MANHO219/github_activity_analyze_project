@@ -420,6 +420,14 @@ class JoinTests(unittest.TestCase):
 
 
 class EvidenceTests(unittest.TestCase):
+    def setUp(self):
+        TEST_TMP_ROOT.mkdir(parents=True, exist_ok=True)
+        self.root = TEST_TMP_ROOT / uuid.uuid4().hex
+        self.root.mkdir(parents=True, exist_ok=True)
+
+    def tearDown(self):
+        shutil.rmtree(self.root, ignore_errors=True)
+
     def test_base64_readme_decoded(self):
         payload = base64.b64encode("# Hello 世界".encode("utf-8")).decode()
 
@@ -435,6 +443,21 @@ class EvidenceTests(unittest.TestCase):
             raw = "# raw readme".encode()
 
         self.assertEqual(_readme_text(Response()), "# raw readme")
+
+
+    def test_sha256_normalizes_line_endings(self):
+        """入库文件以 LF 存储：记录 SHA 时要归一换行，避免平台差异。"""
+        from bmeta.common import sha256_file
+
+        crlf = self.root / "crlf.txt"
+        lf = self.root / "lf.txt"
+        crlf.write_bytes(b"a" + bytes([13, 10]) + b"b" + bytes([13, 10]))
+        lf.write_bytes(b"a" + bytes([10]) + b"b" + bytes([10]))
+        self.assertEqual(
+            sha256_file(crlf, normalize_newlines=True),
+            sha256_file(lf, normalize_newlines=True),
+        )
+        self.assertNotEqual(sha256_file(crlf), sha256_file(lf))
 
 
 class RulesV2Tests(unittest.TestCase):
@@ -1117,6 +1140,55 @@ The code has no dependencies and can be copied into any project.
     def test_v034_keeps_old_heading_only_behaviour(self):
         row = metadata(94, description="", topics=[])
         result = self.V34.decide(row, readme=self.readme(self.INSTALL_ONLY))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+
+class RulesV342Tests(unittest.TestCase):
+    """v0.3.4.2：Overview 下只有英文安装说明时仍为 uncertain。"""
+
+    V342 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.4.2.json"))
+    V341 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.4.1.json"))
+
+    @staticmethod
+    def readme(text):
+        return {"text": text, "sha256": "s", "fetched_at_utc": "t"}
+
+    INSTALL_EN = """# mytool
+
+## Overview
+
+Install the package with pip:
+
+pip install mytool
+
+Then run the following command to start the service:
+
+mytool --help
+""" * 6
+
+    def test_english_install_overview_stays_uncertain(self):
+        row = metadata(121, description="", topics=[])
+        result = self.V342.decide(row, readme=self.readme(self.INSTALL_EN))
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R7_insufficient_text_evidence")
+
+    def test_v341_still_excludes_english_install_overview(self):
+        """版本隔离：v0.3.4.1 仍把安装说明当成用途正文。"""
+        row = metadata(122, description="", topics=[])
+        result = self.V341.decide(row, readme=self.readme(self.INSTALL_EN))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+    def test_media_center_still_excluded_in_v342(self):
+        row = metadata(123, description="", topics=[])
+        result = self.V342.decide(row, readme=self.readme(RulesV341Tests.MEDIA_CENTER))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+    def test_real_overview_still_excluded_in_v342(self):
+        row = metadata(124, description="", topics=[])
+        result = self.V342.decide(row, readme=self.readme(RulesV341Tests.REAL_OVERVIEW))
         self.assertEqual(result["ai_label"], "excluded")
         self.assertEqual(result["rule_id"], "R12_readme_non_ai")
 

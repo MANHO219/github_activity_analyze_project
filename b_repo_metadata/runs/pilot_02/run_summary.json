@@ -240,7 +240,7 @@
       "keyword_name 层来自名称粗筛，名称命中不等于 AI 判定；实际标签仍由 rules 决定。"
     ]
   },
-  "updated_at_utc": "2026-11-09T16:37:18Z",
+  "updated_at_utc": "2026-11-10T05:42:18Z",
   "fetch": {
     "started_at_utc": "2026-11-09T08:21:17Z",
     "finished_at_utc": "2026-11-09T08:23:16Z",
@@ -283,16 +283,16 @@
     "note": "README 仅作人工复核证据；v0.1 规则不读取该字段。"
   },
   "labels": {
-    "rules_version": "ai_rules_v0.3.4.1",
-    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.4.1.json",
-    "rules_sha256": "4421e84393298222ddb5f6f61bc8e29f4954de4c3cc86d97435dcfee44ba48e0",
+    "rules_version": "ai_rules_v0.3.4.2",
+    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.4.2.json",
+    "rules_sha256": "5a4af92d94047ab03db0a15f833175de945772b804bec3fa17186cd7da4cb2e4",
     "metadata_csv": "b_repo_metadata/runs/pilot_02/repo_metadata.csv",
-    "metadata_sha256": "331bbcf70fa8cc0e834b1e7d05d08b8899ef805897ceef32fff31ed8282bcf7d",
-    "labelled_at_utc": "2026-11-09T16:36:55Z",
+    "metadata_sha256": "01ba533476f75f6fadeb510f9207c30f1ccc23904b671a5445484c8386afb86d",
+    "labelled_at_utc": "2026-11-10T05:42:15Z",
     "input_rows": 200,
     "labelled_rows": 200,
     "labels_csv": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-    "labels_sha256": "543e40ecf17a47ab21dfd831b11cf8470253f5b02b75ce483c2c23fac3718a15",
+    "labels_sha256": "6d20ae4cd3adf814728661030f6e39ea1344fac3a1b9c11c9d0abd1c9f70613e",
     "total": 200,
     "by_label": {
       "included": 19,
@@ -633,11 +633,11 @@
     "joined_csv": "b_repo_metadata/runs/pilot_02/repo_labels_joined_events.csv"
   },
   "label_comparison": {
-    "compared_at_utc": "2026-11-09T16:36:56Z",
-    "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.4.csv",
+    "compared_at_utc": "2026-11-10T05:42:17Z",
+    "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.4.1.csv",
     "new_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-    "old_rule_version": "ai_rules_v0.3.4",
-    "new_rule_version": "ai_rules_v0.3.4.1",
+    "old_rule_version": "ai_rules_v0.3.4.1",
+    "new_rule_version": "ai_rules_v0.3.4.2",
     "rows": 200,
     "changed_rows": 0,
     "label_changed_rows": 0,
@@ -718,7 +718,7 @@
     }
   },
   "analysis_labels": {
-    "generated_at_utc": "2026-11-09T16:37:18Z",
+    "generated_at_utc": "2026-11-10T05:42:18Z",
     "policy": "manual_override",
     "policy_note": "人工复核优先：有人工判断的仓库采用人工标签，其余采用规则自动标签。",
     "rows": 200,

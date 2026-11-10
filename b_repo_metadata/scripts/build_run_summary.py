@@ -92,12 +92,12 @@ def build(run_dir: Path) -> dict:
             "candidates_csv": pilot.get("input", {}).get("path"),
             "candidates_sha256": pilot.get("input", {}).get("sha256"),
             "pilot_candidates_sha256": pilot.get("output", {}).get("sha256"),
-            "repo_metadata_sha256": sha256_file(run_dir / "repo_metadata.csv"),
-            "repo_ai_labels_sha256": sha256_file(run_dir / "repo_ai_labels.csv"),
-            "repo_ai_labels_v0_1_sha256": sha256_file(run_dir / "repo_ai_labels_v0.1.csv")
+            "repo_metadata_sha256": sha256_file(run_dir / "repo_metadata.csv", normalize_newlines=True),
+            "repo_ai_labels_sha256": sha256_file(run_dir / "repo_ai_labels.csv", normalize_newlines=True),
+            "repo_ai_labels_v0_1_sha256": sha256_file(run_dir / "repo_ai_labels_v0.1.csv", normalize_newlines=True)
             if (run_dir / "repo_ai_labels_v0.1.csv").exists()
             else None,
-            "analysis_labels_sha256": sha256_file(analysis_csv) if analysis_csv.exists() else None,
+            "analysis_labels_sha256": sha256_file(analysis_csv, normalize_newlines=True) if analysis_csv.exists() else None,
             "rules_sha256": labels.get("rules_sha256"),
         },
         "outputs": {
