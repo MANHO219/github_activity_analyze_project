@@ -10,7 +10,7 @@
 |---|---|
 | 试跑名单 | pilot_01：50 个（40 随机 + 10 名称关键词）；pilot_02：200 个（160 随机 + 40 名称关键词，排除首轮 50） |
 | 元数据获取 | pilot_01：43 成功 / 2 ID 不一致 / 5 个 404；pilot_02：163 成功 / 6 ID 不一致 / 31 个 404（各 200 次调用） |
-| AI 标签（规则 v0.3.7） | pilot_01：`included` 4、`excluded` 32、`uncertain` 14；pilot_02 自动：17 / 86 / 97，最终（含人工修订）：17 / 87 / 96 |
+| AI 标签（规则 v0.3.8） | pilot_01：`included` 4、`excluded` 32、`uncertain` 14；pilot_02 自动：17 / 86 / 97，最终（含人工修订）：17 / 87 / 96 |
 | pilot_02 分层分布 | 160 随机：2 / 75 / 83；40 关键词：15 / 11 / 14 |
 | 与 v0.2 对比 | pilot_01：5 条标签变化 + 5 条仅理由变化；README 补足 3 个 AI 项目、1 个课程仓库 |
 | v0.3.1 → v0.3.2 | pilot_01 0 条；pilot_02 2 条（修复 whisper 子串与中文边界） |
@@ -21,13 +21,14 @@
 | v0.3.5 → v0.3.6 | pilot_01 0 条；pilot_02 0 条（收紧 course on / 论文清单 / 统计卡三个条件，样本未触发回退） |
 | v0.3.4.1 → v0.3.4.2 | pilot_01 0 条；pilot_02 0 条（英文安装说明不再算用途正文） |
 | v0.3.6 → v0.3.7 | pilot_01 0 条；pilot_02 0 条（论文清单整段锚定，总结论文的工具不再误排） |
+| v0.3.7 → v0.3.8 | pilot_01 0 条；pilot_02 0 条（合集改按主要用途判定，两个 pilot 里没有同类描述） |
 | 与人工复核 | pilot_01 复核样本中自动已判定的 19 条全部与人工一致；只代表 33 条复核样本 |
 | 人工复核 | pilot_01：33 条；pilot_02：抽查 13 条（included 3 / excluded 5 / uncertain 5）+ 1 条人工修订（ItsCryptic） |
 | 分析用标签 | pilot_01 人工优先：4 / 38 / 8（人工 33 行、自动 17 行）；pilot_02 人工优先：17 / 87 / 96（13 条复核 + 1 条人工修订） |
-| 接回事件表 | pilot_01：50/50 命中，覆盖 159 / 197,313 条；pilot_02（最终标签）：200/200 命中，覆盖 1,072 / 5,528,300 条，excluded 394 / included 109 / uncertain 569 |
-| 离线测试 | 134 项全部通过（不联网） |
+| 接回事件表 | 两批都用全天表（`sample_data/20240115_24h`）：pilot_01 50/50 命中、覆盖 656 / 5,528,300 条（excluded 579 / included 17 / uncertain 60）；pilot_02 200/200 命中、覆盖 1,072 / 5,528,300 条（394 / 109 / 569） |
+| 离线测试 | 149 项全部通过（不联网） |
 
-详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.7.md](rules/ai_rules_v0.3.7.md)；标签交接口径见 [LABELS.md](LABELS.md)。
+详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.8.md](rules/ai_rules_v0.3.8.md)；标签交接口径见 [LABELS.md](LABELS.md)。
 
 ## 交付物结构
 
@@ -50,7 +51,8 @@ b_repo_metadata/
 │   ├── ai_rules_v0.3.4.2.md / .json   ← 第十版：英文安装说明不算正文（#5 收尾）
 │   ├── ai_rules_v0.3.5.md / .json     ← 第十一版：论文清单、course on、个人主页组件、名称边界
 │   ├── ai_rules_v0.3.6.md / .json     ← 第十二版：收紧三个新增排除条件
-│   └── ai_rules_v0.3.7.md / .json     ← 当前版本：论文清单整段锚定
+│   ├── ai_rules_v0.3.7.md / .json     ← 第十三版：论文清单整段锚定
+│   └── ai_rules_v0.3.8.md / .json     ← 当前版本：合集按主要用途判定
 ├── reviews/pilot_01_decisions.json    ← 第一轮人工判断与理由（不覆盖）
 ├── reviews/pilot_01_revision_check_v0.3.json ← 新口径对旧判断的影响检查
 ├── reviews/pilot_02_rule_review_v0.3.5.md ← 101 条 uncertain + 80 条 excluded 的抽查记录
@@ -67,7 +69,7 @@ b_repo_metadata/
 │   ├── evidence.py                    ← 复核用 README 证据
 │   └── join.py                        ← 按 repo_id 接回事件表
 ├── scripts/                           ← 命令入口（每个步骤一个）
-├── tests/test_b_pipeline.py           ← 134 项离线验证
+├── tests/test_b_pipeline.py           ← 149 项离线验证
 └── runs/
     ├── debug_api_sample/              ← 单仓库连通性样例（apache/superset）
     ├── pilot_01/                      ← 50 个仓库的首轮试跑
@@ -135,8 +137,9 @@ python scripts/build_analysis_labels.py --run-dir runs/pilot_01
 python scripts/manual_review.py --run-dir runs/pilot_01 \
     --decisions reviews/pilot_01_decisions.json
 
-# 7. 接回 A 的事件表并核对；没有 pyarrow 时自动回退到候选表计数
-python scripts/join_check.py
+# 7. 接回全天活动表并核对（共享表必须存在，缺失会直接报错，不会退回一小时数据）
+python scripts/join_check.py --run-dir runs/pilot_01 \
+    --daily-csv ../a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv
 
 # 8. 汇总与验收检查（pilot_02 用 --review 指向它自己的复核表）
 python scripts/build_run_summary.py --run-dir runs/pilot_01
@@ -199,7 +202,7 @@ python scripts/label_repositories.py --run-dir runs/pilot_02 \
 python scripts/build_analysis_labels.py --run-dir runs/pilot_02 \
     --review runs/pilot_02/manual_review_pilot02.csv
 python scripts/join_check.py --run-dir runs/pilot_02 \
-    --daily-csv ../a_data_pipeline/runs/20240115_python/python/repo_daily_counts.csv
+    --daily-csv ../a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv
 python scripts/build_run_summary.py --run-dir runs/pilot_02 \
     --review runs/pilot_02/manual_review_pilot02.csv
 ```
@@ -252,7 +255,9 @@ v0.3.5 是对这 200 个仓库的误判抽查：逐条看完 101 条 `uncertain`
 - `event_share_of_source`：分母是事件表**全部事件**（197,313）；
 - `event_share_of_pilot_events`：分母是**50 个试点仓库的事件总数**（159）。
 
-标签列默认取**最终标签**（`ai_label_final`），`join_check.json` 的 `inputs.label_field` 会写明用的是哪一列。两批都已按最终标签重跑；pilot_01 因本机没有 pyarrow，事件源回退为候选表的 `event_count`（与 parquet 逐条聚合结果一致：197,313 条、覆盖 159 条）。
+标签列按**表头**选：有 `ai_label_final` 就用它，否则用 `ai_label`（`--label-field` 可显式指定）。所以把最终标签表改名成 `custom.csv` 也不会退回自动标签；`join_check.json` 的 `inputs.label_field` 记录实际用的列。两批都已按最终标签 + 全天表重跑。
+
+`--daily-csv` 默认指向 `../a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv`。显式传入的路径不存在时**直接报错退出（码 2）**，不会悄悄退回一小时数据——那只会覆盖 23/200 个仓库、43 条事件。确实要用一小时数据时传 `--daily-csv none`。
 
 ## 处理约定
 
@@ -264,8 +269,8 @@ v0.3.5 是对这 200 个仓库的误判抽查：逐条看完 101 条 `uncertain`
 
 ## 规则版本
 
-- 当前规则 `ai_rules_v0.3.7`：合并 #5 的 v0.3.4.2 后，把 `paper_list` 与 `curated_list` 的“a list of”都锚定到整段描述——用 LLM 总结论文列表的工具不再误排；同时继承 R12 的英文安装说明过滤。v0.3.5 的 6 条改判全部保留，两个 pilot 都是 0 条回退。
-- 版本安排：`#5` 依次是 v0.3.4 → v0.3.4.1 → v0.3.4.2（只修 R12）；`#8` 依次是 v0.3.5 → v0.3.6 → v0.3.7（合并 #5 后继承 v0.3.4.2）。旧版本文件只新增、不修改。
+- 当前规则 `ai_rules_v0.3.8`：资源合集改按“主要用途”判定——`curated` / `collection of` / `links to` 降为复核线索，只有描述或 README 明确表示仓库主要提供清单时才排除；处理这些资料的工具按工具判断，冲突或证据不足保留 `uncertain`。同时继承 R12 的列表标记剥离与英文安装说明过滤。
+- 版本安排：`#5` 依次是 v0.3.4 → v0.3.4.1 → v0.3.4.2 → v0.3.4.3（只修 R12）；`#8` 依次是 v0.3.5 → v0.3.6 → v0.3.7 → v0.3.8（合并 #5 后继承 v0.3.4.3）。旧版本文件只新增、不修改。
 - R12 在 v0.3.4.1 补全：只出现 About/Overview 标题不再算“说明了用途”，标题下方必须有说明正文（≥40 个有效字符），安装命令与代码块不计入。
 - 各版本规则与标签表都保留；pilot_01 的 `label_changes.csv` 是 v0.3.5→v0.3.6（0 条），pilot_02 的也是 0 条；v0.3.4→v0.3.5 的 6 条另存为 `label_changes_v0.3.4_to_v0.3.5.csv`。
 - 新口径对第一轮人工判断的影响检查见 `reviews/pilot_01_revision_check_v0.3.json`：无需改判，旧判断不覆盖。

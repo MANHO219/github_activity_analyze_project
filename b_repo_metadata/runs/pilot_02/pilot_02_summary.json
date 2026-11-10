@@ -1,7 +1,7 @@
 {
   "pilot": "pilot_02",
-  "rules_version": "ai_rules_v0.3.7",
-  "generated_at_utc": "2026-11-10T05:48:16Z",
+  "rules_version": "ai_rules_v0.3.8",
+  "generated_at_utc": "2026-11-10T12:37:25Z",
   "source_data": {
     "note": "按 A README 的官方命令重建 2024-01-15 全天数据；数量与 A 的交接一致",
     "candidates": "a_data_pipeline/runs/20240115_python/python/repo_candidates.csv",
@@ -114,7 +114,8 @@
       "included": 109,
       "uncertain": 569
     },
-    "checks_all_true": true
+    "checks_all_true": true,
+    "events_total_in_source": 5528300
   },
   "manual_review": {
     "rows": 13,

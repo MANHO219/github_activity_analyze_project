@@ -397,6 +397,61 @@ class JoinTests(unittest.TestCase):
         self.assertEqual(summary["inputs"]["label_field"], "ai_label_final")
         self.assertEqual(summary["events_by_label"], {"excluded": 3})
 
+    def test_join_detects_label_field_from_header(self):
+        """表改名成 custom.csv 也按表头选 ai_label_final，不退回自动标签。"""
+        metadata_rows = [metadata(1, topics=["llm"])]
+        labels = label_rows(metadata_rows, RULES)
+        rows = [dict(labels[0], ai_label_final="excluded")]
+        write_csv(self.root / "repo_metadata.csv", METADATA_FIELDS, metadata_rows)
+        write_csv(self.root / "custom.csv", list(rows[0]), rows)
+        write_csv(
+            self.root / "daily.csv",
+            ["repo_id", "event_date", "event_type", "event_count"],
+            [{"repo_id": "1", "event_date": "2024-01-15", "event_type": "PushEvent", "event_count": "5"}],
+        )
+        summary = join_run(
+            metadata_csv=self.root / "repo_metadata.csv",
+            labels_csv=self.root / "custom.csv",
+            out_dir=self.root,
+            daily_counts_csv=self.root / "daily.csv",
+        )
+        joined = read_csv(self.root / "repo_labels_joined_events.csv")
+        self.assertEqual(summary["inputs"]["label_field"], "ai_label_final")
+        self.assertEqual(joined[0]["ai_label"], "excluded")
+        self.assertEqual(summary["events_by_label"], {"excluded": 5})
+
+    def test_join_falls_back_to_auto_label_when_final_missing(self):
+        metadata_rows = [metadata(1, topics=["llm"])]
+        labels = label_rows(metadata_rows, RULES)
+        write_csv(self.root / "repo_metadata.csv", METADATA_FIELDS, metadata_rows)
+        write_csv(self.root / "repo_ai_labels.csv", LABEL_FIELDS, labels)
+        write_csv(
+            self.root / "daily.csv",
+            ["repo_id", "event_date", "event_type", "event_count"],
+            [{"repo_id": "1", "event_date": "2024-01-15", "event_type": "PushEvent", "event_count": "2"}],
+        )
+        summary = join_run(
+            metadata_csv=self.root / "repo_metadata.csv",
+            labels_csv=self.root / "repo_ai_labels.csv",
+            out_dir=self.root,
+            daily_counts_csv=self.root / "daily.csv",
+        )
+        self.assertEqual(summary["inputs"]["label_field"], "ai_label")
+
+    def test_daily_csv_missing_raises_instead_of_fallback(self):
+        """显式给的全天表不存在时要报错，不能悄悄退回一小时数据。"""
+        metadata_rows = [metadata(1, topics=["llm"])]
+        labels = label_rows(metadata_rows, RULES)
+        write_csv(self.root / "repo_metadata.csv", METADATA_FIELDS, metadata_rows)
+        write_csv(self.root / "repo_ai_labels.csv", LABEL_FIELDS, labels)
+        with self.assertRaises(FileNotFoundError):
+            join_run(
+                metadata_csv=self.root / "repo_metadata.csv",
+                labels_csv=self.root / "repo_ai_labels.csv",
+                out_dir=self.root,
+                daily_counts_csv=self.root / "not_there.csv",
+            )
+
     def test_missing_repo_fails_check(self):
         metadata_rows = [metadata(9, topics=["llm"])]
         labels = label_rows(metadata_rows, RULES)
@@ -1504,6 +1559,112 @@ class RulesV37Tests(unittest.TestCase):
         row = metadata(136, description="", topics=[])
         result = self.V37.decide(row, readme=self.readme(RulesV342Tests.INSTALL_EN))
         self.assertEqual(result["ai_label"], "uncertain")
+
+
+class RulesV38Tests(unittest.TestCase):
+    """v0.3.8：资源合集按“主要用途”判定；R12 先剥列表标记。"""
+
+    V38 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.8.json"))
+    V37 = RuleSet(load_rules(B_ROOT / "rules" / "ai_rules_v0.3.7.json"))
+
+    @staticmethod
+    def readme(text):
+        return {"text": text, "sha256": "s", "fetched_at_utc": "t"}
+
+    # -- 论文合集：工具优先 -------------------------------------------
+    def test_tool_summarizing_list_of_papers_included(self):
+        row = metadata(141, description="An LLM tool that summarizes a list of papers")
+        result = self.V38.decide(row)
+        self.assertEqual(result["ai_label"], "included")
+        self.assertEqual(result["rule_id"], "R5_description_match")
+
+    def test_tool_summarizing_collection_of_papers_included(self):
+        row = metadata(142, description="An LLM tool that summarizes a collection of papers")
+        result = self.V38.decide(row)
+        self.assertEqual(result["ai_label"], "included")
+
+    def test_curated_list_still_excluded(self):
+        row = metadata(143, description="A curated list of LLM papers.")
+        result = self.V38.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3_resource_collection")
+
+    def test_collection_of_papers_still_excluded(self):
+        row = metadata(144, description="A collection of papers about LLMs")
+        result = self.V38.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3_resource_collection")
+
+    def test_related_papers_title_still_excluded(self):
+        row = metadata(145, description="ChatGPT-related papers.")
+        result = self.V38.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+
+    def test_curated_mention_without_purpose_is_uncertain(self):
+        """只在描述中间提到 curated / collection of，没有任何用途说明 → 不自动排除。"""
+        row = metadata(146, description="My notes and a curated collection of links about LLMs")
+        result = self.V38.decide(row)
+        self.assertEqual(result["ai_label"], "uncertain")
+        self.assertEqual(result["rule_id"], "R3c_resource_mention_only")
+
+    def test_tutorial_still_excluded(self):
+        """回归保护：教程类仍是明确资料，不因为描述里有 build/generate 就被降级。"""
+        row = metadata(147, description="A tutorial on building LLM apps")
+        result = self.V38.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3_resource_collection")
+
+    def test_awesome_name_without_description_still_excluded(self):
+        row = metadata(148, description="", name="someone/awesome-llm")
+        result = self.V38.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3_resource_collection")
+
+    def test_v037_still_excludes_tool_mentioning_collection(self):
+        """版本隔离：v0.3.7 仍把 collection of 当合集。"""
+        row = metadata(149, description="An LLM tool that summarizes a collection of papers")
+        result = self.V37.decide(row)
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R3_resource_collection")
+
+    # -- R12 编号列表 -------------------------------------------------
+    NUMBERED_INSTALL = (
+        "# mytool\n\n## Overview\n\n"
+        + (
+            "1. Download the release archive for your platform\n"
+            "2. Add the extracted folder to your PATH\n"
+            "3. Run mytool --serve to start the service\n"
+            "4. Open http://localhost:8080 in your browser\n"
+        )
+        * 4
+    )
+
+    def test_numbered_install_steps_stay_uncertain(self):
+        row = metadata(150, description="", topics=[])
+        result = self.V38.decide(row, readme=self.readme(self.NUMBERED_INSTALL))
+        self.assertEqual(result["ai_label"], "uncertain")
+
+    def test_numbered_steps_with_real_purpose_still_excluded(self):
+        row = metadata(151, description="", topics=[])
+        text = (
+            "# timeutil\n\n## Overview\n\n"
+            + (
+                "1. This library converts timestamps between timezones on embedded devices.\n"
+                "2. It has no external dependencies and can be copied into any project.\n"
+                "3. The API mirrors the standard library, so migration is a single import change.\n"
+            )
+            * 4
+        )
+        result = self.V38.decide(row, readme=self.readme(text))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+    def test_v037_still_treats_numbered_install_as_prose(self):
+        """版本隔离：v0.3.7 没有剥列表标记，编号安装步骤仍被当成正文。"""
+        row = metadata(152, description="", topics=[])
+        result = self.V37.decide(row, readme=self.readme(self.NUMBERED_INSTALL))
+        self.assertEqual(result["ai_label"], "excluded")
+        self.assertEqual(result["rule_id"], "R12_readme_non_ai")
 
 
 class CompareAndHandoffTests(unittest.TestCase):

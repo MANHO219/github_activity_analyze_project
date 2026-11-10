@@ -114,6 +114,25 @@ class RuleSet:
         self.engine: str = rules.get("engine", "v1")
         self.resource_description = _compile(rules.get("resource_collection_patterns", []))
         self.resource_name = _compile(rules.get("resource_name_patterns", []))
+        # v0.3.8：资源合集按“主要用途”判定。curated / collection of / links to
+        # 标成 weak（复核线索），其余仍是 strong；只有在描述/README 明确表示
+        # 仓库主要提供清单时才自动排除，处理这些资料的工具按工具判断。
+        resource_patterns = list(rules.get("resource_collection_patterns", []))
+        resource_rule = dict(rules.get("resource_collection") or {})
+        self.resource_require_primary = bool(resource_rule.get("require_primary_purpose", False))
+        self.resource_strong = _compile(
+            [entry for entry in resource_patterns if (entry.get("strength") or "strong") == "strong"]
+        )
+        self.resource_weak = _compile(
+            [entry for entry in resource_patterns if entry.get("strength") == "weak"]
+        )
+        self.resource_lead = _compile(resource_rule.get("list_lead_patterns", []))
+        self.resource_tool = _compile(resource_rule.get("tool_signal_patterns", []))
+        # 明确写着“a tool / a CLI / a library”才算与清单冲突；泛动词（build、generate）
+        # 太容易出现在教程类描述里，不参与 strong 的冲突判定。
+        self.resource_tool_decl = _compile(
+            [entry for entry in resource_rule.get("tool_signal_patterns", []) if entry.get("id") == "tool_declaration"]
+        )
         self.name_signals = _compile(rules.get("name_signal_patterns", []))
         if self.engine in ("v2", "v3"):
             self.strong_topics = {term.lower() for term in rules.get("strong_topic_terms", [])}
@@ -165,6 +184,8 @@ class RuleSet:
                     self.readme_non_ai_min_body_chars = int(non_ai.get("min_purpose_body_chars", 40) or 40)
                     # v0.3.4.2：Overview 下只有英文安装说明时不算“说明了用途”。
                     self.readme_non_ai_ignore_install = bool(non_ai.get("ignore_install_lines", False))
+                    # v0.3.4.3：编号列表（1. Download…）要先剥标记再判断正文。
+                    self.readme_non_ai_strip_markers = bool(non_ai.get("strip_list_markers", False))
                     self.readme_non_ai_heading = [
                         (name, pattern) for name, pattern in self.readme_non_ai_purpose if name == "purpose_heading"
                     ]
@@ -178,6 +199,7 @@ class RuleSet:
                     self.readme_non_ai_require_body = False
                     self.readme_non_ai_min_body_chars = 40
                     self.readme_non_ai_ignore_install = False
+                    self.readme_non_ai_strip_markers = False
                     self.readme_non_ai_heading = []
                 # README 的“可选 AI 集成”排除与“课程覆盖”都只在规则文件显式配置时启用。
                 self.readme_feature_only = _compile(readme_rules.get("feature_only_patterns", []))
@@ -248,11 +270,65 @@ class RuleSet:
             return self._decide_v2(result, description, full_name, topics)
         return self._decide_v1(result, description, full_name, topics)
 
+    # -- 资源合集 --------------------------------------------------------
+    def _resource_result(
+        self,
+        full_name: str,
+        description: str,
+    ) -> tuple[str, str, str] | None:
+        """资源合集的判定结果；None 表示“不是合集，继续走后面的规则”。
+
+        旧版本只看“有没有命中清单词”，于是把“用 LLM 总结一份论文列表的工具”
+        也当成合集排除。v0.3.8 起看主要用途：
+
+        - strong（awesome-/tutorial/整段 papers 清单等）命中 → 排除；
+          但如果描述里同时有工具语义，就是冲突，保留 uncertain；
+        - weak（curated / collection of / links to / 中间的 list of）命中时，
+          只有描述开头就是清单表述（list lead）才排除；
+        - weak 命中且有工具语义 → 按工具判断（返回 None）；
+        - weak 命中但没有任何用途说明 → 保留 uncertain，不自动排除。
+        """
+        name_hits = _matches(self.resource_name, full_name)
+        if not self.resource_require_primary:
+            desc_hits = _matches(self.resource_description, description)
+            if not (name_hits or desc_hits):
+                return None
+            return ("excluded", "R3_resource_collection", ",".join(_dedupe(name_hits + desc_hits)))
+
+        strong_hits = name_hits + _matches(self.resource_strong, description)
+        weak_hits = _matches(self.resource_weak, description)
+        if not (strong_hits or weak_hits):
+            return None
+
+        hits = ",".join(_dedupe(strong_hits + weak_hits))
+        tool = _matches(self.resource_tool, description)
+
+        if strong_hits:
+            # 只有“明确声明自己是工具”才构成冲突；教程里出现 build/generate 不算。
+            conflict = _matches(self.resource_tool_decl, description)
+            if conflict:
+                return (
+                    "uncertain",
+                    "R3b_resource_vs_tool",
+                    f"list={hits};tool={','.join(_dedupe(conflict))}",
+                )
+            return ("excluded", "R3_resource_collection", hits)
+
+        if _matches(self.resource_lead, description):
+            # 开头就是“A curated list of …”：明确在提供清单；有工具语义时按工具走。
+            if tool:
+                return None
+            return ("excluded", "R3_resource_collection", hits)
+
+        if tool:
+            return None
+        return ("uncertain", "R3c_resource_mention_only", f"mention={hits}")
+
     # -- v1 ------------------------------------------------------------
     def _decide_v1(self, result, description: str, full_name: str, topics: Sequence[str]) -> dict[str, str]:
-        resource_hits = _matches(self.resource_name, full_name) + _matches(self.resource_description, description)
-        if resource_hits:
-            return result("excluded", "R3_resource_collection", ",".join(_dedupe(resource_hits)))
+        resource = self._resource_result(full_name, description)
+        if resource:
+            return result(*resource)
 
         topic_hits = [topic for topic in topics if topic in self.topic_terms]
         if topic_hits:
@@ -282,9 +358,9 @@ class RuleSet:
         if self._is_profile_repository(full_name, description, topics):
             return result("excluded", "R3c_profile_repository", f"name={full_name};no_description;no_topics")
 
-        resource_hits = _matches(self.resource_name, full_name) + _matches(self.resource_description, description)
-        if resource_hits:
-            return result("excluded", "R3_resource_collection", ",".join(_dedupe(resource_hits)))
+        resource = self._resource_result(full_name, description)
+        if resource:
+            return result(*resource)
 
         strong_topic_hits = [topic for topic in topics if topic in self.strong_topics]
         if strong_topic_hits:
@@ -492,24 +568,44 @@ class RuleSet:
 
     _INSTRUCTION_LINE = re.compile(
         r"^(to\s+)?(install|installation|set\s*up|setup|run|execute|launch|start|build|compile|clone|download|"
-        r"configure|usage|quick\s*start|getting\s+started|requirements?|prerequisites?|dependencies)\b",
+        r"copy|move|add|open|extract|edit|select|choose|click|navigate|chmod|export|source|configure|"
+        r"usage|quick\s*start|getting\s+started|requirements?|prerequisites?|dependencies)\b",
         re.IGNORECASE,
     )
+    # 有序/无序列表标记与 checkbox：A 的复测里 “1. Download…” 这类编号步骤
+    # 因为开头是 “1.” 绕过了指令行判断，被当成正文。先剥标记再判断。
+    _LIST_MARKER = re.compile(r"^(?:[-*+]\s+(?:\[[ xX]\]\s+)?|\(?\d{1,2}[.)]\s+)")
     _INSTRUCTION_HINT = re.compile(
         r"\bthe\s+following\s+(commands?|steps?)\b"
         r"|^(then|next|afterwards?|finally)\b[^.]{0,30}\b(run|install|execute|start|launch|build|clone|download)\b",
         re.IGNORECASE,
     )
 
+    def _strip_list_marker(self, line: str) -> str:
+        """去掉列表标记与 checkbox，最多剥两层（``1. - item``）。"""
+        text = line
+        for _ in range(2):
+            new = self._LIST_MARKER.sub("", text, count=1).strip()
+            if new == text:
+                break
+            text = new
+        return text
+
     def _has_prose_body(self, body: str) -> bool:
-        """正文里是否真的有说明性文字：命令行、空行、纯列表符号都不算。
+        """正文里是否真的有说明性文字：命令行、空行、列表符号都不算。
 
         v0.3.4.2 起，英文安装说明（Install/Run/Setup 开头，或以冒号收尾的引导句）
         也不算用途说明——A 的复测里“Overview + 安装步骤”仍被误判为说明了用途。
+        v0.3.4.3 起先剥掉 Markdown 列表标记：``1. Download…``、``2. Add…`` 这类
+        编号步骤与 ``- Install …`` 一样按指令行处理。
         """
         kept: list[str] = []
         for line in body.splitlines():
             stripped = line.strip()
+            if not stripped:
+                continue
+            if self.readme_non_ai_strip_markers:
+                stripped = self._strip_list_marker(stripped)
             if not stripped or stripped in ("-", "*", "+"):
                 continue
             if stripped.startswith("$") or self._COMMAND_LINE.match(stripped):
@@ -563,9 +659,9 @@ class RuleSet:
                 f"name={profile_name};no_description;no_topics;no_language",
             )
 
-        resource_hits = _matches(self.resource_name, full_name) + _matches(self.resource_description, description)
-        if resource_hits:
-            return result("excluded", "R3_resource_collection", ",".join(_dedupe(resource_hits)))
+        resource = self._resource_result(full_name, description)
+        if resource:
+            return result(*resource)
 
         # 明确把 AI 写成附加能力时才排除；以 AI 为核心的应用仍可纳入。
         feature_hits = _matches(self.feature_only, description)

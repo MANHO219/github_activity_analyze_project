@@ -240,7 +240,7 @@
       "keyword_name 层来自名称粗筛，名称命中不等于 AI 判定；实际标签仍由 rules 决定。"
     ]
   },
-  "updated_at_utc": "2026-11-10T05:48:06Z",
+  "updated_at_utc": "2026-11-10T12:37:12Z",
   "fetch": {
     "started_at_utc": "2026-11-09T08:21:17Z",
     "finished_at_utc": "2026-11-09T08:23:16Z",
@@ -283,16 +283,16 @@
     "note": "README 仅作人工复核证据；v0.1 规则不读取该字段。"
   },
   "labels": {
-    "rules_version": "ai_rules_v0.3.7",
-    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.7.json",
-    "rules_sha256": "78ad80f98d4ad9a64063dbac4ea1cddb16f267088172ff3d4db10851fa2a2769",
+    "rules_version": "ai_rules_v0.3.8",
+    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.8.json",
+    "rules_sha256": "9a85ca627c68ba35106f62ccd6e8cc7eaacf4e6c128304d884798d38dd7d1245",
     "metadata_csv": "b_repo_metadata/runs/pilot_02/repo_metadata.csv",
     "metadata_sha256": "01ba533476f75f6fadeb510f9207c30f1ccc23904b671a5445484c8386afb86d",
-    "labelled_at_utc": "2026-11-10T05:47:52Z",
+    "labelled_at_utc": "2026-11-10T12:37:01Z",
     "input_rows": 200,
     "labelled_rows": 200,
     "labels_csv": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-    "labels_sha256": "bcd25a308720071dba6a15585065d1e4c2dcdbcba8fe77eb5b2cc7c53edc2fc2",
+    "labels_sha256": "fbbfdb6f23e5636fbafb5c02f858dfe04dab3136ad9939712cd61aeca71af238",
     "total": 200,
     "by_label": {
       "included": 17,
@@ -589,7 +589,7 @@
     }
   },
   "join": {
-    "checked_at_utc": "2026-11-10T05:48:06Z",
+    "checked_at_utc": "2026-11-10T12:37:12Z",
     "event_source": "repo_daily_counts.csv:sum(event_count)",
     "events_total_in_source": 5528300,
     "pilot_repos": 200,
@@ -600,7 +600,7 @@
     "events_outside_pilot_share": 0.999806,
     "event_share_denominators": {
       "event_share_of_source": "事件表全部事件数（events_total_in_source）",
-      "event_share_of_pilot_events": "50 个试点仓库的事件总数（events_covered_by_pilot）"
+      "event_share_of_pilot_events": "本次试点仓库的事件总数（events_covered_by_pilot）"
     },
     "events_by_label": {
       "excluded": 394,
@@ -620,22 +620,22 @@
       "label_field": "ai_label_final",
       "events_parquet": "a_data_pipeline/runs/20240115_1hour_handoff/python/events_clean.parquet",
       "candidates_csv": "a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv",
-      "daily_counts_csv": "a_data_pipeline/runs/20240115_python/python/repo_daily_counts.csv"
+      "daily_counts_csv": "a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv"
     },
     "limits": [
       "Only repo_id is used as the join key; repo names in the event table may be historical.",
       "The pilot covers a small sample, so covered/uncovered event shares describe this run only.",
       "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events.",
-      "Full parquet join not executed; repo-level counts from candidates used."
+      "Event counts come from repo_daily_counts.csv (repo-level sums), not per-event rows."
     ],
     "joined_csv": "b_repo_metadata/runs/pilot_02/repo_labels_joined_events.csv"
   },
   "label_comparison": {
-    "compared_at_utc": "2026-11-10T05:47:54Z",
-    "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.6.csv",
+    "compared_at_utc": "2026-11-10T12:37:02Z",
+    "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.7.csv",
     "new_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-    "old_rule_version": "ai_rules_v0.3.6",
-    "new_rule_version": "ai_rules_v0.3.7",
+    "old_rule_version": "ai_rules_v0.3.7",
+    "new_rule_version": "ai_rules_v0.3.8",
     "rows": 200,
     "changed_rows": 0,
     "label_changed_rows": 0,
@@ -716,7 +716,7 @@
     }
   },
   "analysis_labels": {
-    "generated_at_utc": "2026-11-10T05:48:00Z",
+    "generated_at_utc": "2026-11-10T12:37:06Z",
     "policy": "manual_override",
     "policy_note": "人工复核优先：有人工判断的仓库采用人工标签，其余采用规则自动标签。",
     "rows": 200,
@@ -755,13 +755,13 @@
       "random": 160,
       "keyword_name": 40
     },
-    "rules_version": "ai_rules_v0.3.7",
+    "rules_version": "ai_rules_v0.3.8",
     "rules_compared": [
-      "ai_rules_v0.3.6",
-      "ai_rules_v0.3.7"
+      "ai_rules_v0.3.7",
+      "ai_rules_v0.3.8"
     ],
     "analysis_label_policy": "manual_override",
-    "generated_at_utc": "2026-11-10T05:48:15Z",
+    "generated_at_utc": "2026-11-10T12:37:20Z",
     "environment": {
       "python_version": "3.13.14",
       "platform": "Windows-11-10.0.26200-SP0",
@@ -772,10 +772,10 @@
       "candidates_sha256": "3b0ffd5a72723dd55e5889dacdf2b75febd607df9628d1000d7f1a371146c143",
       "pilot_candidates_sha256": "5393f838db735bdcfd788d74cbd24f3e7e10c71b4f92c50f228052a9a1ed6dab",
       "repo_metadata_sha256": "01ba533476f75f6fadeb510f9207c30f1ccc23904b671a5445484c8386afb86d",
-      "repo_ai_labels_sha256": "bcd25a308720071dba6a15585065d1e4c2dcdbcba8fe77eb5b2cc7c53edc2fc2",
+      "repo_ai_labels_sha256": "fbbfdb6f23e5636fbafb5c02f858dfe04dab3136ad9939712cd61aeca71af238",
       "repo_ai_labels_v0_1_sha256": null,
-      "analysis_labels_sha256": "b40e193b7f4454fac271d8fbb87a92a555bd5ef16c2e0fb6c4c59d5fcc33abe2",
-      "rules_sha256": "78ad80f98d4ad9a64063dbac4ea1cddb16f267088172ff3d4db10851fa2a2769"
+      "analysis_labels_sha256": "bb6d6be5d3c4e9b8122e1e35fa605e1d0f019e3d4b24c4acc4edd9ea51c88d02",
+      "rules_sha256": "9a85ca627c68ba35106f62ccd6e8cc7eaacf4e6c128304d884798d38dd7d1245"
     },
     "outputs": {
       "metadata_rows": 200,

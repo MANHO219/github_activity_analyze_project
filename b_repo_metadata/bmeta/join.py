@@ -59,7 +59,29 @@ def _event_counts_from_daily_csv(daily_csv: Path) -> tuple[dict[int, int], int, 
     for row in read_csv(daily_csv):
         repo_id = int(row["repo_id"])
         counts[repo_id] = counts.get(repo_id, 0) + int(row["event_count"])
-    return counts, sum(counts.values()), "repo_daily_counts.csv:sum(event_count)"
+    return counts, sum(counts.values()), f"{daily_csv.name}:sum(event_count)"
+
+
+LABEL_FIELD_CANDIDATES = ("ai_label_final", "ai_label")
+
+
+def resolve_label_field(labels: list[dict[str, str]], requested: str | None = "auto") -> str:
+    """决定用哪一列当标签。
+
+    ``auto``（默认）按**表头**判断：有 ``ai_label_final`` 就用它，否则用 ``ai_label``。
+    这样把最终标签表改名成 ``custom.csv`` 也不会退回自动标签。
+    """
+    if not labels:
+        raise ValueError("labels must be non-empty")
+    header = set(labels[0])
+    if requested in (None, "", "auto"):
+        for name in LABEL_FIELD_CANDIDATES:
+            if name in header:
+                return name
+        raise ValueError(f"labels header has neither {' nor '.join(LABEL_FIELD_CANDIDATES)}: {sorted(header)}")
+    if requested not in header:
+        raise ValueError(f"label field {requested!r} not in labels header: {sorted(header)}")
+    return requested
 
 
 def run(
@@ -70,13 +92,14 @@ def run(
     events_parquet: Path | None = None,
     candidates_csv: Path | None = None,
     daily_counts_csv: Path | None = None,
-    label_field: str = "ai_label",
+    label_field: str | None = "auto",
 ) -> dict[str, Any]:
     out_dir = Path(out_dir)
     metadata = read_csv(metadata_csv)
     labels = read_csv(labels_csv)
     if not metadata or not labels:
         raise ValueError("metadata and labels must be non-empty")
+    label_field = resolve_label_field(labels, label_field)
 
     metadata_ids = [row["repo_id"] for row in metadata]
     label_ids = [row["repo_id"] for row in labels]
@@ -85,8 +108,13 @@ def run(
     counts: dict[int, int] = {}
     total_events = 0
     source = "unavailable"
-    if daily_counts_csv and Path(daily_counts_csv).exists():
-        counts, total_events, source = _event_counts_from_daily_csv(Path(daily_counts_csv))
+    if daily_counts_csv is not None:
+        # 显式指定的全天表必须存在：否则会悄悄退回一小时数据，
+        # 表现为“只接回 23 个仓库、43 条事件”而没有任何提示。
+        daily_path = Path(daily_counts_csv)
+        if not daily_path.exists():
+            raise FileNotFoundError(f"daily counts csv not found: {daily_path}")
+        counts, total_events, source = _event_counts_from_daily_csv(daily_path)
     elif events_parquet and Path(events_parquet).exists():
         try:
             counts, total_events, source = _event_counts_from_parquet(Path(events_parquet))
@@ -115,7 +143,7 @@ def run(
             {
                 "repo_id": row["repo_id"],
                 "observed_repo_name": names.get(row["repo_id"], ""),
-                "ai_label": row.get(label_field) or row["ai_label"],
+                "ai_label": row[label_field],
                 "event_count": event_count,
                 # 分母是事件表里全部事件：这个仓库占整个样本事件的比例。
                 "event_share_of_source": round(event_count / total_events, 6) if total_events else 0.0,
@@ -140,7 +168,7 @@ def run(
         "events_outside_pilot_share": round((total_events - covered_events) / total_events, 6) if total_events else 0.0,
         "event_share_denominators": {
             "event_share_of_source": "事件表全部事件数（events_total_in_source）",
-            "event_share_of_pilot_events": "50 个试点仓库的事件总数（events_covered_by_pilot）",
+            "event_share_of_pilot_events": "本次试点仓库的事件总数（events_covered_by_pilot）",
         },
         "events_by_label": dict(sorted(by_label_events.items())),
         "checks": {
@@ -154,7 +182,6 @@ def run(
             "metadata_csv": project_relative(metadata_csv),
             "labels_csv": project_relative(labels_csv),
             "label_field": label_field,
-            "label_field": label_field,
             "events_parquet": project_relative(events_parquet) if events_parquet else None,
             "candidates_csv": project_relative(candidates_csv) if candidates_csv else None,
             "daily_counts_csv": project_relative(daily_counts_csv) if daily_counts_csv else None,
@@ -164,7 +191,16 @@ def run(
             "The pilot covers a small sample, so covered/uncovered event shares describe this run only.",
             "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events.",
         ]
-        + ([] if source == "events_clean.parquet" else ["Full parquet join not executed; repo-level counts from candidates used."]),
+        + (
+            ["Full parquet join not executed; repo-level counts from candidates used."]
+            if "candidates" in source
+            else []
+        )
+        + (
+            ["Event counts come from repo_daily_counts.csv (repo-level sums), not per-event rows."]
+            if ":sum(event_count)" in source
+            else []
+        ),
     }
     write_json(out_dir / "join_check.json", summary)
 

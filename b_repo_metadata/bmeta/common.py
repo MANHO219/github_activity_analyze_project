@@ -22,6 +22,11 @@ A_HANDOFF = PROJECT_ROOT / "a_data_pipeline" / "runs" / "20240115_1hour_handoff"
 DEFAULT_CANDIDATES = A_HANDOFF / "python" / "repo_candidates.csv"
 DEFAULT_NAME_HISTORY = A_HANDOFF / "python" / "repo_name_history.csv"
 DEFAULT_EVENTS_PARQUET = A_HANDOFF / "python" / "events_clean.parquet"
+# 全天活动表：仓库共享的 24 小时汇总（A 提供）。接回默认用它，
+# 避免干净检出里悄悄退回一小时数据（那样只覆盖 23 个试点仓库）。
+DEFAULT_DAILY_COUNTS = (
+    PROJECT_ROOT / "a_data_pipeline" / "sample_data" / "20240115_24h" / "repo_daily_counts.csv"
+)
 DEFAULT_CONFIG = B_ROOT / "config" / "pilot.json"
 
 UTC_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
