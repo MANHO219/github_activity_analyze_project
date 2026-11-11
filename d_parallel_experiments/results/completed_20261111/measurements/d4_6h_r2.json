@@ -1,0 +1,10 @@
+{
+  "run_id": "d4_6h_r2",
+  "mode": "D4",
+  "hours": 6,
+  "start_epoch": 1794310290.5829332,
+  "end_epoch": 1794310573.189026,
+  "elapsed_seconds": 282.6060929298401,
+  "exit_code": 143,
+  "warmup": false
+}

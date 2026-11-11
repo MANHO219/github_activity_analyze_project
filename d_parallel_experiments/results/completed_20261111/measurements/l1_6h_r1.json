@@ -1,0 +1,10 @@
+{
+  "run_id": "l1_6h_r1",
+  "mode": "L1",
+  "hours": 6,
+  "start_epoch": 1794311590.7216794,
+  "end_epoch": 1794311800.9367385,
+  "elapsed_seconds": 210.21505904197693,
+  "exit_code": 0,
+  "warmup": false
+}

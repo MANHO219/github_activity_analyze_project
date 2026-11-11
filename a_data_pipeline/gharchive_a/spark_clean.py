@@ -47,8 +47,8 @@ def rows_as_dict(frame):
         yield row.asDict(recursive=True)
 
 
-def clean_spark(cfg, data_dir, output, allow_missing=False, master="local[2]"):
-    if not (master == "local" or master.startswith("local[")):
+def clean_spark(cfg, data_dir, output, allow_missing=False, master="local[2]", benchmark=False):
+    if not benchmark and not (master == "local" or master.startswith("local[")):
         raise ValueError("This pilot accepts local Spark masters only; raw files live on this machine")
     from pyspark import StorageLevel
     from pyspark.sql import SparkSession, Window, functions as F
@@ -66,12 +66,18 @@ def clean_spark(cfg, data_dir, output, allow_missing=False, master="local[2]"):
         write_json(out / "spark_environment.json", {"master": master, "java": java.stderr.strip(),
                    "python": sys.executable, "java_home": os.environ.get("JAVA_HOME"),
                    "timezone": "UTC", "parquet_timestamp_type": "TIMESTAMP_MICROS", "hour_file_partitions": len(files)})
-        spark = (SparkSession.builder.master(master).appName("CS5488-A-sample")
+        builder = (SparkSession.builder.master(master).appName("CS5488-" + out.name)
                  .config("spark.sql.session.timeZone", "UTC")
-                 .config("spark.sql.parquet.outputTimestampType", "TIMESTAMP_MICROS")
-                 .config("spark.sql.shuffle.partitions", max(2, len(files) * 2))
-                 .config("spark.driver.host", "127.0.0.1").config("spark.driver.bindAddress", "127.0.0.1")
-                 .config("spark.ui.enabled", "false").getOrCreate())
+                 .config("spark.sql.parquet.outputTimestampType", "TIMESTAMP_MICROS"))
+        if not benchmark:
+            builder = (builder.config("spark.sql.shuffle.partitions", max(2, len(files) * 2))
+                       .config("spark.driver.host", "127.0.0.1")
+                       .config("spark.driver.bindAddress", "127.0.0.1")
+                       .config("spark.ui.enabled", "false"))
+        spark = builder.getOrCreate()
+        write_json(out / "effective_spark_config.json", dict(spark.sparkContext.getConf().getAll()))
+        write_json(out / "application.json", {"application_id": spark.sparkContext.applicationId,
+                                             "master": spark.sparkContext.master})
         spark.sparkContext.setLogLevel("WARN")
         try:
             spark.sparkContext.addPyFile(str(out / "worker_code.zip"))

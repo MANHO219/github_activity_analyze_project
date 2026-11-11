@@ -1,0 +1,10 @@
+{
+  "run_id": "l4_6h_warmup",
+  "mode": "L4",
+  "hours": 6,
+  "start_epoch": 1794310889.2250168,
+  "end_epoch": 1794310977.8287613,
+  "elapsed_seconds": 88.60374450683594,
+  "exit_code": 0,
+  "warmup": true
+}

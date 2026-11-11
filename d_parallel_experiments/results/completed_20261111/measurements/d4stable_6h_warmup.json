@@ -1,0 +1,10 @@
+{
+  "run_id": "d4stable_6h_warmup",
+  "mode": "D4",
+  "hours": 6,
+  "start_epoch": 1794329477.1734822,
+  "end_epoch": 1794329573.8190463,
+  "elapsed_seconds": 96.64556407928467,
+  "exit_code": 0,
+  "warmup": true
+}

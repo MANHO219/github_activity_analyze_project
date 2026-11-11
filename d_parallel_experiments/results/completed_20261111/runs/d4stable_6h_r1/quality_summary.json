@@ -1,0 +1,101 @@
+{
+  "rule_version": "a-events-v1",
+  "engine": "spark",
+  "master": "spark://192.168.20.130:7077",
+  "line_status_counts": {
+    "valid": 1177282
+  },
+  "cleaned_events": 1177282,
+  "duplicates_removed": 0,
+  "nonempty_lines": 1177282,
+  "time_outside_file_hour_before_dedup": 0,
+  "time_outside_file_hour_clean": 0,
+  "conflicting_ids": 0,
+  "conflict_occurrences_excluded": 0,
+  "conflict_policy": "exclude all occurrences of a conflicting event ID until reviewed",
+  "rejection_reasons": {},
+  "clean_event_types": {
+    "DeleteEvent": 26819,
+    "IssueCommentEvent": 40817,
+    "PullRequestEvent": 73133,
+    "ForkEvent": 9815,
+    "IssuesEvent": 14104,
+    "CommitCommentEvent": 2195,
+    "PushEvent": 825853,
+    "PullRequestReviewEvent": 14010,
+    "GollumEvent": 1231,
+    "ReleaseEvent": 4653,
+    "PublicEvent": 2450,
+    "CreateEvent": 104856,
+    "PullRequestReviewCommentEvent": 6690,
+    "WatchEvent": 48823,
+    "MemberEvent": 1833
+  },
+  "clean_unique_repos": 248395,
+  "grouped_event_count_sum": 1177282,
+  "checks": {
+    "valid_count_reconciles": true,
+    "grouped_count_reconciles": true,
+    "clean_ids_unique": true
+  },
+  "coverage": {
+    "rule_version": "a-events-v1",
+    "timezone": "UTC",
+    "date": "2024-01-15",
+    "expected_files": [
+      "2024-01-15-0.json.gz",
+      "2024-01-15-1.json.gz",
+      "2024-01-15-2.json.gz",
+      "2024-01-15-3.json.gz",
+      "2024-01-15-4.json.gz",
+      "2024-01-15-5.json.gz"
+    ],
+    "missing_files": [],
+    "observed_files": [
+      {
+        "name": "2024-01-15-0.json.gz",
+        "path": "/data/cs5488/raw/2024-01-15-0.json.gz",
+        "bytes": 73709206,
+        "sha256": "019cd01bb263573ae1d633fd965cdc9869fa5eefc31bd409376d10052ed7acd8"
+      },
+      {
+        "name": "2024-01-15-1.json.gz",
+        "path": "/data/cs5488/raw/2024-01-15-1.json.gz",
+        "bytes": 90685641,
+        "sha256": "94e84924f1cc94d2e6a1fb746f50b79f7448f1267f6d8dbd7e43e25d6d21b6a0"
+      },
+      {
+        "name": "2024-01-15-2.json.gz",
+        "path": "/data/cs5488/raw/2024-01-15-2.json.gz",
+        "bytes": 83416515,
+        "sha256": "2bc9eb9fc40160143d6988c9cd240ddb464a428138b4d1db0b705cf4e1b7950e"
+      },
+      {
+        "name": "2024-01-15-3.json.gz",
+        "path": "/data/cs5488/raw/2024-01-15-3.json.gz",
+        "bytes": 81857854,
+        "sha256": "a8e8747fb562dbbd0a47a661d11817f0802bbba4544cc210494ce07e3ad276cc"
+      },
+      {
+        "name": "2024-01-15-4.json.gz",
+        "path": "/data/cs5488/raw/2024-01-15-4.json.gz",
+        "bytes": 87198257,
+        "sha256": "3d79948d6e7d1233fe788b747289a0e8d0d7c42bbed7e619a927ad6c3caee481"
+      },
+      {
+        "name": "2024-01-15-5.json.gz",
+        "path": "/data/cs5488/raw/2024-01-15-5.json.gz",
+        "bytes": 86336209,
+        "sha256": "d24889fb2ab7001b0106c156bfe59e6f886192e87ab5fb484cf69b0f6a97e881"
+      }
+    ],
+    "all_requested_archives_present": true,
+    "complete_utc_day_requested": false,
+    "capture_completeness": "not established by archive availability"
+  },
+  "formats": [
+    "csv.gz",
+    "parquet"
+  ],
+  "parser": "shared strict Python parser with explicit Spark schema"
+}

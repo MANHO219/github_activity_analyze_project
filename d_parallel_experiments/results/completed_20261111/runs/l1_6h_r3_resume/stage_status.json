@@ -1,0 +1,49 @@
+{
+  "stage": "spark_clean",
+  "state": "completed",
+  "started_at": "2026-11-10T16:45:39+00:00",
+  "rule_version": "a-events-v1",
+  "config": {
+    "date": "2024-01-15",
+    "hours": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "base_url": "https://data.gharchive.org",
+    "timeout_seconds": 60,
+    "retries": 2,
+    "max_file_bytes": 536870912,
+    "raw_preview_rows": 5,
+    "clean_preview_rows": 100,
+    "parquet_batch_rows": 10000
+  },
+  "argv": [
+    "/data/cs5488/project/d_parallel_experiments/scripts/run_experiment.py",
+    "--master",
+    "local[1]",
+    "--hours",
+    "6",
+    "--output",
+    "/data/cs5488/runs/l1_6h_r3_resume"
+  ],
+  "environment": {
+    "python": "3.11.18 (main, Oct 26 2026, 11:35:17) [GCC 15.3.0]",
+    "executable": "/home/lishuo/cs5488-round1/env/bin/python",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+    "cpu_count": 1,
+    "memory_bytes": 7734812672,
+    "packages": {
+      "pyarrow": "26.0.1",
+      "pyspark": "3.5.7",
+      "py4j": "0.10.9.7"
+    },
+    "java_home": "/usr/lib/jvm/java-17-openjdk-amd64",
+    "code_sha256": "7d54f7c8d3fc0f541ee94f65d91b5c6c889688946f00e08d2b57fd7898f783f7"
+  },
+  "finished_at": "2026-11-10T16:49:17+00:00",
+  "elapsed_seconds": 217.585604
+}

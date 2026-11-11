@@ -1,0 +1,12 @@
+{
+  "a_data_pipeline/gharchive_a/clean.py": "a18528605a29b640c83cdb84cf6c8a5bae6a87fb70759258a692464a9df5f35d",
+  "a_data_pipeline/gharchive_a/cli.py": "b810e0797966250e1afde3dafb06878a899e134d94c76627cd9f9db067960fb4",
+  "a_data_pipeline/gharchive_a/common.py": "911f311b291e69135f37c23d9194c605eba952f133ba148a7e6011365e76cd23",
+  "a_data_pipeline/gharchive_a/compare.py": "9c076d983cbedb33f0dc551606dd908ff11f25f2324d994dd45fc8ca8df0ad35",
+  "a_data_pipeline/gharchive_a/download.py": "30fd57a5cb8b229f703af8d0f978018826a4ce3fb395bdd21eecef6024d9ed5c",
+  "a_data_pipeline/gharchive_a/export.py": "58aa0ccc74c2e854596685da7e9cf61838404cec80ad7e40ea7a8eb8bf9e1d6c",
+  "a_data_pipeline/gharchive_a/inspect.py": "b10de178dd4da4ac1758427b12f9b524e00485bfe1550960382af328ff377c25",
+  "a_data_pipeline/gharchive_a/records.py": "dc6b9da207373994d481022274339c8c795875ca14a1824df5332a7c3b0ff20d",
+  "a_data_pipeline/gharchive_a/spark_clean.py": "d72841b42e4da5916d81b7c2289a1fcccc3e6781f7e8735f5a25155a78b9bb60",
+  "a_data_pipeline/gharchive_a/__init__.py": "ec8784c2124b4e39cd545ca3c152974b1ae202cdb1dc0352ef874f8bccda604c"
+}

@@ -1,0 +1,10 @@
+{
+  "run_id": "l1_6h_resume_warmup",
+  "mode": "L1",
+  "hours": 6,
+  "start_epoch": 1794328891.6772637,
+  "end_epoch": 1794329123.1144702,
+  "elapsed_seconds": 231.43720650672913,
+  "exit_code": 0,
+  "warmup": true
+}

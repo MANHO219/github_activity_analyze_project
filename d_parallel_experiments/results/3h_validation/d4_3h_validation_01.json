@@ -1,0 +1,10 @@
+{
+  "run_id": "d4_3h_validation_01",
+  "mode": "D4",
+  "hours": 3,
+  "start_epoch": 1794309339.740213,
+  "end_epoch": 1794309404.1421244,
+  "elapsed_seconds": 64.40191149711609,
+  "exit_code": 0,
+  "warmup": false
+}
