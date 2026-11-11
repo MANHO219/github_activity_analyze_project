@@ -1,0 +1,2 @@
+# Install after creating the shared environment from ../environment.yml.
+duckdb==1.4.3

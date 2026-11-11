@@ -1,0 +1,16 @@
+{
+  "requested_days": [
+    "2024-01-15",
+    "2024-01-16",
+    "2024-01-17",
+    "2024-01-18",
+    "2024-01-19",
+    "2024-01-20",
+    "2024-01-21"
+  ],
+  "requested_hours": 168,
+  "verified_hours": 168,
+  "missing_source_hours": [],
+  "event_dates_use_utc_event_time": true,
+  "archive_presence_does_not_prove_all_public_activity_was_captured": true
+}
