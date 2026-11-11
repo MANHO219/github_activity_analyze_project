@@ -1,0 +1,64 @@
+date_utc,step,description,seconds
+2024-01-19,total_seconds,Python 清洗整体耗时，包含输入哈希和各子步骤,330.727005
+2024-01-19,input_hash_and_setup_seconds,计算输入哈希并初始化清洗工作区,2.291095
+2024-01-19,read_parse_and_sqlite_insert_seconds,逐小时读取解压、解析校验、写入 SQLite 和异常记录,180.00184
+2024-01-19,remaining_seconds,中间提交、最终核对和状态记录等未单独计时部分,5.40455
+2024-01-19,sqlite.event_groups,按事件 ID 汇总重复次数和内容指纹种类,1.229006
+2024-01-19,sqlite.group_id_index,为事件分组建立索引,0.768964
+2024-01-19,sqlite.cleaned_events,生成去重后事件表并排除冲突 ID,2.265326
+2024-01-19,sqlite.cleaned_id_index,为清洗事件的 ID 建立唯一索引,0.923141
+2024-01-19,sqlite.cleaned_repo_time_index,为仓库和时间建立索引,1.87917
+2024-01-19,sqlite.duplicate_occurrences,创建重复事件的查询视图,0.000341
+2024-01-19,sqlite.conflicting_occurrences,创建冲突事件的查询视图,0.00023
+2024-01-19,sqlite.daily_counts,按仓库、UTC 日期和事件类型聚合,8.551538
+2024-01-19,last_commit_and_event_id_index,提交最后一个小时并为事件 ID 建索引,1.015884
+2024-01-19,duplicate_audit_export,导出重复事件记录,4.222695
+2024-01-19,conflict_audit_export,导出冲突事件记录,1.107327
+2024-01-19,export_cleaned_events_csv_and_parquet,导出逐条事件 CSV 和 Parquet,54.914507
+2024-01-19,export_daily_counts_csv_and_parquet,导出日汇总 CSV 和 Parquet,2.107441
+2024-01-19,write_repo_name_history.csv,生成仓库名称历史表,13.545525
+2024-01-19,write_repo_candidates.csv,生成仓库候选表,7.690427
+2024-01-19,hourly_quality_queries,逐小时查询质量核对统计,42.80505
+2024-01-19,write_hourly_quality.csv,写出逐小时质量统计,0.002947
+2024-01-20,total_seconds,Python 清洗整体耗时，包含输入哈希和各子步骤,232.926083
+2024-01-20,input_hash_and_setup_seconds,计算输入哈希并初始化清洗工作区,1.459643
+2024-01-20,read_parse_and_sqlite_insert_seconds,逐小时读取解压、解析校验、写入 SQLite 和异常记录,119.888927
+2024-01-20,remaining_seconds,中间提交、最终核对和状态记录等未单独计时部分,3.528474
+2024-01-20,sqlite.event_groups,按事件 ID 汇总重复次数和内容指纹种类,0.990688
+2024-01-20,sqlite.group_id_index,为事件分组建立索引,0.63425
+2024-01-20,sqlite.cleaned_events,生成去重后事件表并排除冲突 ID,1.90162
+2024-01-20,sqlite.cleaned_id_index,为清洗事件的 ID 建立唯一索引,0.75381
+2024-01-20,sqlite.cleaned_repo_time_index,为仓库和时间建立索引,1.548863
+2024-01-20,sqlite.duplicate_occurrences,创建重复事件的查询视图,0.000373
+2024-01-20,sqlite.conflicting_occurrences,创建冲突事件的查询视图,0.000312
+2024-01-20,sqlite.daily_counts,按仓库、UTC 日期和事件类型聚合,5.087742
+2024-01-20,last_commit_and_event_id_index,提交最后一个小时并为事件 ID 建索引,0.76618
+2024-01-20,duplicate_audit_export,导出重复事件记录,2.409109
+2024-01-20,conflict_audit_export,导出冲突事件记录,1.036041
+2024-01-20,export_cleaned_events_csv_and_parquet,导出逐条事件 CSV 和 Parquet,44.437901
+2024-01-20,export_daily_counts_csv_and_parquet,导出日汇总 CSV 和 Parquet,1.476529
+2024-01-20,write_repo_name_history.csv,生成仓库名称历史表,10.832985
+2024-01-20,write_repo_candidates.csv,生成仓库候选表,5.929008
+2024-01-20,hourly_quality_queries,逐小时查询质量核对统计,30.241313
+2024-01-20,write_hourly_quality.csv,写出逐小时质量统计,0.002315
+2024-01-21,total_seconds,Python 清洗整体耗时，包含输入哈希和各子步骤,232.434926
+2024-01-21,input_hash_and_setup_seconds,计算输入哈希并初始化清洗工作区,1.424571
+2024-01-21,read_parse_and_sqlite_insert_seconds,逐小时读取解压、解析校验、写入 SQLite 和异常记录,124.521907
+2024-01-21,remaining_seconds,中间提交、最终核对和状态记录等未单独计时部分,3.676123
+2024-01-21,sqlite.event_groups,按事件 ID 汇总重复次数和内容指纹种类,1.03036
+2024-01-21,sqlite.group_id_index,为事件分组建立索引,0.682023
+2024-01-21,sqlite.cleaned_events,生成去重后事件表并排除冲突 ID,1.824567
+2024-01-21,sqlite.cleaned_id_index,为清洗事件的 ID 建立唯一索引,0.883723
+2024-01-21,sqlite.cleaned_repo_time_index,为仓库和时间建立索引,1.619684
+2024-01-21,sqlite.duplicate_occurrences,创建重复事件的查询视图,0.000283
+2024-01-21,sqlite.conflicting_occurrences,创建冲突事件的查询视图,0.000212
+2024-01-21,sqlite.daily_counts,按仓库、UTC 日期和事件类型聚合,4.99951
+2024-01-21,last_commit_and_event_id_index,提交最后一个小时并为事件 ID 建索引,0.73605
+2024-01-21,duplicate_audit_export,导出重复事件记录,0.97489
+2024-01-21,conflict_audit_export,导出冲突事件记录,0.936175
+2024-01-21,export_cleaned_events_csv_and_parquet,导出逐条事件 CSV 和 Parquet,43.93048
+2024-01-21,export_daily_counts_csv_and_parquet,导出日汇总 CSV 和 Parquet,1.485957
+2024-01-21,write_repo_name_history.csv,生成仓库名称历史表,6.856146
+2024-01-21,write_repo_candidates.csv,生成仓库候选表,6.248
+2024-01-21,hourly_quality_queries,逐小时查询质量核对统计,30.604002
+2024-01-21,write_hourly_quality.csv,写出逐小时质量统计,0.000263
