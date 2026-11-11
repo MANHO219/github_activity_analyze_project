@@ -1,0 +1,5 @@
+# Dependencies for lifecycle_analysis.ipynb
+pandas
+numpy
+matplotlib
+pyarrow
