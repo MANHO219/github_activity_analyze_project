@@ -253,7 +253,7 @@ python scripts/join_check.py --run-dir runs/pilot_02 \
 
 ## 规则版本
 
-- 当前规则 `ai_rules_v0.3.4.2`：在 v0.3.4.1 基础上把“英文安装说明”从用途正文里剔除——Install/Run/Setup 开头的行、含“the following command(s)”的引导句、以冒号收尾的短句、`tool --flag` 调用行都不计入。A 复测“Overview + 安装说明”仍被误排，本版修掉。
+- 当前规则 `ai_rules_v0.3.4.3`：在 v0.3.4.2 基础上先剥 Markdown 列表标记再判正文——`1. Download…` / `2. Add…` / `3. Run…` 这类编号步骤不再算用途说明；纯安装步骤维持 `uncertain`。v0.3.4.2 的英文安装说明过滤（指令行、引导句、冒号短句、`tool --flag`）继续生效。
 - 版本安排：`v0.3.4.1` 是 R12 的第一版补丁，`v0.3.4.2` 补英文安装说明，`v0.3.4.3` 补编号列表；三者都只改 #5 分支，不改 v0.3.4，#8 合并后通过 v0.3.8 继承。
 - v0.3.4 的行为保留：可选 AI 集成不纳入；README 明确“为课程/训练营制作”时可覆盖 included。两个行为仍只在规则文件显式配置时启用。
 - 各版本规则与标签表都保留；pilot_01 的 `label_changes.csv` 是 v0.3.2→v0.3.3（6 条），pilot_02 的是同版本对比（22 条）。
