@@ -194,7 +194,7 @@ python scripts/label_repositories.py --run-dir runs/pilot_02 \
 python scripts/build_analysis_labels.py --run-dir runs/pilot_02 \
     --review runs/pilot_02/manual_review_pilot02.csv
 python scripts/join_check.py --run-dir runs/pilot_02 \
-    --daily-csv ../a_data_pipeline/runs/20240115_python/python/repo_daily_counts.csv
+    --daily-csv ../a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv
 ```
 
 结果（全部在 `runs/pilot_02/pilot_02_summary.json`）：
@@ -202,11 +202,11 @@ python scripts/join_check.py --run-dir runs/pilot_02 \
 | 项目 | 结果 |
 |---|---|
 | 元数据 API | 200 次调用、163 成功、31 个 404、6 个 ID 不一致、120 秒 |
-| README 证据 | 200 次请求、138 可读、62 无 README/404、128 秒 |
-| 标签分布（160 随机） | included 2 / excluded 71 / uncertain 87 |
-| 标签分布（40 关键词） | included 17 / excluded 9 / uncertain 14 |
+| README 证据 | 200 次请求、138 个有响应（134 个有正文）、62 个无 README/404、128 秒 |
+| 标签分布（160 随机，最终标签） | included 2 / excluded 71 / uncertain 87 |
+| 标签分布（40 关键词，最终标签） | included 17 / excluded 9 / uncertain 14 |
 | 接回全天活动表 | 200/200 命中，覆盖 1,072 / 5,528,300 条事件；按最终标签 excluded 313 / included 173 / uncertain 586 |
-| 全部 200 | included 19 / excluded 80 / uncertain 101（5 条由 R12、1 条由 R13 排除） |
+| 全部 200 | included 19 / excluded 80 / uncertain 101（5 条由 R12、1 条由 R13、2 条由 R11 排除） |
 | 人工抽查 | 13 条：included 3、excluded 5、uncertain 5 |
 
 抽查发现并修复了两处规则 bug（v0.3.2）：`Whispering-Origin-2D` 曾被当成 `whisper`（名称子串误判），中文“用Resnet101+GPT搭建…的AI”曾因 `\b` 在中文里失效被漏判。A 对两个边界案例给出判定：Etherscan-ML 按训练营项目排除，CoreELEC/xbmc 按 README 主体非 AI 排除。v0.3.3.1 把 R12 收紧为“README 必须说明项目用途、只对描述为空的仓库生效”；v0.3.4 新增 R13，README 明确“为课程/训练营制作”时自动覆盖 included——Etherscan-ML 现在由规则自动排除，13 条人工复核与自动标签的差异为 0。
@@ -240,8 +240,8 @@ python scripts/join_check.py --run-dir runs/pilot_02 \
 
 `repo_labels_joined_events.csv`：每个试点仓库一行，含 `event_count` 与两个不同分母的占比：
 
-- `event_share_of_source`：分母是事件表**全部事件**（197,313）；
-- `event_share_of_pilot_events`：分母是**50 个试点仓库的事件总数**（159）。
+- `event_share_of_source`：分母是事件表**全部事件**（5,528,300）；
+- `event_share_of_pilot_events`：分母是**本次试点仓库的事件总数**（pilot_01 656、pilot_02 1,072）。
 
 ## 处理约定
 
@@ -276,6 +276,6 @@ python -m unittest discover -s tests -v
 
 - 首批 50 个是分层样本（其中 10 个按名称过采样），**不能**用来估计整个 GitHub 的 AI 仓库比例。
 - v0.3.1 仍有 16 个 `uncertain`：8 个元数据缺失/空仓库，其余是弱信号、个人主页无文字证据、README 也无判据的仓库。
-- `17/17 = 100%` 只表示**当前复核样本中自动已判定的 17 条**与人工一致，不是整体分类准确率；复核只覆盖 33 个仓库。
-- 事件覆盖只有 2024-01-15 UTC 00:00–01:00 这一个小时，生命周期分析要等 A 扩展时间窗后重跑。
+- `19/19 = 100%` 只表示**当前复核样本中自动已判定的 19 条**与人工一致，不是整体分类准确率；复核只覆盖 33 个仓库。
+- 接回用的是 2024-01-15 全天表（5,528,300 条事件），但仍只有一天，生命周期分析要等 A 扩展时间窗后重跑。
 - README 证据是复核与标注的辅助材料，会随时间变化；每行记录了快照时间与哈希，但 README 内容本身可能已变。
