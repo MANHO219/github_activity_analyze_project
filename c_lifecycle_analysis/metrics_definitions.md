@@ -11,11 +11,16 @@ Two different units are kept separate on purpose:
 A count and a day count are not interchangeable. A repository with 100 events on one day has
 `total_events = 100` but `active_days = 1`.
 
+Issue and PR activity are split on purpose. `IssueCommentEvent` is kept separate from
+`issue_events` because a comment can land under a pull request as well as under an issue;
+counting it with issues would inflate issue activity.
+
 | Metric | Unit | Definition | Fields needed |
 |---|---|---|---|
 | `total_events` | events | sum of `event_count` for the repository | `repo_id`, `event_count` |
 | `push_events` | events | sum of `event_count` where `event_type == "PushEvent"` | `event_type` |
-| `issue_events` | events | sum of `IssuesEvent` + `IssueCommentEvent` | `event_type` |
+| `issue_events` | events | sum of `IssuesEvent` only (issue open/close actions) | `event_type` |
+| `issue_comment_events` | events | sum of `IssueCommentEvent` only | `event_type` |
 | `pr_events` | events | sum of `PullRequestEvent` + `PullRequestReviewEvent` + `PullRequestReviewCommentEvent` | `event_type` |
 | `active_days` | days | number of distinct `event_date` values with activity | `event_date` |
 
@@ -27,7 +32,8 @@ The metrics are produced by `repo_metrics(daily)` on the aggregated table
 1. pivot the table so each repository is a row and each event type is a column;
 2. `total_events` = row sum;
 3. `push_events` = the `PushEvent` column;
-4. `issue_events` / `pr_events` = sum of the type lists above;
+4. `issue_events` = `IssuesEvent`; `issue_comment_events` = `IssueCommentEvent`;
+   `pr_events` = sum of the three PR-related types;
 5. `active_days` = distinct `event_date` count per repository.
 
 The aggregate is checked against the raw table: the sum of `total_events` must equal the sum of
@@ -35,7 +41,10 @@ The aggregate is checked against the raw table: the sum of `total_events` must e
 
 ## Conventions that the group still needs to confirm
 
-- **Issue events**: whether to include `IssueCommentEvent`, or count only issue open/close events.
+- **Issue vs. comment split (decided for this version)**: `issue_events` counts `IssuesEvent`
+  only; `IssueCommentEvent` is reported as `issue_comment_events` because it can also occur under
+  pull requests. If the group prefers a different grouping, change the type list in
+  `repo_metrics()` and re-run.
 - **PR events**: whether to include the two review events, or count only `PullRequestEvent`.
 - **Bots**: whether to keep bot actors. The event table keeps all actors; the actor fields
   (`actor_id`, `actor_login`) are available if a bot filter is wanted later.
