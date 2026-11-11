@@ -27,7 +27,7 @@
 | 人工复核 | pilot_01：33 条；pilot_02：抽查 13 条（included 3 / excluded 5 / uncertain 5）+ 1 条人工修订（ItsCryptic） |
 | 分析用标签 | pilot_01 人工优先：4 / 38 / 8（人工 33 行、自动 17 行）；pilot_02 人工优先：17 / 87 / 96（13 条复核 + 1 条人工修订） |
 | 接回事件表 | 两批都用全天表（`sample_data/20240115_24h`）：pilot_01 50/50 命中、覆盖 656 / 5,528,300 条（excluded 579 / included 17 / uncertain 60）；pilot_02 200/200 命中、覆盖 1,072 / 5,528,300 条（394 / 109 / 569） |
-| 离线测试 | 149 项全部通过（不联网） |
+| 离线测试 | 156 项全部通过（不联网） |
 
 详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.8.md](rules/ai_rules_v0.3.8.md)；标签交接口径见 [LABELS.md](LABELS.md)。
 
@@ -71,7 +71,7 @@ b_repo_metadata/
 │   ├── evidence.py                    ← 复核用 README 证据
 │   └── join.py                        ← 按 repo_id 接回事件表
 ├── scripts/                           ← 命令入口（每个步骤一个）
-├── tests/test_b_pipeline.py           ← 149 项离线验证
+├── tests/test_b_pipeline.py           ← 156 项离线验证
 └── runs/
     ├── debug_api_sample/              ← 单仓库连通性样例（apache/superset）
     ├── pilot_01/                      ← 50 个仓库的首轮试跑

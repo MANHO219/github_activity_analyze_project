@@ -1666,6 +1666,23 @@ class RulesV38Tests(unittest.TestCase):
         self.assertEqual(result["ai_label"], "excluded")
         self.assertEqual(result["rule_id"], "R12_readme_non_ai")
 
+    PLAIN_STEP_VERBS = (
+        "# mytool\n\n## Overview\n\n"
+        + (
+            "Add the extracted folder to your PATH\n"
+            "Open http://localhost:8080 in your browser\n"
+        )
+        * 20
+    )
+
+    def test_extra_step_verbs_do_not_leak_to_v037(self):
+        """版本隔离：add/open 是 v0.3.4.3 才加的，v0.3.7 仍把它们当正文。"""
+        row = metadata(153, description="", topics=[])
+        old = self.V37.decide(row, readme=self.readme(self.PLAIN_STEP_VERBS))
+        new = self.V38.decide(row, readme=self.readme(self.PLAIN_STEP_VERBS))
+        self.assertEqual(old["ai_label"], "excluded")
+        self.assertEqual(new["ai_label"], "uncertain")
+
 
 class RulesV343Tests(unittest.TestCase):
     """v0.3.4.3：编号安装步骤要先剥列表标记，不能当成用途正文。"""
@@ -1732,6 +1749,23 @@ class RulesV343Tests(unittest.TestCase):
         result = self.V342.decide(row, readme=self.readme(self.NUMBERED_INSTALL))
         self.assertEqual(result["ai_label"], "excluded")
         self.assertEqual(result["rule_id"], "R12_readme_non_ai")
+
+    PLAIN_STEP_VERBS = (
+        "# mytool\n\n## Overview\n\n"
+        + (
+            "Add the extracted folder to your PATH\n"
+            "Open http://localhost:8080 in your browser\n"
+        )
+        * 20
+    )
+
+    def test_extra_step_verbs_do_not_leak_to_v342(self):
+        """add/open 属于 extra_step_verbs：v0.3.4.2 仍用旧词表，同一份 README 判 excluded。"""
+        row = metadata(176, description="", topics=[])
+        old = self.V342.decide(row, readme=self.readme(self.PLAIN_STEP_VERBS))
+        new = self.V343.decide(row, readme=self.readme(self.PLAIN_STEP_VERBS))
+        self.assertEqual(old["ai_label"], "excluded")
+        self.assertEqual(new["ai_label"], "uncertain")
 
 class CompareAndHandoffTests(unittest.TestCase):
     def setUp(self):

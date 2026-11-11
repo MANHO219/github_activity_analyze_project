@@ -61,6 +61,8 @@ A 复测：安装说明写成 `1. Download…`、`2. Add…`、`3. Run…` 后�
 （有序 `1.` / `1)`、无序 `- * +`、checkbox），再判断正文：
 
 - `readme_rules.non_ai.strip_list_markers: true` 显式开启，旧版本行为不变；
+- 新增的步骤动词（`copy / move / add / open / extract / edit / select / choose / click / navigate / chmod / export / source`）
+  放进 `extra_step_verbs` 开关：v0.3.4.2 及更早仍用原词表，同一份 README 判 `excluded`；
 - 纯安装步骤 → `uncertain`；
 - 编号列表但每行确实在说明用途 → 仍 `excluded`（`R12_readme_non_ai`）。
 

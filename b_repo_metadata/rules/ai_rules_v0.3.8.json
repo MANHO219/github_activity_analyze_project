@@ -1101,7 +1101,8 @@
       "purpose_requires_body": true,
       "min_purpose_body_chars": 40,
       "ignore_install_lines": true,
-      "strip_list_markers": true
+      "strip_list_markers": true,
+      "extra_step_verbs": true
     },
     "feature_only_patterns": [
       {
@@ -1222,7 +1223,8 @@
     "weak 命中时只有描述开头就是清单表述（list lead）才排除；有工具语义（tool / cli / summarizer / 动词）时按工具的核心功能判断。",
     "弱线索没有任何用途说明时保留 uncertain，不自动排除。新行为由 resource_collection.require_primary_purpose 显式开启，旧版本不变。",
     "R12 正文判定先剥 Markdown 列表标记：编号步骤（1. Download…）与无序列表不再被当成说明正文。",
-    "R12 先剥 Markdown 列表标记（v0.3.4.3 同源改动）：1. Download… / 2. Add… / 3. Run… 不再被当成说明正文。"
+    "R12 先剥 Markdown 列表标记（v0.3.4.3 同源改动）：1. Download… / 2. Add… / 3. Run… 不再被当成说明正文。",
+    "新增的步骤动词（copy/move/add/open/extract/edit/select/choose/click/navigate/chmod/export/source）放进 extra_step_verbs 开关，v0.3.4.2 及更早加载后仍用原词表。"
   ],
   "resource_collection": {
     "require_primary_purpose": true,

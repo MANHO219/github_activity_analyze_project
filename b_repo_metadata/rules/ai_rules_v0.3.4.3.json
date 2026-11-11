@@ -1077,7 +1077,8 @@
       "purpose_requires_body": true,
       "min_purpose_body_chars": 40,
       "ignore_install_lines": true,
-      "strip_list_markers": true
+      "strip_list_markers": true,
+      "extra_step_verbs": true
     },
     "feature_only_patterns": [
       {
@@ -1179,6 +1180,7 @@
     "R12 正文判定先剥 Markdown 列表标记：有序（1. / 1)）、无序（- * +）与 checkbox 都先去掉再判断。",
     "编号安装步骤（1. Download… / 2. Add… / 3. Run…）不再被当成项目用途说明，维持 uncertain。",
     "每行确实是用途说明的编号列表仍可触发 R12（excluded）。",
-    "新行为由 readme_rules.non_ai.strip_list_markers 显式开启，v0.3.4.2 及更早版本行为不变。"
+    "新行为由 readme_rules.non_ai.strip_list_markers 显式开启，v0.3.4.2 及更早版本行为不变。",
+    "新增的步骤动词（copy/move/add/open/extract/edit/select/choose/click/navigate/chmod/export/source）放进 extra_step_verbs 开关，v0.3.4.2 及更早加载后仍用原词表。"
   ]
 }

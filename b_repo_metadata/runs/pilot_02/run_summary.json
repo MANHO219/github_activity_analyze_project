@@ -240,7 +240,7 @@
       "keyword_name 层来自名称粗筛，名称命中不等于 AI 判定；实际标签仍由 rules 决定。"
     ]
   },
-  "updated_at_utc": "2026-11-10T12:43:42Z",
+  "updated_at_utc": "2026-11-11T06:04:23Z",
   "fetch": {
     "started_at_utc": "2026-11-09T08:21:17Z",
     "finished_at_utc": "2026-11-09T08:23:16Z",
@@ -285,14 +285,14 @@
   "labels": {
     "rules_version": "ai_rules_v0.3.8",
     "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.8.json",
-    "rules_sha256": "9a85ca627c68ba35106f62ccd6e8cc7eaacf4e6c128304d884798d38dd7d1245",
+    "rules_sha256": "7c2ff7f67b2d746f622ef63b842184df0f523ee4f502c1320d8b914775ad5b0f",
     "metadata_csv": "b_repo_metadata/runs/pilot_02/repo_metadata.csv",
     "metadata_sha256": "01ba533476f75f6fadeb510f9207c30f1ccc23904b671a5445484c8386afb86d",
-    "labelled_at_utc": "2026-11-10T12:43:32Z",
+    "labelled_at_utc": "2026-11-11T06:04:15Z",
     "input_rows": 200,
     "labelled_rows": 200,
     "labels_csv": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-    "labels_sha256": "bb149991337704e0b8886f5767d921f54e554b961aae0a7a45cf2d4af9461edf",
+    "labels_sha256": "3c959c3e7355fa504c650e6062c423af3acfadd48e02f6458a256f76ec6ea056",
     "total": 200,
     "by_label": {
       "included": 17,
@@ -589,7 +589,7 @@
     }
   },
   "join": {
-    "checked_at_utc": "2026-11-10T12:43:42Z",
+    "checked_at_utc": "2026-11-11T06:04:23Z",
     "event_source": "repo_daily_counts.csv:sum(event_count)",
     "events_total_in_source": 5528300,
     "pilot_repos": 200,
@@ -631,7 +631,7 @@
     "joined_csv": "b_repo_metadata/runs/pilot_02/repo_labels_joined_events.csv"
   },
   "label_comparison": {
-    "compared_at_utc": "2026-11-10T12:43:33Z",
+    "compared_at_utc": "2026-11-11T06:04:17Z",
     "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.7.csv",
     "new_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
     "old_rule_version": "ai_rules_v0.3.7",
@@ -716,7 +716,7 @@
     }
   },
   "analysis_labels": {
-    "generated_at_utc": "2026-11-10T12:43:37Z",
+    "generated_at_utc": "2026-11-11T06:04:18Z",
     "policy": "manual_override",
     "policy_note": "人工复核优先：有人工判断的仓库采用人工标签，其余采用规则自动标签。",
     "rows": 200,
