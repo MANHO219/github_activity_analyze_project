@@ -215,10 +215,10 @@ python scripts/build_run_summary.py --run-dir runs/pilot_02 \
 |---|---|
 | 元数据 API | 200 次调用、163 成功、31 个 404、6 个 ID 不一致、120 秒 |
 | README 证据 | 200 次请求、138 个有响应（134 个有正文）、62 个无 README/404、128 秒 |
-| 标签分布（160 随机） | included 2 / excluded 75 / uncertain 83 |
-| 标签分布（40 关键词） | included 15 / excluded 11 / uncertain 14 |
+| 标签分布（160 随机，最终标签） | included 2 / excluded 76 / uncertain 82 |
+| 标签分布（40 关键词，最终标签） | included 15 / excluded 11 / uncertain 14 |
 | 接回全天活动表 | 200/200 命中，覆盖 1,072 / 5,528,300 条事件 |
-| 全部 200 | included 17 / excluded 86 / uncertain 97（5 条由 R12、1 条由 R13、3 条由 R11 排除） |
+| 全部 200 | included 17 / excluded 86 / uncertain 97（5 条由 R12、1 条由 R13、5 条由 R11 排除） |
 | 人工抽查 | 13 条：included 3、excluded 5、uncertain 5 |
 
 抽查发现并修复了两处规则 bug（v0.3.2）：`Whispering-Origin-2D` 曾被当成 `whisper`（名称子串误判），中文“用Resnet101+GPT搭建…的AI”曾因 `\b` 在中文里失效被漏判。A 对两个边界案例给出判定：Etherscan-ML 按训练营项目排除，CoreELEC/xbmc 按 README 主体非 AI 排除。v0.3.3.1 把 R12 收紧为“README 必须说明项目用途、只对描述为空的仓库生效”；v0.3.4 新增 R13，README 明确“为课程/训练营制作”时自动覆盖 included——Etherscan-ML 现在由规则自动排除，13 条人工复核与自动标签的差异为 0。
@@ -248,14 +248,14 @@ v0.3.5 是对这 200 个仓库的误判抽查：逐条看完 101 条 `uncertain`
 | `http_status` | 最近一次 HTTP 状态码 |
 | `fetched_at_utc` | 获取成功时的时间；失败留空（失败时间在 `fetch_log.jsonl`） |
 
-`repo_ai_labels.csv`（v0.3.6）：`repo_id`、`ai_label`、`reason`、`rule_version`、`rule_id`、`metadata_fetched_at_utc`、`labelled_at_utc`，以及 README 辅助字段 `readme_evidence`（`used` / `no_signal` / 空）、`readme_sha256`、`readme_fetched_at_utc`。`reason` 以规则 ID 开头，例如 `R5b_weak_signal_corroborated:weak=ai_token;corroboration=sdk_api`，README 相关的一行形如 `R9_readme_ai:readme=llm,machine_learning`。
+`repo_ai_labels.csv`（v0.3.8）：`repo_id`、`ai_label`、`reason`、`rule_version`、`rule_id`、`metadata_fetched_at_utc`、`labelled_at_utc`，以及 README 辅助字段 `readme_evidence`（`used` / `no_signal` / 空）、`readme_sha256`、`readme_fetched_at_utc`。`reason` 以规则 ID 开头，例如 `R5b_weak_signal_corroborated:weak=ai_token;corroboration=sdk_api`，README 相关的一行形如 `R9_readme_ai:readme=llm,machine_learning`。
 
 `repo_ai_labels_analysis.csv`：在自动标签基础上增加 `ai_label_manual`、`ai_label_final`、`label_source`、`policy`，用于交接给 C。字段与口径说明见 [LABELS.md](LABELS.md)。
 
 `repo_labels_joined_events.csv`：每个试点仓库一行，含 `event_count` 与两个不同分母的占比：
 
-- `event_share_of_source`：分母是事件表**全部事件**（197,313）；
-- `event_share_of_pilot_events`：分母是**50 个试点仓库的事件总数**（159）。
+- `event_share_of_source`：分母是事件表**全部事件**（5,528,300）；
+- `event_share_of_pilot_events`：分母是**本次试点仓库的事件总数**（pilot_01 656、pilot_02 1,072）。
 
 标签列按**表头**选：有 `ai_label_final` 就用它，否则用 `ai_label`（`--label-field` 可显式指定）。所以把最终标签表改名成 `custom.csv` 也不会退回自动标签；`join_check.json` 的 `inputs.label_field` 记录实际用的列。两批都已按最终标签 + 全天表重跑。
 
