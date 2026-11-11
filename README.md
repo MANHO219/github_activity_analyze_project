@@ -59,7 +59,7 @@ python rolling_pipeline/weekly_report.py \
 | 自动标签 / 人工复核 / 分析用标签的区别 | [标签交接说明](b_repo_metadata/LABELS.md) |
 | A 的实现和运行命令 | [数据管道 README](a_data_pipeline/README.md) |
 | 已验证的一周滚动流程与 D 的适配起点 | [滚动程序 README](a_data_pipeline/rolling_pipeline/README.md)、[一周实测](a_data_pipeline/verification/20240115_1week/README.md) |
-| D 的单核、多核与虚拟机分布式实验，以及 A/D 分工边界 | [D 的实验计划](D_并行与分布式实验计划.md) |
+| D 的单核、多核与虚拟机分布式实验，以及 A/D 分工边界 | [D 的实验计划](D_并行与分布式实验计划.md)、[D 实测成果与完整日志获取](d_parallel_experiments/README.md) |
 | 实际样本与核对结果 | [样本交接记录](a_data_pipeline/runs/20240115_1hour_handoff/HANDOFF.md)、[验证摘要](a_data_pipeline/verification/RESULTS.md) |
 
 HTML 请在下载或 clone 后，用本地浏览器打开；在 GitHub 文件页面也可以先下载。Markdown 说明可直接在 GitHub 阅读。仓库里的 HTML 已内嵌样本和源码，阅读主体内容不需要启动服务。
