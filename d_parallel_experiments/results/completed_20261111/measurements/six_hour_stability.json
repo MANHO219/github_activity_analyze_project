@@ -1,0 +1,144 @@
+{
+  "runs": [
+    {
+      "run_id": "l1_6h_r1",
+      "task_end_reasons": {
+        "Success": 577
+      },
+      "task_attempt_gt_zero": 0,
+      "stage_failures": [],
+      "executor_removals": [],
+      "application_end_events": 1,
+      "spill_bytes": 0,
+      "summed_task_gc_ms": 6452,
+      "summed_executor_run_ms": 164847
+    },
+    {
+      "run_id": "l1_6h_r2",
+      "task_end_reasons": {
+        "Success": 577
+      },
+      "task_attempt_gt_zero": 0,
+      "stage_failures": [],
+      "executor_removals": [],
+      "application_end_events": 1,
+      "spill_bytes": 0,
+      "summed_task_gc_ms": 5783,
+      "summed_executor_run_ms": 164469
+    },
+    {
+      "run_id": "l1_6h_r3_resume",
+      "task_end_reasons": {
+        "Success": 577
+      },
+      "task_attempt_gt_zero": 0,
+      "stage_failures": [],
+      "executor_removals": [],
+      "application_end_events": 1,
+      "spill_bytes": 0,
+      "summed_task_gc_ms": 6111,
+      "summed_executor_run_ms": 173959
+    },
+    {
+      "run_id": "l4_6h_r1",
+      "task_end_reasons": {
+        "Success": 577
+      },
+      "task_attempt_gt_zero": 0,
+      "stage_failures": [],
+      "executor_removals": [],
+      "application_end_events": 1,
+      "spill_bytes": 0,
+      "summed_task_gc_ms": 3518,
+      "summed_executor_run_ms": 172213
+    },
+    {
+      "run_id": "l4_6h_r2",
+      "task_end_reasons": {
+        "Success": 577
+      },
+      "task_attempt_gt_zero": 0,
+      "stage_failures": [],
+      "executor_removals": [],
+      "application_end_events": 1,
+      "spill_bytes": 0,
+      "summed_task_gc_ms": 3801,
+      "summed_executor_run_ms": 172314
+    },
+    {
+      "run_id": "l4_6h_r3",
+      "task_end_reasons": {
+        "Success": 577
+      },
+      "task_attempt_gt_zero": 0,
+      "stage_failures": [],
+      "executor_removals": [],
+      "application_end_events": 1,
+      "spill_bytes": 0,
+      "summed_task_gc_ms": 3969,
+      "summed_executor_run_ms": 172227
+    },
+    {
+      "run_id": "d4stable_6h_r1",
+      "task_end_reasons": {
+        "Success": 577
+      },
+      "task_attempt_gt_zero": 0,
+      "stage_failures": [],
+      "executor_removals": [],
+      "application_end_events": 1,
+      "spill_bytes": 0,
+      "summed_task_gc_ms": 3742,
+      "summed_executor_run_ms": 162713
+    },
+    {
+      "run_id": "d4stable_6h_r2",
+      "task_end_reasons": {
+        "Success": 577
+      },
+      "task_attempt_gt_zero": 0,
+      "stage_failures": [],
+      "executor_removals": [],
+      "application_end_events": 1,
+      "spill_bytes": 0,
+      "summed_task_gc_ms": 4544,
+      "summed_executor_run_ms": 197659
+    },
+    {
+      "run_id": "d4stable_6h_r3",
+      "task_end_reasons": {
+        "Success": 577
+      },
+      "task_attempt_gt_zero": 0,
+      "stage_failures": [],
+      "executor_removals": [],
+      "application_end_events": 1,
+      "spill_bytes": 0,
+      "summed_task_gc_ms": 3552,
+      "summed_executor_run_ms": 162171
+    }
+  ],
+  "variability": {
+    "L1": {
+      "n": 3,
+      "mean_seconds": 212.51163935661316,
+      "sample_sd_seconds": 6.842107120634978,
+      "cv_percent": 3.21963876489293,
+      "max_over_min_percent": 6.3218131881706
+    },
+    "L4": {
+      "n": 3,
+      "mean_seconds": 85.66899394989014,
+      "sample_sd_seconds": 0.15616569539063382,
+      "cv_percent": 0.18228963384579827,
+      "max_over_min_percent": 0.32560761503546143
+    },
+    "D4": {
+      "n": 3,
+      "mean_seconds": 94.3096050421397,
+      "sample_sd_seconds": 5.630622801351965,
+      "cv_percent": 5.970359857658266,
+      "max_over_min_percent": 11.27166925213523
+    }
+  }
+}

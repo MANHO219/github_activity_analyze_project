@@ -1,0 +1,10 @@
+{
+  "run_id": "d4stable_6h_r3",
+  "mode": "D4",
+  "hours": 6,
+  "start_epoch": 1794329809.415621,
+  "end_epoch": 1794329899.992268,
+  "elapsed_seconds": 90.57664704322815,
+  "exit_code": 0,
+  "warmup": false
+}

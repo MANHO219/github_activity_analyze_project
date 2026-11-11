@@ -1,0 +1,41 @@
+{
+  "run_id": "l4_6h_r1",
+  "application_id": "local-1794310992971",
+  "event_log": "/data/cs5488/event-logs/local-1794310992971",
+  "executors": {
+    "driver": {
+      "Host": "spark-worker-1",
+      "Total Cores": 4,
+      "Log Urls": {},
+      "Attributes": {},
+      "Resources": {},
+      "Resource Profile Id": 0
+    }
+  },
+  "successful_tasks_by_host": {
+    "spark-worker-1": 577
+  },
+  "task_metrics": {
+    "Executor Run Time": 172213,
+    "JVM GC Time": 3518,
+    "Memory Bytes Spilled": 0,
+    "Disk Bytes Spilled": 0,
+    "Shuffle Write Bytes": 1267189660,
+    "Shuffle Read Bytes": 1344036113
+  },
+  "fingerprints": {
+    "events_clean.csv.gz": "615d294072fb5fbdceacff14220c6e356bcf0f2b426c151a6242ea3fe546469a",
+    "repo_daily_counts.csv": "ae73055521c07443b5232c51a83c4b43d66fea13cab87d6b40d6b5bb6d81eedf",
+    "repo_candidates.csv": "5b5d054ba30a20e0ebae9c0e077c37416d0154c95f02f9a1463dfed573434f3b",
+    "repo_name_history.csv": "5bfac21d67571c0dab50f8760fc36b8200baefbab9282cb034f8d9e1a60161cf"
+  },
+  "parquet_multiset_sha256_sum": "a4129910a7c4b228e8bb2e728205738c2155c9aaf53a5dc6bc4ea62050474b94",
+  "parquet_rows": 1177282,
+  "parquet_schema": "event_id: string\nevent_type: string\nevent_time: timestamp[us, tz=UTC]\nrepo_id: int64\nrepo_name: string\nactor_id: int64\nactor_login: string\nevent_date: date32[day]\nsource_file: string\nsource_line: int64\nsource_hour: timestamp[us, tz=UTC]\ntime_outside_file_hour: bool\noptional_field_issues: list<element: string>\n  child 0, element: string\n-- schema metadata --\norg.apache.spark.version: '3.5.7'\norg.apache.spark.sql.parquet.row.metadata: '{\"type\":\"struct\",\"fields\":[{\"' + 952",
+  "quality_checks": {
+    "valid_count_reconciles": true,
+    "grouped_count_reconciles": true,
+    "clean_ids_unique": true
+  },
+  "cleaned_events": 1177282
+}

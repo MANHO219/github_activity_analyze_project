@@ -1,0 +1,23 @@
+{
+  "host": "spark-master",
+  "cpu_count": 2,
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "meminfo": "MemTotal:        5489236 kB\nMemFree:         2418832 kB\nMemAvailable:    4522136 kB\nBuffers:           42540 kB\nCached:          2249028 kB\nSwapCached:            0 kB\nActive:           899684 kB\nInactive:        1829384 kB\nActive(anon):     446560 kB\nInactive(anon):        0 kB\nActive(file):     453124 kB\nInactive(file):  1829384 kB\nUnevictable:        9748 kB\nMlocked:            9748 kB\nSwapTotal:       4194300 kB\nSwapFree:        4194300 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:             58744 kB\nWriteback:             0 kB\nAnonPages:        447256 kB\nMapped:           101892 kB\nShmem:              1636 kB\nKReclaimable:      66140 kB\nSlab:             179232 kB\nSReclaimable:      66140 kB\nSUnreclaim:       113092 kB\nKernelStack:        7280 kB\nPageTables:         5400 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     6938916 kB\nCommitted_AS:     888424 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       28088 kB\nVmallocChunk:          0 kB\nPercpu:            69632 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:    389120 kB\nFilePmdMapped:         0 kB\nCmaTotal:              0 kB\nCmaFree:         1197772 kB\nUnaccepted:            0 kB\nBalloon:               0 kB\nGPUActive:          7236 kB\nGPUReclaim:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:      143168 kB\nDirectMap2M:     4050944 kB\nDirectMap1G:     4194304 kB\n",
+  "loadavg": "0.84 0.48 0.20 1/328 3385\n",
+  "source_sha256": {
+    "a_data_pipeline/gharchive_a/__init__.py": "ec8784c2124b4e39cd545ca3c152974b1ae202cdb1dc0352ef874f8bccda604c",
+    "a_data_pipeline/gharchive_a/clean.py": "a18528605a29b640c83cdb84cf6c8a5bae6a87fb70759258a692464a9df5f35d",
+    "a_data_pipeline/gharchive_a/cli.py": "b810e0797966250e1afde3dafb06878a899e134d94c76627cd9f9db067960fb4",
+    "a_data_pipeline/gharchive_a/common.py": "911f311b291e69135f37c23d9194c605eba952f133ba148a7e6011365e76cd23",
+    "a_data_pipeline/gharchive_a/compare.py": "9c076d983cbedb33f0dc551606dd908ff11f25f2324d994dd45fc8ca8df0ad35",
+    "a_data_pipeline/gharchive_a/download.py": "30fd57a5cb8b229f703af8d0f978018826a4ce3fb395bdd21eecef6024d9ed5c",
+    "a_data_pipeline/gharchive_a/export.py": "58aa0ccc74c2e854596685da7e9cf61838404cec80ad7e40ea7a8eb8bf9e1d6c",
+    "a_data_pipeline/gharchive_a/inspect.py": "b10de178dd4da4ac1758427b12f9b524e00485bfe1550960382af328ff377c25",
+    "a_data_pipeline/gharchive_a/records.py": "dc6b9da207373994d481022274339c8c795875ca14a1824df5332a7c3b0ff20d",
+    "a_data_pipeline/gharchive_a/spark_clean.py": "d72841b42e4da5916d81b7c2289a1fcccc3e6781f7e8735f5a25155a78b9bb60",
+    "d_parallel_experiments/scripts/compare_experiments.py": "3381ad004a7faacf7efed8de64c1033296299f8100dcae2f2a0a12c8cab0cbcd",
+    "d_parallel_experiments/scripts/prepare_inputs.py": "b77f4ff87a234aa39a77a670f02226509ca5b4741fc49a91ace06bfcd1236ee9",
+    "d_parallel_experiments/scripts/run_experiment.py": "a362c84862ec221d2200786dc5fde831e5f5ebf51cb4d43633025d41b4c715ce",
+    "d_parallel_experiments/scripts/summarize_run.py": "3e035c2553e940d596f015dbc04ccfe42998e96f8b51f5869bb5bd7271554164"
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "passed": true,
+  "comparison": "full ordered CSV SHA-256 and unordered Parquet row fingerprints including multiplicity",
+  "records": [
+    {
+      "run_id": "l1_6h_r1",
+      "mode": "L1",
+      "hours": 6,
+      "start_epoch": 1794311590.7216794,
+      "end_epoch": 1794311800.9367385,
+      "elapsed_seconds": 210.21505904197693,
+      "exit_code": 0,
+      "warmup": false,
+      "application_id": "local-1794311593976",
+      "events": 1177282,
+      "successful_tasks_by_host": {
+        "spark-worker-1": 577
+      }
+    },
+    {
+      "run_id": "l1_6h_r2",
+      "mode": "L1",
+      "hours": 6,
+      "start_epoch": 1794311814.684786,
+      "end_epoch": 1794312021.7980585,
+      "elapsed_seconds": 207.11327242851257,
+      "exit_code": 0,
+      "warmup": false,
+      "application_id": "local-1794311817941",
+      "events": 1177282,
+      "successful_tasks_by_host": {
+        "spark-worker-1": 577
+      }
+    },
+    {
+      "run_id": "l1_6h_r3_resume",
+      "mode": "L1",
+      "hours": 6,
+      "start_epoch": 1794329137.1018999,
+      "end_epoch": 1794329357.3084865,
+      "elapsed_seconds": 220.20658659934998,
+      "exit_code": 0,
+      "warmup": false,
+      "application_id": "local-1794329140658",
+      "events": 1177282,
+      "successful_tasks_by_host": {
+        "spark-worker-1": 577
+      }
+    },
+    {
+      "run_id": "l4_6h_r1",
+      "mode": "L4",
+      "hours": 6,
+      "start_epoch": 1794310991.0473788,
+      "end_epoch": 1794311076.6178036,
+      "elapsed_seconds": 85.57042479515076,
+      "exit_code": 0,
+      "warmup": false,
+      "application_id": "local-1794310992971",
+      "events": 1177282,
+      "successful_tasks_by_host": {
+        "spark-worker-1": 577
+      }
+    },
+    {
+      "run_id": "l4_6h_r2",
+      "mode": "L4",
+      "hours": 6,
+      "start_epoch": 1794311089.5118597,
+      "end_epoch": 1794311175.099368,
+      "elapsed_seconds": 85.5875084400177,
+      "exit_code": 0,
+      "warmup": false,
+      "application_id": "local-1794311091462",
+      "events": 1177282,
+      "successful_tasks_by_host": {
+        "spark-worker-1": 577
+      }
+    },
+    {
+      "run_id": "l4_6h_r3",
+      "mode": "L4",
+      "hours": 6,
+      "start_epoch": 1794311188.2439852,
+      "end_epoch": 1794311274.0930338,
+      "elapsed_seconds": 85.84904861450195,
+      "exit_code": 0,
+      "warmup": false,
+      "application_id": "local-1794311190201",
+      "events": 1177282,
+      "successful_tasks_by_host": {
+        "spark-worker-1": 577
+      }
+    },
+    {
+      "run_id": "d4stable_6h_r1",
+      "mode": "D4",
+      "hours": 6,
+      "start_epoch": 1794329587.606576,
+      "end_epoch": 1794329679.172597,
+      "elapsed_seconds": 91.56602096557617,
+      "exit_code": 0,
+      "warmup": false,
+      "application_id": "app-20261110165309-0001",
+      "events": 1177282,
+      "successful_tasks_by_host": {
+        "192.168.20.131": 295,
+        "192.168.20.129": 282
+      }
+    },
+    {
+      "run_id": "d4stable_6h_r2",
+      "mode": "D4",
+      "hours": 6,
+      "start_epoch": 1794329695.0426116,
+      "end_epoch": 1794329795.8287587,
+      "elapsed_seconds": 100.78614711761475,
+      "exit_code": 0,
+      "warmup": false,
+      "application_id": "app-20261110165457-0002",
+      "events": 1177282,
+      "successful_tasks_by_host": {
+        "192.168.20.129": 282,
+        "192.168.20.131": 295
+      }
+    },
+    {
+      "run_id": "d4stable_6h_r3",
+      "mode": "D4",
+      "hours": 6,
+      "start_epoch": 1794329809.415621,
+      "end_epoch": 1794329899.992268,
+      "elapsed_seconds": 90.57664704322815,
+      "exit_code": 0,
+      "warmup": false,
+      "application_id": "app-20261110165651-0003",
+      "events": 1177282,
+      "successful_tasks_by_host": {
+        "192.168.20.131": 302,
+        "192.168.20.129": 275
+      }
+    }
+  ],
+  "summary": {
+    "L1": {
+      "raw_seconds": [
+        210.21505904197693,
+        207.11327242851257,
+        220.20658659934998
+      ],
+      "median_seconds": 210.21505904197693,
+      "min_seconds": 207.11327242851257,
+      "max_seconds": 220.20658659934998,
+      "events_per_second": 5600.369475742048,
+      "speedup_vs_L1": 1.0
+    },
+    "L4": {
+      "raw_seconds": [
+        85.57042479515076,
+        85.5875084400177,
+        85.84904861450195
+      ],
+      "median_seconds": 85.5875084400177,
+      "min_seconds": 85.57042479515076,
+      "max_seconds": 85.84904861450195,
+      "events_per_second": 13755.301695983762,
+      "speedup_vs_L1": 2.456141823421603
+    },
+    "D4": {
+      "raw_seconds": [
+        91.56602096557617,
+        100.78614711761475,
+        90.57664704322815
+      ],
+      "median_seconds": 91.56602096557617,
+      "min_seconds": 90.57664704322815,
+      "max_seconds": 100.78614711761475,
+      "events_per_second": 12857.192958538559,
+      "speedup_vs_L1": 2.295775843759841
+    }
+  }
+}

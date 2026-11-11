@@ -1,0 +1,58 @@
+{
+  "run_id": "d4_3h_validation_01",
+  "application_id": "app-20261110111542-0000",
+  "event_log": "/data/cs5488/event-logs/app-20261110111542-0000",
+  "executors": {
+    "1": {
+      "Host": "192.168.20.131",
+      "Total Cores": 2,
+      "Log Urls": {
+        "stdout": "http://192.168.20.131:8081/logPage/?appId=app-20261110111542-0000&executorId=1&logType=stdout",
+        "stderr": "http://192.168.20.131:8081/logPage/?appId=app-20261110111542-0000&executorId=1&logType=stderr"
+      },
+      "Attributes": {},
+      "Resources": {},
+      "Resource Profile Id": 0,
+      "Registration Time": 1794309344632
+    },
+    "0": {
+      "Host": "192.168.20.129",
+      "Total Cores": 2,
+      "Log Urls": {
+        "stdout": "http://192.168.20.129:8081/logPage/?appId=app-20261110111542-0000&executorId=0&logType=stdout",
+        "stderr": "http://192.168.20.129:8081/logPage/?appId=app-20261110111542-0000&executorId=0&logType=stderr"
+      },
+      "Attributes": {},
+      "Resources": {},
+      "Resource Profile Id": 0,
+      "Registration Time": 1794309344714
+    }
+  },
+  "successful_tasks_by_host": {
+    "192.168.20.129": 240,
+    "192.168.20.131": 286
+  },
+  "task_metrics": {
+    "Executor Run Time": 99965,
+    "JVM GC Time": 3117,
+    "Memory Bytes Spilled": 0,
+    "Disk Bytes Spilled": 0,
+    "Shuffle Write Bytes": 654974808,
+    "Shuffle Read Bytes": 697976238
+  },
+  "fingerprints": {
+    "events_clean.csv.gz": "259c4de34b1d6d9ca2b273d5d26d04085661a162add8f802d834c172d096dd53",
+    "repo_daily_counts.csv": "0f0a6a0a59eb5ebc119930350ae04f368fd7f9aff902c888759422dde5be7004",
+    "repo_candidates.csv": "beb5ea793c7fbeecbdc9b063c723aaaf1503df53c9066bd92c22a00c5c9d23c8",
+    "repo_name_history.csv": "8aac54b26ab5cfe2d1056380dc693086d2164393eab64fcac034b491ba1fada3"
+  },
+  "parquet_multiset_sha256_sum": "a4f2f70cc91323af9231723313709bfaad69f8f92262e7fa4936bfcf7e517785",
+  "parquet_rows": 601934,
+  "parquet_schema": "event_id: string\nevent_type: string\nevent_time: timestamp[us, tz=UTC]\nrepo_id: int64\nrepo_name: string\nactor_id: int64\nactor_login: string\nevent_date: date32[day]\nsource_file: string\nsource_line: int64\nsource_hour: timestamp[us, tz=UTC]\ntime_outside_file_hour: bool\noptional_field_issues: list<element: string>\n  child 0, element: string\n-- schema metadata --\norg.apache.spark.version: '3.5.7'\norg.apache.spark.sql.parquet.row.metadata: '{\"type\":\"struct\",\"fields\":[{\"' + 952",
+  "quality_checks": {
+    "valid_count_reconciles": true,
+    "grouped_count_reconciles": true,
+    "clean_ids_unique": true
+  },
+  "cleaned_events": 601934
+}
