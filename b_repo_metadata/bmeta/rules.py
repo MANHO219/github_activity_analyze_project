@@ -161,6 +161,7 @@ class RuleSet:
                     self.readme_non_ai_ignore_install = bool(non_ai.get("ignore_install_lines", False))
                     # v0.3.4.3：编号列表（1. Download…）要先剥标记再判断正文。
                     self.readme_non_ai_strip_markers = bool(non_ai.get("strip_list_markers", False))
+                    self.readme_non_ai_extra_verbs = bool(non_ai.get("extra_step_verbs", False))
                     self.readme_non_ai_heading = [
                         (name, pattern) for name, pattern in self.readme_non_ai_purpose if name == "purpose_heading"
                     ]
@@ -175,6 +176,7 @@ class RuleSet:
                     self.readme_non_ai_min_body_chars = 40
                     self.readme_non_ai_ignore_install = False
                     self.readme_non_ai_strip_markers = False
+                    self.readme_non_ai_extra_verbs = False
                     self.readme_non_ai_heading = []
                 # README 的“可选 AI 集成”排除与“课程覆盖”都只在规则文件显式配置时启用。
                 self.readme_feature_only = _compile(readme_rules.get("feature_only_patterns", []))
@@ -479,7 +481,14 @@ class RuleSet:
                 parts.append(stripped)
         return "\n".join(parts)
 
+    # v0.3.4.2 的词表：旧规则文件加载后必须保持原样，新增词只能走 EXTRA。
     _INSTRUCTION_LINE = re.compile(
+        r"^(to\s+)?(install|installation|set\s*up|setup|run|execute|launch|start|build|compile|clone|download|"
+        r"configure|usage|quick\s*start|getting\s+started|requirements?|prerequisites?|dependencies)\b",
+        re.IGNORECASE,
+    )
+    # v0.3.4.3 新增的步骤动词，只在 extra_step_verbs 打开时生效。
+    _INSTRUCTION_LINE_EXTRA = re.compile(
         r"^(to\s+)?(install|installation|set\s*up|setup|run|execute|launch|start|build|compile|clone|download|"
         r"copy|move|add|open|extract|edit|select|choose|click|navigate|chmod|export|source|configure|"
         r"usage|quick\s*start|getting\s+started|requirements?|prerequisites?|dependencies)\b",
@@ -525,7 +534,10 @@ class RuleSet:
             if self.readme_non_ai_ignore_install and re.match(r"^[\w./@+-]+\s+--?\w", stripped):
                 continue
             if self.readme_non_ai_ignore_install:
-                if self._INSTRUCTION_LINE.match(stripped) or self._INSTRUCTION_HINT.search(stripped):
+                instruction = (
+                    self._INSTRUCTION_LINE_EXTRA if self.readme_non_ai_extra_verbs else self._INSTRUCTION_LINE
+                )
+                if instruction.match(stripped) or self._INSTRUCTION_HINT.search(stripped):
                     continue
                 if stripped.endswith(":") and len(stripped) <= 80:
                     continue

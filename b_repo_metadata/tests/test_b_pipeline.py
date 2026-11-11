@@ -1259,6 +1259,23 @@ class RulesV343Tests(unittest.TestCase):
         self.assertEqual(result["ai_label"], "excluded")
         self.assertEqual(result["rule_id"], "R12_readme_non_ai")
 
+    PLAIN_STEP_VERBS = (
+        "# mytool\n\n## Overview\n\n"
+        + (
+            "Add the extracted folder to your PATH\n"
+            "Open http://localhost:8080 in your browser\n"
+        )
+        * 20
+    )
+
+    def test_extra_step_verbs_do_not_leak_to_v342(self):
+        """add/open 属于 extra_step_verbs：v0.3.4.2 仍用旧词表，同一份 README 判 excluded。"""
+        row = metadata(176, description="", topics=[])
+        old = self.V342.decide(row, readme=self.readme(self.PLAIN_STEP_VERBS))
+        new = self.V343.decide(row, readme=self.readme(self.PLAIN_STEP_VERBS))
+        self.assertEqual(old["ai_label"], "excluded")
+        self.assertEqual(new["ai_label"], "uncertain")
+
 
 class CompareAndHandoffTests(unittest.TestCase):
     def setUp(self):

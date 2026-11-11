@@ -1,14 +1,14 @@
 {
   "rules_version": "ai_rules_v0.3.4.3",
   "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.4.3.json",
-  "rules_sha256": "b4aafd5c2b273721d4ce4ab7d44a8d1a665bdc22451f5219d462914c88721215",
+  "rules_sha256": "a5933b3eab28b63c51ae915b28f8d99c6dea23bffc9366d9a32a182d1b1c898f",
   "metadata_csv": "b_repo_metadata/runs/pilot_02/repo_metadata.csv",
   "metadata_sha256": "01ba533476f75f6fadeb510f9207c30f1ccc23904b671a5445484c8386afb86d",
-  "labelled_at_utc": "2026-11-10T12:39:40Z",
+  "labelled_at_utc": "2026-11-11T06:11:14Z",
   "input_rows": 200,
   "labelled_rows": 200,
   "labels_csv": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-  "labels_sha256": "314df9dafadb9bceb445efbfbb605980ca0445999e1c3fc2d20c9b8cccfa44e2",
+  "labels_sha256": "8a9e2d97ee7eec741c586f866cc963408937b5ba7b57cf50d170a8de8cb373e5",
   "total": 200,
   "by_label": {
     "included": 19,

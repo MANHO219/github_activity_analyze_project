@@ -10,7 +10,7 @@
 |---|---|
 | 试跑名单 | pilot_01：50 个（40 随机 + 10 名称关键词）；pilot_02：200 个（160 随机 + 40 名称关键词，排除首轮 50） |
 | 元数据获取 | pilot_01：43 成功 / 2 ID 不一致 / 5 个 404；pilot_02：163 成功 / 6 ID 不一致 / 31 个 404（各 200 次调用） |
-| AI 标签（规则 v0.3.4.3） | pilot_01：`included` 4、`excluded` 32、`uncertain` 14；pilot_02（含 v0.3.5 的 6 条改判）：17 / 86 / 97 |
+| AI 标签（规则 v0.3.4.3） | pilot_01：`included` 4、`excluded` 32、`uncertain` 14；pilot_02：19 / 80 / 101 |
 | pilot_02 分层分布 | 160 随机：2 / 71 / 87；40 关键词：17 / 9 / 14 |
 | 与 v0.2 对比 | pilot_01：5 条标签变化 + 5 条仅理由变化；README 补足 3 个 AI 项目、1 个课程仓库 |
 | v0.3.1 → v0.3.2 | pilot_01 0 条；pilot_02 2 条（修复 whisper 子串与中文边界） |
@@ -23,8 +23,8 @@
 | 与人工复核 | pilot_01 复核样本中自动已判定的 17 条全部与人工一致；只代表 33 条复核样本 |
 | 人工复核 | pilot_01：33 条；pilot_02：抽查 13 条（included 3 / excluded 5 / uncertain 5） |
 | 分析用标签 | pilot_01 人工优先：4 / 38 / 8（人工 33 行、自动 17 行） |
-| 接回事件表（全天表） | pilot_01：50/50 命中，覆盖 656 / 5,528,300 条（excluded 579 / included 17 / uncertain 60）；pilot_02：200/200 命中，覆盖 1,072 / 5,528,300 条（394 / 109 / 569） |
-| 离线测试 | 107 项全部通过（不联网） |
+| 接回事件表（全天表） | pilot_01：50/50 命中，覆盖 656 / 5,528,300 条（excluded 579 / included 17 / uncertain 60）；pilot_02：200/200 命中，覆盖 1,072 / 5,528,300 条（excluded 313 / included 173 / uncertain 586） |
+| 离线测试 | 108 项全部通过（不联网） |
 
 详细数字、验收清单与遗留问题见 [RESULTS.md](RESULTS.md)；当前规则见 [rules/ai_rules_v0.3.4.3.md](rules/ai_rules_v0.3.4.3.md)；标签交接口径见 [LABELS.md](LABELS.md)。
 
@@ -63,7 +63,7 @@ b_repo_metadata/
 │   ├── evidence.py                    ← 复核用 README 证据
 │   └── join.py                        ← 按 repo_id 接回事件表
 ├── scripts/                           ← 命令入口（每个步骤一个）
-├── tests/test_b_pipeline.py           ← 107 项离线验证
+├── tests/test_b_pipeline.py           ← 108 项离线验证
 └── runs/
     ├── debug_api_sample/              ← 单仓库连通性样例（apache/superset）
     ├── pilot_01/                      ← 50 个仓库的首轮试跑
@@ -205,7 +205,7 @@ python scripts/join_check.py --run-dir runs/pilot_02 \
 | README 证据 | 200 次请求、138 可读、62 无 README/404、128 秒 |
 | 标签分布（160 随机） | included 2 / excluded 71 / uncertain 87 |
 | 标签分布（40 关键词） | included 17 / excluded 9 / uncertain 14 |
-| 接回全天活动表 | 200/200 命中，覆盖 1,072 / 5,528,300 条事件 |
+| 接回全天活动表 | 200/200 命中，覆盖 1,072 / 5,528,300 条事件；按最终标签 excluded 313 / included 173 / uncertain 586 |
 | 全部 200 | included 19 / excluded 80 / uncertain 101（5 条由 R12、1 条由 R13 排除） |
 | 人工抽查 | 13 条：included 3、excluded 5、uncertain 5 |
 

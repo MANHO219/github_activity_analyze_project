@@ -44,7 +44,7 @@ v0.2 → v0.3 共 10 条变化：3 条 `uncertain → included`（README 证明�
 | 标签（160 随机） | included 2 / excluded 71 / uncertain 87 |
 | 标签（40 关键词） | included 17 / excluded 9 / uncertain 14 |
 | 全部 200 | included 19 / excluded 80 / uncertain 101（5 条由 R12、1 条由 R13 排除） |
-| 接回全天活动表 | 200/200 命中，覆盖 1,072 / 5,528,300 条事件 |
+| 接回全天活动表 | 200/200 命中，覆盖 1,072 / 5,528,300 条事件；按最终标签 excluded 313 / included 173 / uncertain 586 |
 | 人工抽查 | 13 条（included 3、excluded 5、uncertain 5） |
 
 抽查发现并修复两处规则 bug（v0.3.2）：`Whispering-Origin-2D` 被子串当成 `whisper`；中文“用Resnet101+GPT搭建…的AI”因 `\b` 在中文里失效被漏判。A 判定两个边界案例：Etherscan-ML 按训练营项目排除，CoreELEC/xbmc 按 README 主体非 AI 排除。v0.3.3.1 收紧 R12（需用途说明、只对 R7）；v0.3.4 新增 R13 课程覆盖，Etherscan-ML 由规则自动 excluded，13 条人工复核与自动标签差异为 0。明细见 `runs/pilot_02/manual_review_pilot02.csv` 与 `pilot_02_summary.json`。
@@ -62,7 +62,7 @@ v0.2 → v0.3 共 10 条变化：3 条 `uncertain → included`（README 证明�
 | 人工复核 | 33 条：included 3（全查）、excluded 5（抽样）、uncertain 25（全查） |
 | 与人工一致率（已判定行） | v0.1 6/8 = 75% → v0.2 14/14 → v0.3 17/17 |
 | 接回 A 的事件表 | 50/50 个试点仓库按 `repo_id` 匹配；197,313 条事件中 159 条属这 50 个仓库 |
-| 离线测试 | 107 项通过 |
+| 离线测试 | 108 项通过 |
 
 v0.2 的规则分布（历史记录）：
 
@@ -171,7 +171,7 @@ v0.2 仍存疑的 19 条分三类：
 | 获取成功数 + 失败数 = 已处理仓库数；三种标签数量之和 = 结果仓库数；待处理项单列 | ✅ | 43+2+5=50；1+30+19=50；`pending_repo_ids` 为空 |
 | 规则、标签理由和人工复核记录齐全；入选/排除各复核 5 个，不足时全查；存疑案例单独复核 | ✅ | 三版规则 JSON/MD、每行 `reason`、`manual_review.csv`（33 条） |
 | 能按 `repo_id` 接回 A 的事件表；带标签的仓库表一仓库一行 | ✅ | `join_check.json`：50/50 命中，覆盖 159 条事件，唯一性检查通过 |
-| 交回代码、运行命令和依赖；另一位组员能按说明重跑 | ✅ | `README.md` 的“怎么重跑”分成复现与开新一轮两种；107 项离线测试；缓存策略可复跑 |
+| 交回代码、运行命令和依赖；另一位组员能按说明重跑 | ✅ | `README.md` 的“怎么重跑”分成复现与开新一轮两种；108 项离线测试；缓存策略可复跑 |
 
 ## 8. 未解决与待确认
 
