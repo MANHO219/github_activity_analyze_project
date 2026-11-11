@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "fingerprints": {
+    "events_clean.csv.gz": "615d294072fb5fbdceacff14220c6e356bcf0f2b426c151a6242ea3fe546469a",
+    "repo_daily_counts.csv": "ae73055521c07443b5232c51a83c4b43d66fea13cab87d6b40d6b5bb6d81eedf",
+    "repo_candidates.csv": "5b5d054ba30a20e0ebae9c0e077c37416d0154c95f02f9a1463dfed573434f3b",
+    "repo_name_history.csv": "5bfac21d67571c0dab50f8760fc36b8200baefbab9282cb034f8d9e1a60161cf"
+  }
+}

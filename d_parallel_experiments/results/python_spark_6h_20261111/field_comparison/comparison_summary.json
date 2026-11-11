@@ -1,0 +1,172 @@
+{
+  "passed": true,
+  "status": "completed",
+  "comparison": "exact full event values and daily key/count sets",
+  "scope": [
+    "2024-01-15-0.json.gz",
+    "2024-01-15-1.json.gz",
+    "2024-01-15-2.json.gz",
+    "2024-01-15-3.json.gz",
+    "2024-01-15-4.json.gz",
+    "2024-01-15-5.json.gz"
+  ],
+  "scope_basis": "source_file, not event_time",
+  "boundary_note": "Full-day deduplication may select a different source occurrence across the six-hour boundary; provenance fields remain part of the comparison.",
+  "inputs": {
+    "python": {
+      "path": "/data/cs5488/runs/python_6h_reconcile_20261111_01/python/events_clean.parquet",
+      "files": [
+        {
+          "path": "/data/cs5488/runs/python_6h_reconcile_20261111_01/python/events_clean.parquet/part-00000.parquet",
+          "bytes": 44107183,
+          "sha256": "0459f2f3bc0d023030c35e7d184ef39cb58fd29fab5275c471e077e9a5ce3a2d"
+        }
+      ],
+      "schema": "event_id: string\nevent_type: string\nevent_time: timestamp[us, tz=UTC]\nrepo_id: int64\nrepo_name: string\nactor_id: int64\nactor_login: string\nevent_date: date32[day]\nsource_file: string\nsource_line: int64\nsource_hour: timestamp[us, tz=UTC]\ntime_outside_file_hour: bool\noptional_field_issues: list<element: string>\n  child 0, element: string",
+      "total_parquet_rows": 1177282,
+      "selected_rows": 1177282,
+      "distinct_event_ids": 1177282,
+      "selected_source_counts": {
+        "2024-01-15-0.json.gz": 197313,
+        "2024-01-15-1.json.gz": 213965,
+        "2024-01-15-2.json.gz": 190656,
+        "2024-01-15-3.json.gz": 189329,
+        "2024-01-15-4.json.gz": 189681,
+        "2024-01-15-5.json.gz": 196338
+      }
+    },
+    "spark": {
+      "path": "/data/cs5488/runs/d4stable_6h_r1/events_clean.parquet",
+      "files": [
+        {
+          "path": "/data/cs5488/runs/d4stable_6h_r1/events_clean.parquet/part-00000-57994622-d0d4-490e-8569-6e490dcfe5d6-c000.snappy.parquet",
+          "bytes": 4064341,
+          "sha256": "0a0609a8af111db095f09916386242af16db840776dc578524db5777520300aa"
+        },
+        {
+          "path": "/data/cs5488/runs/d4stable_6h_r1/events_clean.parquet/part-00001-57994622-d0d4-490e-8569-6e490dcfe5d6-c000.snappy.parquet",
+          "bytes": 4068147,
+          "sha256": "9d4671355ec612018daad54b8d0cfd0c8393e4c9608931d265de14fa405591e4"
+        },
+        {
+          "path": "/data/cs5488/runs/d4stable_6h_r1/events_clean.parquet/part-00002-57994622-d0d4-490e-8569-6e490dcfe5d6-c000.snappy.parquet",
+          "bytes": 4088565,
+          "sha256": "927b4e2f28f4f281789ef7890f047aa40f52fc11394f32f941273abb79f92648"
+        },
+        {
+          "path": "/data/cs5488/runs/d4stable_6h_r1/events_clean.parquet/part-00003-57994622-d0d4-490e-8569-6e490dcfe5d6-c000.snappy.parquet",
+          "bytes": 4063731,
+          "sha256": "e69082f9250d6459b0c3bafa3f3c6ea08a3fb3daa28965c4507c8f8be7fae5aa"
+        },
+        {
+          "path": "/data/cs5488/runs/d4stable_6h_r1/events_clean.parquet/part-00004-57994622-d0d4-490e-8569-6e490dcfe5d6-c000.snappy.parquet",
+          "bytes": 4077758,
+          "sha256": "330317162cb87d75b9e166f3c455177fc8abddfe55a82e63e50fd76b9c67c9df"
+        },
+        {
+          "path": "/data/cs5488/runs/d4stable_6h_r1/events_clean.parquet/part-00005-57994622-d0d4-490e-8569-6e490dcfe5d6-c000.snappy.parquet",
+          "bytes": 4090840,
+          "sha256": "eb16070c2d4dd650922f048e9f4437440a8d2a0d91e6fd37f9648d2019c9665a"
+        },
+        {
+          "path": "/data/cs5488/runs/d4stable_6h_r1/events_clean.parquet/part-00006-57994622-d0d4-490e-8569-6e490dcfe5d6-c000.snappy.parquet",
+          "bytes": 4060430,
+          "sha256": "e41405d7b57884cfa53fa77bd44612e025c30af08a6b13a57a9cda158b7d9245"
+        },
+        {
+          "path": "/data/cs5488/runs/d4stable_6h_r1/events_clean.parquet/part-00007-57994622-d0d4-490e-8569-6e490dcfe5d6-c000.snappy.parquet",
+          "bytes": 4054246,
+          "sha256": "b308714331c227490b8e4e4d21607e9439f77f1369a0b19d4c2a0df377d71a68"
+        },
+        {
+          "path": "/data/cs5488/runs/d4stable_6h_r1/events_clean.parquet/part-00008-57994622-d0d4-490e-8569-6e490dcfe5d6-c000.snappy.parquet",
+          "bytes": 4064878,
+          "sha256": "e4aa63321b8efdbfd87c11df0eae04ac1f267b15c9b698fd446099f05efc3bb9"
+        },
+        {
+          "path": "/data/cs5488/runs/d4stable_6h_r1/events_clean.parquet/part-00009-57994622-d0d4-490e-8569-6e490dcfe5d6-c000.snappy.parquet",
+          "bytes": 4041656,
+          "sha256": "55dfc7d9d89ae8d2756eac1ad3ebaa9a25cfbc53cf25b440d096f025190a646f"
+        },
+        {
+          "path": "/data/cs5488/runs/d4stable_6h_r1/events_clean.parquet/part-00010-57994622-d0d4-490e-8569-6e490dcfe5d6-c000.snappy.parquet",
+          "bytes": 4032094,
+          "sha256": "3c21ba9b26605967eb8099b1c58782dc897d4fb21546a7be23614a64505a99f8"
+        },
+        {
+          "path": "/data/cs5488/runs/d4stable_6h_r1/events_clean.parquet/part-00011-57994622-d0d4-490e-8569-6e490dcfe5d6-c000.snappy.parquet",
+          "bytes": 4056194,
+          "sha256": "2c5e19e9b72b8774bba9731d3050e9c5144d619f5e0c09df1b40247ada906a04"
+        }
+      ],
+      "schema": "event_id: string\nevent_type: string\nevent_time: timestamp[us, tz=UTC]\nrepo_id: int64\nrepo_name: string\nactor_id: int64\nactor_login: string\nevent_date: date32[day]\nsource_file: string\nsource_line: int64\nsource_hour: timestamp[us, tz=UTC]\ntime_outside_file_hour: bool\noptional_field_issues: list<element: string>\n  child 0, element: string\n-- schema metadata --\norg.apache.spark.version: '3.5.7'\norg.apache.spark.sql.parquet.row.metadata: '{\"type\":\"struct\",\"fields\":[{\"' + 952",
+      "total_parquet_rows": 1177282,
+      "selected_rows": 1177282,
+      "distinct_event_ids": 1177282,
+      "selected_source_counts": {
+        "2024-01-15-0.json.gz": 197313,
+        "2024-01-15-1.json.gz": 213965,
+        "2024-01-15-2.json.gz": 190656,
+        "2024-01-15-3.json.gz": 189329,
+        "2024-01-15-4.json.gz": 189681,
+        "2024-01-15-5.json.gz": 196338
+      }
+    },
+    "spark_daily": {
+      "path": "/data/cs5488/runs/d4stable_6h_r1/repo_daily_counts.csv",
+      "sha256": "ae73055521c07443b5232c51a83c4b43d66fea13cab87d6b40d6b5bb6d81eedf"
+    }
+  },
+  "checks": {
+    "python_ids_unique": true,
+    "python_expected_rows": true,
+    "python_source_scope": true,
+    "spark_ids_unique": true,
+    "spark_expected_rows": true,
+    "spark_source_scope": true,
+    "field_types_equal": true,
+    "spark_daily_keys_unique": true,
+    "event_ids_left_only_zero": true,
+    "event_ids_right_only_zero": true,
+    "event_fields_left_only_zero": true,
+    "event_fields_right_only_zero": true,
+    "daily_keys_left_only_zero": true,
+    "daily_keys_right_only_zero": true,
+    "daily_counts_left_only_zero": true,
+    "daily_counts_right_only_zero": true,
+    "spark_daily_internal_left_only_zero": true,
+    "spark_daily_internal_right_only_zero": true
+  },
+  "daily_groups": {
+    "python_daily": 347774,
+    "spark_daily": 347774,
+    "exported_daily": 347774
+  },
+  "differences": {
+    "event_ids_left_only": 0,
+    "event_ids_right_only": 0,
+    "event_fields_left_only": 0,
+    "event_fields_right_only": 0,
+    "daily_keys_left_only": 0,
+    "daily_keys_right_only": 0,
+    "daily_counts_left_only": 0,
+    "daily_counts_right_only": 0,
+    "spark_daily_internal_left_only": 0,
+    "spark_daily_internal_right_only": 0
+  },
+  "field_mismatch_counts": {
+    "event_id": 0,
+    "event_type": 0,
+    "event_time": 0,
+    "repo_id": 0,
+    "repo_name": 0,
+    "actor_id": 0,
+    "actor_login": 0,
+    "event_date": 0,
+    "source_file": 0,
+    "source_line": 0,
+    "source_hour": 0,
+    "time_outside_file_hour": 0,
+    "optional_field_issues": 0
+  }
+}
