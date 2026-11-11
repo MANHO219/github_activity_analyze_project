@@ -255,3 +255,10 @@
 !/results/python_spark_6h_20261111/README.md
 !/results/python_spark_6h_20261111/reconciliation_status.json
 !/results/python_spark_6h_20261111/spark_fingerprint_reverification.json
+# Reusable reconciliation fixes; keep the historical execution snapshots above.
+!/configs/reconciliation_code_lf.json
+!/scripts/run_reconciliation.py
+!/scripts/collect_reconciliation.py
+!/tests/
+/tests/*
+!/tests/test_reconciliation.py
