@@ -1,5 +1,5 @@
 {
-  "compared_at_utc": "2026-11-11T06:04:16Z",
+  "compared_at_utc": "2026-11-11T06:13:17Z",
   "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.7.csv",
   "new_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
   "old_rule_version": "ai_rules_v0.3.7",

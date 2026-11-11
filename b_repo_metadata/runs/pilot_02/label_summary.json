@@ -4,11 +4,11 @@
   "rules_sha256": "7c2ff7f67b2d746f622ef63b842184df0f523ee4f502c1320d8b914775ad5b0f",
   "metadata_csv": "b_repo_metadata/runs/pilot_02/repo_metadata.csv",
   "metadata_sha256": "01ba533476f75f6fadeb510f9207c30f1ccc23904b671a5445484c8386afb86d",
-  "labelled_at_utc": "2026-11-11T06:04:15Z",
+  "labelled_at_utc": "2026-11-11T06:13:16Z",
   "input_rows": 200,
   "labelled_rows": 200,
   "labels_csv": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-  "labels_sha256": "3c959c3e7355fa504c650e6062c423af3acfadd48e02f6458a256f76ec6ea056",
+  "labels_sha256": "906184d40fac74e43c4a0356800785fc5eca500677174cd07db8575b8418d529",
   "total": 200,
   "by_label": {
     "included": 17,
