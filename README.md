@@ -1,6 +1,6 @@
 # CS5488 小组项目：AI 相关 GitHub 仓库的生命周期
 
-从 GH Archive 的公开事件中整理仓库活动，补仓库元数据与 AI 标签，再研究仓库生命周期。**A 已跑通 2024-01-15 至 01-21 的一周滚动获取和 Python 清洗，代码及小型验证记录现已整理到仓库。** B 的两批仓库标签试跑和 C 的第一版分析 Notebook 也已保留。
+从 GH Archive 的公开事件中整理仓库活动，补仓库元数据与 AI 标签，再研究仓库生命周期。**A 已跑通 2024-01-15 至 01-21 的一周滚动获取和 Python 清洗，代码及小型验证记录现已整理到仓库。** B 已完成两批元数据与标签试跑（pilot_01 50 个、pilot_02 200 个，当前规则 v0.3.8），C 的第一版分析 Notebook 也已保留。正式观察期与生命周期结论仍待后续完成。
 
 ## 已跑通的一周滚动获取与清洗
 
@@ -68,7 +68,7 @@ HTML 请在下载或 clone 后，用本地浏览器打开；在 GitHub 文件页
 
 打开[仓库候选清单](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv)：69,768 个唯一仓库，每行一个 `repo_id`。第一轮先在自己电脑获取一个仓库，再固定一个小名单试跑；50 个是建议规模，AI 规则与最终字段由 A、B 确认。
 
-B 的第一轮已完成并留在 [b_repo_metadata/](b_repo_metadata/)：50 个仓库的元数据、AI 标签（规则 v0.3）、33 条人工复核与按 `repo_id` 接回事件表的核对结果都可直接查看或重跑。规则从 v0.1 到 v0.3 的逐条变化都有记录（[v0.2→v0.3](b_repo_metadata/runs/pilot_01/label_changes.csv)、[v0.1→v0.2](b_repo_metadata/runs/pilot_01/label_changes_v0.1_to_v0.2.csv)），标签交接方式见 [LABELS.md](b_repo_metadata/LABELS.md)。
+B 已完成两轮试跑并留在 [b_repo_metadata/](b_repo_metadata/)：pilot_01 的 50 个仓库（33 条人工复核）与 pilot_02 的 200 个仓库（13 条抽查 + 1 条人工修订），都含元数据、AI 标签（规则 v0.3.8）与按 `repo_id` 接回事件表的核对结果。规则从 v0.1 到 v0.3.8 的逐条变化都有记录（当前对比见 `b_repo_metadata/runs/pilot_02/label_changes.csv`），标签交接方式见 [LABELS.md](b_repo_metadata/LABELS.md)。
 
 其他现成输入：[名称历史](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_name_history.csv)、[事件预览](a_data_pipeline/runs/20240115_1hour_handoff/python/events_preview.csv)、[完整事件 Parquet](a_data_pipeline/runs/20240115_1hour_handoff/python/events_clean.parquet/)、[活动计数](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_daily_counts.csv)。
 
@@ -97,14 +97,14 @@ B 的第一轮已完成并留在 [b_repo_metadata/](b_repo_metadata/)：50 个�
 └── b_repo_metadata/                ← B：元数据、AI 标签、复核与接回事件表
     ├── README.md                   ← 跑法与字段说明
     ├── LABELS.md                   ← 自动、人工与分析用标签的交接口径
-    ├── RESULTS.md                  ← pilot_01 结果与验收清单
+    ├── RESULTS.md                  ← 两批试跑结果与验收清单
     ├── config/                     ← 种子、分层规模、API 参数
     ├── rules/                      ← 当前及历史规则
     ├── bmeta/                      ← 抓取、规则、复核、接回的实现
     ├── scripts/                    ← 每个步骤一个命令入口
     ├── reviews/                    ← 人工判断与理由
     ├── tests/                      ← B 的离线验证
-    └── runs/                       ← debug_api_sample 与 pilot_01 结果
+    └── runs/                       ← debug_api_sample、pilot_01 与 pilot_02 结果
 ```
 
 ## 一小时试跑：快速熟悉管道

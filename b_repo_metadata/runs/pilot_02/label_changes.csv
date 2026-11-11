@@ -1,3 +1,1 @@
 repo_id,observed_repo_name,old_label,old_rule,new_label,new_rule,change_type,explanation
-327109955,FengQuanLi/ResnetGPT,included,R9_readme_ai,included,R5_description_match,rule_reason_only,规则调整：R9_readme_ai → R5_description_match
-210809341,mauritzn/Whispering-Origin-2D,uncertain,R6_name_only_signal,excluded,R8_no_ai_signal,uncertain->excluded,规则调整：R6_name_only_signal → R8_no_ai_signal

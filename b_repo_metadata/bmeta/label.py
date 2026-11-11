@@ -23,6 +23,15 @@ from .common import (
 from .rules import LABEL_FIELDS, RuleSet, label_rows, load_rules, summary_counts
 
 
+def _is_api_envelope(text: str) -> bool:
+    """历史证据里可能把 GitHub 的错误/文件信封当成 README 正文存下来。
+
+    这类文本不是 README，参与判定会让哈希与快照失真，按“没有正文”处理。
+    """
+    head = text.lstrip()[:40]
+    return head.startswith('{"message"') or head.startswith('{"name":"README.md"')
+
+
 def load_readme_evidence(path: Path | None) -> dict[str, dict[str, str]]:
     """读取复核/标注用 README 证据，返回 repo_id → {text, sha256, fetched_at_utc}。"""
     if path is None or not Path(path).exists():
@@ -32,7 +41,7 @@ def load_readme_evidence(path: Path | None) -> dict[str, dict[str, str]]:
         if row.get("status") not in (None, "ok"):
             continue
         text = row.get("readme_excerpt") or ""
-        if not text.strip():
+        if not text.strip() or _is_api_envelope(text):
             continue
         evidence[str(row.get("repo_id", ""))] = {
             "text": text,
@@ -66,14 +75,14 @@ def run(
     summary = {
         "rules_version": rules.version,
         "rules_file": project_relative(rules_path),
-        "rules_sha256": sha256_file(rules_path),
+        "rules_sha256": sha256_file(rules_path, normalize_newlines=True),
         "metadata_csv": project_relative(metadata_csv),
-        "metadata_sha256": sha256_file(metadata_csv),
+        "metadata_sha256": sha256_file(metadata_csv, normalize_newlines=True),
         "labelled_at_utc": labels[0]["labelled_at_utc"] if labels else utc_now(),
         "input_rows": len(metadata_rows),
         "labelled_rows": len(labels),
         "labels_csv": project_relative(out_dir / "repo_ai_labels.csv"),
-        "labels_sha256": sha256_file(out_dir / "repo_ai_labels.csv"),
+        "labels_sha256": sha256_file(out_dir / "repo_ai_labels.csv", normalize_newlines=True),
         **counts,
         "uncertain_repo_ids": [row["repo_id"] for row in uncertain],
         "readme_evidence": {

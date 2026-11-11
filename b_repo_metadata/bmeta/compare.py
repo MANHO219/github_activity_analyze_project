@@ -80,6 +80,19 @@ EXPLANATIONS: dict[tuple[str, str], str] = {
     ("R5c_weak_signal_only", "R9_readme_ai"): (
         "v0.3 用 README 补足弱信号：README 有明确 AI 证据，由 uncertain 改判 included"
     ),
+    # v0.3.5：抽样复核后补的判据
+    ("R4_topic_match", "R3b_coursework"): (
+        "v0.3.5 补充 course on/about 语义：描述自述为课程资料的仓库改判 excluded"
+    ),
+    ("R5_description_match", "R3_resource_collection"): (
+        "v0.3.5 补充论文清单识别：描述形如“X-related papers”的链接合集改判 excluded"
+    ),
+    ("R3c_profile_suspected", "R11_readme_profile"): (
+        "v0.3.5 补充个人主页组件措辞（统计卡/贡献蛇/typing 头图），README 确认后排除"
+    ),
+    ("R6_name_only_signal", "R8_no_ai_signal"): (
+        "v0.3.5 修复名称信号 ai 词元边界：chai 等词不再误命中，改判 excluded"
+    ),
 }
 
 

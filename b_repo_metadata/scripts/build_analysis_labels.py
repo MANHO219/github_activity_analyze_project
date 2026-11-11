@@ -25,6 +25,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--labels", help="自动标签表；默认 <run-dir>/repo_ai_labels.csv")
     parser.add_argument("--metadata", help="默认 <run-dir>/repo_metadata.csv")
     parser.add_argument("--review", help="人工复核表；默认 <run-dir>/manual_review.csv")
+    parser.add_argument(
+        "--revisions",
+        help="人工修订表（按 repo_id 覆盖原复核结论）；默认 <run-dir>/manual_revisions.csv（存在时）",
+    )
     parser.add_argument("--policy", choices=VALID_POLICIES, default="manual_override", help="采用口径")
     return parser.parse_args(argv)
 
@@ -36,6 +40,11 @@ def main(argv: list[str] | None = None) -> int:
     labels = Path(args.labels or (run_dir / "repo_ai_labels.csv"))
     metadata = Path(args.metadata or (run_dir / "repo_metadata.csv"))
     review = Path(args.review or (run_dir / "manual_review.csv"))
+    if args.revisions:
+        revisions: Path | None = Path(args.revisions)
+    else:
+        candidate = run_dir / "manual_revisions.csv"
+        revisions = candidate if candidate.exists() else None
     if not labels.exists() or not metadata.exists():
         print(f"missing input: {project_relative(labels if not labels.exists() else metadata)}")
         return 1
@@ -45,11 +54,13 @@ def main(argv: list[str] | None = None) -> int:
         metadata_csv=metadata,
         out_dir=run_dir,
         review_csv=review,
+        revisions_csv=revisions,
         policy=args.policy,
     )
     print(f"policy={summary['policy']} rows={summary['rows']}")
     print(f"final={summary['final_labels']} source={summary['label_source']}")
     print(f"manual coverage={summary['manual_rows']}/{summary['rows']}, differs from auto={summary['manual_differs_from_auto']}")
+    print(f"manual revisions={summary['revision_rows']} {summary['revision_repo_ids']}")
     print(f"output: {summary['output_csv']}")
     return 0
 

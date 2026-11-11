@@ -85,7 +85,7 @@
       "keyword_name 层来自名称粗筛，名称命中不等于 AI 判定；实际标签仍由 rules 决定。"
     ]
   },
-  "updated_at_utc": "2026-11-09T08:29:23Z",
+  "updated_at_utc": "2026-11-11T06:13:49Z",
   "fetch": {
     "started_at_utc": "2026-11-02T05:02:36Z",
     "finished_at_utc": "2026-11-02T05:03:07Z",
@@ -113,25 +113,26 @@
     "note": "失败行只记录状态，缺失元数据留空；pending 行尚未写入 repo_metadata.csv。"
   },
   "labels": {
-    "rules_version": "ai_rules_v0.3.2",
-    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.2.json",
-    "rules_sha256": "551dd575f7249fd5cf809c7268485167ea62dfcacb2c99c3970a83c58c3f3441",
+    "rules_version": "ai_rules_v0.3.8",
+    "rules_file": "b_repo_metadata/rules/ai_rules_v0.3.8.json",
+    "rules_sha256": "7c2ff7f67b2d746f622ef63b842184df0f523ee4f502c1320d8b914775ad5b0f",
     "metadata_csv": "b_repo_metadata/runs/pilot_01/repo_metadata.csv",
-    "metadata_sha256": "374eabffca61553c824d751b61cf4667a6d775569a0654339f9dab366663caa6",
-    "labelled_at_utc": "2026-11-09T08:28:21Z",
+    "metadata_sha256": "5965ac967c9aaecf29e3699f46b457228058d7fb1104360b492e636c31edabff",
+    "labelled_at_utc": "2026-11-11T06:13:16Z",
     "input_rows": 50,
     "labelled_rows": 50,
     "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
-    "labels_sha256": "5f8a6a0dbee714a01744dff18ae58afe28a0cfcd730db51c63bb1c0091f503f3",
+    "labels_sha256": "041fb4b77555418f0df9a936eb8a2055646b525cf16b309b3b260361353962f0",
     "total": 50,
     "by_label": {
       "included": 4,
-      "excluded": 30,
-      "uncertain": 16
+      "excluded": 32,
+      "uncertain": 14
     },
     "by_rule": {
       "R10_readme_coursework": 1,
       "R11_readme_profile": 5,
+      "R12_readme_non_ai": 2,
       "R1_metadata_unavailable": 5,
       "R2_api_id_mismatch": 2,
       "R3_resource_collection": 3,
@@ -139,7 +140,7 @@
       "R3c_profile_suspected": 1,
       "R4b_weak_topic_only": 1,
       "R5b_weak_signal_corroborated": 1,
-      "R7_insufficient_text_evidence": 7,
+      "R7_insufficient_text_evidence": 5,
       "R8_no_ai_signal": 18,
       "R9_readme_ai": 3
     },
@@ -148,10 +149,8 @@
       "82206054",
       "271994210",
       "421217174",
-      "465991566",
       "551162351",
       "684223328",
-      "697973922",
       "711869837",
       "716775427",
       "719391258",
@@ -191,20 +190,23 @@
         "743310414",
         "743320808"
       ],
-      "used_rows": 9,
+      "used_rows": 11,
       "used_repo_ids": [
         "302309533",
         "374770773",
         "441317480",
+        "465991566",
         "526345511",
         "549894670",
         "653701739",
+        "697973922",
         "647729619",
         "731867521",
         "743310414"
       ],
       "decisions": {
         "R11_readme_profile": 5,
+        "R12_readme_non_ai": 2,
         "R9_readme_ai": 3,
         "R10_readme_coursework": 1
       },
@@ -423,23 +425,23 @@
     "note": "README 仅作人工复核证据；v0.1 规则不读取该字段。"
   },
   "join": {
-    "checked_at_utc": "2026-11-09T08:29:23Z",
-    "event_source": "events_clean.parquet",
-    "events_total_in_source": 197313,
+    "checked_at_utc": "2026-11-11T06:13:49Z",
+    "event_source": "repo_daily_counts.csv:sum(event_count)",
+    "events_total_in_source": 5528300,
     "pilot_repos": 50,
     "pilot_repos_found_in_events": 50,
     "missing_from_events": [],
-    "events_covered_by_pilot": 159,
-    "events_covered_share_of_source": 0.000806,
-    "events_outside_pilot_share": 0.999194,
+    "events_covered_by_pilot": 656,
+    "events_covered_share_of_source": 0.000119,
+    "events_outside_pilot_share": 0.999881,
     "event_share_denominators": {
       "event_share_of_source": "事件表全部事件数（events_total_in_source）",
-      "event_share_of_pilot_events": "50 个试点仓库的事件总数（events_covered_by_pilot）"
+      "event_share_of_pilot_events": "本次试点仓库的事件总数（events_covered_by_pilot）"
     },
     "events_by_label": {
-      "excluded": 69,
-      "included": 14,
-      "uncertain": 76
+      "excluded": 579,
+      "included": 17,
+      "uncertain": 60
     },
     "checks": {
       "labels_have_unique_repo_ids": true,
@@ -450,15 +452,17 @@
     },
     "inputs": {
       "metadata_csv": "b_repo_metadata/runs/pilot_01/repo_metadata.csv",
-      "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
+      "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels_analysis.csv",
+      "label_field": "ai_label_final",
       "events_parquet": "a_data_pipeline/runs/20240115_1hour_handoff/python/events_clean.parquet",
       "candidates_csv": "a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv",
-      "daily_counts_csv": null
+      "daily_counts_csv": "a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv"
     },
     "limits": [
       "Only repo_id is used as the join key; repo names in the event table may be historical.",
       "The pilot covers a small sample, so covered/uncovered event shares describe this run only.",
-      "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events."
+      "event_share_of_source uses all events in the source table; event_share_of_pilot_events uses only the pilot repos' events.",
+      "Event counts come from repo_daily_counts.csv (repo-level sums), not per-event rows."
     ],
     "joined_csv": "b_repo_metadata/runs/pilot_01/repo_labels_joined_events.csv"
   },
@@ -469,15 +473,15 @@
       "random": 40,
       "keyword_name": 10
     },
-    "rules_version": "ai_rules_v0.3.2",
+    "rules_version": "ai_rules_v0.3.8",
     "rules_compared": [
-      "ai_rules_v0.3.1",
-      "ai_rules_v0.3.2"
+      "ai_rules_v0.3.7",
+      "ai_rules_v0.3.8"
     ],
     "analysis_label_policy": "manual_override",
-    "generated_at_utc": "2026-11-09T08:29:23Z",
+    "generated_at_utc": "2026-11-11T06:13:52Z",
     "environment": {
-      "python_version": "3.12.14",
+      "python_version": "3.13.14",
       "platform": "Windows-11-10.0.26200-SP0",
       "package_version": "0.1.0"
     },
@@ -485,11 +489,11 @@
       "candidates_csv": "a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv",
       "candidates_sha256": "e11f5c20990233b45fa8fabe4e0eeeed401baceaaf6f108e1d2d3c6d463c0b09",
       "pilot_candidates_sha256": "e9de060d26ded56bb841fe6a449bc409f55eb5a86125f279efa7bea170d3a9c8",
-      "repo_metadata_sha256": "374eabffca61553c824d751b61cf4667a6d775569a0654339f9dab366663caa6",
-      "repo_ai_labels_sha256": "5f8a6a0dbee714a01744dff18ae58afe28a0cfcd730db51c63bb1c0091f503f3",
-      "repo_ai_labels_v0_1_sha256": "8252f049b05eaae66f2ffd7b387fb82ce5539e4cdbb3e96c04155761078d55e9",
-      "analysis_labels_sha256": "fadc066a03a2ab2041dc6b2f12c1376361dc585c7d939a423bb3fda4c818a470",
-      "rules_sha256": "551dd575f7249fd5cf809c7268485167ea62dfcacb2c99c3970a83c58c3f3441"
+      "repo_metadata_sha256": "5965ac967c9aaecf29e3699f46b457228058d7fb1104360b492e636c31edabff",
+      "repo_ai_labels_sha256": "041fb4b77555418f0df9a936eb8a2055646b525cf16b309b3b260361353962f0",
+      "repo_ai_labels_v0_1_sha256": "8e4c28686464cc8bc8676cf34b91eb9b465007c224cd6a2f38983f943f8188b5",
+      "analysis_labels_sha256": "af2bb801cd0389dbe12acecf8734b883b557517a1ab9a8c7fd420c28a3261059",
+      "rules_sha256": "7c2ff7f67b2d746f622ef63b842184df0f523ee4f502c1320d8b914775ad5b0f"
     },
     "outputs": {
       "metadata_rows": 50,
@@ -497,8 +501,8 @@
       "review_rows": 33,
       "labels": {
         "included": 4,
-        "excluded": 30,
-        "uncertain": 16
+        "excluded": 32,
+        "uncertain": 14
       },
       "fetch_status": {
         "ok": 43,
@@ -514,27 +518,27 @@
             "included": 4
           },
           "excluded": {
-            "excluded": 30
+            "excluded": 32
           },
           "uncertain": {
-            "uncertain": 16
+            "uncertain": 14
           }
         }
       },
       "human_agreement": {
         "old": {
           "reviewed_rows": 33,
-          "agree": 17,
+          "agree": 19,
           "disagree": 0,
-          "resolves": 8,
+          "resolves": 6,
           "kept_uncertain": 8,
           "agreement_rate_on_decided_rows": 1.0
         },
         "new": {
           "reviewed_rows": 33,
-          "agree": 17,
+          "agree": 19,
           "disagree": 0,
-          "resolves": 8,
+          "resolves": 6,
           "kept_uncertain": 8,
           "agreement_rate_on_decided_rows": 1.0
         },
@@ -554,19 +558,18 @@
         }
       },
       "join": {
-        "event_source": "events_clean.parquet",
-        "events_total": 197313,
-        "events_covered_by_pilot": 159,
-        "events_covered_share_of_source": 0.000806
+        "event_source": "repo_daily_counts.csv:sum(event_count)",
+        "events_total": 5528300,
+        "events_covered_by_pilot": 656,
+        "events_covered_share_of_source": 0.000119
       }
     },
     "unresolved_issues": [
-      "7 个候选仓库无法按名称取回元数据（5 个 404、2 个 id 不一致），标签保持 uncertain；不能据此推断删除或非 AI。",
-      "规则 v0.2 后仍有 19 个 uncertain：8 个是元数据缺失或空仓库（规则无法处理），11 个需要 README 才能判断（名称命中、弱信号、作品集等），而 v0.2 规则不读 README。",
-      "待统一口径：弱信号是否直接 excluded、仅集成 AI 功能是否纳入、README 能否作为规则输入、课程作业边界。见 rules/ai_rules_v0.2.md 第 6 节。",
-      "仓库元数据是 2026-11-02 的快照，不是 2024-01-15 事件发生时的状态；描述与 topics 可能已经变化。",
-      "首批 50 个仓库为“40 随机 + 10 名称关键词过采样”的分层样本，不能用来估计整个 GitHub 的 AI 仓库比例。",
-      "失败响应的缓存默认不复用，重跑会重新请求（已在 cache_retry_check.json 记录：5 个 404 重试、43 个成功响应命中缓存）。"
+      "元数据缺失或 API 返回 id 不一致的仓库一律保持 uncertain，不能据此推断删除、私有化或非 AI。",
+      "README 证据是抓取时的快照，内容可能已变化；每行记录快照时间与 SHA-256，复核与判定都以此为准。",
+      "试点仓库按分层抽样（名称关键词层过采样），不能用来估计整个 GitHub 的 AI 仓库比例。",
+      "事件覆盖仍有限（pilot_01 一小时、pilot_02 全天），不足以支持生命周期结论，需等 A 扩展时间窗后重跑。",
+      "失败响应默认不复用，重跑会重新请求；只有 HTTP 200 且响应体合法的成功响应进入缓存。"
     ],
     "checks": {
       "fetch_processed_plus_pending_equals_input": true,
@@ -582,19 +585,19 @@
       "analysis_label_counts_sum": true
     },
     "next_steps": [
-      "今晚统一口径：弱信号是否直接排除、AI 附加功能是否纳入、README 能否作为规则输入、课程作业边界。",
-      "口径确认后按第 7 节流程起草 ai_rules_v0.3，并用 compare_label_versions.py 再做一次变化对比。",
-      "确认标签交接口径：analysis_labels 默认 manual_override，可切换 auto_only。",
-      "A 扩展事件时间窗后，B 在同一规则版本上重跑全部候选仓库，而不是只跑这 50 个。"
+      "等 A 扩展事件时间窗后，在同一规则版本上重跑全部候选仓库，而不是只跑试点样本。",
+      "LLM API 辅助判断 uncertain：单独分支与 PR，先做 pilot_02 的小试验并记录成本。",
+      "月级扩展前先补批量调度、失败续跑、跨日去重与按日分区。",
+      "R12 的 purpose_patterns 与 R5d 的可选集成措辞仍缺真实样本，扩量后专门抽样验证。"
     ],
     "run_dir": "b_repo_metadata/runs/pilot_01"
   },
   "label_comparison": {
-    "compared_at_utc": "2026-11-09T08:28:21Z",
-    "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.1.csv",
+    "compared_at_utc": "2026-11-11T06:13:17Z",
+    "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.7.csv",
     "new_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
-    "old_rule_version": "ai_rules_v0.3.1",
-    "new_rule_version": "ai_rules_v0.3.2",
+    "old_rule_version": "ai_rules_v0.3.7",
+    "new_rule_version": "ai_rules_v0.3.8",
     "rows": 50,
     "changed_rows": 0,
     "label_changed_rows": 0,
@@ -604,15 +607,16 @@
         "included": 4
       },
       "excluded": {
-        "excluded": 30
+        "excluded": 32
       },
       "uncertain": {
-        "uncertain": 16
+        "uncertain": 14
       }
     },
     "per_rule_old": {
       "R10_readme_coursework": 1,
       "R11_readme_profile": 5,
+      "R12_readme_non_ai": 2,
       "R1_metadata_unavailable": 5,
       "R2_api_id_mismatch": 2,
       "R3_resource_collection": 3,
@@ -620,13 +624,14 @@
       "R3c_profile_suspected": 1,
       "R4b_weak_topic_only": 1,
       "R5b_weak_signal_corroborated": 1,
-      "R7_insufficient_text_evidence": 7,
+      "R7_insufficient_text_evidence": 5,
       "R8_no_ai_signal": 18,
       "R9_readme_ai": 3
     },
     "per_rule_new": {
       "R10_readme_coursework": 1,
       "R11_readme_profile": 5,
+      "R12_readme_non_ai": 2,
       "R1_metadata_unavailable": 5,
       "R2_api_id_mismatch": 2,
       "R3_resource_collection": 3,
@@ -634,7 +639,7 @@
       "R3c_profile_suspected": 1,
       "R4b_weak_topic_only": 1,
       "R5b_weak_signal_corroborated": 1,
-      "R7_insufficient_text_evidence": 7,
+      "R7_insufficient_text_evidence": 5,
       "R8_no_ai_signal": 18,
       "R9_readme_ai": 3
     },
@@ -643,17 +648,17 @@
       "reviewed_rows": 33,
       "old_version": {
         "reviewed_rows": 33,
-        "agree": 17,
+        "agree": 19,
         "disagree": 0,
-        "resolves": 8,
+        "resolves": 6,
         "kept_uncertain": 8,
         "agreement_rate_on_decided_rows": 1.0
       },
       "new_version": {
         "reviewed_rows": 33,
-        "agree": 17,
+        "agree": 19,
         "disagree": 0,
-        "resolves": 8,
+        "resolves": 6,
         "kept_uncertain": 8,
         "agreement_rate_on_decided_rows": 1.0
       },
@@ -663,11 +668,9 @@
         "82206054",
         "271994210",
         "421217174",
-        "465991566",
         "551162351",
         "569927055",
         "684223328",
-        "697973922",
         "711869837",
         "716775427",
         "719391258",
@@ -681,7 +684,7 @@
     }
   },
   "analysis_labels": {
-    "generated_at_utc": "2026-11-09T08:29:21Z",
+    "generated_at_utc": "2026-11-11T06:13:46Z",
     "policy": "manual_override",
     "policy_note": "人工复核优先：有人工判断的仓库采用人工标签，其余采用规则自动标签。",
     "rows": 50,
@@ -696,21 +699,22 @@
     },
     "manual_rows": 33,
     "manual_coverage": 0.66,
-    "manual_differs_from_auto": 8,
+    "manual_differs_from_auto": 6,
     "manual_differs_repo_ids": [
       "82206054",
       "421217174",
-      "465991566",
       "551162351",
       "684223328",
-      "697973922",
       "711869837",
       "719391258"
     ],
+    "revision_rows": 0,
+    "revision_repo_ids": [],
     "inputs": {
       "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
       "metadata_csv": "b_repo_metadata/runs/pilot_01/repo_metadata.csv",
-      "review_csv": "b_repo_metadata/runs/pilot_01/manual_review.csv"
+      "review_csv": "b_repo_metadata/runs/pilot_01/manual_review.csv",
+      "revisions_csv": null
     },
     "output_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels_analysis.csv",
     "decision_pending": "最终采用自动、人工还是混合口径，需 A、B 确认（见 LABELS.md）。"

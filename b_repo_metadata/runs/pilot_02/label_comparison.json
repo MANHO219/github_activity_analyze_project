@@ -1,54 +1,85 @@
 {
-  "compared_at_utc": "2026-11-09T08:28:30Z",
-  "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.1.csv",
+  "compared_at_utc": "2026-11-11T06:13:18Z",
+  "old_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels_v0.3.7.csv",
   "new_labels": "b_repo_metadata/runs/pilot_02/repo_ai_labels.csv",
-  "old_rule_version": "ai_rules_v0.3.1",
-  "new_rule_version": "ai_rules_v0.3.2",
+  "old_rule_version": "ai_rules_v0.3.7",
+  "new_rule_version": "ai_rules_v0.3.8",
   "rows": 200,
-  "changed_rows": 2,
-  "label_changed_rows": 1,
-  "rule_reason_changed_rows": 1,
+  "changed_rows": 0,
+  "label_changed_rows": 0,
+  "rule_reason_changed_rows": 0,
   "confusion_matrix": {
     "included": {
-      "included": 20
+      "included": 17
     },
     "excluded": {
-      "excluded": 73
+      "excluded": 86
     },
     "uncertain": {
-      "excluded": 1,
-      "uncertain": 106
+      "uncertain": 97
     }
   },
   "per_rule_old": {
     "R10_readme_coursework": 1,
-    "R11_readme_profile": 2,
+    "R11_readme_profile": 5,
+    "R12_readme_non_ai": 5,
+    "R13_course_override": 1,
     "R1_metadata_unavailable": 31,
     "R2_api_id_mismatch": 6,
-    "R3_resource_collection": 7,
-    "R3b_coursework": 5,
-    "R3c_profile_suspected": 4,
-    "R4_topic_match": 5,
+    "R3_resource_collection": 8,
+    "R3b_coursework": 6,
+    "R3c_profile_suspected": 1,
+    "R4_topic_match": 3,
     "R5_description_match": 10,
-    "R6_name_only_signal": 12,
-    "R7_insufficient_text_evidence": 54,
-    "R8_no_ai_signal": 58,
-    "R9_readme_ai": 5
+    "R6_name_only_signal": 10,
+    "R7_insufficient_text_evidence": 49,
+    "R8_no_ai_signal": 60,
+    "R9_readme_ai": 4
   },
   "per_rule_new": {
     "R10_readme_coursework": 1,
-    "R11_readme_profile": 2,
+    "R11_readme_profile": 5,
+    "R12_readme_non_ai": 5,
+    "R13_course_override": 1,
     "R1_metadata_unavailable": 31,
     "R2_api_id_mismatch": 6,
-    "R3_resource_collection": 7,
-    "R3b_coursework": 5,
-    "R3c_profile_suspected": 4,
-    "R4_topic_match": 5,
-    "R5_description_match": 11,
-    "R6_name_only_signal": 11,
-    "R7_insufficient_text_evidence": 54,
-    "R8_no_ai_signal": 59,
+    "R3_resource_collection": 8,
+    "R3b_coursework": 6,
+    "R3c_profile_suspected": 1,
+    "R4_topic_match": 3,
+    "R5_description_match": 10,
+    "R6_name_only_signal": 10,
+    "R7_insufficient_text_evidence": 49,
+    "R8_no_ai_signal": 60,
     "R9_readme_ai": 4
   },
-  "changes_csv": "b_repo_metadata/runs/pilot_02/label_changes.csv"
+  "changes_csv": "b_repo_metadata/runs/pilot_02/label_changes.csv",
+  "human_review": {
+    "reviewed_rows": 13,
+    "old_version": {
+      "reviewed_rows": 13,
+      "agree": 9,
+      "disagree": 0,
+      "resolves": 0,
+      "kept_uncertain": 4,
+      "agreement_rate_on_decided_rows": 1.0
+    },
+    "new_version": {
+      "reviewed_rows": 13,
+      "agree": 9,
+      "disagree": 0,
+      "resolves": 0,
+      "kept_uncertain": 4,
+      "agreement_rate_on_decided_rows": 1.0
+    },
+    "improved_repo_ids": [],
+    "regressed_repo_ids": [],
+    "still_uncertain_repo_ids": [
+      "259922583",
+      "265892246",
+      "336689935",
+      "342791330"
+    ],
+    "note": "人工判断来自 v0.1 复核（manual_review.csv），这里用于比较两个版本与人工结论的吻合度。"
+  }
 }

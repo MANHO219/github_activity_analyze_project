@@ -28,19 +28,34 @@ def _readme_url(client: GitHubRepoClient, full_name: str) -> str:
 
 
 def _readme_text(response) -> str:
-    """README 接口默认返回 JSON（content 为 base64）；也兼容原始文本响应。"""
+    """README 接口的正文；取不到正文时返回空串，绝不回退成响应的 JSON 信封。
+
+    两类历史问题都由这个回退造成：404 的 ``{"message": "Not Found"}`` 与空 README
+    的 ``{"name": "README.md", ..., "size": 0}`` 都曾被当成正文写进证据，
+    导致 ``readme_chars`` 虚高、哈希对不上真实 README。
+    """
+    status = getattr(response, "http_status", None)
+    if status is not None and status != 200:
+        return ""
     body = response.body
-    if isinstance(body, dict) and body.get("content"):
+    if isinstance(body, dict):
+        content = body.get("content") or ""
+        if not content:
+            return ""
         encoding = (body.get("encoding") or "").lower()
-        try:
-            if encoding == "base64":
+        if encoding == "base64":
+            try:
                 import base64
 
-                return base64.b64decode(body["content"]).decode("utf-8", "replace")
-            return str(body["content"])
-        except Exception:  # noqa: BLE001 - 证据缺失时保留原文比中断更好
-            pass
-    return response.raw.decode("utf-8", "replace") if response.raw else ""
+                return base64.b64decode(content).decode("utf-8", "replace")
+            except Exception:  # noqa: BLE001 - 证据缺失时保留原文比中断更好
+                return ""
+        return str(content)
+    raw = response.raw.decode("utf-8", "replace") if response.raw else ""
+    # 原始响应也可能是错误 JSON（没有可解析的 body），按无正文处理。
+    if raw.lstrip().startswith("{"):
+        return ""
+    return raw
 
 
 def fetch_evidence(

@@ -50,6 +50,7 @@ def build(
     review: list[dict[str, str]],
     *,
     policy: str,
+    revisions: list[dict[str, str]] | None = None,
 ) -> list[dict[str, str]]:
     if policy not in VALID_POLICIES:
         raise ValueError(f"unknown policy: {policy!r}; expected one of {VALID_POLICIES}")
@@ -59,6 +60,10 @@ def build(
         for row in review
         if (row.get("human_label") or "").strip() in ("included", "excluded", "uncertain")
     }
+    # 人工修订晚于原复核记录：按 repo_id 覆盖，原文件保持不动，修订单独留痕。
+    for row in revisions or []:
+        if (row.get("human_label") or "").strip() in ("included", "excluded", "uncertain"):
+            manual[row["repo_id"]] = row
     rows: list[dict[str, str]] = []
     for row in labels:
         repo_id = row["repo_id"]
@@ -96,14 +101,16 @@ def run(
     metadata_csv: Path,
     out_dir: Path,
     review_csv: Path | None = None,
+    revisions_csv: Path | None = None,
     policy: str = "manual_override",
 ) -> dict[str, Any]:
     out_dir = Path(out_dir)
     labels = read_csv(labels_csv)
     metadata = read_csv(metadata_csv)
     review = read_csv(review_csv) if review_csv and Path(review_csv).exists() else []
+    revisions = read_csv(revisions_csv) if revisions_csv and Path(revisions_csv).exists() else []
 
-    rows = build(labels, metadata, review, policy=policy)
+    rows = build(labels, metadata, review, policy=policy, revisions=revisions)
     out_csv = out_dir / "repo_ai_labels_analysis.csv"
     write_csv(out_csv, ANALYSIS_FIELDS, rows)
 
@@ -131,10 +138,22 @@ def run(
         "manual_coverage": round(sum(1 for row in rows if row["ai_label_manual"]) / len(rows), 4) if rows else None,
         "manual_differs_from_auto": len(overridden),
         "manual_differs_repo_ids": [row["repo_id"] for row in overridden],
+        "revision_rows": len(
+            [row for row in revisions if (row.get("human_label") or "").strip() in ("included", "excluded", "uncertain")]
+        ),
+        "revision_repo_ids": sorted(
+            {
+                row["repo_id"]
+                for row in revisions
+                if (row.get("human_label") or "").strip() in ("included", "excluded", "uncertain")
+            },
+            key=int,
+        ),
         "inputs": {
             "labels_csv": project_relative(labels_csv),
             "metadata_csv": project_relative(metadata_csv),
             "review_csv": project_relative(review_csv) if review_csv else None,
+            "revisions_csv": project_relative(revisions_csv) if revisions_csv else None,
         },
         "output_csv": project_relative(out_csv),
         "decision_pending": "最终采用自动、人工还是混合口径，需 A、B 确认（见 LABELS.md）。",

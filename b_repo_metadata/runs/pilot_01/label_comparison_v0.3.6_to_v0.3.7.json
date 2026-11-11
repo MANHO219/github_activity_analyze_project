@@ -1,0 +1,91 @@
+{
+  "compared_at_utc": "2026-11-10T05:47:53Z",
+  "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.6.csv",
+  "new_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
+  "old_rule_version": "ai_rules_v0.3.6",
+  "new_rule_version": "ai_rules_v0.3.7",
+  "rows": 50,
+  "changed_rows": 0,
+  "label_changed_rows": 0,
+  "rule_reason_changed_rows": 0,
+  "confusion_matrix": {
+    "included": {
+      "included": 4
+    },
+    "excluded": {
+      "excluded": 32
+    },
+    "uncertain": {
+      "uncertain": 14
+    }
+  },
+  "per_rule_old": {
+    "R10_readme_coursework": 1,
+    "R11_readme_profile": 5,
+    "R12_readme_non_ai": 2,
+    "R1_metadata_unavailable": 5,
+    "R2_api_id_mismatch": 2,
+    "R3_resource_collection": 3,
+    "R3b_coursework": 3,
+    "R3c_profile_suspected": 1,
+    "R4b_weak_topic_only": 1,
+    "R5b_weak_signal_corroborated": 1,
+    "R7_insufficient_text_evidence": 5,
+    "R8_no_ai_signal": 18,
+    "R9_readme_ai": 3
+  },
+  "per_rule_new": {
+    "R10_readme_coursework": 1,
+    "R11_readme_profile": 5,
+    "R12_readme_non_ai": 2,
+    "R1_metadata_unavailable": 5,
+    "R2_api_id_mismatch": 2,
+    "R3_resource_collection": 3,
+    "R3b_coursework": 3,
+    "R3c_profile_suspected": 1,
+    "R4b_weak_topic_only": 1,
+    "R5b_weak_signal_corroborated": 1,
+    "R7_insufficient_text_evidence": 5,
+    "R8_no_ai_signal": 18,
+    "R9_readme_ai": 3
+  },
+  "changes_csv": "b_repo_metadata/runs/pilot_01/label_changes.csv",
+  "human_review": {
+    "reviewed_rows": 33,
+    "old_version": {
+      "reviewed_rows": 33,
+      "agree": 19,
+      "disagree": 0,
+      "resolves": 6,
+      "kept_uncertain": 8,
+      "agreement_rate_on_decided_rows": 1.0
+    },
+    "new_version": {
+      "reviewed_rows": 33,
+      "agree": 19,
+      "disagree": 0,
+      "resolves": 6,
+      "kept_uncertain": 8,
+      "agreement_rate_on_decided_rows": 1.0
+    },
+    "improved_repo_ids": [],
+    "regressed_repo_ids": [],
+    "still_uncertain_repo_ids": [
+      "82206054",
+      "271994210",
+      "421217174",
+      "551162351",
+      "569927055",
+      "684223328",
+      "711869837",
+      "716775427",
+      "719391258",
+      "738759461",
+      "742748171",
+      "742995337",
+      "743146326",
+      "743319257"
+    ],
+    "note": "人工判断来自 v0.1 复核（manual_review.csv），这里用于比较两个版本与人工结论的吻合度。"
+  }
+}

@@ -1,9 +1,9 @@
 {
-  "compared_at_utc": "2026-11-09T08:28:21Z",
-  "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.1.csv",
+  "compared_at_utc": "2026-11-11T06:13:17Z",
+  "old_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels_v0.3.7.csv",
   "new_labels": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
-  "old_rule_version": "ai_rules_v0.3.1",
-  "new_rule_version": "ai_rules_v0.3.2",
+  "old_rule_version": "ai_rules_v0.3.7",
+  "new_rule_version": "ai_rules_v0.3.8",
   "rows": 50,
   "changed_rows": 0,
   "label_changed_rows": 0,
@@ -13,15 +13,16 @@
       "included": 4
     },
     "excluded": {
-      "excluded": 30
+      "excluded": 32
     },
     "uncertain": {
-      "uncertain": 16
+      "uncertain": 14
     }
   },
   "per_rule_old": {
     "R10_readme_coursework": 1,
     "R11_readme_profile": 5,
+    "R12_readme_non_ai": 2,
     "R1_metadata_unavailable": 5,
     "R2_api_id_mismatch": 2,
     "R3_resource_collection": 3,
@@ -29,13 +30,14 @@
     "R3c_profile_suspected": 1,
     "R4b_weak_topic_only": 1,
     "R5b_weak_signal_corroborated": 1,
-    "R7_insufficient_text_evidence": 7,
+    "R7_insufficient_text_evidence": 5,
     "R8_no_ai_signal": 18,
     "R9_readme_ai": 3
   },
   "per_rule_new": {
     "R10_readme_coursework": 1,
     "R11_readme_profile": 5,
+    "R12_readme_non_ai": 2,
     "R1_metadata_unavailable": 5,
     "R2_api_id_mismatch": 2,
     "R3_resource_collection": 3,
@@ -43,7 +45,7 @@
     "R3c_profile_suspected": 1,
     "R4b_weak_topic_only": 1,
     "R5b_weak_signal_corroborated": 1,
-    "R7_insufficient_text_evidence": 7,
+    "R7_insufficient_text_evidence": 5,
     "R8_no_ai_signal": 18,
     "R9_readme_ai": 3
   },
@@ -52,17 +54,17 @@
     "reviewed_rows": 33,
     "old_version": {
       "reviewed_rows": 33,
-      "agree": 17,
+      "agree": 19,
       "disagree": 0,
-      "resolves": 8,
+      "resolves": 6,
       "kept_uncertain": 8,
       "agreement_rate_on_decided_rows": 1.0
     },
     "new_version": {
       "reviewed_rows": 33,
-      "agree": 17,
+      "agree": 19,
       "disagree": 0,
-      "resolves": 8,
+      "resolves": 6,
       "kept_uncertain": 8,
       "agreement_rate_on_decided_rows": 1.0
     },
@@ -72,11 +74,9 @@
       "82206054",
       "271994210",
       "421217174",
-      "465991566",
       "551162351",
       "569927055",
       "684223328",
-      "697973922",
       "711869837",
       "716775427",
       "719391258",

@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-09T08:29:21Z",
+  "generated_at_utc": "2026-11-11T06:13:46Z",
   "policy": "manual_override",
   "policy_note": "人工复核优先：有人工判断的仓库采用人工标签，其余采用规则自动标签。",
   "rows": 50,
@@ -14,21 +14,22 @@
   },
   "manual_rows": 33,
   "manual_coverage": 0.66,
-  "manual_differs_from_auto": 8,
+  "manual_differs_from_auto": 6,
   "manual_differs_repo_ids": [
     "82206054",
     "421217174",
-    "465991566",
     "551162351",
     "684223328",
-    "697973922",
     "711869837",
     "719391258"
   ],
+  "revision_rows": 0,
+  "revision_repo_ids": [],
   "inputs": {
     "labels_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels.csv",
     "metadata_csv": "b_repo_metadata/runs/pilot_01/repo_metadata.csv",
-    "review_csv": "b_repo_metadata/runs/pilot_01/manual_review.csv"
+    "review_csv": "b_repo_metadata/runs/pilot_01/manual_review.csv",
+    "revisions_csv": null
   },
   "output_csv": "b_repo_metadata/runs/pilot_01/repo_ai_labels_analysis.csv",
   "decision_pending": "最终采用自动、人工还是混合口径，需 A、B 确认（见 LABELS.md）。"
