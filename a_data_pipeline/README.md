@@ -40,6 +40,8 @@ python scripts/run_sample.py --with-spark
 
 ## 获取 24 小时数据（当前为单日入口）
 
+已验证的一周滚动入口和依赖在 [rolling_pipeline/](rolling_pipeline/README.md)，实测数据见 [一周验证记录](verification/20240115_1week/README.md)。该程序复用下述单日处理，负责按日调度、续跑、验收、清理及跨日合并。D 将在这套代码上适配任意日期、批次时长和 Spark 后端。
+
 `run_sample.py` 当前是**单日验证入口**，一次处理一个 UTC 日期。下面的命令用于复现 2024-01-15 这一天；它不是月级批处理方案。先在项目根目录进入 `a_data_pipeline/`，并按上面的步骤创建并激活环境，然后运行：
 
 ```bash
@@ -49,7 +51,7 @@ python scripts/run_sample.py --date 2024-01-15 --hours 0-23 --run-dir runs/20240
 
 命令默认下载该日期 24 个 GH Archive 小时文件，校验后保存到 `data/raw/`，再运行原始检查和 Python 清洗；已有档案会验证后复用。每个 `--run-dir` 必须是**尚不存在的新目录**，以免覆盖旧结果。处理失败时保留失败目录，改用新目录重跑；已验证的原始档案可以复用。
 
-要换成另一个**单日**，修改日期和运行目录即可。当前脚本没有日期区间或批量调度入口。扩到一个月前，需要专门补上按日批处理、失败续跑、跨日 `event_id` 去重、按日分区和汇总校验；不应让组员手动重复几十条命令，也不能直接拼接每日结果。
+要换成另一个**单日**，修改日期和运行目录即可。`run_sample.py` 继续作为单日入口。一周的按日调度、失败续跑和跨日核对已在 [rolling_pipeline/](rolling_pipeline/README.md) 验证，当前起点固定为 2024-01-15。月级通用化由 D 基于该入口继续适配。
 
 每个日期完成后，先看该运行目录里的 `HANDOFF.md`、`run_summary.json` 和 `python/quality_summary.json`；确认状态和小时覆盖后，再读取 `python/events_clean.parquet/`、`python/repo_daily_counts.csv` 和 `python/repo_candidates.csv`。2024-01-15 的全天仓库活动汇总表已放在 `sample_data/20240115_24h/` 供组员直接使用；其他运行目录和逐条事件数据默认保留在本机，不会随 Git 自动共享。
 

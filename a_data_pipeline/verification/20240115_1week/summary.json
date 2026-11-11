@@ -1,0 +1,102 @@
+{
+  "days": [
+    "2024-01-15",
+    "2024-01-16",
+    "2024-01-17",
+    "2024-01-18",
+    "2024-01-19",
+    "2024-01-20",
+    "2024-01-21"
+  ],
+  "input_hashes": {
+    "2024-01-15": {
+      "events": "925a7151311f925422fd39033f5afc686344d0c1f71d8b94d45cb3549fb0349e",
+      "daily": "005ce2f4735ec6df160081f672bacb8a47f2802939c0cf19ab0ada59e5f3a45b",
+      "valid_index": "175c2e2d4fa8260613f2b01e89cc062e5228d6afc8220a20c129f411a781798f"
+    },
+    "2024-01-16": {
+      "events": "720bad83fcae4592dd6595f7710e17a6bebfb6ae5cb60ee6c977d20d6c543497",
+      "daily": "fd591c052b848dd936e90e1cfb21fc1e5c172f973a0ac9aface2bd4a91a61368",
+      "valid_index": "26a786aa4cc67478584b179046accb70d934bc2a8d05bc789f2e4ce4bbc003d8"
+    },
+    "2024-01-17": {
+      "events": "ed78befcf8a3834b32f118bb9b3d4854a775e4e63da50414e94cf3ded5163b20",
+      "daily": "4df342bc0575777dbfeb1a8cbec8f9c3e414be1c59c5e296b1a530582b2ffadf",
+      "valid_index": "115402e613e3d50231fa46d18bd03398cf44305b30fc20a91d1510ef0d52adc7"
+    },
+    "2024-01-18": {
+      "events": "cfb0d89bdbe0aee76111da8757e927aeb0ad89a0cd8979d47dafedf5d5a026b8",
+      "daily": "8a8d777a5d9f96b8f1f339aa971bf26282454a7542394bd73ac54420a24efb49",
+      "valid_index": "109b832d5ebffa1f486d1537540e5df9ec3598142b8321a181cef41f528e7913"
+    },
+    "2024-01-19": {
+      "events": "ccd50a5090157463a92e883d4a3cb4aa324fa7bad95ee5439a28f7b485e270cc",
+      "daily": "33efeb946c7d7e6d4a48f7c2fd10326b7091ff4c6168548fae399a764b9c2cb4",
+      "valid_index": "44e0e89739ec4511afcf9a97886d354644512d5859dde711da40f529cd2ca939"
+    },
+    "2024-01-20": {
+      "events": "d7a289213270cd9ca87593fe5801721e8886c531429d89e24dcf15b420437499",
+      "daily": "200084337c434330a3d114fb59cf23aec08e8f4cc95cb0dab1eae3f54c706b35",
+      "valid_index": "60634e458c00bc9147c0037aedbe22790f2bde4375b8cce614e79f18df3d2112"
+    },
+    "2024-01-21": {
+      "events": "b4bbecb2cd49e4f0520219b51af347f63fe85c4d72340691552f31302234a3dd",
+      "daily": "2d3bbbc26d4d714f4e74abf70b015d2d8eb6b82e364e57d1f494736bf0445f42",
+      "valid_index": "4f4c40d0538ddeef98ec8da454fa4f95e5be831368a2c72ffab2a9d1538a5271"
+    }
+  },
+  "code_sha256": "4c868b129a70b430ed9e5cd4b1684fd6ecda8120017e0abeabac9da566d4b1f9",
+  "rule_version": "a-events-v1",
+  "checks": {
+    "complete_hourly_coverage": true,
+    "all_valid_index_counts_match": true,
+    "event_ids_unique": true,
+    "daily_counts_reconcile": true,
+    "candidate_counts_reconcile": true
+  },
+  "index_counts": {
+    "valid_occurrences": 34437133,
+    "unique_event_ids": 34437099,
+    "surviving_event_ids": 34437099,
+    "duplicate_occurrences_removed": 34,
+    "conflicting_event_ids": 0,
+    "conflicting_occurrences_excluded": 0
+  },
+  "cross_day_daily_rows_removed": 0,
+  "final_events": 34437099,
+  "daily_rows": 8636288,
+  "daily_sum": 34437099,
+  "candidate_repositories": 3301406,
+  "candidate_sum": 34437099,
+  "elapsed_seconds": 52.42,
+  "total_wall_seconds": 53.422632,
+  "timings_seconds": {
+    "verify_accepted_inputs": 1.001021,
+    "classify_event_ids": 43.858624,
+    "write_event_partitions_and_removals": 0.020071,
+    "write_coverage_and_manifest": 0.001787,
+    "initialize_duckdb": 0.016221,
+    "verify_unique_event_ids": 2.128389,
+    "write_daily_activity_parquet": 1.539612,
+    "write_repository_candidates_csv": 4.552164,
+    "verify_exported_counts": 0.269354
+  },
+  "environment": {
+    "python": "3.11.17",
+    "pyarrow": "25.0.0",
+    "duckdb": "1.4.3",
+    "duckdb_threads": 2,
+    "duckdb_memory_limit": "3GB",
+    "duckdb_max_temp_size": "12GB"
+  },
+  "min_local_free_bytes": 125337600000,
+  "max_merge_temp_bytes": 0,
+  "files": {
+    "events": "events_clean/",
+    "daily": "repo_daily_counts.parquet",
+    "candidates": "repo_candidates.csv",
+    "coverage": "coverage.json",
+    "input_manifest": "input_manifest.csv",
+    "removals": "cross_day_removals.csv"
+  }
+}
