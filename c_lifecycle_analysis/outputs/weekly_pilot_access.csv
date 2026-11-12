@@ -1,0 +1,3 @@
+pilot,repos,matched_in_weekly,valid_creation,included,excluded,uncertain,final_labels,rule_version,policy
+pilot_01,50,50,43,4.0,38.0,8.0,delivered,ai_rules_v0.3.2,manual_override
+pilot_02,200,200,163,,,,not delivered,,
