@@ -1,7 +1,8 @@
 # Metric definitions for the lifecycle analysis (draft for group agreement)
 
 Scope: how each per-repository activity metric is defined in `lifecycle_analysis.ipynb`.
-All metrics are computed per repository, grouped later by age month (calendar months since creation).
+All metrics are computed per repository, grouped later into fixed-cohort **90-day age bands**
+(days 1-30 / 31-60 / 61-90 since creation, counted on **UTC calendar days**).
 
 Two different units are kept separate on purpose:
 
@@ -39,6 +40,24 @@ The metrics are produced by `repo_metrics(daily)` on the aggregated table
 The aggregate is checked against the raw table: the sum of `total_events` must equal the sum of
 `event_count` (verified: 5,528,300 on 2024-01-15).
 
+## Age bands (UTC natural days)
+
+The 90-day lifecycle analysis groups each repository's activity into three bands: **day 1-30**,
+**day 31-60** and **day 61-90** since creation.
+
+- Both the creation time (`repo_created_at`) and the activity time are converted to a **UTC
+  calendar day** by dropping the time-of-day part (`pd.Timestamp(...).normalize()` for a single
+  value, `Series.dt.normalize()` for a column).
+- The **creation day counts as day 1**, so `age_day = (activity_utc_date - creation_utc_date).days + 1`.
+- Band boundaries use that 1-based day: `1 <= age_day <= 30`, `31 <= age_day <= 60`,
+  `61 <= age_day <= 90`.
+- Example: a repository created on **4 April** has its day 30 on **3 May**; **1 May** is day 28
+  (still band 1) and **4 May** is day 31 (band 2 starts). The earlier code subtracted the raw
+  timestamps, so the time-of-day part shifted the boundary and could place a same-day activity
+  before creation.
+- Activity **before** the creation date is reported as `pre_creation`; activity **after** day 90 is
+  reported as `beyond_90`. Neither is silently folded into a band.
+
 ## Conventions that the group still needs to confirm
 
 - **Issue vs. comment split (decided for this version)**: `issue_events` counts `IssuesEvent`
@@ -56,8 +75,27 @@ The aggregate is checked against the raw table: the sum of `total_events` must e
 
 - One `PushEvent` is not one commit. A push can carry several commits in its payload, which is not
   in the current event table.
-- `active_days` is 1 for every repository on the current table because it covers a single day
-  (2024-01-15). It only becomes meaningful once the observation window spans several days or months.
-- Age month is defined from the repository's own `repo_created_at`, not the calendar month, and only
-  repositories whose whole first 12 months fall inside the observation window can be compared over a
-  full year. `repo_created_at` is currently available for 50 pilot repositories only.
+- `active_days` is 1 for every repository on the single-day 2024-01-15 table. The current one-week
+  package (7 UTC days) is the first window where `active_days` spans more than one day; it is still
+  far shorter than the 90 days the lifecycle bands need.
+- The 90-day age-band function in section 12 is exercised on a **convenience sample** (a few pilot
+  repositories with a valid creation time), selected mainly by creation time. It is a **general
+  workflow demonstration**, not an AI-cohort result: the repositories are not filtered by
+  `ai_label_final`, and the full AI-cohort wiring is deferred to the next round.
+- `repo_created_at` is needed for every cohort repository. It is currently available for the pilot
+  repositories only; the full candidate list is pending from B.
+- The `YEAR` switch in section 12 is **declared but not yet wired**: changing it only changes the
+  printed label, it does not switch the cohort, created-date range, activity table or coverage list.
+  Wiring the two-year switch is a next-round task.
+
+## Round 2 requirements (fixed-cohort 90-day analysis, not yet implemented)
+
+- Fix one AI cohort per year and track that **same** list across all three bands. Do not re-select
+  active repositories per band, and do not drop a repository that has no activity after day 60.
+- Every cohort repository must keep a row in all three bands. A band with a fully covered window but
+  no events is a real **0**, not a missing value.
+- Use the per-repository **coverage list** to tell the two apart: data fully processed but no event
+  -> 0; data not fetched yet / archive missing / processing failed -> **observation incomplete**,
+  not zero.
+- Official comparisons use the same set of repositories with a complete 90-day observation as the
+  denominator, and report how many were excluded as incomplete.
