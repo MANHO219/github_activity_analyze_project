@@ -1,0 +1,12 @@
+repo_id,observed_repo_name,ai_label_auto,rule_id,ai_label_manual,ai_label_final,label_source,rule_version,reason_auto,reason_human,metadata_fetched_at_utc,labelled_at_utc,policy
+900000000000000001,test-org/early-decline-2024,included,testing_rule,included,included,testing,testing_v1,synthetic label for Testing Data,,2026-11-12T00:00:00Z,2026-11-12T00:00:00Z,testing
+900000000000000002,test-org/sustained-2024,included,testing_rule,included,included,testing,testing_v1,synthetic label for Testing Data,,2026-11-12T00:00:00Z,2026-11-12T00:00:00Z,testing
+900000000000000003,test-org/growing-2024,included,testing_rule,included,included,testing,testing_v1,synthetic label for Testing Data,,2026-11-12T00:00:00Z,2026-11-12T00:00:00Z,testing
+900000000000000004,test-org/idle-2024,included,testing_rule,included,included,testing,testing_v1,synthetic label for Testing Data,,2026-11-12T00:00:00Z,2026-11-12T00:00:00Z,testing
+900000000000000091,test-org/excluded-2024,excluded,testing_rule,excluded,excluded,testing,testing_v1,synthetic label for Testing Data,,2026-11-12T00:00:00Z,2026-11-12T00:00:00Z,testing
+900000000000000092,test-org/uncertain-2024,uncertain,testing_rule,uncertain,uncertain,testing,testing_v1,synthetic label for Testing Data,,2026-11-12T00:00:00Z,2026-11-12T00:00:00Z,testing
+900000000000000093,test-org/no-label-2024,,testing_rule,,,testing,testing_v1,synthetic label for Testing Data,,2026-11-12T00:00:00Z,2026-11-12T00:00:00Z,testing
+900000000000000094,test-org/fetch-error-2024,included,testing_rule,included,included,testing,testing_v1,synthetic label for Testing Data,,2026-11-12T00:00:00Z,2026-11-12T00:00:00Z,testing
+900000000000000096,test-org/api-mismatch-2024,included,testing_rule,included,included,testing,testing_v1,synthetic label for Testing Data,,2026-11-12T00:00:00Z,2026-11-12T00:00:00Z,testing
+900000000000000097,test-org/no-created-at-2024,included,testing_rule,included,included,testing,testing_v1,synthetic label for Testing Data,,2026-11-12T00:00:00Z,2026-11-12T00:00:00Z,testing
+900000000000000095,test-org/out-of-range-2024,included,testing_rule,included,included,testing,testing_v1,synthetic label for Testing Data,,2026-11-12T00:00:00Z,2026-11-12T00:00:00Z,testing

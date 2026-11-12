@@ -1,0 +1,13 @@
+cohort_year,data_kind,repo_id,repo_created_at,band,band_day_start,band_day_end,required_days,covered_days,band_complete,coverage_status,counts_are_observed_only,total_events,active_days,push_events,issue_events,issue_comment_events,pr_events
+2024,Testing Data,900000000000000001,2024-04-01 12:00:00+00:00,day_1_30,1,30,30,30,True,complete,False,12,4,9,3,0,0
+2024,Testing Data,900000000000000001,2024-04-01 12:00:00+00:00,day_31_60,31,60,30,30,True,complete,False,1,1,1,0,0,0
+2024,Testing Data,900000000000000001,2024-04-01 12:00:00+00:00,day_61_90,61,90,30,30,True,complete,False,0,0,0,0,0,0
+2024,Testing Data,900000000000000002,2024-04-02 09:30:00+00:00,day_1_30,1,30,30,30,True,complete,False,5,3,3,0,0,2
+2024,Testing Data,900000000000000002,2024-04-02 09:30:00+00:00,day_31_60,31,60,30,30,True,complete,False,3,3,1,1,0,1
+2024,Testing Data,900000000000000002,2024-04-02 09:30:00+00:00,day_61_90,61,90,30,30,True,complete,False,3,3,3,0,0,0
+2024,Testing Data,900000000000000003,2024-04-03 23:45:00+00:00,day_1_30,1,30,30,30,True,complete,False,2,2,1,0,1,0
+2024,Testing Data,900000000000000003,2024-04-03 23:45:00+00:00,day_31_60,31,60,30,30,True,complete,False,5,3,3,1,1,0
+2024,Testing Data,900000000000000003,2024-04-03 23:45:00+00:00,day_61_90,61,90,30,30,True,complete,False,10,3,9,0,0,1
+2024,Testing Data,900000000000000004,2024-04-04 00:05:00+00:00,day_1_30,1,30,30,30,True,complete,False,0,0,0,0,0,0
+2024,Testing Data,900000000000000004,2024-04-04 00:05:00+00:00,day_31_60,31,60,30,30,True,complete,False,0,0,0,0,0,0
+2024,Testing Data,900000000000000004,2024-04-04 00:05:00+00:00,day_61_90,61,90,30,30,True,complete,False,0,0,0,0,0,0
