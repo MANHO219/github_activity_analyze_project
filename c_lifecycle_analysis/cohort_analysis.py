@@ -272,6 +272,12 @@ def _band_totals(rows: pd.DataFrame) -> dict:
     )
 
 
+def _cohort_events_by_repo(cohort, daily):
+    """Group only selected repositories, keeping unrelated input out of memory."""
+    selected = daily.loc[daily["repo_id"].isin(cohort["repo_id"])]
+    return {rid: rows for rid, rows in selected.groupby("repo_id")}
+
+
 def per_repo_stage_table(cohort, daily, coverage, cohort_year, data_kind):
     """Build the fixed cohort x 3 bands table, incl. coverage status per band.
 
@@ -279,7 +285,7 @@ def per_repo_stage_table(cohort, daily, coverage, cohort_year, data_kind):
     rows at all. Counts are computed inside the UTC day window of each band.
     """
     complete_days = set(coverage["complete_days"])
-    by_repo = {rid: g for rid, g in daily.groupby("repo_id")}
+    by_repo = _cohort_events_by_repo(cohort, daily)
 
     records = []
     for rec in cohort.itertuples(index=False):
@@ -322,7 +328,7 @@ def per_repo_stage_table(cohort, daily, coverage, cohort_year, data_kind):
 def out_of_band_events(cohort, daily):
     """Events before creation (``pre_creation``) or after day 90 (``beyond_90``)."""
     records = []
-    by_repo = {rid: g for rid, g in daily.groupby("repo_id")}
+    by_repo = _cohort_events_by_repo(cohort, daily)
     for rec in cohort.itertuples(index=False):
         created = pd.Timestamp(rec.repo_created_day).normalize()
         repo_events = by_repo.get(rec.repo_id)
@@ -341,7 +347,7 @@ def out_of_band_events(cohort, daily):
 # --------------------------------------------------------------------------- #
 # cohort aggregation
 # --------------------------------------------------------------------------- #
-def aggregate_cohort(stage_table, cohort_size):
+def aggregate_cohort(stage_table, cohort_size, *, cohort_year=None, data_kind=None):
     """Aggregate the cohort per band around one fixed official denominator.
 
     The official comparison tracks the **same** repositories in all three bands,
@@ -350,7 +356,17 @@ def aggregate_cohort(stage_table, cohort_size):
     meet this stay in ``not_complete_90d_repos`` and never enter the ratio or the
     distributions. When that set is empty the ratio, the event total and the
     quantiles are not computable (``NaN``), never 0.
+    For a non-empty stage table the year and data kind can still be inferred,
+    preserving the original helper interface. An empty cohort needs the explicit
+    context supplied by ``analyze_cohort`` and produces three not-computable rows.
     """
+    if cohort_year is None or data_kind is None:
+        if stage_table.empty:
+            raise InputError("cohort_year and data_kind are required for an empty stage table")
+        if cohort_year is None:
+            cohort_year = stage_table["cohort_year"].iloc[0]
+        if data_kind is None:
+            data_kind = stage_table["data_kind"].iloc[0]
     complete_90d = stage_table.groupby("repo_id")["band_complete"].all()
     official_ids = set(complete_90d[complete_90d].index)
     n_official = len(official_ids)
@@ -366,8 +382,8 @@ def aggregate_cohort(stage_table, cohort_size):
 
         rows.append(
             dict(
-                cohort_year=int(band["cohort_year"].iloc[0]),
-                data_kind=band["data_kind"].iloc[0],
+                cohort_year=int(cohort_year),
+                data_kind=data_kind,
                 band=band_name,
                 cohort_size=int(cohort_size),
                 complete_90d_repos=n_official,
@@ -414,7 +430,9 @@ def analyze_cohort(
         metadata, labels, cohort_year, created_from, created_to
     )
     stage_table = per_repo_stage_table(cohort, daily, coverage, cohort_year, data_kind)
-    aggregate = aggregate_cohort(stage_table, cohort_size=len(cohort))
+    aggregate = aggregate_cohort(
+        stage_table, cohort_size=len(cohort), cohort_year=cohort_year, data_kind=data_kind
+    )
     out_of_band = out_of_band_events(cohort, daily)
 
     return {
