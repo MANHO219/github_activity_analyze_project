@@ -1,6 +1,7 @@
 # Metric definitions for the lifecycle analysis (draft for group agreement)
 
-Scope: how each per-repository activity metric is defined in `lifecycle_analysis.ipynb`.
+Scope: how each per-repository activity metric is defined. The first-pass metrics live in
+`lifecycle_analysis.ipynb`; the fixed-cohort 90-day analysis lives in `cohort_analysis.py`.
 All metrics are computed per repository, grouped later into fixed-cohort **90-day age bands**
 (days 1-30 / 31-60 / 61-90 since creation, counted on **UTC calendar days**).
 
@@ -81,21 +82,65 @@ The 90-day lifecycle analysis groups each repository's activity into three bands
 - The 90-day age-band function in section 12 is exercised on a **convenience sample** (a few pilot
   repositories with a valid creation time), selected mainly by creation time. It is a **general
   workflow demonstration**, not an AI-cohort result: the repositories are not filtered by
-  `ai_label_final`, and the full AI-cohort wiring is deferred to the next round.
+  `ai_label_final`. The full AI-cohort wiring now lives in `cohort_analysis.py` (see
+  "Fixed-cohort 90-day analysis" below).
 - `repo_created_at` is needed for every cohort repository. It is currently available for the pilot
   repositories only; the full candidate list is pending from B.
-- The `YEAR` switch in section 12 is **declared but not yet wired**: changing it only changes the
-  printed label, it does not switch the cohort, created-date range, activity table or coverage list.
-  Wiring the two-year switch is a next-round task.
+- The `YEAR` switch in section 12 of `lifecycle_analysis.ipynb` is **declared but not wired**:
+  changing it only changes the printed label. The working two-year switch is in `cohort_analysis.py`,
+  where the year changes the four input files and the created-date range together.
 
-## Round 2 requirements (fixed-cohort 90-day analysis, not yet implemented)
+## Fixed-cohort 90-day analysis (round 2)
 
-- Fix one AI cohort per year and track that **same** list across all three bands. Do not re-select
-  active repositories per band, and do not drop a repository that has no activity after day 60.
-- Every cohort repository must keep a row in all three bands. A band with a fully covered window but
-  no events is a real **0**, not a missing value.
-- Use the per-repository **coverage list** to tell the two apart: data fully processed but no event
-  -> 0; data not fetched yet / archive missing / processing failed -> **observation incomplete**,
-  not zero.
-- Official comparisons use the same set of repositories with a complete 90-day observation as the
-  denominator, and report how many were excluded as incomplete.
+Implemented in `cohort_analysis.py` and demonstrated in `cohort_90d_analysis.ipynb`; the synthetic
+inputs and their expected values are in `testing_data/README.md`.
+
+### The fixed cohort
+
+- One cohort per year. A repository joins the cohort when its metadata is valid
+  (`fetch_status = ok`, `api_repo_id` consistent with `repo_id`, `repo_created_at` parseable), its
+  `ai_label_final = included`, and its **UTC** creation date falls inside the inclusive
+  `created_from .. created_to` range.
+- The list is fixed once and then tracked across **all three** bands. Repositories are never
+  re-selected per band and never dropped for having no activity later.
+- Rejected repositories are reported separately, not silently: invalid metadata, no label,
+  `uncertain`, `excluded`, and out of range.
+
+### Bands and out-of-band activity
+
+- The three bands are **day 1-30**, **day 31-60** and **day 61-90** since creation, on **UTC natural
+  days** with the creation day counted as day 1 (same rule as "Age bands" above).
+- Activity **before** creation and **after** day 90 is reported as `pre_creation` / `beyond_90` and
+  is never folded into a band.
+
+### Per-repository stage table
+
+Every cohort repository gets exactly **three** rows (one per band), even when a band has no activity
+- this is an aggregation row, not extra raw events. Beyond the six metrics above, each row carries:
+
+| Field | Meaning |
+|---|---|
+| `band`, `band_day_start`, `band_day_end` | which band, and its 1-based day bounds |
+| `required_days` | UTC days the band needs (30, or fewer for a truncated band) |
+| `covered_days` | how many of those days the coverage list confirms as fully processed |
+| `band_complete` | whether **all** required days are covered |
+| `coverage_status` | `complete` / `incomplete` |
+| `counts_are_observed_only` | `True` when the band is incomplete, so the counts are only the observed part |
+
+A band whose window is **fully covered** and has no events is a real **0**. A band that is **not
+fully covered** is **observation incomplete** and its counts are marked observed-only - it must not
+be read as "the repository was inactive".
+
+### Cohort summary and the active ratio
+
+Grouped by year x band, over the fixed cohort:
+
+- `cohort_size`, `complete_repos`, `incomplete_repos`, `active_repos`;
+- `active_ratio`, `total_events_sum`, and the median / q25 / q75 of `total_events` and `active_days`.
+
+`active_ratio` = active repositories / repositories with a **fully covered** band. It is computed
+over the fixed cohort (never only over the repositories that happen to have events), and fully
+covered zero-activity repositories stay in the denominator and in the distribution. When a band has
+**no** fully covered repository, the ratio is **not computable** (`NaN`), never 0%. A fully covered
+90-day denominator is required for the official comparison; a shorter observed window may be shown
+as observed values only.
