@@ -135,12 +135,14 @@ be read as "the repository was inactive".
 
 Grouped by year x band, over the fixed cohort:
 
-- `cohort_size`, `complete_repos`, `incomplete_repos`, `active_repos`;
+- `cohort_size`, `complete_90d_repos`, `not_complete_90d_repos`, `active_repos`;
 - `active_ratio`, `total_events_sum`, and the median / q25 / q75 of `total_events` and `active_days`.
 
-`active_ratio` = active repositories / repositories with a **fully covered** band. It is computed
-over the fixed cohort (never only over the repositories that happen to have events), and fully
-covered zero-activity repositories stay in the denominator and in the distribution. When a band has
-**no** fully covered repository, the ratio is **not computable** (`NaN`), never 0%. A fully covered
-90-day denominator is required for the official comparison; a shorter observed window may be shown
-as observed values only.
+`active_ratio` = active repositories / `complete_90d_repos`. `complete_90d_repos` is the **fixed
+official denominator**: the cohort repositories whose whole 90-day window was fully covered
+(complete in *every* band). It is the **same set** for all three bands, so the bands stay comparable
+and a repository missing coverage in one band leaves the ratio in all three. Repositories that fall
+short are counted in `not_complete_90d_repos` and never enter the ratio or the distributions;
+fully-covered zero-activity repositories stay in the denominator and in the distribution. When no
+repository is covered for the whole 90 days the set is empty, so `active_ratio`, `total_events_sum`
+and the quantiles are **not computable** (`NaN`), never 0%.

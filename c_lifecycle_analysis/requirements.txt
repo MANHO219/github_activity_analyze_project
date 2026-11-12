@@ -1,4 +1,5 @@
-# Dependencies for lifecycle_analysis.ipynb
+# Dependencies for lifecycle_analysis.ipynb and cohort_90d_analysis.ipynb
+# (cohort_analysis.py uses the same set)
 pandas
 numpy
 matplotlib

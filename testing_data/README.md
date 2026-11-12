@@ -121,15 +121,16 @@ Out-of-band events: `...001` pre-creation 1, beyond day 90 = 1; `...003` beyond 
 
 ### 2024, complete coverage - cohort summary per band
 
-| band | cohort_size | complete | incomplete | active | active_ratio | total_events | events_median | events_q25 | events_q75 | active_days_median | active_days_q25 | active_days_q75 |
+| band | cohort_size | complete_90d | not_complete_90d | active | active_ratio | total_events | events_median | events_q25 | events_q75 | active_days_median | active_days_q25 | active_days_q75 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | day_1_30 | 4 | 4 | 0 | 3 | 0.75 | 19 | 3.5 | 1.50 | 6.75 | 2.5 | 1.50 | 3.25 |
 | day_31_60 | 4 | 4 | 0 | 3 | 0.75 | 9 | 2.0 | 0.75 | 3.50 | 2.0 | 0.75 | 3.00 |
 | day_61_90 | 4 | 4 | 0 | 2 | 0.50 | 13 | 1.5 | 0.00 | 4.75 | 1.5 | 0.00 | 3.00 |
 
-The active ratio uses the **whole fixed cohort** (4), not just the repositories with events: in
-day_61_90 only `...002` and `...003` are active, so the ratio is 2/4 = 0.50. Zero-activity `...004`
-still counts in the denominator.
+Here all 4 repositories are covered for the whole 90 days, so the official denominator is 4 in every
+band. The ratio uses that **fixed set** (not just the repositories with events): in day_61_90 only
+`...002` and `...003` are active, so the ratio is 2/4 = 0.50. Zero-activity `...004` still counts in
+the denominator.
 
 ### 2026, complete coverage
 
@@ -152,7 +153,7 @@ Per repository x band (same tuple order):
 
 Cohort summary per band:
 
-| band | cohort_size | complete | incomplete | active | active_ratio | total_events | events_median | active_days_median |
+| band | cohort_size | complete_90d | not_complete_90d | active | active_ratio | total_events | events_median | active_days_median |
 |---|---|---|---|---|---|---|---|---|
 | day_1_30 | 4 | 4 | 0 | 3 | 0.75 | 9 | 2.5 | 1.0 |
 | day_31_60 | 4 | 4 | 0 | 3 | 0.75 | 6 | 1.5 | 1.0 |
@@ -172,23 +173,32 @@ For both years, band day_61_90 of the missing variant:
 | ...003 | 30 | 29 | incomplete | True |
 | ...004 | 30 | 28 | incomplete | True |
 
-Cohort summary, 2024 day_61_90 with missing coverage: `complete_repos = 2`,
-`incomplete_repos = 2`, `active_repos = 1`, `active_ratio = 0.50`, `total_events_sum = 3`.
+Cohort summary, 2024 with missing coverage - the official set is now the 2 repositories covered for
+the whole 90 days, so `complete_90d_repos = 2` and `not_complete_90d_repos = 2` in **every** band:
 
-Repositories are **kept** in the table; the incomplete band is only flagged. The official ratio uses
-the 2 fully covered repositories (1/2 = 50%) and never treats an unobserved band as zero activity.
-Bands day_1_30 and day_31_60 stay fully covered (`complete_repos = 4`).
-
-### A band with no fully covered repository
-
-If day_61_90 has **no** fully covered repository, the active ratio must be **not computable**
-(`NaN`), never 0%. This is checked by dropping the June days on top of the missing variant:
-
-| band | complete | incomplete | active | active_ratio | total_events |
+| band | complete_90d | not_complete_90d | active | active_ratio | total_events |
 |---|---|---|---|---|---|
-| day_1_30 | 4 | 0 | 3 | 0.75 | 19 |
+| day_1_30 | 2 | 2 | 2 | 1.00 | 17 |
 | day_31_60 | 2 | 2 | 2 | 1.00 | 4 |
-| day_61_90 | 0 | 4 | 0 | NaN | 0 |
+| day_61_90 | 2 | 2 | 1 | 0.50 | 3 |
+
+Repositories are **kept** in the table; the incomplete band is only flagged. `...003` and `...004`
+lose their day-61-90 coverage, so they leave the fixed 90-day set - and therefore drop out of the
+ratio in *all three* bands, not just day_61_90. The band-1 and band-2 counts for the official set
+(`...001`: 12 and 1 events; `...002`: 5 and 3) stay visible in the per-repository table, and an
+unobserved band is never treated as zero activity.
+
+### No repository covered for the whole 90 days
+
+If the fixed 90-day set is **empty**, the ratio, the event total and the quantiles must be **not
+computable** (`NaN`), never 0%. This is checked by dropping the June days, which breaks the day-61-90
+window of all four repositories:
+
+| band | complete_90d | not_complete_90d | active | active_ratio | total_events |
+|---|---|---|---|---|---|
+| day_1_30 | 0 | 4 | 0 | NaN | NaN |
+| day_31_60 | 0 | 4 | 0 | NaN | NaN |
+| day_61_90 | 0 | 4 | 0 | NaN | NaN |
 
 ## Regenerating and re-checking
 

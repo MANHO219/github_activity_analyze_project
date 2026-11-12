@@ -1,4 +1,4 @@
-cohort_year,data_kind,band,cohort_size,complete_repos,incomplete_repos,active_repos,active_ratio,total_events_sum,events_median,events_q25,events_q75,active_days_median,active_days_q25,active_days_q75
+cohort_year,data_kind,band,cohort_size,complete_90d_repos,not_complete_90d_repos,active_repos,active_ratio,total_events_sum,events_median,events_q25,events_q75,active_days_median,active_days_q25,active_days_q75
 2026,Testing Data,day_1_30,4,4,0,3,0.75,9,2.5,0.75,4.0,1.0,0.75,1.25
 2026,Testing Data,day_31_60,4,4,0,3,0.75,6,1.5,0.75,2.25,1.0,0.75,1.0
 2026,Testing Data,day_61_90,4,4,0,2,0.5,9,1.0,0.0,3.25,0.5,0.0,1.0

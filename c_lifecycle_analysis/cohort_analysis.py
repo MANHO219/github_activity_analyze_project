@@ -12,6 +12,12 @@ no activity after day 60 stays in the list. A band with a fully covered window
 and no events is a real ``0``; a band whose source days were not fully processed
 is marked ``incomplete`` and is not silently read as zero activity.
 
+The official cohort comparison uses **one fixed denominator for all three
+bands**: the cohort repositories whose whole 90-day window was fully covered
+(complete in every band). Repositories that fall short are reported next to it
+and never enter the active ratio or the distributions; when that set is empty
+the ratio and the totals are not computable (``NaN``), never 0.
+
 All day arithmetic uses UTC calendar days (time-of-day is dropped before the
 subtraction), consistent with ``age_band_metrics`` in the round-1 notebook.
 
@@ -336,40 +342,45 @@ def out_of_band_events(cohort, daily):
 # cohort aggregation
 # --------------------------------------------------------------------------- #
 def aggregate_cohort(stage_table, cohort_size):
-    """Aggregate the cohort per band.
+    """Aggregate the cohort per band around one fixed official denominator.
 
-    Official figures use only repositories whose band window was fully covered
-    (the same denominator for all three bands requires the complete-90-day set;
-    here it is reported per band so partial coverage is visible). A band with no
-    fully covered repository reports ``active_ratio = NaN`` instead of 0.
+    The official comparison tracks the **same** repositories in all three bands,
+    so the denominator is the set of cohort repositories whose whole 90-day
+    window was fully covered (complete in every band). Repositories that do not
+    meet this stay in ``not_complete_90d_repos`` and never enter the ratio or the
+    distributions. When that set is empty the ratio, the event total and the
+    quantiles are not computable (``NaN``), never 0.
     """
+    complete_90d = stage_table.groupby("repo_id")["band_complete"].all()
+    official_ids = set(complete_90d[complete_90d].index)
+    n_official = len(official_ids)
+
     rows = []
     for band_name in BAND_ORDER:
         band = stage_table[stage_table["band"] == band_name]
-        complete = band[band["band_complete"]]
-        n_complete = int(complete["repo_id"].nunique())
-        active = int((complete["total_events"] > 0).sum())
+        official = band[band["repo_id"].isin(official_ids)]
 
-        events = complete["total_events"]
-        days = complete["active_days"]
+        active = int((official["total_events"] > 0).sum()) if n_official else 0
+        events = official["total_events"]
+        days = official["active_days"]
 
         rows.append(
             dict(
-                cohort_year=int(band["cohort_year"].iloc[0]) if len(band) else np.nan,
-                data_kind=band["data_kind"].iloc[0] if len(band) else "",
+                cohort_year=int(band["cohort_year"].iloc[0]),
+                data_kind=band["data_kind"].iloc[0],
                 band=band_name,
                 cohort_size=int(cohort_size),
-                complete_repos=n_complete,
-                incomplete_repos=int(band["repo_id"].nunique()) - n_complete,
+                complete_90d_repos=n_official,
+                not_complete_90d_repos=int(cohort_size) - n_official,
                 active_repos=active,
-                active_ratio=(active / n_complete) if n_complete else np.nan,
-                total_events_sum=int(events.sum()) if n_complete else 0,
-                events_median=float(events.median()) if n_complete else np.nan,
-                events_q25=float(events.quantile(0.25)) if n_complete else np.nan,
-                events_q75=float(events.quantile(0.75)) if n_complete else np.nan,
-                active_days_median=float(days.median()) if n_complete else np.nan,
-                active_days_q25=float(days.quantile(0.25)) if n_complete else np.nan,
-                active_days_q75=float(days.quantile(0.75)) if n_complete else np.nan,
+                active_ratio=(active / n_official) if n_official else np.nan,
+                total_events_sum=int(events.sum()) if n_official else np.nan,
+                events_median=float(events.median()) if n_official else np.nan,
+                events_q25=float(events.quantile(0.25)) if n_official else np.nan,
+                events_q75=float(events.quantile(0.75)) if n_official else np.nan,
+                active_days_median=float(days.median()) if n_official else np.nan,
+                active_days_q25=float(days.quantile(0.25)) if n_official else np.nan,
+                active_days_q75=float(days.quantile(0.75)) if n_official else np.nan,
             )
         )
     return pd.DataFrame(rows)
