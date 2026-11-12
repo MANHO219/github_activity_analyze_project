@@ -1,0 +1,12 @@
+repo_id,observed_repo_name,api_repo_id,current_full_name,repo_created_at,description,topics_json,language,archived,fetch_status,http_status,fetched_at_utc
+900000000000000001,test-org/early-decline-2024,900000000000000001,test-org/early-decline-2024,2024-04-01T12:00:00Z,synthetic Testing Data repository,"[""testing-data""]",Python,False,ok,200,2026-11-12T00:00:00Z
+900000000000000002,test-org/sustained-2024,900000000000000002,test-org/sustained-2024,2024-04-02T09:30:00Z,synthetic Testing Data repository,"[""testing-data""]",Python,False,ok,200,2026-11-12T00:00:00Z
+900000000000000003,test-org/growing-2024,900000000000000003,test-org/growing-2024,2024-04-03T23:45:00Z,synthetic Testing Data repository,"[""testing-data""]",Python,False,ok,200,2026-11-12T00:00:00Z
+900000000000000004,test-org/idle-2024,900000000000000004,test-org/idle-2024,2024-04-04T00:05:00Z,synthetic Testing Data repository,"[""testing-data""]",Python,False,ok,200,2026-11-12T00:00:00Z
+900000000000000091,test-org/excluded-2024,900000000000000091,test-org/excluded-2024,2024-04-05T10:00:00Z,synthetic Testing Data repository,"[""testing-data""]",Python,False,ok,200,2026-11-12T00:00:00Z
+900000000000000092,test-org/uncertain-2024,900000000000000092,test-org/uncertain-2024,2024-04-06T10:00:00Z,synthetic Testing Data repository,"[""testing-data""]",Python,False,ok,200,2026-11-12T00:00:00Z
+900000000000000093,test-org/no-label-2024,900000000000000093,test-org/no-label-2024,2024-04-07T10:00:00Z,synthetic Testing Data repository,"[""testing-data""]",Python,False,ok,200,2026-11-12T00:00:00Z
+900000000000000094,test-org/fetch-error-2024,900000000000000094,test-org/fetch-error-2024,2024-04-08T10:00:00Z,synthetic Testing Data repository,"[""testing-data""]",Python,False,error,500,2026-11-12T00:00:00Z
+900000000000000096,test-org/api-mismatch-2024,12345,test-org/api-mismatch-2024,2024-04-09T10:00:00Z,synthetic Testing Data repository,"[""testing-data""]",Python,False,ok,200,2026-11-12T00:00:00Z
+900000000000000097,test-org/no-created-at-2024,900000000000000097,test-org/no-created-at-2024,,synthetic Testing Data repository,"[""testing-data""]",Python,False,ok,200,2026-11-12T00:00:00Z
+900000000000000095,test-org/out-of-range-2024,900000000000000095,test-org/out-of-range-2024,2024-05-15T10:00:00Z,synthetic Testing Data repository,"[""testing-data""]",Python,False,ok,200,2026-11-12T00:00:00Z
