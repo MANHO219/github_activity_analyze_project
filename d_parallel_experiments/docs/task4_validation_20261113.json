@@ -1,0 +1,1885 @@
+{
+  "task": 4,
+  "passed": true,
+  "source": {
+    "rule_version": "a-events-v1",
+    "source_sha256_lf": {
+      "a_data_pipeline/gharchive_a/__init__.py": "d7f29377789a470ff76b7cc18e8a601fd80bba23b5bddafe122845a99e208654",
+      "a_data_pipeline/gharchive_a/clean.py": "a8bb6b4acd69f75b211a5573cc8ab63a75b43071c1516f4d17153933fd186d4b",
+      "a_data_pipeline/gharchive_a/cli.py": "aba9053e996dd3be7e40dd9c0e93d1754810a08316a9cf92a4037cfa315c6f3b",
+      "a_data_pipeline/gharchive_a/common.py": "0f2d93af59980ec8de55239cb247e5399055e15c0cdefac9551f4ed04a4ba7d0",
+      "a_data_pipeline/gharchive_a/compare.py": "603479a3f054d0724b95021243d51759ebea6027c1343ea1d5824a4256a827ee",
+      "a_data_pipeline/gharchive_a/download.py": "cb66133542d0d03b729cd2d3add472c68a1fb1f5f6aff3c7673a4b36288da198",
+      "a_data_pipeline/gharchive_a/export.py": "619a087357da3da9b3a00d2fd57bc1074dbfb61163af9ca1abbc8b3f2ecfa0e4",
+      "a_data_pipeline/gharchive_a/inspect.py": "b257257f43d222d6baba510b23183f4c01d4d8107d25321a099363ae5a790b75",
+      "a_data_pipeline/gharchive_a/records.py": "024d5d88f69a411ea4b3583fd27405d3ce9f06b1fd3fb79a8eb30ff750e0b1a0",
+      "a_data_pipeline/gharchive_a/spark_clean.py": "6f614a231798dbbf9bd83605f57875aae48452efd46daded7a92ca12724dc54f",
+      "a_data_pipeline/rolling_pipeline/batch_download.py": "e961c3097342c2ba16e86db87c2866d893213e7c3215cf6552c97276f081b04d",
+      "a_data_pipeline/rolling_pipeline/batch_merge.py": "ec20fa460d0d984e3158270c474ef4c05c6084eae92e54b0ccd5b23df82455ca",
+      "a_data_pipeline/rolling_pipeline/batch_support.py": "211b9c8fddac614e841756679bf57ac3ceda5b7094274db8cd06de63e8da2862",
+      "d_parallel_experiments/scripts/run_batch_pipeline.py": "e6ebdf4cc54bf9d25e8f8856b8cc531862a195aab4587085cb616952cee78671",
+      "d_parallel_experiments/scripts/spark_batch_job.py": "c5da63d56550c56aca95a637bc5b3ad7fbe7b7a7cc224998ab57fae13030b85c",
+      "d_parallel_experiments/scripts/summarize_results.py": "4a416bfcc33ab5ebf856369ebf3cc97b965c1d7f4bf45fd4d3a1e57a5faf2a71",
+      "d_parallel_experiments/scripts/verify_results.py": "c8fc25e51cc1d2b39ca942aaaa74d4928217c7fd74700f6d59b98ea441981885"
+    },
+    "sha256": "68d9b4051daf6343f78d934e1687f6586438e0bef16d0f28ad48c74419fe1217"
+  },
+  "scope": {
+    "start": "2024-01-16T00:00Z",
+    "end": "2024-01-16T02:00Z",
+    "batch_hours": 2
+  },
+  "output": "/data/cs5488/runs/rolling_v1_20261113_task4",
+  "dedicated_raw": "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup",
+  "records": [
+    {
+      "phase": "spark_interrupt",
+      "os_command": [
+        "/home/lishuo/cs5488-round1/env/bin/python",
+        "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/bootstrap/recovery.py",
+        "child",
+        "spark_interrupt",
+        "/data/cs5488/runs/rolling_v1_20261113_task4"
+      ],
+      "entrypoint": "runner.main(argv) through external fault harness",
+      "runner_argv": [
+        "--start",
+        "2024-01-16T00:00Z",
+        "--end",
+        "2024-01-16T02:00Z",
+        "--batch-hours",
+        "2",
+        "--raw-dir",
+        "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup",
+        "--output-dir",
+        "/data/cs5488/runs/rolling_v1_20261113_task4",
+        "--spark-config",
+        "L4",
+        "--spark-submit",
+        "/home/lishuo/cs5488-round1/env/lib/python3.11/site-packages/pyspark/bin/spark-submit",
+        "--cleanup",
+        "accepted-raw",
+        "--min-free-gib",
+        "4",
+        "--spark-conf",
+        "spark.driver.host=127.0.0.1",
+        "--spark-conf",
+        "spark.driver.bindAddress=127.0.0.1",
+        "--spark-conf",
+        "spark.ui.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.enabled=true",
+        "--spark-conf",
+        "spark.eventLog.compress=false",
+        "--spark-conf",
+        "spark.eventLog.rolling.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.dir=file:/data/cs5488/monthly_validation/rolling_v1_20261113_task4/event-logs"
+      ],
+      "started_at": "2026-11-13T05:29:24.091177+00:00",
+      "boundary": {
+        "application": {
+          "application_id": "local-1794547819724",
+          "master": "local[4]"
+        },
+        "log": "/data/cs5488/runs/rolling_v1_20261113_task4/batches/20240116T0000Z_20240116T0200Z/attempt-0001/fragments/2024-01-16/spark.log"
+      },
+      "remaining_process_group": false,
+      "exit_code": 1,
+      "elapsed_seconds": 56.96963502499966,
+      "finished_at": "2026-11-13T05:30:21.060800+00:00"
+    },
+    {
+      "phase": "cleanup_interrupt",
+      "os_command": [
+        "/home/lishuo/cs5488-round1/env/bin/python",
+        "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/bootstrap/recovery.py",
+        "child",
+        "cleanup_interrupt",
+        "/data/cs5488/runs/rolling_v1_20261113_task4"
+      ],
+      "entrypoint": "runner.main(argv) through external fault harness",
+      "runner_argv": [
+        "--start",
+        "2024-01-16T00:00Z",
+        "--end",
+        "2024-01-16T02:00Z",
+        "--batch-hours",
+        "2",
+        "--raw-dir",
+        "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup",
+        "--output-dir",
+        "/data/cs5488/runs/rolling_v1_20261113_task4",
+        "--spark-config",
+        "L4",
+        "--spark-submit",
+        "/home/lishuo/cs5488-round1/env/lib/python3.11/site-packages/pyspark/bin/spark-submit",
+        "--cleanup",
+        "accepted-raw",
+        "--min-free-gib",
+        "4",
+        "--spark-conf",
+        "spark.driver.host=127.0.0.1",
+        "--spark-conf",
+        "spark.driver.bindAddress=127.0.0.1",
+        "--spark-conf",
+        "spark.ui.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.enabled=true",
+        "--spark-conf",
+        "spark.eventLog.compress=false",
+        "--spark-conf",
+        "spark.eventLog.rolling.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.dir=file:/data/cs5488/monthly_validation/rolling_v1_20261113_task4/event-logs"
+      ],
+      "started_at": "2026-11-13T05:30:21.070537+00:00",
+      "boundary": {
+        "disk_journal": {
+          "targets": [
+            {
+              "name": "2024-01-16-0.json.gz",
+              "url": "https://data.gharchive.org/2024-01-16-0.json.gz",
+              "bytes": 78166242,
+              "sha256": "62fa17f986933b8692719ce00a8fa049aa528544a676096af629b3986aebfc95",
+              "cache_status": "cached_verified",
+              "owner_run": "9138330f26894da88a9cbe7c3e2f0cc1"
+            },
+            {
+              "name": "2024-01-16-1.json.gz",
+              "url": "https://data.gharchive.org/2024-01-16-1.json.gz",
+              "bytes": 78713808,
+              "sha256": "4f86c2a16a6837c7c11b54b03fd2ec6da15595be2dabafa9be94388efb07e190",
+              "cache_status": "cached_verified",
+              "owner_run": "9138330f26894da88a9cbe7c3e2f0cc1"
+            }
+          ],
+          "files": {
+            "2024-01-16-0.json.gz": "deleting"
+          },
+          "completed": false
+        },
+        "raw_files_present": [
+          "2024-01-16-1.json.gz"
+        ]
+      },
+      "remaining_process_group": false,
+      "exit_code": 1,
+      "elapsed_seconds": 102.65078996699958,
+      "finished_at": "2026-11-13T05:32:03.721318+00:00"
+    },
+    {
+      "phase": "merge_interrupt",
+      "os_command": [
+        "/home/lishuo/cs5488-round1/env/bin/python",
+        "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/bootstrap/recovery.py",
+        "child",
+        "merge_interrupt",
+        "/data/cs5488/runs/rolling_v1_20261113_task4"
+      ],
+      "entrypoint": "runner.main(argv) through external fault harness",
+      "runner_argv": [
+        "--start",
+        "2024-01-16T00:00Z",
+        "--end",
+        "2024-01-16T02:00Z",
+        "--batch-hours",
+        "2",
+        "--raw-dir",
+        "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup",
+        "--output-dir",
+        "/data/cs5488/runs/rolling_v1_20261113_task4",
+        "--spark-config",
+        "L4",
+        "--spark-submit",
+        "/home/lishuo/cs5488-round1/env/lib/python3.11/site-packages/pyspark/bin/spark-submit",
+        "--cleanup",
+        "accepted-raw",
+        "--min-free-gib",
+        "4",
+        "--spark-conf",
+        "spark.driver.host=127.0.0.1",
+        "--spark-conf",
+        "spark.driver.bindAddress=127.0.0.1",
+        "--spark-conf",
+        "spark.ui.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.enabled=true",
+        "--spark-conf",
+        "spark.eventLog.compress=false",
+        "--spark-conf",
+        "spark.eventLog.rolling.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.dir=file:/data/cs5488/monthly_validation/rolling_v1_20261113_task4/event-logs"
+      ],
+      "started_at": "2026-11-13T05:32:03.725664+00:00",
+      "boundary": {
+        "database": "/data/cs5488/runs/rolling_v1_20261113_task4/merge/attempt-0001/result/merge.sqlite3",
+        "bytes": 2813952,
+        "committed_valid_rows": 10000
+      },
+      "remaining_process_group": false,
+      "exit_code": 1,
+      "elapsed_seconds": 0.8724738559994876,
+      "finished_at": "2026-11-13T05:32:04.598132+00:00"
+    },
+    {
+      "phase": "resume",
+      "os_command": [
+        "/home/lishuo/cs5488-round1/env/bin/python",
+        "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/bootstrap/recovery.py",
+        "child",
+        "resume",
+        "/data/cs5488/runs/rolling_v1_20261113_task4"
+      ],
+      "entrypoint": "runner.main(argv) through external fault harness",
+      "runner_argv": [
+        "--start",
+        "2024-01-16T00:00Z",
+        "--end",
+        "2024-01-16T02:00Z",
+        "--batch-hours",
+        "2",
+        "--raw-dir",
+        "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup",
+        "--output-dir",
+        "/data/cs5488/runs/rolling_v1_20261113_task4",
+        "--spark-config",
+        "L4",
+        "--spark-submit",
+        "/home/lishuo/cs5488-round1/env/lib/python3.11/site-packages/pyspark/bin/spark-submit",
+        "--cleanup",
+        "accepted-raw",
+        "--min-free-gib",
+        "4",
+        "--spark-conf",
+        "spark.driver.host=127.0.0.1",
+        "--spark-conf",
+        "spark.driver.bindAddress=127.0.0.1",
+        "--spark-conf",
+        "spark.ui.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.enabled=true",
+        "--spark-conf",
+        "spark.eventLog.compress=false",
+        "--spark-conf",
+        "spark.eventLog.rolling.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.dir=file:/data/cs5488/monthly_validation/rolling_v1_20261113_task4/event-logs"
+      ],
+      "started_at": "2026-11-13T05:32:04.603769+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 18.350038893999226,
+      "finished_at": "2026-11-13T05:32:22.953801+00:00"
+    },
+    {
+      "phase": "all_skips",
+      "os_command": [
+        "/home/lishuo/cs5488-round1/env/bin/python",
+        "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/bootstrap/recovery.py",
+        "child",
+        "all_skips",
+        "/data/cs5488/runs/rolling_v1_20261113_task4"
+      ],
+      "entrypoint": "runner.main(argv) through external fault harness",
+      "runner_argv": [
+        "--start",
+        "2024-01-16T00:00Z",
+        "--end",
+        "2024-01-16T02:00Z",
+        "--batch-hours",
+        "2",
+        "--raw-dir",
+        "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup",
+        "--output-dir",
+        "/data/cs5488/runs/rolling_v1_20261113_task4",
+        "--spark-config",
+        "L4",
+        "--spark-submit",
+        "/home/lishuo/cs5488-round1/env/lib/python3.11/site-packages/pyspark/bin/spark-submit",
+        "--cleanup",
+        "accepted-raw",
+        "--min-free-gib",
+        "4",
+        "--spark-conf",
+        "spark.driver.host=127.0.0.1",
+        "--spark-conf",
+        "spark.driver.bindAddress=127.0.0.1",
+        "--spark-conf",
+        "spark.ui.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.enabled=true",
+        "--spark-conf",
+        "spark.eventLog.compress=false",
+        "--spark-conf",
+        "spark.eventLog.rolling.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.dir=file:/data/cs5488/monthly_validation/rolling_v1_20261113_task4/event-logs"
+      ],
+      "started_at": "2026-11-13T05:32:22.961957+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.6687369660003242,
+      "finished_at": "2026-11-13T05:32:23.630688+00:00"
+    },
+    {
+      "phase": "corrupt",
+      "os_command": [
+        "/home/lishuo/cs5488-round1/env/bin/python",
+        "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/bootstrap/recovery.py",
+        "child",
+        "corrupt",
+        "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/corrupt_copy"
+      ],
+      "entrypoint": "runner.main(argv) through external fault harness",
+      "runner_argv": [
+        "--start",
+        "2024-01-16T00:00Z",
+        "--end",
+        "2024-01-16T02:00Z",
+        "--batch-hours",
+        "2",
+        "--raw-dir",
+        "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup",
+        "--output-dir",
+        "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/corrupt_copy",
+        "--spark-config",
+        "L4",
+        "--spark-submit",
+        "/home/lishuo/cs5488-round1/env/lib/python3.11/site-packages/pyspark/bin/spark-submit",
+        "--cleanup",
+        "accepted-raw",
+        "--min-free-gib",
+        "4",
+        "--spark-conf",
+        "spark.driver.host=127.0.0.1",
+        "--spark-conf",
+        "spark.driver.bindAddress=127.0.0.1",
+        "--spark-conf",
+        "spark.ui.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.enabled=true",
+        "--spark-conf",
+        "spark.eventLog.compress=false",
+        "--spark-conf",
+        "spark.eventLog.rolling.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.dir=file:/data/cs5488/monthly_validation/rolling_v1_20261113_task4/event-logs"
+      ],
+      "started_at": "2026-11-13T05:32:27.271974+00:00",
+      "exit_code": 1,
+      "elapsed_seconds": 0.4679016190002585,
+      "finished_at": "2026-11-13T05:32:27.739867+00:00"
+    }
+  ],
+  "cleanup": {
+    "targets": [
+      {
+        "name": "2024-01-16-0.json.gz",
+        "url": "https://data.gharchive.org/2024-01-16-0.json.gz",
+        "bytes": 78166242,
+        "sha256": "62fa17f986933b8692719ce00a8fa049aa528544a676096af629b3986aebfc95",
+        "cache_status": "cached_verified",
+        "owner_run": "9138330f26894da88a9cbe7c3e2f0cc1"
+      },
+      {
+        "name": "2024-01-16-1.json.gz",
+        "url": "https://data.gharchive.org/2024-01-16-1.json.gz",
+        "bytes": 78713808,
+        "sha256": "4f86c2a16a6837c7c11b54b03fd2ec6da15595be2dabafa9be94388efb07e190",
+        "cache_status": "cached_verified",
+        "owner_run": "9138330f26894da88a9cbe7c3e2f0cc1"
+      }
+    ],
+    "files": {
+      "2024-01-16-0.json.gz": "deleted",
+      "2024-01-16-1.json.gz": "deleted"
+    },
+    "completed": true
+  },
+  "accepted_files": [
+    {
+      "path": "disk_monitor.json",
+      "bytes": 112,
+      "sha256": "00cc58ce61a0da76ebbe9410c80ab0cf3f80d6d986e27b4a2e052b5341ea6f86"
+    },
+    {
+      "path": "fragments/2024-01-16/acceptance.json",
+      "bytes": 489,
+      "sha256": "941aa3651bf68b4a769afd439573259c4530c26e3f81e513c148bb4e0ccd5dc5"
+    },
+    {
+      "path": "fragments/2024-01-16/acceptance.sqlite3",
+      "bytes": 334200832,
+      "sha256": "1049191f7373f1aaa3518af35ffd6e81060c8b7a8f0779c05f1f895e73c799d1"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/application.json",
+      "bytes": 70,
+      "sha256": "a705e84e5e1da6afaf4a4d7192204d8cdeabdc5413077ff78dff4d4660834b53"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/conflicting_records.jsonl/._SUCCESS.crc",
+      "bytes": 8,
+      "sha256": "1d44f510ec2ed7595badbec80583316defc14e8dd89130d719724149adfaa07d"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/conflicting_records.jsonl/.part-00000-cd0dac2b-0164-4cf6-b4d1-4120db6f2776-c000.json.crc",
+      "bytes": 8,
+      "sha256": "1d44f510ec2ed7595badbec80583316defc14e8dd89130d719724149adfaa07d"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/conflicting_records.jsonl/_SUCCESS",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/conflicting_records.jsonl/part-00000-cd0dac2b-0164-4cf6-b4d1-4120db6f2776-c000.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/duplicate_records.jsonl/._SUCCESS.crc",
+      "bytes": 8,
+      "sha256": "1d44f510ec2ed7595badbec80583316defc14e8dd89130d719724149adfaa07d"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/duplicate_records.jsonl/.part-00000-d3f77de3-ec5c-4ccf-b0f6-462d0e938962-c000.json.crc",
+      "bytes": 8,
+      "sha256": "1d44f510ec2ed7595badbec80583316defc14e8dd89130d719724149adfaa07d"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/duplicate_records.jsonl/_SUCCESS",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/duplicate_records.jsonl/part-00000-d3f77de3-ec5c-4ccf-b0f6-462d0e938962-c000.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/effective_spark_config.json",
+      "bytes": 2742,
+      "sha256": "5c90942299df3136fe0d41f7a93806770e0c9e9b24cbc0f9dcc3ef91475dc9e5"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.csv.gz",
+      "bytes": 11973595,
+      "sha256": "8372ae00947a0a0c7aa012726a501b5753ce2b833466056f933945fb695d3903"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/._SUCCESS.crc",
+      "bytes": 8,
+      "sha256": "1d44f510ec2ed7595badbec80583316defc14e8dd89130d719724149adfaa07d"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/.part-00000-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet.crc",
+      "bytes": 11680,
+      "sha256": "24f48b83030e2fe419847d6a02ea39509f5a215421eb60efe59a88ff84b0c798"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/.part-00001-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet.crc",
+      "bytes": 11652,
+      "sha256": "e2df9b4a8b607331dfaa5fa36d71966fcd050b75ad9d0a25fe910816b6091b3c"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/.part-00002-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet.crc",
+      "bytes": 11676,
+      "sha256": "a9c2cdbf87563e73711f7de82ee993453571b655858d17746bedd7d087d710f9"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/.part-00003-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet.crc",
+      "bytes": 11544,
+      "sha256": "8b76ef2f99b34864deaa6851e7e1571cd0586608caeea09b8f4e705969c7d74c"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/.part-00004-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet.crc",
+      "bytes": 11608,
+      "sha256": "f9289338066e4cdb672f80d941d04eb314e3a26cad6825ee60ca222be74e0278"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/.part-00005-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet.crc",
+      "bytes": 11652,
+      "sha256": "f54199df027322faa47c2bf6de1b3978f82a2912013164058dffb39232b8bd90"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/.part-00006-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet.crc",
+      "bytes": 11612,
+      "sha256": "6522bcdbe332f2bb6fb8c30df72dedbc5c613aafb1e5c95dec229feeccb72865"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/.part-00007-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet.crc",
+      "bytes": 11560,
+      "sha256": "f26c9f3a033aec74ad0c1ddf397b972ce3fc42341beb253cceb2cad1bb206ea5"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/.part-00008-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet.crc",
+      "bytes": 11692,
+      "sha256": "b9f54914d411285ab5714076124f2425edcaa31d2497eee8d7da8745ba3ce958"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/.part-00009-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet.crc",
+      "bytes": 11564,
+      "sha256": "4371fd93bda02098e81e026e7e09e955ace401b28bb40b0ace690084681bccbb"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/.part-00010-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet.crc",
+      "bytes": 11688,
+      "sha256": "59aa13a4ae856486bea493d13ff0be5ed99c9752d1de88edd83617dd456ee101"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/.part-00011-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet.crc",
+      "bytes": 11600,
+      "sha256": "27e59124b90b03c3e52760865e6ba9665630df5f241ce4ce2f91aa1d042c3eb3"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/_SUCCESS",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/part-00000-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet",
+      "bytes": 1494007,
+      "sha256": "ddab086ae9946024d9daac796baec16aaa9cc9b90057a61bceec3ac41384b288"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/part-00001-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet",
+      "bytes": 1489985,
+      "sha256": "813815cbf95c8811a07edcabb3e414adf8c6351af849783bfd8a93ca9149d53e"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/part-00002-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet",
+      "bytes": 1493033,
+      "sha256": "139c1aa23eb0d871af50912184d422c08cfc6aeac3e3abcd991607655c1a7b9e"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/part-00003-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet",
+      "bytes": 1476150,
+      "sha256": "6c2226ff52b223a54c1c9108b9cdb7ead45b84e857569f3e6cc9f17722454d10"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/part-00004-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet",
+      "bytes": 1484346,
+      "sha256": "aa7a74b2502385c2ce15c4a0e0efaf6a95511d4941c920e3aade8c6739323445"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/part-00005-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet",
+      "bytes": 1490284,
+      "sha256": "b0683bdff2e6c02553b242155a88520efda65fbaafa88005051a4f6687b6c0b2"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/part-00006-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet",
+      "bytes": 1484915,
+      "sha256": "c3aa6081da992a92782b4bdb15c9c29e01f7c7bdd429f3db093f7c0d72134c1e"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/part-00007-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet",
+      "bytes": 1478522,
+      "sha256": "a09801a62aeb5ed7f4ffe5cc0ad31381e2f7cb2aba7ead2aaea6569b1e622a4c"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/part-00008-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet",
+      "bytes": 1495491,
+      "sha256": "a56f941e11aecde9ef38e998f62ecc11a24fab8c7eb909266ad58118aa1f1bcf"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/part-00009-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet",
+      "bytes": 1479002,
+      "sha256": "44c463e3ef155ae5500bf3bdb7c6f608c9ca9b577a2154329e511a62ef1a833b"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/part-00010-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet",
+      "bytes": 1494846,
+      "sha256": "da4422e77b2f217ce25bb282ff4d5b4cb83961fc424a0feda986edaf02afa385"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_clean.parquet/part-00011-2d176f0b-2569-4f83-bae7-4b47792c5a78-c000.snappy.parquet",
+      "bytes": 1483565,
+      "sha256": "0270d58c7fabc37e328c1abecb9ff88394aa38fb47f834bbda72a778bc5ad411"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/events_preview.csv",
+      "bytes": 17431,
+      "sha256": "0678682d74fd5684ad3cf7110a5beac353602003b96f7349712f1de7cc1de6c6"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/flagged_records.jsonl/._SUCCESS.crc",
+      "bytes": 8,
+      "sha256": "1d44f510ec2ed7595badbec80583316defc14e8dd89130d719724149adfaa07d"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/flagged_records.jsonl/.part-00000-b54d6b29-3c3f-4e3f-88b3-20e1ca7badb1-c000.json.crc",
+      "bytes": 8,
+      "sha256": "1d44f510ec2ed7595badbec80583316defc14e8dd89130d719724149adfaa07d"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/flagged_records.jsonl/_SUCCESS",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/flagged_records.jsonl/part-00000-b54d6b29-3c3f-4e3f-88b3-20e1ca7badb1-c000.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/input_manifest.json",
+      "bytes": 884,
+      "sha256": "48246a5311ceda9ebcb5d4907f1ae4907549993e90b1f66499fcb6547bfad137"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/quality_summary.json",
+      "bytes": 2185,
+      "sha256": "8f7f4320f122de0df95cf1e24cad829034d4b7e68592573af5549c60414d2c79"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/rejected_records.jsonl/._SUCCESS.crc",
+      "bytes": 8,
+      "sha256": "1d44f510ec2ed7595badbec80583316defc14e8dd89130d719724149adfaa07d"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/rejected_records.jsonl/.part-00000-dd0f3c18-d310-4fdd-a2f4-1bdd7c102106-c000.json.crc",
+      "bytes": 8,
+      "sha256": "1d44f510ec2ed7595badbec80583316defc14e8dd89130d719724149adfaa07d"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/rejected_records.jsonl/_SUCCESS",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/rejected_records.jsonl/part-00000-dd0f3c18-d310-4fdd-a2f4-1bdd7c102106-c000.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_candidates.csv",
+      "bytes": 12986950,
+      "sha256": "a436e616b34782a834e3feb3ed6b3365abc8dbd9d47fdb7aaea642ac6536ee9c"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.csv",
+      "bytes": 5924542,
+      "sha256": "ccd45a7bf4046cd4da2bd07b0efaa793b62413c2aef6beb7217ad699d2e18845"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/._SUCCESS.crc",
+      "bytes": 8,
+      "sha256": "1d44f510ec2ed7595badbec80583316defc14e8dd89130d719724149adfaa07d"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/.part-00000-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet.crc",
+      "bytes": 744,
+      "sha256": "f553d278776be97496f765b8cf959d3999b823897e08232ba5b89d32754df912"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/.part-00001-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet.crc",
+      "bytes": 760,
+      "sha256": "4a9aa5e86ba274bf9beacc647ccbc28aa7111552c2a94dc75e84f8b7f0ff19df"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/.part-00002-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet.crc",
+      "bytes": 768,
+      "sha256": "33f5cb7096675fdce7108320dc9828c9e8c3ac900d0b9652477a1553e4e019b3"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/.part-00003-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet.crc",
+      "bytes": 768,
+      "sha256": "4cdfea775b994ba276cda553de4dd3b06b6d6b1c8e039f708d3f84c1a2d30745"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/.part-00004-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet.crc",
+      "bytes": 752,
+      "sha256": "3919da24a303771305f602ba95983ae394dceefe0ce5260530b82cab63f05092"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/.part-00005-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet.crc",
+      "bytes": 760,
+      "sha256": "2cae27f6fa6777f0d484e172727af4200ac240354137cf3a6ad28af3eebf3adc"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/.part-00006-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet.crc",
+      "bytes": 760,
+      "sha256": "56c7c6539c09635db88bcfb573161e64cfc33649a4d79f51ee46398586a4db01"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/.part-00007-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet.crc",
+      "bytes": 756,
+      "sha256": "2508f0194705b4b333ac9b51401a2717baef5f20d9bffee1cd00fc912e54d80d"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/.part-00008-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet.crc",
+      "bytes": 744,
+      "sha256": "0d307603882cf358c85318da9d062ef4bd51c164e0870a7d76a0852b924509de"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/.part-00009-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet.crc",
+      "bytes": 768,
+      "sha256": "a6874a7feb21fd27b64791733b9acc78d09fbd30106c57135261bd8eb496417a"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/.part-00010-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet.crc",
+      "bytes": 744,
+      "sha256": "31bb404d0efc4a93277380decf739a19df841984f3d58b51cfb63b8727d72341"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/.part-00011-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet.crc",
+      "bytes": 756,
+      "sha256": "07f50137890ed64e8930e7c9b334d944b84759f92bac6cf0c8227a8aee70bb3b"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/_SUCCESS",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/part-00000-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet",
+      "bytes": 94008,
+      "sha256": "e1c23bc1b0523675ec920174b2d41c0f0bd37d4098a4bb210a9f6249063a7549"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/part-00001-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet",
+      "bytes": 95885,
+      "sha256": "bc92286d5096c2b672d01f1cecdee226d4d07e1a8d890497812e630e54674530"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/part-00002-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet",
+      "bytes": 96986,
+      "sha256": "9e89a4f3391206d3d0591a0cd6da8eb07a19872bf454c149f91909c1065d4294"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/part-00003-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet",
+      "bytes": 96967,
+      "sha256": "d2b703a2ae274ac2e96b6e944c7d7d4c3584d47d5e88bcfc6d4fa125a8f5b747"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/part-00004-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet",
+      "bytes": 94816,
+      "sha256": "ac2b7f2b8bb827488246660f3812e8cf6a64d09625936ddb1c85e819fb77ceaf"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/part-00005-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet",
+      "bytes": 95846,
+      "sha256": "8c0e9f72217957d6672776353225d27c7199aea41f28f833945c2d666914fc3e"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/part-00006-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet",
+      "bytes": 95773,
+      "sha256": "534e4b189987892b80d1a10f1d5b2c90c4dd6fa5708d532d91e988ad5ee1db17"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/part-00007-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet",
+      "bytes": 95372,
+      "sha256": "58e1dde1c58b3f0fabddf39abaf095f5b0cbeb17a9d267e74adad6bd24c05e39"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/part-00008-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet",
+      "bytes": 94180,
+      "sha256": "471ffeca266ca397de2b5ab0603ba89aeb7f770ac41a7be2befd78ba60efeb2b"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/part-00009-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet",
+      "bytes": 96876,
+      "sha256": "0a1b8061afb235b446e89df660bc102821c664e56aefaf7422db7014fe8f9b74"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/part-00010-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet",
+      "bytes": 94105,
+      "sha256": "9b84223c0fd2fb522e991efae5514e0d6ea751ef1d9e22784e6bba9023f2f2a9"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_daily_counts.parquet/part-00011-e5c43c2b-f23a-4e0b-a218-38b2e0590435-c000.snappy.parquet",
+      "bytes": 95557,
+      "sha256": "6c12c7559ac71af4e90445ecf684afb0dfda944309f95f685bb10d9e812d171e"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/repo_name_history.csv",
+      "bytes": 12736807,
+      "sha256": "cab30a87e7757031ca1a3f9f2164357cbf9fe77a3a23c6b4ce08e49b99bed326"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/spark_environment.json",
+      "bytes": 435,
+      "sha256": "b800912b3cb3fc54d581cc281557bf169c9595f221d14348255bba9fb3397790"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/stage_status.json",
+      "bytes": 1569,
+      "sha256": "621d746229395e15d9fb94c157d89bc9360bd64f08933863eac54cfefe584d70"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/valid_before_dedup.parquet/._SUCCESS.crc",
+      "bytes": 8,
+      "sha256": "1d44f510ec2ed7595badbec80583316defc14e8dd89130d719724149adfaa07d"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/valid_before_dedup.parquet/.part-00000-d64cb35a-8ac7-43b3-86df-3cb47b6c91f5-c000.snappy.parquet.crc",
+      "bytes": 164284,
+      "sha256": "8c68fc74285157375b0ad1af417ca940110e1a9639936b818ca414a61da139fe"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/valid_before_dedup.parquet/.part-00001-d64cb35a-8ac7-43b3-86df-3cb47b6c91f5-c000.snappy.parquet.crc",
+      "bytes": 172520,
+      "sha256": "ac7e77498425f94188cd4d0b4b4c3dd541677a38b92f60c307d422278edf1af8"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/valid_before_dedup.parquet/_SUCCESS",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/valid_before_dedup.parquet/part-00000-d64cb35a-8ac7-43b3-86df-3cb47b6c91f5-c000.snappy.parquet",
+      "bytes": 21026940,
+      "sha256": "b693e30c4e4f24df08835bba408fb96cf606b13bcad8bc336e561753dcb95ccb"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/valid_before_dedup.parquet/part-00001-d64cb35a-8ac7-43b3-86df-3cb47b6c91f5-c000.snappy.parquet",
+      "bytes": 22081101,
+      "sha256": "e4ffdc30edb06ae68df671068276addd56af2eff8b6ed50f86b57ab013c1769d"
+    },
+    {
+      "path": "fragments/2024-01-16/clean/worker_code.zip",
+      "bytes": 62747,
+      "sha256": "95156c702aef49b9b28c950b72b75744adada7a098e6af72ed83e6182fc608d3"
+    },
+    {
+      "path": "fragments/2024-01-16/config.json",
+      "bytes": 259,
+      "sha256": "af05a3e264f003b9f8e1f7fdb9e2b32fe0fffcf7dbe74f0180835cc33c125cc0"
+    },
+    {
+      "path": "fragments/2024-01-16/download-9138330f26894da88a9cbe7c3e2f0cc1-attempt-0002-2024-01-16/download_manifest.json",
+      "bytes": 730,
+      "sha256": "87793b8b317c34c67753259f49f2281f9967477f25128cf28ae41e7aa0642c71"
+    },
+    {
+      "path": "fragments/2024-01-16/download-9138330f26894da88a9cbe7c3e2f0cc1-attempt-0002-2024-01-16/stage_status.json",
+      "bytes": 1217,
+      "sha256": "367328c04fa24f26216caed148473e8c577d9545077e06a07d86b4cb1d08c2f4"
+    },
+    {
+      "path": "fragments/2024-01-16/inspection/file_statistics.csv",
+      "bytes": 230,
+      "sha256": "948b4a880591532418fd1bf6cdadd67664424279ec04d52f324835ac40537fd5"
+    },
+    {
+      "path": "fragments/2024-01-16/inspection/input_manifest.json",
+      "bytes": 884,
+      "sha256": "48246a5311ceda9ebcb5d4907f1ae4907549993e90b1f66499fcb6547bfad137"
+    },
+    {
+      "path": "fragments/2024-01-16/inspection/inspection_summary.json",
+      "bytes": 1699,
+      "sha256": "21c6fc69cbfe97b5889ac6a0e9e10c84c0e85b008268d13d98689cecef7c9fb1"
+    },
+    {
+      "path": "fragments/2024-01-16/inspection/raw_anomalies.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "fragments/2024-01-16/inspection/raw_event_types.csv",
+      "bytes": 354,
+      "sha256": "c66764179ca4c193d8b0a3a6ed15382fdfc8cacaa3b3240276cf7e4530fffe0e"
+    },
+    {
+      "path": "fragments/2024-01-16/inspection/raw_examples.json",
+      "bytes": 8783,
+      "sha256": "40355cacac919aa62a8e389847e0cb7773ee3cf2d53cfebf640819dc3f736eb3"
+    },
+    {
+      "path": "fragments/2024-01-16/inspection/stage_status.json",
+      "bytes": 1210,
+      "sha256": "190fb5a8c3e6a09bcea2b60dc6f7d49bbe76ac7f688ede39a055f8a2a85b9b2f"
+    },
+    {
+      "path": "fragments/2024-01-16/spark.log",
+      "bytes": 3992,
+      "sha256": "2f540a285f7ef84144821d5024e04ed4e63da98803fa46518400cad80d586353"
+    },
+    {
+      "path": "fragments/2024-01-16/timing_clean.json",
+      "bytes": 4495,
+      "sha256": "4bc265e359188cf976ef218d2c04bf1df40dbff2dc9f370fe1a3f7cb98897fd8"
+    },
+    {
+      "path": "fragments/2024-01-16/timing_download.json",
+      "bytes": 277,
+      "sha256": "48a83e2849e92ea8a7fbd92b627e3e1e2f5811cda002a256dd3c11a23a3554f8"
+    },
+    {
+      "path": "fragments/2024-01-16/timing_inspection.json",
+      "bytes": 276,
+      "sha256": "cd1c4d83f750b8cc7a6f34e750bad4aa60ba2884d6497d0d0df22e27fa390a38"
+    },
+    {
+      "path": "timing_accept.json",
+      "bytes": 277,
+      "sha256": "19dae34f5ad127fbde73d2ba7efd4b6085455023e644029fb25822569e012058"
+    },
+    {
+      "path": "timing_batch.json",
+      "bytes": 294,
+      "sha256": "2c6879cc32a66f6eddebff6cb9cd00ae259e71531b7314b8d2f48d5bf037c81b"
+    }
+  ],
+  "sentinel_preserved": {
+    "path": "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup/unlisted_sentinel.json.gz",
+    "sha256": "f8f2e9d336b8decda1e0820ee2c23eae6d825afd4830c9742902fafef9556b30"
+  },
+  "shared_raw_unchanged": {
+    "2024-01-15-22.json.gz": "96630172abc64bb99716365fbc853be46794dc5690a44a1d7a4f1c5adbaa19e9",
+    "2024-01-15-21.json.gz": "166b0efd72229e353fa5ff13a68968ab784a5e8b0a1d95d515e9c6b0ccca36e8",
+    "2024-01-16-3.json.gz": "c847562c13ffbd2a0613f68b6c19cbccba2d5b56d4405e066f7e829a970f7b6a",
+    "2024-01-16-0.json.gz": "62fa17f986933b8692719ce00a8fa049aa528544a676096af629b3986aebfc95",
+    "2024-01-16-1.json.gz": "4f86c2a16a6837c7c11b54b03fd2ec6da15595be2dabafa9be94388efb07e190",
+    "2024-01-15-23.json.gz": "a6133d95c5753bcd1ec8527902b33b265c549d8a67a10b6f5e30c2854504f1bc",
+    "2024-01-16-2.json.gz": "153f0f3b77980d6700e69d3329fb4f10dce864f69e499a675d452afc4eb55e46"
+  },
+  "final_checks": {
+    "actual_unique_ids": true,
+    "actual_daily_matches_events": true,
+    "actual_candidates_match_events": true,
+    "actual_csv_parquet": true,
+    "actual_daily_csv_parquet": true
+  },
+  "final_events": 433588,
+  "summary": {
+    "backend": "python_sqlite",
+    "sqlite_cache_mib": 128,
+    "counts": {
+      "valid_occurrences": 433588,
+      "final_events": 433588,
+      "duplicate_occurrences_removed": 0,
+      "conflicting_event_ids": 0,
+      "conflicting_occurrences_excluded": 0
+    },
+    "checks": {
+      "valid_occurrences_reconcile": true,
+      "event_ids_unique": true,
+      "daily_sum": true,
+      "candidate_sum": true
+    },
+    "final_events": 433588,
+    "daily_sum": 433588,
+    "candidate_sum": 433588,
+    "elapsed_seconds": 17.622657223000715,
+    "fragments": [
+      {
+        "batch": "20240116T0000Z_20240116T0200Z",
+        "fragment": "2024-01-16",
+        "valid": "/data/cs5488/runs/rolling_v1_20261113_task4/batches/20240116T0000Z_20240116T0200Z/attempt-0002/fragments/2024-01-16/clean/valid_before_dedup.parquet"
+      }
+    ]
+  },
+  "coverage": {
+    "start": "2024-01-16T00:00:00Z",
+    "end": "2024-01-16T02:00:00Z",
+    "interval": "[start,end)",
+    "source_archives": [
+      "2024-01-16-0.json.gz",
+      "2024-01-16-1.json.gz"
+    ],
+    "requested_hours": 2,
+    "verified_hours": 2,
+    "missing_source_hours": [],
+    "event_dates_use_utc_event_time": true,
+    "archive_presence_does_not_prove_capture_completeness": true
+  },
+  "run_summary": {
+    "state": "completed",
+    "run_id": "9138330f26894da88a9cbe7c3e2f0cc1",
+    "identity": {
+      "format": "rolling-v1",
+      "plan": {
+        "start": "2024-01-16T00:00:00Z",
+        "end": "2024-01-16T02:00:00Z",
+        "interval": "[start,end)",
+        "selection": "source archive hour; event timestamps are not filtered",
+        "batch_hours": 2,
+        "batches": [
+          {
+            "id": "20240116T0000Z_20240116T0200Z",
+            "start": "2024-01-16T00:00:00Z",
+            "end": "2024-01-16T02:00:00Z",
+            "archives": [
+              "2024-01-16-0.json.gz",
+              "2024-01-16-1.json.gz"
+            ]
+          }
+        ]
+      },
+      "raw_dir": "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup",
+      "spark": {
+        "name": "L4",
+        "master": "local[4]",
+        "driver_memory": "4g",
+        "conf": {
+          "spark.sql.shuffle.partitions": "12",
+          "spark.sql.adaptive.enabled": "false",
+          "spark.sql.session.timeZone": "UTC",
+          "spark.sql.parquet.outputTimestampType": "TIMESTAMP_MICROS",
+          "spark.driver.host": "127.0.0.1",
+          "spark.driver.bindAddress": "127.0.0.1",
+          "spark.ui.enabled": "false",
+          "spark.eventLog.enabled": "true",
+          "spark.eventLog.compress": "false",
+          "spark.eventLog.rolling.enabled": "false",
+          "spark.eventLog.dir": "file:/data/cs5488/monthly_validation/rolling_v1_20261113_task4/event-logs"
+        }
+      },
+      "engine": "spark",
+      "cleanup": "accepted-raw",
+      "code": {
+        "rule_version": "a-events-v1",
+        "source_sha256_lf": {
+          "a_data_pipeline/gharchive_a/__init__.py": "d7f29377789a470ff76b7cc18e8a601fd80bba23b5bddafe122845a99e208654",
+          "a_data_pipeline/gharchive_a/clean.py": "a8bb6b4acd69f75b211a5573cc8ab63a75b43071c1516f4d17153933fd186d4b",
+          "a_data_pipeline/gharchive_a/cli.py": "aba9053e996dd3be7e40dd9c0e93d1754810a08316a9cf92a4037cfa315c6f3b",
+          "a_data_pipeline/gharchive_a/common.py": "0f2d93af59980ec8de55239cb247e5399055e15c0cdefac9551f4ed04a4ba7d0",
+          "a_data_pipeline/gharchive_a/compare.py": "603479a3f054d0724b95021243d51759ebea6027c1343ea1d5824a4256a827ee",
+          "a_data_pipeline/gharchive_a/download.py": "cb66133542d0d03b729cd2d3add472c68a1fb1f5f6aff3c7673a4b36288da198",
+          "a_data_pipeline/gharchive_a/export.py": "619a087357da3da9b3a00d2fd57bc1074dbfb61163af9ca1abbc8b3f2ecfa0e4",
+          "a_data_pipeline/gharchive_a/inspect.py": "b257257f43d222d6baba510b23183f4c01d4d8107d25321a099363ae5a790b75",
+          "a_data_pipeline/gharchive_a/records.py": "024d5d88f69a411ea4b3583fd27405d3ce9f06b1fd3fb79a8eb30ff750e0b1a0",
+          "a_data_pipeline/gharchive_a/spark_clean.py": "6f614a231798dbbf9bd83605f57875aae48452efd46daded7a92ca12724dc54f",
+          "a_data_pipeline/rolling_pipeline/batch_download.py": "e961c3097342c2ba16e86db87c2866d893213e7c3215cf6552c97276f081b04d",
+          "a_data_pipeline/rolling_pipeline/batch_merge.py": "ec20fa460d0d984e3158270c474ef4c05c6084eae92e54b0ccd5b23df82455ca",
+          "a_data_pipeline/rolling_pipeline/batch_support.py": "211b9c8fddac614e841756679bf57ac3ceda5b7094274db8cd06de63e8da2862",
+          "d_parallel_experiments/scripts/run_batch_pipeline.py": "e6ebdf4cc54bf9d25e8f8856b8cc531862a195aab4587085cb616952cee78671",
+          "d_parallel_experiments/scripts/spark_batch_job.py": "c5da63d56550c56aca95a637bc5b3ad7fbe7b7a7cc224998ab57fae13030b85c",
+          "d_parallel_experiments/scripts/summarize_results.py": "4a416bfcc33ab5ebf856369ebf3cc97b965c1d7f4bf45fd4d3a1e57a5faf2a71",
+          "d_parallel_experiments/scripts/verify_results.py": "c8fc25e51cc1d2b39ca942aaaa74d4928217c7fd74700f6d59b98ea441981885"
+        },
+        "sha256": "68d9b4051daf6343f78d934e1687f6586438e0bef16d0f28ad48c74419fe1217"
+      },
+      "input_config": {
+        "date": "2024-01-15",
+        "hours": [
+          0
+        ],
+        "base_url": "https://data.gharchive.org",
+        "timeout_seconds": 60,
+        "retries": 2,
+        "max_file_bytes": 536870912,
+        "raw_preview_rows": 5,
+        "clean_preview_rows": 100,
+        "parquet_batch_rows": 10000
+      },
+      "budgets": {
+        "min_free_gib": 4.0,
+        "batch_budget_gib": 16,
+        "merge_budget_gib": 24,
+        "sqlite_cache_mib": 128
+      },
+      "spark_submit": "/home/lishuo/cs5488-round1/env/lib/python3.11/site-packages/pyspark/bin/spark-submit"
+    },
+    "host": {
+      "hostname": "spark-worker-1",
+      "cpu_count": 4,
+      "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+      "python": "3.11.18",
+      "sqlite": "3.54.1",
+      "packages": {
+        "pyarrow": "26.0.1",
+        "pyspark": "3.5.7",
+        "duckdb": null
+      },
+      "meminfo": "MemTotal:        7553592 kB\nMemFree:         1635904 kB\nMemAvailable:    6898908 kB\nBuffers:           11932 kB\nCached:          5443804 kB\nSwapCached:            8 kB\nActive:           331904 kB\nInactive:        5248656 kB\nActive(anon):     102712 kB\nInactive(anon):    31128 kB\nActive(file):     229192 kB\nInactive(file):  5217528 kB\nUnevictable:        9764 kB\nMlocked:            9764 kB\nSwapTotal:       4194300 kB\nSwapFree:        4194292 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:               716 kB\nWriteback:             0 kB\nAnonPages:        134452 kB\nMapped:           128572 kB\nShmem:              1576 kB\nKReclaimable:      74256 kB\nSlab:             197928 kB\nSReclaimable:      74256 kB\nSUnreclaim:       123672 kB\nKernelStack:        6224 kB\nPageTables:         4512 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     7971096 kB\nCommitted_AS:     434852 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       30316 kB\nVmallocChunk:          0 kB\nPercpu:            69632 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:      4096 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nCmaTotal:              0 kB\nCmaFree:               0 kB\nUnaccepted:            0 kB\nBalloon:               0 kB\nGPUActive:          7236 kB\nGPUReclaim:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:      163648 kB\nDirectMap2M:     4030464 kB\nDirectMap1G:     6291456 kB\n"
+    },
+    "timing_records": [
+      {
+        "path": "batches/20240116T0000Z_20240116T0200Z/attempt-0001/fragments/2024-01-16/timing_clean.json",
+        "stage": "spark_clean_export",
+        "started_at": "2026-11-13T05:30:17+00:00",
+        "state": "error",
+        "parent": "invocation",
+        "batch": "20240116T0000Z_20240116T0200Z",
+        "command": [
+          "/home/lishuo/cs5488-round1/env/lib/python3.11/site-packages/pyspark/bin/spark-submit",
+          "--master",
+          "local[4]",
+          "--deploy-mode",
+          "client",
+          "--driver-memory",
+          "4g",
+          "--conf",
+          "spark.driver.bindAddress=127.0.0.1",
+          "--conf",
+          "spark.driver.host=127.0.0.1",
+          "--conf",
+          "spark.eventLog.compress=false",
+          "--conf",
+          "spark.eventLog.dir=file:/data/cs5488/monthly_validation/rolling_v1_20261113_task4/event-logs",
+          "--conf",
+          "spark.eventLog.enabled=true",
+          "--conf",
+          "spark.eventLog.rolling.enabled=false",
+          "--conf",
+          "spark.sql.adaptive.enabled=false",
+          "--conf",
+          "spark.sql.parquet.outputTimestampType=TIMESTAMP_MICROS",
+          "--conf",
+          "spark.sql.session.timeZone=UTC",
+          "--conf",
+          "spark.sql.shuffle.partitions=12",
+          "--conf",
+          "spark.ui.enabled=false",
+          "/data/cs5488/releases/rolling_v1_20261113_task4_lockfix01/d_parallel_experiments/scripts/spark_batch_job.py",
+          "--config",
+          "/data/cs5488/runs/rolling_v1_20261113_task4/batches/20240116T0000Z_20240116T0200Z/attempt-0001/fragments/2024-01-16/config.json",
+          "--raw-dir",
+          "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup",
+          "--output",
+          "/data/cs5488/runs/rolling_v1_20261113_task4/batches/20240116T0000Z_20240116T0200Z/attempt-0001/fragments/2024-01-16/clean",
+          "--master",
+          "local[4]"
+        ],
+        "exit_code": 1,
+        "error": "KeyboardInterrupt: ",
+        "finished_at": "2026-11-13T05:30:21+00:00",
+        "elapsed_seconds": 3.057915373000469
+      },
+      {
+        "path": "batches/20240116T0000Z_20240116T0200Z/attempt-0001/fragments/2024-01-16/timing_download.json",
+        "stage": "download_verify",
+        "started_at": "2026-11-13T05:29:24+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "batch": "20240116T0000Z_20240116T0200Z",
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:29:50+00:00",
+        "elapsed_seconds": 26.29793670900017
+      },
+      {
+        "path": "batches/20240116T0000Z_20240116T0200Z/attempt-0001/fragments/2024-01-16/timing_inspection.json",
+        "stage": "raw_inspection",
+        "started_at": "2026-11-13T05:29:50+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "batch": "20240116T0000Z_20240116T0200Z",
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:30:17+00:00",
+        "elapsed_seconds": 27.247534201000235
+      },
+      {
+        "path": "batches/20240116T0000Z_20240116T0200Z/attempt-0001/timing_batch.json",
+        "stage": "batch_total",
+        "started_at": "2026-11-13T05:29:24+00:00",
+        "state": "error",
+        "parent": "invocation",
+        "batch": "20240116T0000Z_20240116T0200Z",
+        "is_parent": true,
+        "exit_code": 1,
+        "error": "KeyboardInterrupt: ",
+        "finished_at": "2026-11-13T05:30:21+00:00",
+        "elapsed_seconds": 56.64612266600034
+      },
+      {
+        "path": "batches/20240116T0000Z_20240116T0200Z/attempt-0002/fragments/2024-01-16/timing_clean.json",
+        "stage": "spark_clean_export",
+        "started_at": "2026-11-13T05:30:48+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "batch": "20240116T0000Z_20240116T0200Z",
+        "command": [
+          "/home/lishuo/cs5488-round1/env/lib/python3.11/site-packages/pyspark/bin/spark-submit",
+          "--master",
+          "local[4]",
+          "--deploy-mode",
+          "client",
+          "--driver-memory",
+          "4g",
+          "--conf",
+          "spark.driver.bindAddress=127.0.0.1",
+          "--conf",
+          "spark.driver.host=127.0.0.1",
+          "--conf",
+          "spark.eventLog.compress=false",
+          "--conf",
+          "spark.eventLog.dir=file:/data/cs5488/monthly_validation/rolling_v1_20261113_task4/event-logs",
+          "--conf",
+          "spark.eventLog.enabled=true",
+          "--conf",
+          "spark.eventLog.rolling.enabled=false",
+          "--conf",
+          "spark.sql.adaptive.enabled=false",
+          "--conf",
+          "spark.sql.parquet.outputTimestampType=TIMESTAMP_MICROS",
+          "--conf",
+          "spark.sql.session.timeZone=UTC",
+          "--conf",
+          "spark.sql.shuffle.partitions=12",
+          "--conf",
+          "spark.ui.enabled=false",
+          "/data/cs5488/releases/rolling_v1_20261113_task4_lockfix01/d_parallel_experiments/scripts/spark_batch_job.py",
+          "--config",
+          "/data/cs5488/runs/rolling_v1_20261113_task4/batches/20240116T0000Z_20240116T0200Z/attempt-0002/fragments/2024-01-16/config.json",
+          "--raw-dir",
+          "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup",
+          "--output",
+          "/data/cs5488/runs/rolling_v1_20261113_task4/batches/20240116T0000Z_20240116T0200Z/attempt-0002/fragments/2024-01-16/clean",
+          "--master",
+          "local[4]"
+        ],
+        "effective_config": {
+          "spark.eventLog.enabled": "true",
+          "spark.driver.extraJavaOptions": "-Djava.net.preferIPv6Addresses=false -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED -Djdk.reflect.useDirectMethodHandle=false",
+          "spark.master": "local[4]",
+          "spark.driver.host": "127.0.0.1",
+          "spark.sql.parquet.outputTimestampType": "TIMESTAMP_MICROS",
+          "spark.driver.memory": "4g",
+          "spark.app.name": "CS5488-clean",
+          "spark.driver.port": "42277",
+          "spark.executor.id": "driver",
+          "spark.sql.shuffle.partitions": "12",
+          "spark.driver.bindAddress": "127.0.0.1",
+          "spark.eventLog.compress": "false",
+          "spark.rdd.compress": "True",
+          "spark.executor.extraJavaOptions": "-Djava.net.preferIPv6Addresses=false -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED -Djdk.reflect.useDirectMethodHandle=false",
+          "spark.ui.enabled": "false",
+          "spark.serializer.objectStreamReset": "100",
+          "spark.app.startTime": "1794547849782",
+          "spark.app.submitTime": "1794547849304",
+          "spark.submit.pyFiles": "",
+          "spark.submit.deployMode": "client",
+          "spark.eventLog.dir": "file:/data/cs5488/monthly_validation/rolling_v1_20261113_task4/event-logs",
+          "spark.eventLog.rolling.enabled": "false",
+          "spark.sql.adaptive.enabled": "false",
+          "spark.app.id": "local-1794547850121",
+          "spark.sql.session.timeZone": "UTC"
+        },
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:31:34+00:00",
+        "elapsed_seconds": 45.751284974000555
+      },
+      {
+        "path": "batches/20240116T0000Z_20240116T0200Z/attempt-0002/fragments/2024-01-16/timing_download.json",
+        "stage": "download_verify",
+        "started_at": "2026-11-13T05:30:21+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "batch": "20240116T0000Z_20240116T0200Z",
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:30:23+00:00",
+        "elapsed_seconds": 2.2032950650000203
+      },
+      {
+        "path": "batches/20240116T0000Z_20240116T0200Z/attempt-0002/fragments/2024-01-16/timing_inspection.json",
+        "stage": "raw_inspection",
+        "started_at": "2026-11-13T05:30:23+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "batch": "20240116T0000Z_20240116T0200Z",
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:30:48+00:00",
+        "elapsed_seconds": 24.919716684000377
+      },
+      {
+        "path": "batches/20240116T0000Z_20240116T0200Z/attempt-0002/timing_accept.json",
+        "stage": "batch_acceptance",
+        "started_at": "2026-11-13T05:31:34+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "batch": "20240116T0000Z_20240116T0200Z",
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:32:03+00:00",
+        "elapsed_seconds": 28.84134904199982
+      },
+      {
+        "path": "batches/20240116T0000Z_20240116T0200Z/attempt-0002/timing_batch.json",
+        "stage": "batch_total",
+        "started_at": "2026-11-13T05:30:21+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "batch": "20240116T0000Z_20240116T0200Z",
+        "is_parent": true,
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:32:03+00:00",
+        "elapsed_seconds": 101.85689493600057
+      },
+      {
+        "path": "invocations/attempt-0001/timing.json",
+        "stage": "invocation",
+        "started_at": "2026-11-13T05:29:24+00:00",
+        "state": "error",
+        "parent": "invocation",
+        "is_parent": true,
+        "exit_code": 1,
+        "error": "KeyboardInterrupt: ",
+        "finished_at": "2026-11-13T05:30:21+00:00",
+        "elapsed_seconds": 56.66332075699938
+      },
+      {
+        "path": "invocations/attempt-0002/timing.json",
+        "stage": "invocation",
+        "started_at": "2026-11-13T05:30:21+00:00",
+        "state": "error",
+        "parent": "invocation",
+        "is_parent": true,
+        "exit_code": 1,
+        "error": "KeyboardInterrupt: ",
+        "finished_at": "2026-11-13T05:32:03+00:00",
+        "elapsed_seconds": 102.44556946800003
+      },
+      {
+        "path": "invocations/attempt-0003/timing.json",
+        "stage": "invocation",
+        "started_at": "2026-11-13T05:32:03+00:00",
+        "state": "error",
+        "parent": "invocation",
+        "is_parent": true,
+        "exit_code": 1,
+        "error": "KeyboardInterrupt: ",
+        "finished_at": "2026-11-13T05:32:04+00:00",
+        "elapsed_seconds": 0.643849942000088
+      },
+      {
+        "path": "invocations/attempt-0004/timing.json",
+        "stage": "invocation",
+        "started_at": "2026-11-13T05:32:04+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "is_parent": true,
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:32:22+00:00",
+        "elapsed_seconds": 18.160970601000372
+      },
+      {
+        "path": "invocations/attempt-0005/timing.json",
+        "stage": "invocation",
+        "started_at": "2026-11-13T05:32:23+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "is_parent": true,
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:32:23+00:00",
+        "elapsed_seconds": 0.5072288090004804
+      },
+      {
+        "path": "merge/attempt-0001/result/timing_dedup.json",
+        "stage": "cross_batch_dedup",
+        "started_at": "2026-11-13T05:32:04+00:00",
+        "state": "error",
+        "parent": "invocation",
+        "exit_code": 1,
+        "error": "KeyboardInterrupt: ",
+        "finished_at": "2026-11-13T05:32:04+00:00",
+        "elapsed_seconds": 0.22658458499972767
+      },
+      {
+        "path": "merge/attempt-0001/timing_merge.json",
+        "stage": "final_merge",
+        "started_at": "2026-11-13T05:32:04+00:00",
+        "state": "error",
+        "parent": "invocation",
+        "is_parent": true,
+        "exit_code": 1,
+        "error": "KeyboardInterrupt: ",
+        "finished_at": "2026-11-13T05:32:04+00:00",
+        "elapsed_seconds": 0.24838819700016757
+      },
+      {
+        "path": "merge/attempt-0002/result/timing_aggregate.json",
+        "stage": "final_aggregate_export",
+        "started_at": "2026-11-13T05:32:12+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:32:22+00:00",
+        "elapsed_seconds": 10.546141435999743
+      },
+      {
+        "path": "merge/attempt-0002/result/timing_dedup.json",
+        "stage": "cross_batch_dedup",
+        "started_at": "2026-11-13T05:32:05+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:32:12+00:00",
+        "elapsed_seconds": 7.071600956999646
+      },
+      {
+        "path": "merge/attempt-0002/timing_merge.json",
+        "stage": "final_merge",
+        "started_at": "2026-11-13T05:32:05+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "is_parent": true,
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:32:22+00:00",
+        "elapsed_seconds": 17.64413393599989
+      }
+    ],
+    "timing_note": "Parent batch/merge/invocation spans overlap their children; do not sum all rows. Cached verification is measured; skipped compute has no invented zero duration.",
+    "retained_run_bytes": 866648094,
+    "summary": {
+      "backend": "python_sqlite",
+      "sqlite_cache_mib": 128,
+      "counts": {
+        "valid_occurrences": 433588,
+        "final_events": 433588,
+        "duplicate_occurrences_removed": 0,
+        "conflicting_event_ids": 0,
+        "conflicting_occurrences_excluded": 0
+      },
+      "checks": {
+        "valid_occurrences_reconcile": true,
+        "event_ids_unique": true,
+        "daily_sum": true,
+        "candidate_sum": true
+      },
+      "final_events": 433588,
+      "daily_sum": 433588,
+      "candidate_sum": 433588,
+      "elapsed_seconds": 17.622657223000715,
+      "fragments": [
+        {
+          "batch": "20240116T0000Z_20240116T0200Z",
+          "fragment": "2024-01-16",
+          "valid": "/data/cs5488/runs/rolling_v1_20261113_task4/batches/20240116T0000Z_20240116T0200Z/attempt-0002/fragments/2024-01-16/clean/valid_before_dedup.parquet"
+        }
+      ]
+    },
+    "coverage": {
+      "start": "2024-01-16T00:00:00Z",
+      "end": "2024-01-16T02:00:00Z",
+      "interval": "[start,end)",
+      "source_archives": [
+        "2024-01-16-0.json.gz",
+        "2024-01-16-1.json.gz"
+      ],
+      "requested_hours": 2,
+      "verified_hours": 2,
+      "missing_source_hours": [],
+      "event_dates_use_utc_event_time": true,
+      "archive_presence_does_not_prove_capture_completeness": true
+    },
+    "input_files": 2,
+    "input_bytes": 156880050,
+    "final_output": "/data/cs5488/runs/rolling_v1_20261113_task4/merge/attempt-0002/result"
+  },
+  "lock_tests": {
+    "spark-worker-1": [
+      {
+        "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/lock_fixed/raw/.batch.lock",
+        "blocked": true,
+        "message": "Another pipeline holds /data/cs5488/monthly_validation/rolling_v1_20261113_task4/lock_fixed/raw/.batch.lock"
+      },
+      {
+        "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/lock_fixed/output/.batch.lock",
+        "blocked": true,
+        "message": "Another pipeline holds /data/cs5488/monthly_validation/rolling_v1_20261113_task4/lock_fixed/output/.batch.lock"
+      }
+    ],
+    "spark-worker-2": [
+      {
+        "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/lock_fixed/raw/.batch.lock",
+        "blocked": true,
+        "message": "Another pipeline holds /data/cs5488/monthly_validation/rolling_v1_20261113_task4/lock_fixed/raw/.batch.lock"
+      },
+      {
+        "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/lock_fixed/output/.batch.lock",
+        "blocked": true,
+        "message": "Another pipeline holds /data/cs5488/monthly_validation/rolling_v1_20261113_task4/lock_fixed/output/.batch.lock"
+      }
+    ]
+  },
+  "lock_release": {
+    "both_acquired_after_release": true
+  },
+  "old_lock_failure": [
+    {
+      "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/lock_probe/raw/.batch.lock",
+      "blocked": false
+    },
+    {
+      "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/lock_probe/output/.batch.lock",
+      "blocked": false
+    }
+  ],
+  "deleted_actual_archives": [
+    {
+      "name": "2024-01-16-0.json.gz",
+      "url": "https://data.gharchive.org/2024-01-16-0.json.gz",
+      "bytes": 78166242,
+      "sha256": "62fa17f986933b8692719ce00a8fa049aa528544a676096af629b3986aebfc95",
+      "cache_status": "cached_verified",
+      "owner_run": "9138330f26894da88a9cbe7c3e2f0cc1"
+    },
+    {
+      "name": "2024-01-16-1.json.gz",
+      "url": "https://data.gharchive.org/2024-01-16-1.json.gz",
+      "bytes": 78713808,
+      "sha256": "4f86c2a16a6837c7c11b54b03fd2ec6da15595be2dabafa9be94388efb07e190",
+      "cache_status": "cached_verified",
+      "owner_run": "9138330f26894da88a9cbe7c3e2f0cc1"
+    }
+  ],
+  "final_free_bytes": 16186867712,
+  "boundaries": [
+    "Actual downloads, Spark, SIGINT, unlink and partial SQLite; external fault hooks only pause/forbid unexpected work",
+    "Corruption only in separate copy; original accepted result reverified",
+    "Only two owned accepted archive files deleted; all indexes, Parquet, SQLite, failures, partials and shared raw retained",
+    "Known-answer duplicate/conflict tests from task2 reused; no full two-day integrated acceptance or month run"
+  ],
+  "audit": {
+    "run_id": "9138330f26894da88a9cbe7c3e2f0cc1",
+    "host": {
+      "hostname": "spark-worker-1",
+      "cpu_count": 4,
+      "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+      "python": "3.11.18",
+      "sqlite": "3.54.1",
+      "packages": {
+        "pyarrow": "26.0.1",
+        "pyspark": "3.5.7",
+        "duckdb": null
+      },
+      "meminfo": "MemTotal:        7553592 kB\nMemFree:         1635904 kB\nMemAvailable:    6898908 kB\nBuffers:           11932 kB\nCached:          5443804 kB\nSwapCached:            8 kB\nActive:           331904 kB\nInactive:        5248656 kB\nActive(anon):     102712 kB\nInactive(anon):    31128 kB\nActive(file):     229192 kB\nInactive(file):  5217528 kB\nUnevictable:        9764 kB\nMlocked:            9764 kB\nSwapTotal:       4194300 kB\nSwapFree:        4194292 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:               716 kB\nWriteback:             0 kB\nAnonPages:        134452 kB\nMapped:           128572 kB\nShmem:              1576 kB\nKReclaimable:      74256 kB\nSlab:             197928 kB\nSReclaimable:      74256 kB\nSUnreclaim:       123672 kB\nKernelStack:        6224 kB\nPageTables:         4512 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     7971096 kB\nCommitted_AS:     434852 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       30316 kB\nVmallocChunk:          0 kB\nPercpu:            69632 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:      4096 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nCmaTotal:              0 kB\nCmaFree:               0 kB\nUnaccepted:            0 kB\nBalloon:               0 kB\nGPUActive:          7236 kB\nGPUReclaim:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:      163648 kB\nDirectMap2M:     4030464 kB\nDirectMap1G:     6291456 kB\n"
+    },
+    "environment": {
+      "python": "3.11.18 (main, Oct 26 2026, 11:35:17) [GCC 15.3.0]",
+      "executable": "/home/lishuo/cs5488-round1/env/bin/python",
+      "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+      "cpu_count": 4,
+      "memory_bytes": 7734878208,
+      "packages": {
+        "pyarrow": "26.0.1",
+        "pyspark": "3.5.7",
+        "py4j": "0.10.9.7"
+      },
+      "java_home": "/usr/lib/jvm/java-17-openjdk-amd64",
+      "code_sha256": "7d54f7c8d3fc0f541ee94f65d91b5c6c889688946f00e08d2b57fd7898f783f7"
+    },
+    "downloads": {
+      "batches/20240116T0000Z_20240116T0200Z/attempt-0001/fragments/2024-01-16/download-9138330f26894da88a9cbe7c3e2f0cc1-attempt-0001-2024-01-16/download_manifest.json": {
+        "date": "2024-01-16",
+        "requested_files": [
+          "2024-01-16-0.json.gz",
+          "2024-01-16-1.json.gz"
+        ],
+        "files": [
+          {
+            "name": "2024-01-16-0.json.gz",
+            "url": "https://data.gharchive.org/2024-01-16-0.json.gz",
+            "status": "downloaded_verified",
+            "attempts": [
+              {
+                "started_at": "2026-11-13T05:29:24+00:00",
+                "partial_file": "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup/2024-01-16-0.json.gz.download-9138330f26894da88a9cbe7c3e2f0cc1-attempt-0001-2024-01-16.attempt-1.part",
+                "http_status": 200,
+                "state": "completed",
+                "finished_at": "2026-11-13T05:29:36+00:00"
+              }
+            ],
+            "bytes": 78166242,
+            "sha256": "62fa17f986933b8692719ce00a8fa049aa528544a676096af629b3986aebfc95"
+          },
+          {
+            "name": "2024-01-16-1.json.gz",
+            "url": "https://data.gharchive.org/2024-01-16-1.json.gz",
+            "status": "downloaded_verified",
+            "attempts": [
+              {
+                "started_at": "2026-11-13T05:29:36+00:00",
+                "partial_file": "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup/2024-01-16-1.json.gz.download-9138330f26894da88a9cbe7c3e2f0cc1-attempt-0001-2024-01-16.attempt-1.part",
+                "http_status": 200,
+                "state": "completed",
+                "finished_at": "2026-11-13T05:29:50+00:00"
+              }
+            ],
+            "bytes": 78713808,
+            "sha256": "4f86c2a16a6837c7c11b54b03fd2ec6da15595be2dabafa9be94388efb07e190"
+          }
+        ],
+        "all_requested_archives_verified": true
+      },
+      "batches/20240116T0000Z_20240116T0200Z/attempt-0002/fragments/2024-01-16/download-9138330f26894da88a9cbe7c3e2f0cc1-attempt-0002-2024-01-16/download_manifest.json": {
+        "date": "2024-01-16",
+        "requested_files": [
+          "2024-01-16-0.json.gz",
+          "2024-01-16-1.json.gz"
+        ],
+        "files": [
+          {
+            "name": "2024-01-16-0.json.gz",
+            "url": "https://data.gharchive.org/2024-01-16-0.json.gz",
+            "status": "cached_verified",
+            "attempts": [],
+            "bytes": 78166242,
+            "sha256": "62fa17f986933b8692719ce00a8fa049aa528544a676096af629b3986aebfc95"
+          },
+          {
+            "name": "2024-01-16-1.json.gz",
+            "url": "https://data.gharchive.org/2024-01-16-1.json.gz",
+            "status": "cached_verified",
+            "attempts": [],
+            "bytes": 78713808,
+            "sha256": "4f86c2a16a6837c7c11b54b03fd2ec6da15595be2dabafa9be94388efb07e190"
+          }
+        ],
+        "all_requested_archives_verified": true
+      }
+    },
+    "disk_monitors": {
+      "batches/20240116T0000Z_20240116T0200Z/attempt-0001/disk_monitor.json": {
+        "sample_interval_seconds": 1,
+        "minimum_free_bytes": 18063818752,
+        "maximum_workspace_bytes": 90821
+      },
+      "batches/20240116T0000Z_20240116T0200Z/attempt-0002/disk_monitor.json": {
+        "sample_interval_seconds": 1,
+        "minimum_free_bytes": 17468227584,
+        "maximum_workspace_bytes": 587215291
+      },
+      "merge/attempt-0001/disk_monitor.json": {
+        "sample_interval_seconds": 1,
+        "minimum_free_bytes": 17772314624,
+        "maximum_workspace_bytes": 143
+      },
+      "merge/attempt-0002/disk_monitor.json": {
+        "sample_interval_seconds": 1,
+        "minimum_free_bytes": 17346592768,
+        "maximum_workspace_bytes": 423169471
+      }
+    },
+    "cleanup_checks": {
+      "all_skips_cleanup_checks.json": [
+        {
+          "name": "2024-01-16-0.json.gz",
+          "exists": false,
+          "intent": "deleted"
+        },
+        {
+          "name": "2024-01-16-1.json.gz",
+          "exists": false,
+          "intent": "deleted"
+        }
+      ],
+      "cleanup_interrupt_cleanup_checks.json": [
+        {
+          "name": "2024-01-16-0.json.gz",
+          "uid": 1000,
+          "bytes": 78166242,
+          "sha256": "62fa17f986933b8692719ce00a8fa049aa528544a676096af629b3986aebfc95",
+          "path": "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup/2024-01-16-0.json.gz",
+          "exists": true
+        },
+        {
+          "name": "2024-01-16-1.json.gz",
+          "uid": 1000,
+          "bytes": 78713808,
+          "sha256": "4f86c2a16a6837c7c11b54b03fd2ec6da15595be2dabafa9be94388efb07e190",
+          "path": "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup/2024-01-16-1.json.gz",
+          "exists": true
+        }
+      ],
+      "merge_interrupt_cleanup_checks.json": [
+        {
+          "name": "2024-01-16-0.json.gz",
+          "exists": false,
+          "intent": "deleting"
+        },
+        {
+          "name": "2024-01-16-1.json.gz",
+          "uid": 1000,
+          "bytes": 78713808,
+          "sha256": "4f86c2a16a6837c7c11b54b03fd2ec6da15595be2dabafa9be94388efb07e190",
+          "path": "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_cleanup/2024-01-16-1.json.gz",
+          "exists": true
+        }
+      ],
+      "resume_cleanup_checks.json": [
+        {
+          "name": "2024-01-16-0.json.gz",
+          "exists": false,
+          "intent": "deleted"
+        },
+        {
+          "name": "2024-01-16-1.json.gz",
+          "exists": false,
+          "intent": "deleted"
+        }
+      ]
+    },
+    "cleanup_timing": {
+      "invocations/attempt-0002/20240116T0000Z_20240116T0200Z_cleanup.json": {
+        "stage": "raw_cleanup",
+        "started_at": "2026-11-13T05:32:03+00:00",
+        "state": "error",
+        "parent": "invocation",
+        "batch": "20240116T0000Z_20240116T0200Z",
+        "exit_code": 1,
+        "error": "KeyboardInterrupt: ",
+        "finished_at": "2026-11-13T05:32:03+00:00",
+        "elapsed_seconds": 0.2881669709995549
+      },
+      "invocations/attempt-0003/20240116T0000Z_20240116T0200Z_cleanup.json": {
+        "stage": "raw_cleanup",
+        "started_at": "2026-11-13T05:32:04+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "batch": "20240116T0000Z_20240116T0200Z",
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:32:04+00:00",
+        "elapsed_seconds": 0.11563005500011059
+      },
+      "invocations/attempt-0004/20240116T0000Z_20240116T0200Z_cleanup.json": {
+        "stage": "raw_cleanup",
+        "started_at": "2026-11-13T05:32:04+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "batch": "20240116T0000Z_20240116T0200Z",
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:32:05+00:00",
+        "elapsed_seconds": 0.018162284000027284
+      },
+      "invocations/attempt-0005/20240116T0000Z_20240116T0200Z_cleanup.json": {
+        "stage": "raw_cleanup",
+        "started_at": "2026-11-13T05:32:23+00:00",
+        "state": "completed",
+        "parent": "invocation",
+        "batch": "20240116T0000Z_20240116T0200Z",
+        "exit_code": 0,
+        "finished_at": "2026-11-13T05:32:23+00:00",
+        "elapsed_seconds": 0.01633539100021153
+      }
+    },
+    "markers": {
+      "final_accepted.json": {
+        "path": "/data/cs5488/runs/rolling_v1_20261113_task4/final_accepted.json",
+        "bytes": 8069,
+        "sha256": "4f646106197c366404ac84652f97d7ab2b2e623293163cb320e82d12a1a30ef4"
+      },
+      "batches/20240116T0000Z_20240116T0200Z/accepted.json": {
+        "path": "/data/cs5488/runs/rolling_v1_20261113_task4/batches/20240116T0000Z_20240116T0200Z/accepted.json",
+        "bytes": 29116,
+        "sha256": "349f4afda5c059a83b00560dd25e940727cd3ad9aa7e354b1af57bf993d3b30a"
+      }
+    },
+    "logs": {
+      "all_skips.log": {
+        "file": {
+          "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/evidence/all_skips.log",
+          "bytes": 191,
+          "sha256": "d975bc465d641d09d082b1afd1548d896d3d45f4ed2687c73dacded11b677609"
+        },
+        "text": "20240116T0000Z_20240116T0200Z: accepted artifacts reverified; skipping compute\n{\"state\": \"completed\", \"final_output\": \"/data/cs5488/runs/rolling_v1_20261113_task4/merge/attempt-0002/result\"}\n"
+      },
+      "cleanup_interrupt.log": {
+        "file": {
+          "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/evidence/cleanup_interrupt.log",
+          "bytes": 37,
+          "sha256": "83c1230d615b144925b4899f3fbae09de7f45eff7c0a064eb4295f750bf55e70"
+        },
+        "text": "Pipeline failed: KeyboardInterrupt: \n"
+      },
+      "corrupt.log": {
+        "file": {
+          "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/evidence/corrupt.log",
+          "bytes": 181,
+          "sha256": "185debbd7b0eefd1009174f4a63e398550756d87c02439bdce871b1281cca96d"
+        },
+        "text": "Pipeline failed: RuntimeError: Accepted artifacts changed: /data/cs5488/monthly_validation/rolling_v1_20261113_task4/corrupt_copy/batches/20240116T0000Z_20240116T0200Z/attempt-0002\n"
+      },
+      "merge_interrupt.log": {
+        "file": {
+          "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/evidence/merge_interrupt.log",
+          "bytes": 116,
+          "sha256": "e1ebba04d2cfade5d52038195f408353510c76785a4ac1bdb92645420b72ecbd"
+        },
+        "text": "20240116T0000Z_20240116T0200Z: accepted artifacts reverified; skipping compute\nPipeline failed: KeyboardInterrupt: \n"
+      },
+      "resume.log": {
+        "file": {
+          "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/evidence/resume.log",
+          "bytes": 191,
+          "sha256": "d975bc465d641d09d082b1afd1548d896d3d45f4ed2687c73dacded11b677609"
+        },
+        "text": "20240116T0000Z_20240116T0200Z: accepted artifacts reverified; skipping compute\n{\"state\": \"completed\", \"final_output\": \"/data/cs5488/runs/rolling_v1_20261113_task4/merge/attempt-0002/result\"}\n"
+      },
+      "spark_interrupt.log": {
+        "file": {
+          "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/evidence/spark_interrupt.log",
+          "bytes": 37,
+          "sha256": "83c1230d615b144925b4899f3fbae09de7f45eff7c0a064eb4295f750bf55e70"
+        },
+        "text": "Pipeline failed: KeyboardInterrupt: \n"
+      }
+    },
+    "bootstrap": {
+      "lock_fixed.py": {
+        "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/bootstrap/lock_fixed.py",
+        "bytes": 1576,
+        "sha256": "1ef18504f6e85c98487d49dbf1d69b38f26762f44235e1a5aeccf91dd331cb84"
+      },
+      "lock_probe.py": {
+        "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/bootstrap/lock_probe.py",
+        "bytes": 1378,
+        "sha256": "6eddb4cf6f0bcc35ede885d034a84a8159551be5fa541e0589453a5c388b397d"
+      },
+      "recovery.py": {
+        "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/bootstrap/recovery.py",
+        "bytes": 14771,
+        "sha256": "ad42662655cac50df9695296b0cfc1e6046eea8d4fe1e35f0eca8ae1b698fb54"
+      }
+    },
+    "result_file": {
+      "path": "/data/cs5488/monthly_validation/rolling_v1_20261113_task4/evidence/task4_result.json",
+      "bytes": 66339,
+      "sha256": "cec5c77dc5c74bd65fed97f425f280966c21a69e5cd67c63cebb05bd83fafcf4"
+    },
+    "deployment_manifest": {
+      "path": "/data/cs5488/releases/rolling_v1_20261113_task4_lockfix01/DEPLOYMENT_SHA256.json",
+      "bytes": 16003,
+      "sha256": "b2de34fb81227b0ee4932ee1b49f80bf0aca7a77dac82e01e80e136232f6c312"
+    }
+  },
+  "deployment": {
+    "archive_sha256": "1d560a2c6bdf8b83fb913897517005cbcdb279849a26b9476a42c31809ab46dc",
+    "runtime": {
+      "rule_version": "a-events-v1",
+      "source_sha256_lf": {
+        "a_data_pipeline/gharchive_a/__init__.py": "d7f29377789a470ff76b7cc18e8a601fd80bba23b5bddafe122845a99e208654",
+        "a_data_pipeline/gharchive_a/clean.py": "a8bb6b4acd69f75b211a5573cc8ab63a75b43071c1516f4d17153933fd186d4b",
+        "a_data_pipeline/gharchive_a/cli.py": "aba9053e996dd3be7e40dd9c0e93d1754810a08316a9cf92a4037cfa315c6f3b",
+        "a_data_pipeline/gharchive_a/common.py": "0f2d93af59980ec8de55239cb247e5399055e15c0cdefac9551f4ed04a4ba7d0",
+        "a_data_pipeline/gharchive_a/compare.py": "603479a3f054d0724b95021243d51759ebea6027c1343ea1d5824a4256a827ee",
+        "a_data_pipeline/gharchive_a/download.py": "cb66133542d0d03b729cd2d3add472c68a1fb1f5f6aff3c7673a4b36288da198",
+        "a_data_pipeline/gharchive_a/export.py": "619a087357da3da9b3a00d2fd57bc1074dbfb61163af9ca1abbc8b3f2ecfa0e4",
+        "a_data_pipeline/gharchive_a/inspect.py": "b257257f43d222d6baba510b23183f4c01d4d8107d25321a099363ae5a790b75",
+        "a_data_pipeline/gharchive_a/records.py": "024d5d88f69a411ea4b3583fd27405d3ce9f06b1fd3fb79a8eb30ff750e0b1a0",
+        "a_data_pipeline/gharchive_a/spark_clean.py": "6f614a231798dbbf9bd83605f57875aae48452efd46daded7a92ca12724dc54f",
+        "a_data_pipeline/rolling_pipeline/batch_download.py": "e961c3097342c2ba16e86db87c2866d893213e7c3215cf6552c97276f081b04d",
+        "a_data_pipeline/rolling_pipeline/batch_merge.py": "ec20fa460d0d984e3158270c474ef4c05c6084eae92e54b0ccd5b23df82455ca",
+        "a_data_pipeline/rolling_pipeline/batch_support.py": "211b9c8fddac614e841756679bf57ac3ceda5b7094274db8cd06de63e8da2862",
+        "d_parallel_experiments/scripts/run_batch_pipeline.py": "e6ebdf4cc54bf9d25e8f8856b8cc531862a195aab4587085cb616952cee78671",
+        "d_parallel_experiments/scripts/spark_batch_job.py": "c5da63d56550c56aca95a637bc5b3ad7fbe7b7a7cc224998ab57fae13030b85c",
+        "d_parallel_experiments/scripts/summarize_results.py": "4a416bfcc33ab5ebf856369ebf3cc97b965c1d7f4bf45fd4d3a1e57a5faf2a71",
+        "d_parallel_experiments/scripts/verify_results.py": "c8fc25e51cc1d2b39ca942aaaa74d4928217c7fd74700f6d59b98ea441981885"
+      },
+      "sha256": "68d9b4051daf6343f78d934e1687f6586438e0bef16d0f28ad48c74419fe1217"
+    },
+    "release": "/data/cs5488/releases/rolling_v1_20261113_task4_lockfix01"
+  },
+  "regression_tests": {
+    "local_new_reentry_test": "passed",
+    "linux_lock_selection": "2 tests passed, 0.337 seconds; no repeat of task2/task3 suites",
+    "change": "POSIX lockf shared by server/client; reject same-process reentry before opening second descriptor"
+  },
+  "local_delivery_package": {
+    "archive": "E:\\Vibecoding_codex\\cs5488proj\\.deployment\\rolling_v1_20261113_task4_delivery01.tar.gz",
+    "bytes": 114588,
+    "sha256": "7e1734f400245d811436d0472318e54cde3448baf2dc0103346ba4a5f2a8d72a",
+    "manifest": "E:\\Vibecoding_codex\\cs5488proj\\.deployment\\rolling_v1_20261113_task4_delivery01_manifest.json",
+    "source_files": 52,
+    "all_current_files_match": true,
+    "note": "Updated documentation package only; executed VM snapshot preserved; runtime identical"
+  },
+  "local_fault_harness": {
+    "path": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\local_only\\task4_20261113_exec01\\recovery.py",
+    "sha256": "ad42662655cac50df9695296b0cfc1e6046eea8d4fe1e35f0eca8ae1b698fb54",
+    "note": "SCP preserves raw CRLF bytes; VM bootstrap hash recorded in audit"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "L4",
+  "master": "local[4]",
+  "driver_memory": "4g",
+  "conf": {
+    "spark.sql.shuffle.partitions": "12",
+    "spark.sql.adaptive.enabled": "false",
+    "spark.sql.session.timeZone": "UTC",
+    "spark.sql.parquet.outputTimestampType": "TIMESTAMP_MICROS"
+  }
+}

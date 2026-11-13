@@ -1,0 +1,623 @@
+{
+  "task": 3,
+  "passed": true,
+  "sample": {
+    "start": "2024-01-16T03:00Z",
+    "end": "2024-01-16T04:00Z",
+    "sha256": "c847562c13ffbd2a0613f68b6c19cbccba2d5b56d4405e066f7e829a970f7b6a"
+  },
+  "l4_reused": {
+    "clean": "/data/cs5488/runs/rolling_v1_20261113_task2_7h_fix01_l4_6h/batches/20240116T0300Z_20240116T0400Z/attempt-0001/fragments/2024-01-16/clean",
+    "input_sha256": "c847562c13ffbd2a0613f68b6c19cbccba2d5b56d4405e066f7e829a970f7b6a",
+    "application": {
+      "application_id": "local-1794543303769",
+      "master": "local[4]"
+    },
+    "effective_config": {
+      "spark.eventLog.enabled": "true",
+      "spark.driver.extraJavaOptions": "-Djava.net.preferIPv6Addresses=false -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED -Djdk.reflect.useDirectMethodHandle=false",
+      "spark.master": "local[4]",
+      "spark.driver.host": "127.0.0.1",
+      "spark.sql.parquet.outputTimestampType": "TIMESTAMP_MICROS",
+      "spark.driver.port": "35243",
+      "spark.driver.memory": "4g",
+      "spark.app.name": "CS5488-clean",
+      "spark.executor.id": "driver",
+      "spark.sql.shuffle.partitions": "12",
+      "spark.driver.bindAddress": "127.0.0.1",
+      "spark.eventLog.dir": "file:/data/cs5488/monthly_validation/rolling_v1_20261113_task2_fix01/event-logs/l4_6h",
+      "spark.eventLog.compress": "false",
+      "spark.app.id": "local-1794543303769",
+      "spark.app.startTime": "1794543303461",
+      "spark.rdd.compress": "True",
+      "spark.executor.extraJavaOptions": "-Djava.net.preferIPv6Addresses=false -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED -Djdk.reflect.useDirectMethodHandle=false",
+      "spark.ui.enabled": "false",
+      "spark.serializer.objectStreamReset": "100",
+      "spark.submit.pyFiles": "",
+      "spark.submit.deployMode": "client",
+      "spark.sql.session.timeZone": "UTC",
+      "spark.eventLog.rolling.enabled": "false",
+      "spark.app.submitTime": "1794543303044",
+      "spark.sql.adaptive.enabled": "false"
+    },
+    "accepted_files_reverified": true,
+    "reused": true,
+    "code": {
+      "rule_version": "a-events-v1",
+      "source_sha256_lf": {
+        "a_data_pipeline/gharchive_a/__init__.py": "d7f29377789a470ff76b7cc18e8a601fd80bba23b5bddafe122845a99e208654",
+        "a_data_pipeline/gharchive_a/clean.py": "a8bb6b4acd69f75b211a5573cc8ab63a75b43071c1516f4d17153933fd186d4b",
+        "a_data_pipeline/gharchive_a/cli.py": "aba9053e996dd3be7e40dd9c0e93d1754810a08316a9cf92a4037cfa315c6f3b",
+        "a_data_pipeline/gharchive_a/common.py": "0f2d93af59980ec8de55239cb247e5399055e15c0cdefac9551f4ed04a4ba7d0",
+        "a_data_pipeline/gharchive_a/compare.py": "603479a3f054d0724b95021243d51759ebea6027c1343ea1d5824a4256a827ee",
+        "a_data_pipeline/gharchive_a/download.py": "cb66133542d0d03b729cd2d3add472c68a1fb1f5f6aff3c7673a4b36288da198",
+        "a_data_pipeline/gharchive_a/export.py": "619a087357da3da9b3a00d2fd57bc1074dbfb61163af9ca1abbc8b3f2ecfa0e4",
+        "a_data_pipeline/gharchive_a/inspect.py": "b257257f43d222d6baba510b23183f4c01d4d8107d25321a099363ae5a790b75",
+        "a_data_pipeline/gharchive_a/records.py": "024d5d88f69a411ea4b3583fd27405d3ce9f06b1fd3fb79a8eb30ff750e0b1a0",
+        "a_data_pipeline/gharchive_a/spark_clean.py": "6f614a231798dbbf9bd83605f57875aae48452efd46daded7a92ca12724dc54f",
+        "a_data_pipeline/rolling_pipeline/batch_download.py": "e961c3097342c2ba16e86db87c2866d893213e7c3215cf6552c97276f081b04d",
+        "a_data_pipeline/rolling_pipeline/batch_merge.py": "ec20fa460d0d984e3158270c474ef4c05c6084eae92e54b0ccd5b23df82455ca",
+        "a_data_pipeline/rolling_pipeline/batch_support.py": "e8491d33b1bb3cf887a17ec8fe336db7009246bf0bb2cfd408c84eba0b767396",
+        "d_parallel_experiments/scripts/run_batch_pipeline.py": "e6ebdf4cc54bf9d25e8f8856b8cc531862a195aab4587085cb616952cee78671",
+        "d_parallel_experiments/scripts/spark_batch_job.py": "c5da63d56550c56aca95a637bc5b3ad7fbe7b7a7cc224998ab57fae13030b85c",
+        "d_parallel_experiments/scripts/summarize_results.py": "4a416bfcc33ab5ebf856369ebf3cc97b965c1d7f4bf45fd4d3a1e57a5faf2a71",
+        "d_parallel_experiments/scripts/verify_results.py": "c8fc25e51cc1d2b39ca942aaaa74d4928217c7fd74700f6d59b98ea441981885"
+      },
+      "sha256": "379d91154313d86a943ffe1f7166c476a8aa8fb1ce2170151f2fbcc523e55a1a"
+    }
+  },
+  "runs": {
+    "L1": {
+      "run_id": "00a625a3193e4332afc4d2a59ae3d9c8",
+      "identity": {
+        "format": "rolling-v1",
+        "plan": {
+          "start": "2024-01-16T03:00:00Z",
+          "end": "2024-01-16T04:00:00Z",
+          "interval": "[start,end)",
+          "selection": "source archive hour; event timestamps are not filtered",
+          "batch_hours": 24,
+          "batches": [
+            {
+              "id": "20240116T0300Z_20240116T0400Z",
+              "start": "2024-01-16T03:00:00Z",
+              "end": "2024-01-16T04:00:00Z",
+              "archives": [
+                "2024-01-16-3.json.gz"
+              ]
+            }
+          ]
+        },
+        "raw_dir": "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_shared",
+        "spark": {
+          "name": "L1",
+          "master": "local[1]",
+          "driver_memory": "4g",
+          "conf": {
+            "spark.sql.shuffle.partitions": "12",
+            "spark.sql.adaptive.enabled": "false",
+            "spark.sql.session.timeZone": "UTC",
+            "spark.sql.parquet.outputTimestampType": "TIMESTAMP_MICROS",
+            "spark.ui.enabled": "false",
+            "spark.eventLog.enabled": "true",
+            "spark.eventLog.compress": "false",
+            "spark.eventLog.rolling.enabled": "false",
+            "spark.eventLog.dir": "file:/data/cs5488/monthly_validation/rolling_v1_20261113_task3/event-logs/L1",
+            "spark.driver.host": "127.0.0.1",
+            "spark.driver.bindAddress": "127.0.0.1"
+          }
+        },
+        "engine": "spark",
+        "cleanup": "retain",
+        "code": {
+          "rule_version": "a-events-v1",
+          "source_sha256_lf": {
+            "a_data_pipeline/gharchive_a/__init__.py": "d7f29377789a470ff76b7cc18e8a601fd80bba23b5bddafe122845a99e208654",
+            "a_data_pipeline/gharchive_a/clean.py": "a8bb6b4acd69f75b211a5573cc8ab63a75b43071c1516f4d17153933fd186d4b",
+            "a_data_pipeline/gharchive_a/cli.py": "aba9053e996dd3be7e40dd9c0e93d1754810a08316a9cf92a4037cfa315c6f3b",
+            "a_data_pipeline/gharchive_a/common.py": "0f2d93af59980ec8de55239cb247e5399055e15c0cdefac9551f4ed04a4ba7d0",
+            "a_data_pipeline/gharchive_a/compare.py": "603479a3f054d0724b95021243d51759ebea6027c1343ea1d5824a4256a827ee",
+            "a_data_pipeline/gharchive_a/download.py": "cb66133542d0d03b729cd2d3add472c68a1fb1f5f6aff3c7673a4b36288da198",
+            "a_data_pipeline/gharchive_a/export.py": "619a087357da3da9b3a00d2fd57bc1074dbfb61163af9ca1abbc8b3f2ecfa0e4",
+            "a_data_pipeline/gharchive_a/inspect.py": "b257257f43d222d6baba510b23183f4c01d4d8107d25321a099363ae5a790b75",
+            "a_data_pipeline/gharchive_a/records.py": "024d5d88f69a411ea4b3583fd27405d3ce9f06b1fd3fb79a8eb30ff750e0b1a0",
+            "a_data_pipeline/gharchive_a/spark_clean.py": "6f614a231798dbbf9bd83605f57875aae48452efd46daded7a92ca12724dc54f",
+            "a_data_pipeline/rolling_pipeline/batch_download.py": "e961c3097342c2ba16e86db87c2866d893213e7c3215cf6552c97276f081b04d",
+            "a_data_pipeline/rolling_pipeline/batch_merge.py": "ec20fa460d0d984e3158270c474ef4c05c6084eae92e54b0ccd5b23df82455ca",
+            "a_data_pipeline/rolling_pipeline/batch_support.py": "e8491d33b1bb3cf887a17ec8fe336db7009246bf0bb2cfd408c84eba0b767396",
+            "d_parallel_experiments/scripts/run_batch_pipeline.py": "e6ebdf4cc54bf9d25e8f8856b8cc531862a195aab4587085cb616952cee78671",
+            "d_parallel_experiments/scripts/spark_batch_job.py": "c5da63d56550c56aca95a637bc5b3ad7fbe7b7a7cc224998ab57fae13030b85c",
+            "d_parallel_experiments/scripts/summarize_results.py": "4a416bfcc33ab5ebf856369ebf3cc97b965c1d7f4bf45fd4d3a1e57a5faf2a71",
+            "d_parallel_experiments/scripts/verify_results.py": "c8fc25e51cc1d2b39ca942aaaa74d4928217c7fd74700f6d59b98ea441981885"
+          },
+          "sha256": "379d91154313d86a943ffe1f7166c476a8aa8fb1ce2170151f2fbcc523e55a1a"
+        },
+        "input_config": {
+          "date": "2024-01-15",
+          "hours": [
+            0
+          ],
+          "base_url": "https://data.gharchive.org",
+          "timeout_seconds": 60,
+          "retries": 2,
+          "max_file_bytes": 536870912,
+          "raw_preview_rows": 5,
+          "clean_preview_rows": 100,
+          "parquet_batch_rows": 10000
+        },
+        "budgets": {
+          "min_free_gib": 4.0,
+          "batch_budget_gib": 16,
+          "merge_budget_gib": 24,
+          "sqlite_cache_mib": 128
+        },
+        "spark_submit": "/home/lishuo/cs5488-round1/env/lib/python3.11/site-packages/pyspark/bin/spark-submit"
+      },
+      "summary": {
+        "backend": "python_sqlite",
+        "sqlite_cache_mib": 128,
+        "counts": {
+          "valid_occurrences": 193073,
+          "final_events": 193073,
+          "duplicate_occurrences_removed": 0,
+          "conflicting_event_ids": 0,
+          "conflicting_occurrences_excluded": 0
+        },
+        "checks": {
+          "valid_occurrences_reconcile": true,
+          "event_ids_unique": true,
+          "daily_sum": true,
+          "candidate_sum": true
+        },
+        "final_events": 193073,
+        "daily_sum": 193073,
+        "candidate_sum": 193073,
+        "elapsed_seconds": 7.513557870999648,
+        "fragments": [
+          {
+            "batch": "20240116T0300Z_20240116T0400Z",
+            "fragment": "2024-01-16",
+            "valid": "/data/cs5488/runs/rolling_v1_20261113_task3_L1/batches/20240116T0300Z_20240116T0400Z/attempt-0001/fragments/2024-01-16/clean/valid_before_dedup.parquet"
+          }
+        ]
+      }
+    },
+    "D4": {
+      "run_id": "2ded0ced140f412cb9d37c046751a84e",
+      "identity": {
+        "format": "rolling-v1",
+        "plan": {
+          "start": "2024-01-16T03:00:00Z",
+          "end": "2024-01-16T04:00:00Z",
+          "interval": "[start,end)",
+          "selection": "source archive hour; event timestamps are not filtered",
+          "batch_hours": 24,
+          "batches": [
+            {
+              "id": "20240116T0300Z_20240116T0400Z",
+              "start": "2024-01-16T03:00:00Z",
+              "end": "2024-01-16T04:00:00Z",
+              "archives": [
+                "2024-01-16-3.json.gz"
+              ]
+            }
+          ]
+        },
+        "raw_dir": "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_shared",
+        "spark": {
+          "name": "D4",
+          "master": "spark://192.168.20.130:7077",
+          "driver_memory": "2g",
+          "conf": {
+            "spark.cores.max": "4",
+            "spark.executor.cores": "2",
+            "spark.executor.memory": "2g",
+            "spark.dynamicAllocation.enabled": "false",
+            "spark.sql.shuffle.partitions": "12",
+            "spark.sql.adaptive.enabled": "false",
+            "spark.sql.session.timeZone": "UTC",
+            "spark.sql.parquet.outputTimestampType": "TIMESTAMP_MICROS",
+            "spark.ui.enabled": "false",
+            "spark.eventLog.enabled": "true",
+            "spark.eventLog.compress": "false",
+            "spark.eventLog.rolling.enabled": "false",
+            "spark.eventLog.dir": "file:/data/cs5488/monthly_validation/rolling_v1_20261113_task3/event-logs/D4",
+            "spark.driver.host": "192.168.20.130",
+            "spark.driver.bindAddress": "0.0.0.0",
+            "spark.driver.port": "39000",
+            "spark.driver.blockManager.port": "39001"
+          }
+        },
+        "engine": "spark",
+        "cleanup": "retain",
+        "code": {
+          "rule_version": "a-events-v1",
+          "source_sha256_lf": {
+            "a_data_pipeline/gharchive_a/__init__.py": "d7f29377789a470ff76b7cc18e8a601fd80bba23b5bddafe122845a99e208654",
+            "a_data_pipeline/gharchive_a/clean.py": "a8bb6b4acd69f75b211a5573cc8ab63a75b43071c1516f4d17153933fd186d4b",
+            "a_data_pipeline/gharchive_a/cli.py": "aba9053e996dd3be7e40dd9c0e93d1754810a08316a9cf92a4037cfa315c6f3b",
+            "a_data_pipeline/gharchive_a/common.py": "0f2d93af59980ec8de55239cb247e5399055e15c0cdefac9551f4ed04a4ba7d0",
+            "a_data_pipeline/gharchive_a/compare.py": "603479a3f054d0724b95021243d51759ebea6027c1343ea1d5824a4256a827ee",
+            "a_data_pipeline/gharchive_a/download.py": "cb66133542d0d03b729cd2d3add472c68a1fb1f5f6aff3c7673a4b36288da198",
+            "a_data_pipeline/gharchive_a/export.py": "619a087357da3da9b3a00d2fd57bc1074dbfb61163af9ca1abbc8b3f2ecfa0e4",
+            "a_data_pipeline/gharchive_a/inspect.py": "b257257f43d222d6baba510b23183f4c01d4d8107d25321a099363ae5a790b75",
+            "a_data_pipeline/gharchive_a/records.py": "024d5d88f69a411ea4b3583fd27405d3ce9f06b1fd3fb79a8eb30ff750e0b1a0",
+            "a_data_pipeline/gharchive_a/spark_clean.py": "6f614a231798dbbf9bd83605f57875aae48452efd46daded7a92ca12724dc54f",
+            "a_data_pipeline/rolling_pipeline/batch_download.py": "e961c3097342c2ba16e86db87c2866d893213e7c3215cf6552c97276f081b04d",
+            "a_data_pipeline/rolling_pipeline/batch_merge.py": "ec20fa460d0d984e3158270c474ef4c05c6084eae92e54b0ccd5b23df82455ca",
+            "a_data_pipeline/rolling_pipeline/batch_support.py": "e8491d33b1bb3cf887a17ec8fe336db7009246bf0bb2cfd408c84eba0b767396",
+            "d_parallel_experiments/scripts/run_batch_pipeline.py": "e6ebdf4cc54bf9d25e8f8856b8cc531862a195aab4587085cb616952cee78671",
+            "d_parallel_experiments/scripts/spark_batch_job.py": "c5da63d56550c56aca95a637bc5b3ad7fbe7b7a7cc224998ab57fae13030b85c",
+            "d_parallel_experiments/scripts/summarize_results.py": "4a416bfcc33ab5ebf856369ebf3cc97b965c1d7f4bf45fd4d3a1e57a5faf2a71",
+            "d_parallel_experiments/scripts/verify_results.py": "c8fc25e51cc1d2b39ca942aaaa74d4928217c7fd74700f6d59b98ea441981885"
+          },
+          "sha256": "379d91154313d86a943ffe1f7166c476a8aa8fb1ce2170151f2fbcc523e55a1a"
+        },
+        "input_config": {
+          "date": "2024-01-15",
+          "hours": [
+            0
+          ],
+          "base_url": "https://data.gharchive.org",
+          "timeout_seconds": 60,
+          "retries": 2,
+          "max_file_bytes": 536870912,
+          "raw_preview_rows": 5,
+          "clean_preview_rows": 100,
+          "parquet_batch_rows": 10000
+        },
+        "budgets": {
+          "min_free_gib": 4.0,
+          "batch_budget_gib": 16,
+          "merge_budget_gib": 24,
+          "sqlite_cache_mib": 128
+        },
+        "spark_submit": "/home/lishuo/cs5488-round1/env/lib/python3.11/site-packages/pyspark/bin/spark-submit"
+      },
+      "summary": {
+        "backend": "python_sqlite",
+        "sqlite_cache_mib": 128,
+        "counts": {
+          "valid_occurrences": 193073,
+          "final_events": 193073,
+          "duplicate_occurrences_removed": 0,
+          "conflicting_event_ids": 0,
+          "conflicting_occurrences_excluded": 0
+        },
+        "checks": {
+          "valid_occurrences_reconcile": true,
+          "event_ids_unique": true,
+          "daily_sum": true,
+          "candidate_sum": true
+        },
+        "final_events": 193073,
+        "daily_sum": 193073,
+        "candidate_sum": 193073,
+        "elapsed_seconds": 6.5843035839998265,
+        "fragments": [
+          {
+            "batch": "20240116T0300Z_20240116T0400Z",
+            "fragment": "2024-01-16",
+            "valid": "/data/cs5488/runs/rolling_v1_20261113_task3_D4/batches/20240116T0300Z_20240116T0400Z/attempt-0001/fragments/2024-01-16/clean/valid_before_dedup.parquet"
+          }
+        ]
+      }
+    }
+  },
+  "comparisons": {
+    "L1": {
+      "passed": true,
+      "checks": {
+        "same_input_hashes_and_rules": true,
+        "same_line_status_counts": true,
+        "same_rejection_reasons": true,
+        "same_duplicates_removed": true,
+        "same_conflicting_ids": true,
+        "same_conflict_occurrences_excluded": true,
+        "same_clean_unique_repos": true,
+        "same_clean_event_types": true,
+        "same_time_outside_file_hour_before_dedup": true,
+        "same_time_outside_file_hour_clean": true,
+        "left_ids_unique": true,
+        "left_daily_matches_events": true,
+        "left_daily_keys_unique": true,
+        "right_ids_unique": true,
+        "right_daily_matches_events": true,
+        "right_daily_keys_unique": true,
+        "left_parquet_matches_csv": true,
+        "right_parquet_matches_csv": true,
+        "same_parquet_types": true
+      },
+      "differences": {
+        "event_ids_left_only": 0,
+        "event_ids_right_only": 0,
+        "event_rows_left_only": 0,
+        "event_rows_right_only": 0,
+        "daily_counts_left_only": 0,
+        "daily_counts_right_only": 0
+      },
+      "left_events": 193073,
+      "right_events": 193073,
+      "note": "Compares ingestion and DataFrame results; shared parsing rules are also covered by adversarial fixture tests.",
+      "candidate_and_name_history_sha256_equal": true
+    },
+    "D4": {
+      "passed": true,
+      "checks": {
+        "same_input_hashes_and_rules": true,
+        "same_line_status_counts": true,
+        "same_rejection_reasons": true,
+        "same_duplicates_removed": true,
+        "same_conflicting_ids": true,
+        "same_conflict_occurrences_excluded": true,
+        "same_clean_unique_repos": true,
+        "same_clean_event_types": true,
+        "same_time_outside_file_hour_before_dedup": true,
+        "same_time_outside_file_hour_clean": true,
+        "left_ids_unique": true,
+        "left_daily_matches_events": true,
+        "left_daily_keys_unique": true,
+        "right_ids_unique": true,
+        "right_daily_matches_events": true,
+        "right_daily_keys_unique": true,
+        "left_parquet_matches_csv": true,
+        "right_parquet_matches_csv": true,
+        "same_parquet_types": true
+      },
+      "differences": {
+        "event_ids_left_only": 0,
+        "event_ids_right_only": 0,
+        "event_rows_left_only": 0,
+        "event_rows_right_only": 0,
+        "daily_counts_left_only": 0,
+        "daily_counts_right_only": 0
+      },
+      "left_events": 193073,
+      "right_events": 193073,
+      "note": "Compares ingestion and DataFrame results; shared parsing rules are also covered by adversarial fixture tests.",
+      "candidate_and_name_history_sha256_equal": true
+    }
+  },
+  "effective_configs": {
+    "L4": {
+      "spark.eventLog.enabled": "true",
+      "spark.driver.extraJavaOptions": "-Djava.net.preferIPv6Addresses=false -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED -Djdk.reflect.useDirectMethodHandle=false",
+      "spark.master": "local[4]",
+      "spark.driver.host": "127.0.0.1",
+      "spark.sql.parquet.outputTimestampType": "TIMESTAMP_MICROS",
+      "spark.driver.port": "35243",
+      "spark.driver.memory": "4g",
+      "spark.app.name": "CS5488-clean",
+      "spark.executor.id": "driver",
+      "spark.sql.shuffle.partitions": "12",
+      "spark.driver.bindAddress": "127.0.0.1",
+      "spark.eventLog.dir": "file:/data/cs5488/monthly_validation/rolling_v1_20261113_task2_fix01/event-logs/l4_6h",
+      "spark.eventLog.compress": "false",
+      "spark.app.id": "local-1794543303769",
+      "spark.app.startTime": "1794543303461",
+      "spark.rdd.compress": "True",
+      "spark.executor.extraJavaOptions": "-Djava.net.preferIPv6Addresses=false -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED -Djdk.reflect.useDirectMethodHandle=false",
+      "spark.ui.enabled": "false",
+      "spark.serializer.objectStreamReset": "100",
+      "spark.submit.pyFiles": "",
+      "spark.submit.deployMode": "client",
+      "spark.sql.session.timeZone": "UTC",
+      "spark.eventLog.rolling.enabled": "false",
+      "spark.app.submitTime": "1794543303044",
+      "spark.sql.adaptive.enabled": "false"
+    },
+    "L1": {
+      "spark.eventLog.enabled": "true",
+      "spark.driver.extraJavaOptions": "-Djava.net.preferIPv6Addresses=false -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED -Djdk.reflect.useDirectMethodHandle=false",
+      "spark.driver.host": "127.0.0.1",
+      "spark.sql.parquet.outputTimestampType": "TIMESTAMP_MICROS",
+      "spark.driver.memory": "4g",
+      "spark.driver.port": "38579",
+      "spark.app.name": "CS5488-clean",
+      "spark.executor.id": "driver",
+      "spark.sql.shuffle.partitions": "12",
+      "spark.driver.bindAddress": "127.0.0.1",
+      "spark.eventLog.dir": "file:/data/cs5488/monthly_validation/rolling_v1_20261113_task3/event-logs/L1",
+      "spark.eventLog.compress": "false",
+      "spark.app.id": "local-1794545678520",
+      "spark.rdd.compress": "True",
+      "spark.executor.extraJavaOptions": "-Djava.net.preferIPv6Addresses=false -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED -Djdk.reflect.useDirectMethodHandle=false",
+      "spark.ui.enabled": "false",
+      "spark.serializer.objectStreamReset": "100",
+      "spark.app.submitTime": "1794545677475",
+      "spark.submit.pyFiles": "",
+      "spark.submit.deployMode": "client",
+      "spark.sql.session.timeZone": "UTC",
+      "spark.eventLog.rolling.enabled": "false",
+      "spark.sql.adaptive.enabled": "false",
+      "spark.app.startTime": "1794545677985",
+      "spark.master": "local[1]"
+    },
+    "D4": {
+      "spark.dynamicAllocation.enabled": "false",
+      "spark.eventLog.enabled": "true",
+      "spark.sql.parquet.outputTimestampType": "TIMESTAMP_MICROS",
+      "spark.app.id": "app-20261113045658-0000",
+      "spark.driver.host": "192.168.20.130",
+      "spark.master": "spark://192.168.20.130:7077",
+      "spark.sql.shuffle.partitions": "12",
+      "spark.cores.max": "4",
+      "spark.app.submitTime": "1794545817047",
+      "spark.eventLog.dir": "file:/data/cs5488/monthly_validation/rolling_v1_20261113_task3/event-logs/D4",
+      "spark.serializer.objectStreamReset": "100",
+      "spark.submit.deployMode": "client",
+      "spark.sql.adaptive.enabled": "false",
+      "spark.driver.blockManager.port": "39001",
+      "spark.executor.memory": "2g",
+      "spark.driver.extraJavaOptions": "-Djava.net.preferIPv6Addresses=false -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED -Djdk.reflect.useDirectMethodHandle=false",
+      "spark.app.name": "CS5488-clean",
+      "spark.executor.id": "driver",
+      "spark.driver.port": "39000",
+      "spark.executor.cores": "2",
+      "spark.eventLog.compress": "false",
+      "spark.driver.bindAddress": "0.0.0.0",
+      "spark.rdd.compress": "True",
+      "spark.executor.extraJavaOptions": "-Djava.net.preferIPv6Addresses=false -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED -Djdk.reflect.useDirectMethodHandle=false",
+      "spark.ui.enabled": "false",
+      "spark.driver.memory": "2g",
+      "spark.submit.pyFiles": "",
+      "spark.sql.session.timeZone": "UTC",
+      "spark.eventLog.rolling.enabled": "false",
+      "spark.app.startTime": "1794545817516"
+    }
+  },
+  "worker_evidence": {
+    "passed": true,
+    "required_worker_hosts": [
+      "192.168.20.129",
+      "192.168.20.131"
+    ],
+    "applications": [
+      {
+        "application_id": "app-20261113045658-0000",
+        "log": "/data/cs5488/monthly_validation/rolling_v1_20261113_task3/event-logs/D4/app-20261113045658-0000",
+        "sha256": "e351472e6b2446816c07c16b63a4f1691276f8369304cae212e96ae4045936d3",
+        "successful_tasks_by_host": {
+          "192.168.20.129": 531,
+          "192.168.20.131": 9
+        },
+        "application_ended": true,
+        "passed": true
+      }
+    ]
+  },
+  "applications": {
+    "L4": {
+      "application_id": "local-1794543303769",
+      "master": "local[4]"
+    },
+    "L1": {
+      "application_id": "local-1794545678520",
+      "master": "local[1]"
+    },
+    "D4": {
+      "application_id": "app-20261113045658-0000",
+      "master": "spark://192.168.20.130:7077"
+    }
+  },
+  "execution": {
+    "L1": {
+      "command": [
+        "/home/lishuo/cs5488-round1/env/bin/python",
+        "/data/cs5488/releases/rolling_v1_20261113_task2_fix01/d_parallel_experiments/scripts/run_batch_pipeline.py",
+        "--start",
+        "2024-01-16T03:00Z",
+        "--end",
+        "2024-01-16T04:00Z",
+        "--raw-dir",
+        "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_shared",
+        "--output-dir",
+        "/data/cs5488/runs/rolling_v1_20261113_task3_L1",
+        "--spark-config",
+        "L1",
+        "--spark-submit",
+        "/home/lishuo/cs5488-round1/env/lib/python3.11/site-packages/pyspark/bin/spark-submit",
+        "--cleanup",
+        "retain",
+        "--min-free-gib",
+        "4",
+        "--spark-conf",
+        "spark.ui.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.enabled=true",
+        "--spark-conf",
+        "spark.eventLog.compress=false",
+        "--spark-conf",
+        "spark.eventLog.rolling.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.dir=file:/data/cs5488/monthly_validation/rolling_v1_20261113_task3/event-logs/L1",
+        "--spark-conf",
+        "spark.driver.host=127.0.0.1",
+        "--spark-conf",
+        "spark.driver.bindAddress=127.0.0.1"
+      ],
+      "host": "spark-worker-1",
+      "started_at": "2026-11-13T04:54:23.681269+00:00",
+      "environment": {
+        "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64",
+        "SPARK_CONF_DIR": "/data/cs5488/monthly_validation/rolling_v1_20261113_task3/spark-conf",
+        "SPARK_LOCAL_DIRS": "/home/lishuo/cs5488-cluster/local/rolling_v1_20261113_task3_L1",
+        "TMPDIR": "/data/cs5488/monthly_validation/rolling_v1_20261113_task3/tmp/L1"
+      },
+      "exit_code": 0,
+      "elapsed_seconds": 72.71484626800066
+    },
+    "D4": {
+      "command": [
+        "/home/lishuo/cs5488-round1/env/bin/python",
+        "/data/cs5488/releases/rolling_v1_20261113_task2_fix01/d_parallel_experiments/scripts/run_batch_pipeline.py",
+        "--start",
+        "2024-01-16T03:00Z",
+        "--end",
+        "2024-01-16T04:00Z",
+        "--raw-dir",
+        "/data/cs5488/monthly_validation/rolling_v1_20261112/raw_shared",
+        "--output-dir",
+        "/data/cs5488/runs/rolling_v1_20261113_task3_D4",
+        "--spark-config",
+        "D4",
+        "--spark-submit",
+        "/home/lishuo/cs5488-round1/env/lib/python3.11/site-packages/pyspark/bin/spark-submit",
+        "--cleanup",
+        "retain",
+        "--min-free-gib",
+        "4",
+        "--spark-master",
+        "spark://192.168.20.130:7077",
+        "--spark-conf",
+        "spark.ui.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.enabled=true",
+        "--spark-conf",
+        "spark.eventLog.compress=false",
+        "--spark-conf",
+        "spark.eventLog.rolling.enabled=false",
+        "--spark-conf",
+        "spark.eventLog.dir=file:/data/cs5488/monthly_validation/rolling_v1_20261113_task3/event-logs/D4",
+        "--spark-conf",
+        "spark.driver.host=192.168.20.130",
+        "--spark-conf",
+        "spark.driver.bindAddress=0.0.0.0",
+        "--spark-conf",
+        "spark.driver.port=39000",
+        "--spark-conf",
+        "spark.driver.blockManager.port=39001"
+      ],
+      "host": "spark-master",
+      "started_at": "2026-11-13T04:56:44.039673+00:00",
+      "environment": {
+        "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64",
+        "SPARK_CONF_DIR": "/data/cs5488/monthly_validation/rolling_v1_20261113_task3/spark-conf",
+        "SPARK_LOCAL_DIRS": "/home/lishuo/cs5488-cluster/local/rolling_v1_20261113_task3_D4",
+        "TMPDIR": "/data/cs5488/monthly_validation/rolling_v1_20261113_task3/tmp/D4"
+      },
+      "exit_code": 0,
+      "elapsed_seconds": 71.97451657900001
+    }
+  },
+  "note": "One functional sample, not repeated performance testing. L4 reused from accepted task2 tail. Services restored separately.",
+  "service_lifecycle": {
+    "original": {
+      "Master": "stopped",
+      "Worker1": "stopped",
+      "Worker2": "stopped"
+    },
+    "started_for_this_task": [
+      "Master",
+      "Worker1",
+      "Worker2"
+    ],
+    "restored_to_stopped": true,
+    "history_server_touched": false,
+    "restore_logs": {
+      "master_restored.log": "af3f598de8583842461a74d11962fb7c1ad4a7bdbaf451cb5252ef9f51d3b333",
+      "worker1_restored.log": "c7d1526acb7150ee676af700c2c755a28fdef2626b2f16499506f027edc3f439",
+      "worker2_restored.log": "c7d1526acb7150ee676af700c2c755a28fdef2626b2f16499506f027edc3f439"
+    }
+  }
+}
