@@ -136,7 +136,7 @@ def main():
                   "additional_final_merge_outputs_and_peak_temp_are_not_included": True,
                   "two_day_merge": status["two_day_check"],
                   "final_merge_sampled_temp_peak_bytes": summary.get("max_merge_temp_bytes"),
-                  "note": "Linear estimates use one week; archive sizes and merge requirements vary."}
+                  "note": "Linear estimates use the measured date range; archive sizes and merge requirements vary."}
     save_json(args.root / "size_projection.json", projection)
 
     files = [final / "repo_daily_counts.parquet", final / "repo_candidates.csv", final / "coverage.json",
@@ -163,7 +163,7 @@ def main():
     table = "\n".join(f"| {row['date_utc']} | {row['hours']} | {row['daily_clean_events']:,} | "
                       f"{row['daily_group_rows']:,} | {row['raw_bytes'] / GIB:.2f} | "
                       f"{row['max_day_output_sampled_bytes'] / GIB:.2f} |" for row in rows)
-    readme = f"""# 2024 年 1 月 15—21 日数据交接
+    readme = f"""# {summary['days'][0]} 至 {summary['days'][-1]} 数据交接
 
 这次处理包含 {len(rows)} 个 UTC 日期、{sum(row['hours'] for row in rows)} 个已校验小时档案。单日结果先用相同规则清洗，再按完整事件指纹做跨日去重。跨日合并后有 **{summary['final_events']:,} 条事件**，覆盖 **{summary['candidate_repositories']:,} 个仓库**。
 
@@ -175,7 +175,7 @@ def main():
 ├── archive_ingest_timings.csv  后续日期逐小时档案的读取、解析和写库耗时
 ├── merge_timings.csv         跨日去重、输出和对账各阶段的实际耗时
 ├── size_projection.json      30 天空间粗估，未包含最终合并峰值
-├── 2024-01-15/ ... 2024-01-21/
+├── {summary['days'][0]}/ ... {summary['days'][-1]}/
 │   ├── accepted.json         每日验收结果与保留文件哈希
 │   ├── index-01.parquet      全部有效记录的跨日去重索引，含当天冲突 ID
 │   ├── cleanup_plan.json     当天清理前列出的文件及占用
@@ -201,7 +201,7 @@ def main():
 
 表中的单日数字是在跨日去重之前。最终事件 ID 唯一，日汇总总数和候选表事件数都与最终事件总数一致，详细检查见 `summary.json`。索引保留清洗前所有有效记录的 ID、完整记录指纹和来源，冲突 ID 的每条出现都会排除。
 
-1 月 15 日的原始档案和原基准保留。1 月 16—21 日的原始档案在当日验收和两日合并通过后按清单清理，仍可用 `input_manifest.csv` 重新下载。每日报告、异常和清洗事件保留，本轮 SQLite 过程库和重复的 CSV 导出已按 `cleanup_done.json` 清理。
+原始档案在当日验收和实际首两日合并通过后按清单清理；若范围包含旧的 2024-01-15 基准日，该日原始档案仍保留。可用 `input_manifest.csv` 重新下载。每日报告、异常和清洗事件保留，本轮 SQLite 过程库和重复的 CSV 导出已按 `cleanup_done.json` 清理。
 
 ## 实测耗时
 
@@ -209,7 +209,7 @@ def main():
 |---|---:|---:|---:|---:|
 {daily_timing_table}
 
-1 月 15 日复用已有档案。表中下载阶段包含传输、gzip 完整性检查与 SHA-256 计算。原始检查和清洗分别读取输入。四列相加约 **{minutes:.1f} 分钟**，统计各日通过验收的尝试，包含单日索引导出，跨日合并另计。`daily_pipeline_wall_seconds` 记录该日管道从启动到完成的时间，也覆盖阶段开始前的输入哈希与管道开销。磁盘占用按约 15 秒采样，可能漏掉短暂峰值。
+旧的 2024-01-15 基准日可复用已有档案。表中下载阶段包含传输、gzip 完整性检查与 SHA-256 计算。原始检查和清洗分别读取输入。四列相加约 **{minutes:.1f} 分钟**，统计各日通过验收的尝试，包含单日索引导出，跨日合并另计。`daily_pipeline_wall_seconds` 记录该日管道从启动到完成的时间，也覆盖阶段开始前的输入哈希与管道开销。磁盘占用按约 15 秒采样，可能漏掉短暂峰值。
 
 清洗内部的实测记录覆盖 {profiled_dates or '已启用细分计时的日期'}，包括逐小时解压、解析和写库，SQLite 去重与聚合，导出以及质量查询。`total_seconds` 包含清洗开始前的输入哈希和各子步骤。较早日期保留阶段总时间。 [逐日计时](day_metrics.csv) · [清洗步骤计时](step_timings.csv) · [逐小时读取计时](archive_ingest_timings.csv)
 
@@ -221,9 +221,9 @@ def main():
 
 后续比较 Spark 时，按 `input_manifest.csv` 的 SHA-256 固定输入，在同一机器、存储和缓存条件下测量同等输出的清洗与导出。用两种实现各自的 `stage_status.json` 对齐计时边界，把下载与原始检查单列。若比较 Spark 并行度，以 Spark 单核的同任务耗时除以多核耗时。若比较跨日合并，需保持事件去重规则、汇总和验收范围一致，现有基线使用 Python 和 DuckDB。
 
-按本周平均值线性外推，30 天原始档案全留约 **{average_raw * 30 / GIB:.1f} GiB**，逐日清理后每天保留的产物合计约 **{average_retained * 30 / GIB:.1f} GiB**。最终合并输出和临时空间需要另算。两日和一周合并的实测记录可用于进一步评估。
+按本次观测日期的平均值线性外推，30 天原始档案全留约 **{average_raw * 30 / GIB:.1f} GiB**，逐日清理后每天保留的产物合计约 **{average_retained * 30 / GIB:.1f} GiB**。最终合并输出和临时空间需要另算。两日和最终合并的实测记录可用于进一步评估。
 
-处理脚本在 `a_data_pipeline/rolling_pipeline/`，使用说明见该目录的 `README.md`。运行结果保存在本机。重新运行入口为 `weekly_orchestrate.py`，它会检查已验收的日期并从失败处继续。日期和批次通用化、Spark 接入的后续任务见代码目录说明。
+处理脚本在 `a_data_pipeline/rolling_pipeline/`，使用说明见该目录的 `README.md`。运行结果保存在本机。重新运行入口为 `weekly_orchestrate.py`，它会检查已验收的日期并从失败处继续。可调批次和 Spark 接入的后续任务见代码目录说明。
 """
     (args.root / "README.md").write_text(readme, encoding="utf-8")
     print(f"Handoff written to {args.root / 'README.md'}", flush=True)

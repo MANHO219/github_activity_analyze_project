@@ -70,10 +70,12 @@ def apply_cleanup(day_string, root, volume, raw_root, proof):
     summary = read_json(proof / "summary.json")
     required_checks = ("complete_hourly_coverage", "all_valid_index_counts_match", "event_ids_unique",
                        "daily_counts_reconcile", "candidate_counts_reconcile")
-    if (not {"2024-01-15", "2024-01-16"}.issubset(set(summary["days"]))
+    proof_days = summary.get("days", [])
+    if (len(proof_days) != 2
+            or date.fromisoformat(proof_days[1]) != date.fromisoformat(proof_days[0]) + timedelta(days=1)
             or not all(summary.get("checks", {}).get(name) is True for name in required_checks)):
         raise RuntimeError("Two-day cross-day validation has not passed")
-    for proof_day in ("2024-01-15", "2024-01-16"):
+    for proof_day in proof_days:
         accepted = accepted_day(root / proof_day)
         expected = {name: accepted["retained_files"][name]["sha256"] for name in ("events", "daily", "valid_index")}
         if summary.get("input_hashes", {}).get(proof_day) != expected:
