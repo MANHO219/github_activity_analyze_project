@@ -1,4 +1,7 @@
-"""Fixed-cohort 90-day lifecycle analysis for AI-related GitHub repositories.
+"""Fixed-cohort lifecycle analysis for AI-related GitHub repositories.
+
+The default stays 3 x 30 days for existing notebooks. Pass window_days=7 for
+3 x 7 days; denominator fields and out-of-window checks follow that horizon.
 
 Round-2 configurable entry point. It takes a fixed AI repository cohort and
 tracks each repository over the three bands after its creation:
@@ -38,7 +41,15 @@ import numpy as np
 import pandas as pd
 
 # name, first age day, last age day (creation day counts as day 1)
-BANDS = (("day_1_30", 1, 30), ("day_31_60", 31, 60), ("day_61_90", 61, 90))
+def bands_for(window_days=30):
+    """Three equal windows; creation day is day 1. Default preserves 90-day APIs."""
+    if type(window_days) is not int or window_days <= 0:
+        raise InputError("window_days must be a positive integer")
+    return tuple((f"day_{i * window_days + 1}_{(i + 1) * window_days}",
+                  i * window_days + 1, (i + 1) * window_days) for i in range(3))
+
+
+BANDS = bands_for()
 
 BAND_ORDER = [name for name, _, _ in BANDS]
 
@@ -185,7 +196,7 @@ def select_cohort(metadata, labels, cohort_year, created_from, created_to):
 
     reasons = {}
     if "fetch_status" in meta.columns:
-        bad_status = meta["fetch_status"].astype("string").str.lower().ne("ok")
+        bad_status = meta["fetch_status"].astype("string").str.strip().str.lower().isin(["ok", "ok_cached"]).eq(False)
         reasons["fetch_status_not_ok"] = int(bad_status.sum())
     else:
         bad_status = pd.Series(False, index=meta.index)
@@ -231,6 +242,8 @@ def select_cohort(metadata, labels, cohort_year, created_from, created_to):
     end = to_utc_day(created_to)
     if end < start:
         raise InputError("created_to must not be earlier than created_from")
+    if start.year != int(cohort_year) or end.year != int(cohort_year):
+        raise InputError("Creation range must belong to cohort_year")
 
     in_range = included["repo_created_day"].between(start, end)
     reasons["out_of_range"] = int((~in_range).sum())
@@ -278,12 +291,14 @@ def _cohort_events_by_repo(cohort, daily):
     return {rid: rows for rid, rows in selected.groupby("repo_id")}
 
 
-def per_repo_stage_table(cohort, daily, coverage, cohort_year, data_kind):
+def per_repo_stage_table(cohort, daily, coverage, cohort_year, data_kind, *, window_days=30):
     """Build the fixed cohort x 3 bands table, incl. coverage status per band.
 
     Every cohort repository gets exactly three rows, even if it has no event
     rows at all. Counts are computed inside the UTC day window of each band.
     """
+    bands = bands_for(window_days)
+    band_order = [name for name, _, _ in bands]
     complete_days = set(coverage["complete_days"])
     by_repo = _cohort_events_by_repo(cohort, daily)
 
@@ -294,7 +309,7 @@ def per_repo_stage_table(cohort, daily, coverage, cohort_year, data_kind):
         if repo_events is None:
             repo_events = daily.iloc[0:0]
 
-        for band_name, lo, hi in BANDS:
+        for band_name, lo, hi in bands:
             required = [created + pd.Timedelta(days=offset) for offset in range(lo - 1, hi)]
             covered = sum(1 for day in required if day in complete_days)
             complete = covered == len(required)
@@ -321,12 +336,14 @@ def per_repo_stage_table(cohort, daily, coverage, cohort_year, data_kind):
             )
 
     table = pd.DataFrame.from_records(records, columns=STAGE_COLUMNS)
-    table["band"] = pd.Categorical(table["band"], categories=BAND_ORDER, ordered=True)
+    table["band"] = pd.Categorical(table["band"], categories=band_order, ordered=True)
     return table.sort_values(["repo_id", "band"]).reset_index(drop=True)
 
 
-def out_of_band_events(cohort, daily):
-    """Events before creation (``pre_creation``) or after day 90 (``beyond_90``)."""
+def out_of_band_events(cohort, daily, *, window_days=30):
+    """Events before creation or beyond the configured three-window horizon."""
+    horizon = bands_for(window_days)[-1][2]
+    beyond_column = f"beyond_{horizon}_events"
     records = []
     by_repo = _cohort_events_by_repo(cohort, daily)
     for rec in cohort.itertuples(index=False):
@@ -336,18 +353,18 @@ def out_of_band_events(cohort, daily):
             continue
         age = (repo_events["event_date"] - created).dt.days + 1
         pre = int(repo_events.loc[age < 1, "event_count"].sum())
-        beyond = int(repo_events.loc[age > 90, "event_count"].sum())
+        beyond = int(repo_events.loc[age > horizon, "event_count"].sum())
         if pre or beyond:
             records.append(
-                dict(repo_id=rec.repo_id, pre_creation_events=pre, beyond_90_events=beyond)
+                dict(repo_id=rec.repo_id, pre_creation_events=pre, **{beyond_column: beyond})
             )
-    return pd.DataFrame(records, columns=["repo_id", "pre_creation_events", "beyond_90_events"])
+    return pd.DataFrame(records, columns=["repo_id", "pre_creation_events", beyond_column])
 
 
 # --------------------------------------------------------------------------- #
 # cohort aggregation
 # --------------------------------------------------------------------------- #
-def aggregate_cohort(stage_table, cohort_size, *, cohort_year=None, data_kind=None):
+def aggregate_cohort(stage_table, cohort_size, *, cohort_year=None, data_kind=None, window_days=None):
     """Aggregate the cohort per band around one fixed official denominator.
 
     The official comparison tracks the **same** repositories in all three bands,
@@ -360,6 +377,10 @@ def aggregate_cohort(stage_table, cohort_size, *, cohort_year=None, data_kind=No
     preserving the original helper interface. An empty cohort needs the explicit
     context supplied by ``analyze_cohort`` and produces three not-computable rows.
     """
+    if window_days is None:
+        window_days = int(stage_table["band_day_end"].max()) // 3 if not stage_table.empty else 30
+    bands = bands_for(window_days)
+    horizon = bands[-1][2]
     if cohort_year is None or data_kind is None:
         if stage_table.empty:
             raise InputError("cohort_year and data_kind are required for an empty stage table")
@@ -372,7 +393,7 @@ def aggregate_cohort(stage_table, cohort_size, *, cohort_year=None, data_kind=No
     n_official = len(official_ids)
 
     rows = []
-    for band_name in BAND_ORDER:
+    for band_name, _, _ in bands:
         band = stage_table[stage_table["band"] == band_name]
         official = band[band["repo_id"].isin(official_ids)]
 
@@ -386,8 +407,8 @@ def aggregate_cohort(stage_table, cohort_size, *, cohort_year=None, data_kind=No
                 data_kind=data_kind,
                 band=band_name,
                 cohort_size=int(cohort_size),
-                complete_90d_repos=n_official,
-                not_complete_90d_repos=int(cohort_size) - n_official,
+                **{f"complete_{horizon}d_repos": n_official,
+                   f"not_complete_{horizon}d_repos": int(cohort_size) - n_official},
                 active_repos=active,
                 active_ratio=(active / n_official) if n_official else np.nan,
                 total_events_sum=int(events.sum()) if n_official else np.nan,
@@ -414,6 +435,9 @@ def analyze_cohort(
     created_from,
     created_to,
     data_kind="Testing Data",
+    *,
+    window_days=30,
+    cohort_path=None,
 ):
     """Run the fixed-cohort 90-day analysis for one year and one input set.
 
@@ -429,13 +453,24 @@ def analyze_cohort(
     cohort, exclusions = select_cohort(
         metadata, labels, cohort_year, created_from, created_to
     )
-    stage_table = per_repo_stage_table(cohort, daily, coverage, cohort_year, data_kind)
+    if cohort_path is not None:
+        frozen = pd.read_csv(cohort_path)
+        _require_unique(frozen, "repo_id", "frozen cohort")
+        missing = set(frozen["repo_id"]) - set(cohort["repo_id"])
+        if missing:
+            raise InputError(f"Frozen cohort has IDs failing metadata/label/date validation: {sorted(missing)[:10]}")
+        exclusions["outside_frozen_cohort"] = len(cohort) - len(frozen)
+        cohort = cohort[cohort["repo_id"].isin(frozen["repo_id"])].copy()
+        exclusions["cohort_size"] = len(cohort)
+    stage_table = per_repo_stage_table(cohort, daily, coverage, cohort_year, data_kind, window_days=window_days)
     aggregate = aggregate_cohort(
-        stage_table, cohort_size=len(cohort), cohort_year=cohort_year, data_kind=data_kind
+        stage_table, cohort_size=len(cohort), cohort_year=cohort_year, data_kind=data_kind, window_days=window_days
     )
-    out_of_band = out_of_band_events(cohort, daily)
+    out_of_band = out_of_band_events(cohort, daily, window_days=window_days)
 
     return {
+        "window_days": window_days,
+        "observation_days": 3 * window_days,
         "cohort_year": int(cohort_year),
         "data_kind": data_kind,
         "cohort": cohort,

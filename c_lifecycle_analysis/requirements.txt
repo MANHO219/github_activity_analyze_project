@@ -1,6 +1,6 @@
 # Dependencies for lifecycle_analysis.ipynb and cohort_90d_analysis.ipynb
 # (cohort_analysis.py uses the same set)
-pandas
+pandas>=2.3.3,<3
 numpy
 matplotlib
 pyarrow

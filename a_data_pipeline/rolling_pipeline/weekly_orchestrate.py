@@ -47,32 +47,44 @@ def main():
     parser.add_argument("--root", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--volume", type=Path, default=DEFAULT_VOLUME)
     parser.add_argument("--raw-root", type=Path, default=DEFAULT_RAW)
+    parser.add_argument("--plan-only", action="store_true", help="Print dates and paths without downloading or changing files")
     args = parser.parse_args()
     start, end = date.fromisoformat(args.start), date.fromisoformat(args.end)
-    if start != date(2024, 1, 15) or end < date(2024, 1, 16):
-        parser.error("This pilot starts on 2024-01-15 and requires at least two days")
+    if end < start + timedelta(days=1):
+        parser.error("The rolling pipeline requires at least two consecutive UTC days")
+    first_two = [start.isoformat(), (start + timedelta(days=1)).isoformat()]
+    days = [(start + timedelta(days=offset)).isoformat() for offset in range((end - start).days + 1)]
+    if args.plan_only:
+        import json
+        print(json.dumps({"start": args.start, "end": args.end, "days": days,
+                          "first_two_days": first_two, "requested_hours": len(days) * 24,
+                          "root": str(args.root.resolve()), "raw_root": str(args.raw_root.resolve())}, indent=2))
+        return
+    previous = args.root / "orchestration.json"
+    if previous.exists() and read_json(previous).get("start") != args.start:
+        parser.error("Existing run uses a different start date; choose a new --root")
     args.root.mkdir(parents=True, exist_ok=True)
     status = {"start": args.start, "end": args.end, "state": "running", "stage": "first_two_days"}
     save_json(args.root / "orchestration.json", status)
     common = ["--output", args.root, "--volume", args.volume, "--raw-root", args.raw_root]
     cleanup_args = ["--root", args.root, "--volume", args.volume, "--raw-root", args.raw_root]
     try:
-        run("weekly_pipeline.py", "--start", "2024-01-15", "--end", "2024-01-16", *common)
-        for day in ("2024-01-15", "2024-01-16"):
+        run("weekly_pipeline.py", "--start", first_two[0], "--end", first_two[1], *common)
+        for day in first_two:
             validate_input_snapshots(read_json(args.root / day / "accepted.json")["attempt"])
             if not (args.root / day / "cleanup_plan.json").exists():
                 run("weekly_cleanup.py", "--start", day, "--end", day, *cleanup_args)
         status["stage"] = "two_day_cross_check"
         save_json(args.root / "orchestration.json", status)
-        proof = completed_output(args.root, "two_day_check_", ["2024-01-15", "2024-01-16"])
+        proof = completed_output(args.root, "two_day_check_", first_two)
         if proof is None:
             proof = new_output(args.root, "two_day_check")
-            run("weekly_merge.py", "--start", "2024-01-15", "--end", "2024-01-16",
+            run("weekly_merge.py", "--start", first_two[0], "--end", first_two[1],
                 "--root", args.root, "--output", proof)
-        for day in ("2024-01-15", "2024-01-16"):
+        for day in first_two:
             run("weekly_cleanup.py", "--start", day, "--end", day, *cleanup_args, "--apply", "--proof", proof)
 
-        current = date(2024, 1, 17)
+        current = start + timedelta(days=2)
         while current <= end:
             day = current.isoformat()
             status["stage"] = day
