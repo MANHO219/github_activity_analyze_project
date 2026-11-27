@@ -1,5 +1,6 @@
 """Adversarial fixtures assert known outcomes, not merely implementation agreement."""
 import copy
+from contextlib import closing
 import csv
 import gzip
 import io
@@ -81,7 +82,7 @@ class SampleTests(unittest.TestCase):
         self.assertEqual(summary["time_outside_file_hour_clean"], 1)
         self.assertEqual(len((out / "rejected_records.jsonl").read_text().splitlines()), 6)
         self.assertEqual(len((out / "conflicting_records.jsonl").read_text().splitlines()), 2)
-        with sqlite3.connect(out / "working.sqlite3") as db:
+        with closing(sqlite3.connect(out / "working.sqlite3")) as db:
             self.assertEqual(db.execute("SELECT COUNT(*) FROM valid_events").fetchone()[0], 8)
         with (out / "repo_candidates.csv").open() as handle:
             candidates = {r["repo_id"]: r for r in csv.DictReader(handle)}
@@ -139,6 +140,13 @@ class SampleTests(unittest.TestCase):
         self.assertEqual(path.read_bytes(), b"not a gzip")
 
     def test_download_request_preserves_manifest_and_raw_data(self):
+        probe = self.root / "hardlink-capability-probe"
+        try:
+            os.link(self.raw / "2024-01-15-2.json.gz", probe)
+        except OSError as error:
+            self.skipTest(f"Historical downloader requires hard links, unavailable here: {error}")
+        else:
+            probe.unlink()
         payload = (self.raw / "2024-01-15-2.json.gz").read_bytes()
         class Response(io.BytesIO):
             status = 200

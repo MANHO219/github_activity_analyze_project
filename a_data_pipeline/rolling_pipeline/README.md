@@ -4,6 +4,8 @@
 
 本目录从 A 的本机 `local_tools/` 中整理而来。公共读取和清洗规则仍由 `../gharchive_a/` 提供，原始档案和运行产物写入独立数据目录。
 
+D 新增的 `batch_support.py`、`batch_download.py`、`batch_merge.py` 由[通用滚动入口](../../d_parallel_experiments/docs/monthly_pipeline.md)调用，支持 UTC 半开区间和可选小时批次。它使用现有 Spark/Python 清洗及新增 Python/SQLite 最终合并；本地合成验证与真实 VM 验收分开记录。下文 `weekly_*` 的历史命令、固定日期和包含式 `--end` 保持不变。
+
 ## 文件和调用关系
 
 ```text

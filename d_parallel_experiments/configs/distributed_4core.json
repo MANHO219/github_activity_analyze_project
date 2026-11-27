@@ -1,0 +1,15 @@
+{
+  "name": "D4",
+  "master": "spark://${SPARK_MASTER_HOST}:7077",
+  "driver_memory": "2g",
+  "conf": {
+    "spark.cores.max": "4",
+    "spark.executor.cores": "2",
+    "spark.executor.memory": "2g",
+    "spark.dynamicAllocation.enabled": "false",
+    "spark.sql.shuffle.partitions": "12",
+    "spark.sql.adaptive.enabled": "false",
+    "spark.sql.session.timeZone": "UTC",
+    "spark.sql.parquet.outputTimestampType": "TIMESTAMP_MICROS"
+  }
+}

@@ -1,0 +1,509 @@
+{
+  "format": "rolling-execution-local-v1",
+  "started_at": "2026-11-12T10:39:04.883936+00:00",
+  "evidence_directory": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\local_only\\execution_20261112_103904_6b228d",
+  "host": {
+    "hostname": "LAPTOP-8S5DLP81",
+    "cpu_count": 24,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.9",
+    "sqlite": "3.51.0",
+    "packages": {
+      "pyarrow": "21.0.0",
+      "pyspark": null,
+      "duckdb": null
+    },
+    "meminfo": null
+  },
+  "deployment_state": "not_deployed",
+  "remote_state": "blocked_before_ssh_handshake",
+  "remote_observations": [
+    {
+      "host": "192.168.20.130",
+      "ssh_exit_code": 1,
+      "ssh_output": "ssh: connect to host 192.168.20.130 port 22: Permission denied",
+      "socket_error_type": "PermissionError",
+      "socket_errno": 13,
+      "socket_winerror": 10013,
+      "source": "observed in preceding tool calls; not an authentication failure",
+      "host_identity_verified": false,
+      "command": [
+        "ssh",
+        "-i",
+        "C:\\Users\\lenovo\\.ssh\\cs5488_d_round1",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "lishuo@192.168.20.130",
+        "hostname"
+      ],
+      "socket_probe": "socket.create_connection((host,22),timeout=3)"
+    },
+    {
+      "host": "192.168.20.129",
+      "ssh_exit_code": 1,
+      "ssh_output": "ssh: connect to host 192.168.20.129 port 22: Permission denied",
+      "socket_error_type": "PermissionError",
+      "socket_errno": 13,
+      "socket_winerror": 10013,
+      "source": "observed in preceding tool calls; not an authentication failure",
+      "host_identity_verified": false,
+      "command": [
+        "ssh",
+        "-i",
+        "C:\\Users\\lenovo\\.ssh\\cs5488_d_round1",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "lishuo@192.168.20.129",
+        "hostname"
+      ],
+      "socket_probe": "socket.create_connection((host,22),timeout=3)"
+    },
+    {
+      "host": "192.168.20.131",
+      "ssh_exit_code": 1,
+      "ssh_output": "ssh: connect to host 192.168.20.131 port 22: Permission denied",
+      "socket_error_type": "PermissionError",
+      "socket_errno": 13,
+      "socket_winerror": 10013,
+      "source": "observed in preceding tool calls; not an authentication failure",
+      "host_identity_verified": false,
+      "command": [
+        "ssh",
+        "-i",
+        "C:\\Users\\lenovo\\.ssh\\cs5488_d_round1",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "lishuo@192.168.20.131",
+        "hostname"
+      ],
+      "socket_probe": "socket.create_connection((host,22),timeout=3)"
+    }
+  ],
+  "checks": [
+    {
+      "name": "git_status",
+      "command": [
+        "git",
+        "status",
+        "--short",
+        "--branch"
+      ],
+      "started_at": "2026-11-12T10:39:05.330779+00:00",
+      "finished_at": "2026-11-12T10:39:05.430811+00:00",
+      "elapsed_seconds": 0.10004849999995713,
+      "exit_code": 0,
+      "log": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\local_only\\execution_20261112_103904_6b228d\\git_status.log",
+      "log_sha256": "9eff8d643565e8ddf171e17a2bdcbfeb4e220c490d99d5dae397820a1051d30f"
+    },
+    {
+      "name": "git_head",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "started_at": "2026-11-12T10:39:05.431652+00:00",
+      "finished_at": "2026-11-12T10:39:05.470703+00:00",
+      "elapsed_seconds": 0.03906290000008994,
+      "exit_code": 0,
+      "log": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\local_only\\execution_20261112_103904_6b228d\\git_head.log",
+      "log_sha256": "ac3b4a0ca46be9d4bc6a2f3a8815656f2bfba74938bd7320d6a5f85dcf3675de"
+    },
+    {
+      "name": "untracked",
+      "command": [
+        "git",
+        "ls-files",
+        "--others",
+        "--exclude-standard"
+      ],
+      "started_at": "2026-11-12T10:39:05.471358+00:00",
+      "finished_at": "2026-11-12T10:39:05.535512+00:00",
+      "elapsed_seconds": 0.0641665999999077,
+      "exit_code": 0,
+      "log": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\local_only\\execution_20261112_103904_6b228d\\untracked.log",
+      "log_sha256": "2102e68961729bd92de25fb778ff094e48e58874902c603a410a075200b63852"
+    },
+    {
+      "name": "ignored",
+      "command": [
+        "git",
+        "ls-files",
+        "--others",
+        "--ignored",
+        "--exclude-standard"
+      ],
+      "started_at": "2026-11-12T10:39:05.536197+00:00",
+      "finished_at": "2026-11-12T10:39:05.653254+00:00",
+      "elapsed_seconds": 0.11706870000011804,
+      "exit_code": 0,
+      "log": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\local_only\\execution_20261112_103904_6b228d\\ignored.log",
+      "log_sha256": "386da97e7b9e571704d961bccf92c34991b4473a91a41830cf41a7b0f584ccbd"
+    },
+    {
+      "name": "diff_check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started_at": "2026-11-12T10:39:05.654011+00:00",
+      "finished_at": "2026-11-12T10:39:05.781847+00:00",
+      "elapsed_seconds": 0.12784609999994245,
+      "exit_code": 0,
+      "log": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\local_only\\execution_20261112_103904_6b228d\\diff_check.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "D_tests",
+      "command": [
+        "E:\\Anaconda\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "d_parallel_experiments/tests",
+        "-v"
+      ],
+      "started_at": "2026-11-12T10:39:05.782526+00:00",
+      "finished_at": "2026-11-12T10:39:48.639982+00:00",
+      "elapsed_seconds": 42.85746989999984,
+      "exit_code": 0,
+      "log": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\local_only\\execution_20261112_103904_6b228d\\D_tests.log",
+      "log_sha256": "3bd916aed6243b3de620c4f4a32dc9da9bce03d6dde45b6a97cd7650b94cb397",
+      "tests_run": 26,
+      "test_reported_seconds": 36.003,
+      "skipped_lines": [],
+      "skipped": 0
+    },
+    {
+      "name": "A_tests",
+      "command": [
+        "E:\\Anaconda\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "a_data_pipeline/tests",
+        "-v"
+      ],
+      "started_at": "2026-11-12T10:39:48.640798+00:00",
+      "finished_at": "2026-11-12T10:39:50.391198+00:00",
+      "elapsed_seconds": 1.7504112000001442,
+      "exit_code": 0,
+      "log": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\local_only\\execution_20261112_103904_6b228d\\A_tests.log",
+      "log_sha256": "f21a260eafa5810716bc089fd29c97b9c99185e4b9b7dc4a6191682d9760cf36",
+      "tests_run": 8,
+      "test_reported_seconds": 1.336,
+      "skipped_lines": [
+        "test_download_request_preserves_manifest_and_raw_data (test_pipeline.SampleTests.test_download_request_preserves_manifest_and_raw_data) ... skipped \"Historical downloader requires hard links, unavailable here: [WinError 5] 拒绝访问。: 'E:\\\\\\\\Vibecoding_codex\\\\\\\\cs5488proj\\\\\\\\d_parallel_experiments\\\\\\\\local_only\\\\\\\\execution_20261112_103904_6b228d\\\\\\\\tmp\\\\\\\\tmpr7_widbc\\\\\\\\raw\\\\\\\\2024-01-15-2.json.gz' -> 'E:\\\\\\\\Vibecoding_codex\\\\\\\\cs5488proj\\\\\\\\d_parallel_experiments\\\\\\\\local_only\\\\\\\\execution_20261112_103904_6b228d\\\\\\\\tmp\\\\\\\\tmpr7_widbc\\\\\\\\hardlink-capability-probe'\"",
+        "test_spark_and_reference_agree_on_adversarial_inputs (test_pipeline.SampleTests.test_spark_and_reference_agree_on_adversarial_inputs) ... skipped 'Set RUN_SPARK_TESTS=1 for local Spark fixture verification'"
+      ],
+      "skipped": 2
+    },
+    {
+      "name": "profiled_test",
+      "command": [
+        "E:\\Anaconda\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "a_data_pipeline/rolling_pipeline/tests",
+        "-p",
+        "test_profiled_run.py",
+        "-v"
+      ],
+      "started_at": "2026-11-12T10:39:50.392056+00:00",
+      "finished_at": "2026-11-12T10:39:54.218667+00:00",
+      "elapsed_seconds": 3.8266227999999956,
+      "exit_code": 0,
+      "log": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\local_only\\execution_20261112_103904_6b228d\\profiled_test.log",
+      "log_sha256": "1fbe15b29bed33accc4fced597e505c8a3452e793e0c9f47376f45795e11317c",
+      "tests_run": 1,
+      "test_reported_seconds": 3.23,
+      "skipped_lines": [],
+      "skipped": 0
+    },
+    {
+      "name": "worker_evidence_after_fix",
+      "command": [
+        "E:\\Anaconda\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "d_parallel_experiments/tests",
+        "-p",
+        "test_batch_pipeline.py",
+        "-k",
+        "WorkerEvidenceTests",
+        "-v"
+      ],
+      "started_at": "2026-11-12T10:40:33.366157+00:00",
+      "finished_at": "2026-11-12T10:40:34.376588+00:00",
+      "elapsed_seconds": 1.010447699999986,
+      "exit_code": 0,
+      "tests_run": 2,
+      "skipped": 0,
+      "log": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\local_only\\execution_20261112_103904_6b228d\\worker_evidence_after_fix.log",
+      "log_sha256": "e5193328eb93067db910aa96b85baa641c59f2f0b83c6efe4989718bcbacebf3"
+    }
+  ],
+  "test_environment_overrides": {
+    "TMP": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\local_only\\execution_20261112_103904_6b228d\\tmp",
+    "TEMP": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\local_only\\execution_20261112_103904_6b228d\\tmp",
+    "PYTHONUTF8": "1"
+  },
+  "finished_at": "2026-11-12T10:43:39.301684+00:00",
+  "local_change": {
+    "file": "d_parallel_experiments/scripts/summarize_results.py",
+    "behavior": "Require two distinct nonempty worker hosts before reading evidence",
+    "regression": "new test rejected the original implementation; both worker evidence tests pass after repair",
+    "boundary": "synthetic log validation only; no real Worker participation established"
+  },
+  "baseline_source_verification": {
+    "files": 50,
+    "mismatches": [],
+    "members_match": true,
+    "embedded_manifest_match": true,
+    "runtime_identity_matches": true,
+    "runtime_identity": {
+      "rule_version": "a-events-v1",
+      "source_sha256_lf": {
+        "a_data_pipeline/gharchive_a/__init__.py": "d7f29377789a470ff76b7cc18e8a601fd80bba23b5bddafe122845a99e208654",
+        "a_data_pipeline/gharchive_a/clean.py": "a8bb6b4acd69f75b211a5573cc8ab63a75b43071c1516f4d17153933fd186d4b",
+        "a_data_pipeline/gharchive_a/cli.py": "aba9053e996dd3be7e40dd9c0e93d1754810a08316a9cf92a4037cfa315c6f3b",
+        "a_data_pipeline/gharchive_a/common.py": "0f2d93af59980ec8de55239cb247e5399055e15c0cdefac9551f4ed04a4ba7d0",
+        "a_data_pipeline/gharchive_a/compare.py": "603479a3f054d0724b95021243d51759ebea6027c1343ea1d5824a4256a827ee",
+        "a_data_pipeline/gharchive_a/download.py": "cb66133542d0d03b729cd2d3add472c68a1fb1f5f6aff3c7673a4b36288da198",
+        "a_data_pipeline/gharchive_a/export.py": "619a087357da3da9b3a00d2fd57bc1074dbfb61163af9ca1abbc8b3f2ecfa0e4",
+        "a_data_pipeline/gharchive_a/inspect.py": "b257257f43d222d6baba510b23183f4c01d4d8107d25321a099363ae5a790b75",
+        "a_data_pipeline/gharchive_a/records.py": "024d5d88f69a411ea4b3583fd27405d3ce9f06b1fd3fb79a8eb30ff750e0b1a0",
+        "a_data_pipeline/gharchive_a/spark_clean.py": "6f614a231798dbbf9bd83605f57875aae48452efd46daded7a92ca12724dc54f",
+        "a_data_pipeline/rolling_pipeline/batch_download.py": "e961c3097342c2ba16e86db87c2866d893213e7c3215cf6552c97276f081b04d",
+        "a_data_pipeline/rolling_pipeline/batch_merge.py": "ec20fa460d0d984e3158270c474ef4c05c6084eae92e54b0ccd5b23df82455ca",
+        "a_data_pipeline/rolling_pipeline/batch_support.py": "730cc25226e123a6f96d72944587bd377bbeedf907911eb03e0d21da33d64748",
+        "d_parallel_experiments/scripts/run_batch_pipeline.py": "e6ebdf4cc54bf9d25e8f8856b8cc531862a195aab4587085cb616952cee78671",
+        "d_parallel_experiments/scripts/spark_batch_job.py": "c5da63d56550c56aca95a637bc5b3ad7fbe7b7a7cc224998ab57fae13030b85c",
+        "d_parallel_experiments/scripts/summarize_results.py": "12c26e6a5c450acc1f60312691d8321d1c7eaa57cd7278ca6206419d645c81b8",
+        "d_parallel_experiments/scripts/verify_results.py": "c8fc25e51cc1d2b39ca942aaaa74d4928217c7fd74700f6d59b98ea441981885"
+      },
+      "sha256": "d2d68b14569835a0f4b2761b532c4b6297b50c1e7669e149899c69f378899afb"
+    },
+    "archive_sha256": "4ba1ed22753153e98a528e00dabd7ba4f0d4e72c28bc17907c1139d542ece29b",
+    "manifest_sha256": "d067396d2d08730e0f66650a19124c555e6a336d5e047d657bb16f37f3d49ee9",
+    "scope": "Before this execution repaired summarize_results.py and updated documentation; not the current source identity"
+  },
+  "historical_cleaner_verification": {
+    "file_count": 10,
+    "result": "all matched historical LF manifest",
+    "details": {
+      "normalization": "CRLF to LF for source code only",
+      "sha256_raw": {
+        "a_data_pipeline/gharchive_a/clean.py": "a18528605a29b640c83cdb84cf6c8a5bae6a87fb70759258a692464a9df5f35d",
+        "a_data_pipeline/gharchive_a/cli.py": "b810e0797966250e1afde3dafb06878a899e134d94c76627cd9f9db067960fb4",
+        "a_data_pipeline/gharchive_a/common.py": "911f311b291e69135f37c23d9194c605eba952f133ba148a7e6011365e76cd23",
+        "a_data_pipeline/gharchive_a/compare.py": "9c076d983cbedb33f0dc551606dd908ff11f25f2324d994dd45fc8ca8df0ad35",
+        "a_data_pipeline/gharchive_a/download.py": "30fd57a5cb8b229f703af8d0f978018826a4ce3fb395bdd21eecef6024d9ed5c",
+        "a_data_pipeline/gharchive_a/export.py": "58aa0ccc74c2e854596685da7e9cf61838404cec80ad7e40ea7a8eb8bf9e1d6c",
+        "a_data_pipeline/gharchive_a/inspect.py": "b10de178dd4da4ac1758427b12f9b524e00485bfe1550960382af328ff377c25",
+        "a_data_pipeline/gharchive_a/records.py": "dc6b9da207373994d481022274339c8c795875ca14a1824df5332a7c3b0ff20d",
+        "a_data_pipeline/gharchive_a/spark_clean.py": "d72841b42e4da5916d81b7c2289a1fcccc3e6781f7e8735f5a25155a78b9bb60",
+        "a_data_pipeline/gharchive_a/__init__.py": "ec8784c2124b4e39cd545ca3c152974b1ae202cdb1dc0352ef874f8bccda604c"
+      },
+      "sha256_lf": {
+        "a_data_pipeline/gharchive_a/clean.py": "a8bb6b4acd69f75b211a5573cc8ab63a75b43071c1516f4d17153933fd186d4b",
+        "a_data_pipeline/gharchive_a/cli.py": "aba9053e996dd3be7e40dd9c0e93d1754810a08316a9cf92a4037cfa315c6f3b",
+        "a_data_pipeline/gharchive_a/common.py": "0f2d93af59980ec8de55239cb247e5399055e15c0cdefac9551f4ed04a4ba7d0",
+        "a_data_pipeline/gharchive_a/compare.py": "603479a3f054d0724b95021243d51759ebea6027c1343ea1d5824a4256a827ee",
+        "a_data_pipeline/gharchive_a/download.py": "cb66133542d0d03b729cd2d3add472c68a1fb1f5f6aff3c7673a4b36288da198",
+        "a_data_pipeline/gharchive_a/export.py": "619a087357da3da9b3a00d2fd57bc1074dbfb61163af9ca1abbc8b3f2ecfa0e4",
+        "a_data_pipeline/gharchive_a/inspect.py": "b257257f43d222d6baba510b23183f4c01d4d8107d25321a099363ae5a790b75",
+        "a_data_pipeline/gharchive_a/records.py": "024d5d88f69a411ea4b3583fd27405d3ce9f06b1fd3fb79a8eb30ff750e0b1a0",
+        "a_data_pipeline/gharchive_a/spark_clean.py": "6f614a231798dbbf9bd83605f57875aae48452efd46daded7a92ca12724dc54f",
+        "a_data_pipeline/gharchive_a/__init__.py": "d7f29377789a470ff76b7cc18e8a601fd80bba23b5bddafe122845a99e208654"
+      }
+    }
+  },
+  "current_source_package": {
+    "archive": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\.deployment\\rolling_v1_20261112_exec01.tar.gz",
+    "manifest": "E:\\Vibecoding_codex\\cs5488proj\\d_parallel_experiments\\.deployment\\rolling_v1_20261112_exec01_manifest.json",
+    "source_files": 50,
+    "archive_sha256": "3939016fa9061f616065414d2246f570f6abff24cc1453f14197ec257c22e586",
+    "manifest_sha256": "6ae39ef07904cc223fa8da24d8497695624db7f415c9622a1cdf0085f11ca84f",
+    "runtime_identity": {
+      "rule_version": "a-events-v1",
+      "source_sha256_lf": {
+        "a_data_pipeline/gharchive_a/__init__.py": "d7f29377789a470ff76b7cc18e8a601fd80bba23b5bddafe122845a99e208654",
+        "a_data_pipeline/gharchive_a/clean.py": "a8bb6b4acd69f75b211a5573cc8ab63a75b43071c1516f4d17153933fd186d4b",
+        "a_data_pipeline/gharchive_a/cli.py": "aba9053e996dd3be7e40dd9c0e93d1754810a08316a9cf92a4037cfa315c6f3b",
+        "a_data_pipeline/gharchive_a/common.py": "0f2d93af59980ec8de55239cb247e5399055e15c0cdefac9551f4ed04a4ba7d0",
+        "a_data_pipeline/gharchive_a/compare.py": "603479a3f054d0724b95021243d51759ebea6027c1343ea1d5824a4256a827ee",
+        "a_data_pipeline/gharchive_a/download.py": "cb66133542d0d03b729cd2d3add472c68a1fb1f5f6aff3c7673a4b36288da198",
+        "a_data_pipeline/gharchive_a/export.py": "619a087357da3da9b3a00d2fd57bc1074dbfb61163af9ca1abbc8b3f2ecfa0e4",
+        "a_data_pipeline/gharchive_a/inspect.py": "b257257f43d222d6baba510b23183f4c01d4d8107d25321a099363ae5a790b75",
+        "a_data_pipeline/gharchive_a/records.py": "024d5d88f69a411ea4b3583fd27405d3ce9f06b1fd3fb79a8eb30ff750e0b1a0",
+        "a_data_pipeline/gharchive_a/spark_clean.py": "6f614a231798dbbf9bd83605f57875aae48452efd46daded7a92ca12724dc54f",
+        "a_data_pipeline/rolling_pipeline/batch_download.py": "e961c3097342c2ba16e86db87c2866d893213e7c3215cf6552c97276f081b04d",
+        "a_data_pipeline/rolling_pipeline/batch_merge.py": "ec20fa460d0d984e3158270c474ef4c05c6084eae92e54b0ccd5b23df82455ca",
+        "a_data_pipeline/rolling_pipeline/batch_support.py": "730cc25226e123a6f96d72944587bd377bbeedf907911eb03e0d21da33d64748",
+        "d_parallel_experiments/scripts/run_batch_pipeline.py": "e6ebdf4cc54bf9d25e8f8856b8cc531862a195aab4587085cb616952cee78671",
+        "d_parallel_experiments/scripts/spark_batch_job.py": "c5da63d56550c56aca95a637bc5b3ad7fbe7b7a7cc224998ab57fae13030b85c",
+        "d_parallel_experiments/scripts/summarize_results.py": "4a416bfcc33ab5ebf856369ebf3cc97b965c1d7f4bf45fd4d3a1e57a5faf2a71",
+        "d_parallel_experiments/scripts/verify_results.py": "c8fc25e51cc1d2b39ca942aaaa74d4928217c7fd74700f6d59b98ea441981885"
+      },
+      "sha256": "b307ff8c73e8d05a11fd6825500b6cf9d7842299c997ad5bdaea2a4744b3d443"
+    },
+    "prepare_elapsed_seconds": 0.12536890000001222,
+    "deployed": false,
+    "verification": "prepare() read back every member; all source sizes and SHA-256 match new manifest"
+  },
+  "syntax_check": {
+    "files": [
+      "a_data_pipeline/rolling_pipeline/batch_support.py",
+      "a_data_pipeline/rolling_pipeline/batch_download.py",
+      "a_data_pipeline/rolling_pipeline/batch_merge.py",
+      "d_parallel_experiments/scripts/run_batch_pipeline.py",
+      "d_parallel_experiments/scripts/spark_batch_job.py",
+      "d_parallel_experiments/scripts/verify_results.py",
+      "d_parallel_experiments/scripts/summarize_results.py",
+      "d_parallel_experiments/scripts/prepare_batch_deployment.py",
+      "d_parallel_experiments/tests/test_batch_pipeline.py"
+    ],
+    "passed": true,
+    "method": "compile source in memory; no execution or VM access"
+  },
+  "task_status": {
+    "2": {
+      "status": "blocked",
+      "completed": "local code/config/test/source review",
+      "not_executed": [
+        "remote preflight",
+        "deployment",
+        "1h L4 smoke",
+        "capacity assessment",
+        "48 archive 6/12/24h Spark runs",
+        "full 2d Python reference",
+        "full exact comparisons"
+      ]
+    },
+    "3": {
+      "status": "blocked",
+      "completed": "shared entry review; reject duplicate worker host arguments; targeted synthetic regression",
+      "not_executed": [
+        "real L1/L4/D4 comparison",
+        "service state management",
+        "real two distinct Worker successful TaskEnd evidence"
+      ]
+    },
+    "4": {
+      "status": "blocked",
+      "completed": "existing local synthetic recovery/cleanup regression rerun",
+      "not_executed": [
+        "cross-host NFS raw/output exclusion",
+        "controlled real task interruption",
+        "real input reuse and accepted-result skip/corruption refusal",
+        "real final merge recovery",
+        "dedicated two-archive raw cleanup and partial-deletion recovery"
+      ]
+    },
+    "5": {
+      "status": "partial",
+      "completed": "actual local test commands, host/software, exits, elapsed times, source hashes, blockers and handoff",
+      "not_measured": [
+        "real input hashes",
+        "download verification",
+        "raw inspection",
+        "Spark clean/export",
+        "batch acceptance",
+        "global dedup",
+        "final aggregate",
+        "real cleanup",
+        "real end-to-end time",
+        "disk peak",
+        "throughput",
+        "real comparison results"
+      ]
+    }
+  },
+  "boundary": "No remote TCP connection established, no deployment, download, Spark execution, VM service mutation or remote deletion. Local synthetic tests are not real Spark/NFS acceptance. No commit/push/PR. No old jobs resumed.",
+  "reviewed_documents": [
+    "d_parallel_experiments/docs/project_handoff_prompt_20261112.md",
+    "d_parallel_experiments/docs/round1_handoff_20261112.md",
+    "d_parallel_experiments/虚拟机与SSH接手说明.md",
+    "README.md",
+    "d_parallel_experiments/README.md",
+    "d_parallel_experiments/六小时实验结果_20261111.md",
+    "d_parallel_experiments/results/python_spark_6h_20261111/README.md",
+    "d_parallel_experiments/运行与复核说明.md",
+    "a_data_pipeline/rolling_pipeline/README.md",
+    "a_data_pipeline/verification/20240115_1week/README.md",
+    "d_parallel_experiments/monthly_spark_execution_plan.md",
+    "d_parallel_experiments/docs/local_validation.md",
+    "d_parallel_experiments/docs/monthly_pipeline.md",
+    "d_parallel_experiments/docs/cluster_setup.md"
+  ],
+  "negative_regression_before_fix": {
+    "command": [
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "d_parallel_experiments/tests",
+      "-p",
+      "test_batch_pipeline.py",
+      "-k",
+      "test_requires_two_distinct_worker_hosts",
+      "-v"
+    ],
+    "tests_run": 1,
+    "failing_subtests": 3,
+    "result": "expected failure before production repair; lack of host validation reproduced",
+    "evidence": "preceding tool output, not a preserved local log"
+  },
+  "final_diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "git_final_status": "## main...origin/main\n M README.md\n M a_data_pipeline/rolling_pipeline/README.md\n M a_data_pipeline/tests/test_pipeline.py\n M d_parallel_experiments/.gitignore\n M d_parallel_experiments/README.md\n?? a_data_pipeline/rolling_pipeline/batch_download.py\n?? a_data_pipeline/rolling_pipeline/batch_merge.py\n?? a_data_pipeline/rolling_pipeline/batch_support.py\n?? d_parallel_experiments/configs/distributed_4core.json\n?? d_parallel_experiments/configs/local_1core.json\n?? d_parallel_experiments/configs/local_4core.json\n?? d_parallel_experiments/docs/\n?? d_parallel_experiments/scripts/prepare_batch_deployment.py\n?? d_parallel_experiments/scripts/run_batch_pipeline.py\n?? d_parallel_experiments/scripts/spark_batch_job.py\n?? d_parallel_experiments/scripts/summarize_results.py\n?? d_parallel_experiments/scripts/verify_results.py\n?? d_parallel_experiments/tests/test_batch_pipeline.py\n",
+  "git_final_untracked_files": [
+    "a_data_pipeline/rolling_pipeline/batch_download.py",
+    "a_data_pipeline/rolling_pipeline/batch_merge.py",
+    "a_data_pipeline/rolling_pipeline/batch_support.py",
+    "d_parallel_experiments/configs/distributed_4core.json",
+    "d_parallel_experiments/configs/local_1core.json",
+    "d_parallel_experiments/configs/local_4core.json",
+    "d_parallel_experiments/docs/cluster_setup.md",
+    "d_parallel_experiments/docs/execution_20261112.md",
+    "d_parallel_experiments/docs/local_validation.md",
+    "d_parallel_experiments/docs/monthly_pipeline.md",
+    "d_parallel_experiments/docs/project_handoff_prompt_20261112.md",
+    "d_parallel_experiments/docs/round1_handoff_20261112.md",
+    "d_parallel_experiments/scripts/prepare_batch_deployment.py",
+    "d_parallel_experiments/scripts/run_batch_pipeline.py",
+    "d_parallel_experiments/scripts/spark_batch_job.py",
+    "d_parallel_experiments/scripts/summarize_results.py",
+    "d_parallel_experiments/scripts/verify_results.py",
+    "d_parallel_experiments/tests/test_batch_pipeline.py"
+  ]
+}
