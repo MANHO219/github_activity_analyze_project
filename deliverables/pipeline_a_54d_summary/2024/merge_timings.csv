@@ -1,0 +1,11 @@
+step,description,seconds
+verify_accepted_inputs,复核已验收的事件表、汇总表和索引的大小与哈希,4.544913
+classify_event_ids,扫描全部有效记录索引，识别跨日重复和冲突,199.837146
+write_event_partitions_and_removals,生成事件分区和移除明细，无移除的分区复用现有文件,0.102635
+write_coverage_and_manifest,写出小时覆盖和原始档案清单,0.006071
+initialize_duckdb,初始化 DuckDB 与 Parquet 读取视图,0.018335
+verify_unique_event_ids,验证全周事件 ID 唯一,16.225046
+write_daily_activity_parquet,聚合并写出仓库日活动 Parquet,14.918655
+write_repository_candidates_csv,聚合并写出仓库候选 CSV,38.836711
+verify_exported_counts,读回两份汇总，核对事件总数,1.319606
+total_wall_seconds,从复核输入到跨日汇总对账结束的墙钟耗时,276.008564

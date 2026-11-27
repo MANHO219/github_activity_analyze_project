@@ -1,0 +1,8 @@
+{
+  "python": "3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:59:26) [Clang 19.1.7 ]",
+  "pandas": "2.2.2",
+  "numpy": "1.26.4",
+  "matplotlib": "3.10.9",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "C_daily_input_format": "CSV streamed from source Parquet; no whole-platform dataframe loaded"
+}

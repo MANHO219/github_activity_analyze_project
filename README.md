@@ -1,33 +1,168 @@
-# CS5488 小组项目：AI 相关 GitHub 仓库的生命周期
+# From Hype to Sustainability: Parallel Data-Intensive Processing and Early Lifecycle Patterns of AI-Related GitHub Repositories
 
-从 GH Archive 的公开事件中整理仓库活动，补仓库元数据与 AI 标签，再研究仓库生命周期。**A 已跑通 2024-01-15 至 01-21 的一周滚动获取和 Python 清洗，代码及小型验证记录现已整理到仓库。** B 已完成两批元数据与标签试跑（pilot_01 50 个、pilot_02 200 个，当前规则 v0.3.8），C 的第一版分析 Notebook 也已保留。两年各 4 月 1–27 日的完整活动数据现已在本地处理完成，正式 AI 名单与群体分析结论待后续完成，见下节。
+**City University of Hong Kong · CS5488 – Big Data Algorithms and Techniques · Group 22**
 
-## 双年份前三周：新的可配置 Python 入口
+This repository contains the complete source code, deterministic AI-classification rules, Apache Spark strong-scaling and rolling-batch experiments, automated verification suites, and curated final datasets/logs for our CS5488 Group Project.
 
-已补齐任意起始日期的按日调度与清理、按 API 创建时间选取和冻结名单、三个 7 天阶段，以及 B 成功缓存状态的兼容。完整命令与输出见 [双年份三周运行指南](双年份三周运行指南.md)。
+## Group Members & Responsibilities
 
-已确定比较 **2024、2026 年各自 4 月 1–7 日新建的 AI 仓库**，源档案取到各年 4 月 27 日。2026-11-14 已完成两年各 4 月 1–27 日的真实活动获取、清洗和跨日合并，共 1,296 个已校验小时档案。2024 年为 144,067,003 条事件，2026 年为 99,458,353 条事件；正式 AI 名单和三周比较结论仍待 B 冻结名单后生成。原 90 天接口保留默认行为，D 的批次与 Spark 适配继续独立推进。
+| Role | Student Name | Student ID | Core Responsibilities |
+| :---: | :--- | :---: | :--- |
+| **A** | Wenhao YE | `60825646` | 54-day GH Archive rolling ingestion, validation & deduplication (`a-events-v1`), Spark cleaner prototype, pipeline integration, report synthesis |
+| **B** | Junnan LIU | `61026430` | GitHub Search/REST/README collection, iterative deterministic AI rule engine (`v0.1`–`v0.3.8`), pilot validation, evidence review & cohort freezing |
+| **C** | Yuemen CAO | `61018011` | Fixed-cohort UTC alignment (`cohort_analysis.py`), 21-day persistence/trajectory/skewness analysis, verification & visualizations |
+| **D** | Shuo LI | `61111113` | 3-VM Apache Spark Standalone deployment, controlled 6h strong-scaling benchmark, 48h unified rolling acceptance, fault/bottleneck diagnostics |
 
-**B 下一步是确定正式研究名单**：先交两年统一查询的候选摸底，再完成标签、复核和名单冻结；必须交付的文件、字段与验收标准见 [B 当前任务](B_确定双年份%20ai%20仓库.md)。B 的交接包 `B_双年份正式名单交接_20261114.zip` 已在 A 本地生成，含两年完整日活动 Parquet、覆盖清单和校验记录；由 A 单独发送，尚未上传 GitHub。先读包内 README，再按任务文件检索、复核和冻结名单。包内活动表用于冻结后按 ID 接回，不据后续活动选择仓库。小包随 Git 交接，超过本轮体积预算则用同一仓库的 Release 附件，具体规则及实测体积也在该任务文件中。
+---
 
-## 已跑通的一周滚动获取与清洗
+## Executive Summary of Verified Results
 
-程序按 UTC 日期逐天下载、校验、清洗、验收和清理原始档案，支持失败续跑，并在最后核对跨日重复和冲突。已验证 **168 个小时档案、34,437,099 条事件、3,301,406 个仓库**。
+Our project decouples **controlled parallel computing evaluation** from **large-scale empirical lifecycle analysis**, linked by a verified `a-events-v1` parser and deduplication contract:
 
-| 要找的内容 | 存放位置 |
+| Evidence Stream | Dataset / Scope | Key Verified Results | Primary Artifacts |
+| :--- | :--- | :--- | :--- |
+| **1. Controlled Spark Strong-Scaling (6h)** | `2024-01-15` UTC 00–05 (6 archives; 1,177,282 events; 3 formal runs/mode) | `L1`: **210.2 s** (`1.00×`, CV 3.22%) → `L4`: **85.6 s** (**2.46×**, CV 0.18%) → `D4` (3-VM Standalone, `2×2` cores): **91.6 s** (**2.30×**, CV 5.97%); 0 spills; 9/9 identical fingerprints; 13-field zero-diff Python reconciliation | [`d_parallel_experiments/results/`](d_parallel_experiments/results/) |
+| **2. Unified Rolling Batch Acceptance (48h)** | `2024-01-15` to `01-17` UTC (48 archives; 4.59 GiB; 10,885,513 events) | `L4 24h`, `L4 6h`, and `Python 24h`: **19/19 bidirectional checks passed** (0 discrepancies); diagnosed virtual NIC (`e1000`→`vmxnet3`), NFS `fcntl.lockf`, and SQLite-over-NFS locality bottlenecks | [`d_parallel_experiments/docs/two_day_validation_20261114.md`](d_parallel_experiments/docs/two_day_validation_20261114.md) |
+| **3. Production Archival Ingestion (54d)** | April 1–27 in 2024 & 2026 (1,296 verified `.json.gz`; 89.29 GB compressed) | **243,525,356** unique cleaned events (**144.07M** in 2024; **99.46M** in 2026), 71,794,991 daily repo-event rows, 792 duplicate occurrences removed, 1 conflicting ID excluded | [`deliverables/pipeline_a_54d_summary/`](deliverables/pipeline_a_54d_summary/) |
+| **4. Dual-Year AI Cohorts & 21-Day Persistence** | Independent GitHub Search API (16 AI topics, Apr 1–7) → 2 fixed cohorts of **200 repos/year** | Development active share: **71.0% vs. 71.5%** in Week 1 → **25.0% vs. 14.5%** in Week 3 (10.5 pp descriptive gap); `SWE-agent` alone drove **76.3%** of 2024 Week-1 total events (91.2% stars/forks) | [`deliverables/pipeline_b_frozen_cohorts/`](deliverables/pipeline_b_frozen_cohorts/) & [`deliverables/pipeline_c_21d_analysis/`](deliverables/pipeline_c_21d_analysis/) |
+
+---
+
+## Repository Structure
+
+```text
+.
+├── README.md                          ← Project overview & submission entry point
+├── Project.pdf                        ← Official CS5488 course project specification
+├── deliverables/                      ← Curated final datasets, frozen cohorts & verification logs (~3.1 MB)
+│   ├── README.md                      ← Manifest of curated evidence files
+│   ├── pipeline_a_54d_summary/        ← 2024 & 2026 daily metrics, ingest/merge timings, run summaries
+│   ├── pipeline_b_frozen_cohorts/     ← Frozen 200+200 AI cohorts, manifests, labels & scope policy
+│   └── pipeline_c_21d_analysis/       ← 21-day summary CSVs, trajectories, SWE-agent breakdown & SHA-256 manifest
+├── a_data_pipeline/                   ← Pipeline A: GH Archive ingestion, a-events-v1 validation/dedup, Spark prototype
+│   ├── gharchive_a/                   ← Core shared parser, deduplicator & aggregation library
+│   ├── rolling_pipeline/              ← Configurable daily/batch rolling orchestration, merge & cleanup helpers
+│   ├── scripts/                       ← CLI entry points (download, clean, verify)
+│   ├── sample_data/                   ← Curated 24-hour reference daily summary table
+│   ├── verification/                  ← 1-hour, 1-day, and 1-week verification records
+│   └── tests/                         ← Pipeline A & rolling-date unit tests
+├── b_repo_metadata/                   ← Pipeline B: GitHub API discovery, v0.1–v0.3.8 AI rules & cohort freezing
+│   ├── bmeta/                         ← Metadata fetcher, deterministic 19-rule classifier & cohort join helpers
+│   ├── rules/                         ← Versioned AI classification rule definitions (v0.1–v0.3.8)
+│   ├── scripts/                       ← Discovery, API enrichment, rule evaluation & cohort freezing CLIs
+│   ├── runs/                          ← Pilot runs (pilot_01: 50 repos; pilot_02: 200 repos)
+│   └── tests/                         ← 160 unit tests covering rule logic, text boundaries & freezing
+├── c_lifecycle_analysis/              ← Pipeline C: Fixed-cohort UTC alignment & 21-day lifecycle analysis
+│   ├── cohort_analysis.py             ← Core UTC day-offset alignment & window metric computation
+│   ├── run_cohort.py                  ← CLI entry point for cohort window analysis
+│   ├── lifecycle_analysis.ipynb       ← Exploratory lifecycle notebook
+│   ├── cohort_90d_analysis.ipynb      ← Extended 90-day cohort analysis notebook template
+│   └── tests/                         ← 15 unit tests verifying alignment, edge cases & zero-activity preservation
+├── d_parallel_experiments/            ← Pipeline D: 3-VM Spark cluster, 6h benchmark & 48h unified rolling validation
+│   ├── configs/                       ← Spark & rolling-batch runtime configurations (L1, L4, D4)
+│   ├── scripts/                       ← Unified rolling runner, Spark batch job & 19-check parity verifier
+│   ├── results/                       ← 6h strong-scaling summaries & 13-field Python reconciliation outputs
+│   ├── docs/                          ← Cluster setup, 48h acceptance reports, stage timings CSV & troubleshooting logs
+│   └── tests/                         ← 21 rolling-batch pipeline unit tests
+├── testing_data/                      ← Synthetic 2024/2026 interface-validation fixtures
+└── tools/                             ← Shared workspace utilities
+```
+
+---
+
+## Quick Verification & Reproducibility
+
+All automated unit tests across Pipelines A, B, C, and D can be run directly from the repository root (Python 3.11+ with `pandas` / `pyarrow` / `pytest` or standard `unittest`):
+
+```bash
+# Pipeline A + rolling-date tests
+python -m unittest discover -s a_data_pipeline/tests -p "test_*.py" -v
+python -m unittest discover -s a_data_pipeline/rolling_pipeline/tests -p "test_*.py" -v
+
+# Pipeline B tests (160 tests covering v0.3.8 rules & cohort tools)
+python -m unittest discover -s b_repo_metadata/tests -p "test_*.py" -v
+
+# Pipeline C tests (15 tests covering UTC alignment & 3-week fixed-cohort metrics)
+python -m unittest discover -s c_lifecycle_analysis/tests -p "test_*.py" -v
+
+# Pipeline D unified rolling-batch tests (21 tests)
+python -m unittest discover -s d_parallel_experiments/tests -p "test_*.py" -v
+```
+
+### Key Pipeline Entry Points
+
+- **Pipeline A (1-hour quick smoke test with Spark)**:
+  ```bash
+  cd a_data_pipeline && python scripts/run_sample.py --with-spark
+  ```
+- **Pipeline C (re-run 21-day analysis directly on the committed deliverables)**:
+  ```bash
+  python c_lifecycle_analysis/run_cohort.py \
+    --cohort-year 2024 --created-from 2024-04-01 --created-to 2024-04-07 \
+    --window-days 7 --data-kind "Real Data" \
+    --cohort deliverables/pipeline_b_frozen_cohorts/2024/cohort.csv \
+    --metadata deliverables/pipeline_b_frozen_cohorts/2024/repo_metadata.csv \
+    --labels deliverables/pipeline_b_frozen_cohorts/2024/repo_ai_labels_analysis.csv \
+    --daily deliverables/pipeline_c_21d_analysis/2024/activity_input/repo_daily_counts.csv \
+    --coverage deliverables/pipeline_c_21d_analysis/2024/activity_input/coverage.json \
+    --output /tmp/cs5488_repro_2024
+  ```
+- **Pipeline D (unified Spark/Python rolling batch runner & parity verifier)**:
+  See [`d_parallel_experiments/README.md`](d_parallel_experiments/README.md) and [`d_parallel_experiments/docs/monthly_pipeline.md`](d_parallel_experiments/docs/monthly_pipeline.md).
+
+---
+
+## Appendix: Development Alignment & Handoff History（开发过程对齐记录）
+
+> 以下保留项目开发推进过程中的阶段性同步、交接文档索引与试跑说明，便于回溯各成员模块从 1 小时样本 → 24 小时 → 1 周滚动 → 双年份三周与 48 小时统一验收的演进过程。
+
+### 阶段文档与内部交接入口
+
+| 想了解什么 | 入口 |
 |---|---|
-| 处理脚本、额外依赖和回归测试 | [a_data_pipeline/rolling_pipeline/](a_data_pipeline/rolling_pipeline/) |
-| 环境准备、完整运行命令、续跑与清理说明 | [滚动程序使用说明](a_data_pipeline/rolling_pipeline/README.md) |
-| 输入清单、质量摘要及各阶段计时 | [一周验证记录](a_data_pipeline/verification/20240115_1week/README.md) |
-| D 的后续日期、批次及 Spark 适配要求 | [滚动程序交接说明](a_data_pipeline/rolling_pipeline/README.md#计时和-d-的下一步) |
+| 选题、分工、课程交付和研究边界 | [小组同步说明](CS5488_AI_Repository_Lifecycle_Project.md) |
+| 数据从哪里来、哪个脚本处理、每个文件在哪 | [数据处理全解 HTML](a_data_pipeline/数据处理全解.html) |
+| 双年份三周完整运行命令与输出口径 | [双年份三周运行指南](双年份三周运行指南.md) |
+| B 正式名单任务、交付文件和数据交接规则 | [B 当前任务](B_确定双年份%20ai%20仓库.md) |
+| B 历史试跑如何开始 | [B 接手指南](a_data_pipeline/B_接手指南.md) |
+| B 的实现、跑法与试跑结果 | [B 阶段 README](b_repo_metadata/README.md)、[试跑结果](b_repo_metadata/RESULTS.md) |
+| 自动标签 / 人工复核 / 分析用标签的区别 | [标签交接说明](b_repo_metadata/LABELS.md) |
+| A 的实现和运行命令 | [数据管道 README](a_data_pipeline/README.md) |
+| 已验证的一周滚动流程与 D 的适配起点 | [滚动程序 README](a_data_pipeline/rolling_pipeline/README.md)、[一周实测](a_data_pipeline/verification/20240115_1week/README.md) |
+| C 的分析修订与双年份口径 | [C 分析修订与双年份准备](C_分析修订与双年份准备.md)、[指标定义](c_lifecycle_analysis/metrics_definitions.md) |
+| D 的单核、多核与虚拟机分布式实验，以及统一滚动验收 | [D 的实验计划](D_并行与分布式实验计划.md)、[D 实测成果与完整日志获取](d_parallel_experiments/README.md)、[通用滚动入口说明](d_parallel_experiments/docs/monthly_pipeline.md) |
+| 实际样本与核对结果 | [样本交接记录](a_data_pipeline/runs/20240115_1hour_handoff/HANDOFF.md)、[验证摘要](a_data_pipeline/verification/RESULTS.md) |
 
-先按使用说明创建 `cs5488-data` 环境，再从仓库根目录进入 `a_data_pipeline/`。以下示例先准备基准日，再把其余日期放在 T7 上。将卷名和数据路径换成自己的实际挂载位置，准备目录使用新名称。
+*(HTML 请在 clone 后用本地浏览器打开；仓库里的 HTML 已内嵌样本和源码，阅读主体内容不需要启动服务。)*
+
+### 历史开发里程碑记录
+
+1. **一小时最小样本与交接起点（`a_data_pipeline/runs/20240115_1hour_handoff/`）**
+   - 首个 1 小时样本输出 69,768 个唯一仓库（[`repo_candidates.csv`](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv)、[`repo_name_history.csv`](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_name_history.csv)、[`events_preview.csv`](a_data_pipeline/runs/20240115_1hour_handoff/python/events_preview.csv)、[`events_clean.parquet`](a_data_pipeline/runs/20240115_1hour_handoff/python/events_clean.parquet/)、[`repo_daily_counts.csv`](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_daily_counts.csv)）。
+   - B 基于前期样本完成两轮试跑并保留在 [`b_repo_metadata/`](b_repo_metadata/)：`pilot_01`（50 个仓库，33 条人工复核）与 `pilot_02`（200 个仓库，13 条抽查 + 1 条人工修订），规则由 `v0.1` 迭代至 `v0.3.8`（变化记录见 `b_repo_metadata/runs/pilot_02/label_changes.csv`）。
+2. **24 小时基准与一周滚动程序（`2024-01-15` 至 `2024-01-21`）**
+   - 2024-01-15 全天参考汇总表（1,340,785 行，5,528,300 条事件）直接保留在 [`a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv`](a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv)；验证说明见 [全天结果与交接](a_data_pipeline/verification/20240115_1day/README.md)。
+   - 一周滚动程序按 UTC 日期逐天下载、校验、清洗、验收与清理，支持失败续跑并核对跨日重复与冲突，验证 **168 个小时档案、34,437,099 条事件、3,301,406 个仓库**（详见 [`a_data_pipeline/rolling_pipeline/README.md`](a_data_pipeline/rolling_pipeline/README.md) 与 [`a_data_pipeline/verification/20240115_1week/README.md`](a_data_pipeline/verification/20240115_1week/README.md)）。
+3. **双年份三周正式生产与 48 小时 Spark 统一滚动验收**
+   - 最终确定比较 **2024、2026 年各自 4 月 1–7 日新建的 AI 仓库**，源档案覆盖至各年 4 月 27 日（共 54 个 UTC 日、1,296 个已校验小时档案；2024 年 144,067,003 条事件，2026 年 99,458,353 条事件），并由 B 冻结 200+200 活动盲选队列、C 完成三周对齐分析（最终产物已整理至 [`deliverables/`](deliverables/)）。
+   - D 在 6 小时受控强扩展实验（`L1`/`L4`/`D4`）基础上，完成任意 UTC 半开区间与可变批次时长的统一滚动程序（`d/unified-batch-pipeline`，已合并至 `main`），并通过 48 小时连续真实数据双向对账（19/19 零差异）。
+   - 90 天窗口（第 1–30、31–60、61–90 天）作为后续扩展保留接口兼容性，不更换已冻结的研究队列。
+
+### 历史本机一周复跑示例（参考）
 
 ```bash
 cd a_data_pipeline
+conda env create --file environment.yml
 conda activate cs5488-data
 python -m pip install -r rolling_pipeline/requirements.txt
 
+# 1 小时快速验证（含 Spark）
+python scripts/run_sample.py --with-spark
+
+# 24 小时单日复跑
+python scripts/run_sample.py --date 2024-01-15 --hours 0-23 --run-dir runs/20240115_python
+
+# 一周按日滚动复跑（替换卷名与数据路径为实际挂载目录）
 python scripts/download_sample.py --date 2024-01-15 --hours 0-23 \
     --data-dir data/raw --output runs/weekly_baseline_download
 
@@ -40,109 +175,3 @@ python rolling_pipeline/weekly_orchestrate.py \
 python rolling_pipeline/weekly_report.py \
     --root runs/weekly_20240115_20240121_replay
 ```
-
-重跑主入口时沿用相同的 `--root`，程序会检查并跳过已验收的日期。完整结果和交接报告生成在该本机运行目录。主入口通过两日验收后，会按清单清理后续日期的原始档案和可替代过程文件，保留 Parquet、去重索引和质量记录。Linux 共享盘的参数示例见使用说明。
-
-**原一周实测是 01-15 起点；当前 Python 入口已支持任意起止日期，批次仍为整天。** D 下一步继续适配可调批次时长和 Spark 后端。Git 共享代码和小型实测记录，完整的一周事件、索引及候选表通过单独分享或重建获取。A 原本机结果位于 `a_data_pipeline/runs/weekly_20240115_20240121/combined_20240115_20240121_02/`。
-
-## 后续设想：2024 与 2026 年新建仓库的前 90 天
-
-拟在 2024 年 4 月和 2026 年 4 月各选一批新建公开仓库，用相同的抽样方法、AI 标签口径和活动指标做对比。以每个仓库的 UTC 创建日为第 1 天，分别统计第 1–30、31–60、61–90 天的事件数和活跃天数，比较活动是集中在创建初期，还是在后续阶段持续发生。Agent 工具普及是研究背景，判断仓库实际使用了哪些工具需要额外证据。
-
-**当前先交接 A 的一周程序，并完成 D 的六小时实验材料与 Python 对账。** A 提供固定输入、数据口径和参照，D 基于滚动程序做后续日期、批次与 Spark 适配，B 完成标签交接，C 使用已有数据推进分析。
-
-- **B 当前先完成两年三周分析的正式名单。** 使用同一候选范围、v0.3.8 和复核口径，交付冻结 ID、创建时间、最终标签和证据；详见 [B 当前任务](B_确定双年份%20ai%20仓库.md)。未来扩展到 90 天时继续使用明确版本的名单，不逐阶段换仓库。
-- **C 先修订现有 Notebook，并用小样本验证同一套分析能切换年份。** 用已有的一天活动表和标签验证接入，再用跨日小样本检查 30 天分段及缺档处理。根据日期覆盖清单区分无公开活动与档案缺失。
-
-本轮已确定出生日期为两年各自 4 月 1–7 日、观察创建后前三周；样本量待 B 报告候选规模后确定。90 天仍是后续扩展：如果未来改为整月出生仓库，源数据要覆盖到两年的 7 月 28 日 UTC 全天。长窗口的处理方式结合实际耗时和存储确定，后续由 D 接入 Spark 批处理。
-
-## 第一次打开，按这个顺序看
-
-| 想了解什么 | 入口 |
-|---|---|
-| 选题、分工、课程交付和研究边界 | [小组同步说明](CS5488_AI_Repository_Lifecycle_Project.md) |
-| 数据从哪里来、哪个脚本处理、每个文件在哪 | [数据处理全解 HTML](a_data_pipeline/数据处理全解.html) |
-| B 当前正式名单任务、交付文件和数据交接规则 | [B 当前任务](B_确定双年份%20ai%20仓库.md) |
-| B 历史试跑如何开始 | [B 接手指南](a_data_pipeline/B_接手指南.md) |
-| B 的实现、跑法与试跑结果 | [B 阶段 README](b_repo_metadata/README.md)、[试跑结果](b_repo_metadata/RESULTS.md) |
-| 自动标签 / 人工复核 / 分析用标签的区别 | [标签交接说明](b_repo_metadata/LABELS.md) |
-| A 的实现和运行命令 | [数据管道 README](a_data_pipeline/README.md) |
-| 已验证的一周滚动流程与 D 的适配起点 | [滚动程序 README](a_data_pipeline/rolling_pipeline/README.md)、[一周实测](a_data_pipeline/verification/20240115_1week/README.md) |
-| D 的单核、多核与虚拟机分布式实验，以及 A/D 分工边界 | [D 的实验计划](D_并行与分布式实验计划.md)、[D 实测成果与完整日志获取](d_parallel_experiments/README.md) |
-| 实际样本与核对结果 | [样本交接记录](a_data_pipeline/runs/20240115_1hour_handoff/HANDOFF.md)、[验证摘要](a_data_pipeline/verification/RESULTS.md) |
-
-HTML 请在下载或 clone 后，用本地浏览器打开；在 GitHub 文件页面也可以先下载。Markdown 说明可直接在 GitHub 阅读。仓库里的 HTML 已内嵌样本和源码，阅读主体内容不需要启动服务。
-
-## B 可以立即使用的一小时试跑输入
-
-打开[仓库候选清单](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_candidates.csv)：69,768 个唯一仓库，每行一个 `repo_id`。第一轮先在自己电脑获取一个仓库，再固定一个小名单试跑；50 个是建议规模，AI 规则与最终字段由 A、B 确认。
-
-B 已完成两轮试跑并留在 [b_repo_metadata/](b_repo_metadata/)：pilot_01 的 50 个仓库（33 条人工复核）与 pilot_02 的 200 个仓库（13 条抽查 + 1 条人工修订），都含元数据、AI 标签（规则 v0.3.8）与按 `repo_id` 接回事件表的核对结果。规则从 v0.1 到 v0.3.8 的逐条变化都有记录（当前对比见 `b_repo_metadata/runs/pilot_02/label_changes.csv`），标签交接方式见 [LABELS.md](b_repo_metadata/LABELS.md)。
-
-其他现成输入：[名称历史](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_name_history.csv)、[事件预览](a_data_pipeline/runs/20240115_1hour_handoff/python/events_preview.csv)、[完整事件 Parquet](a_data_pipeline/runs/20240115_1hour_handoff/python/events_clean.parquet/)、[活动计数](a_data_pipeline/runs/20240115_1hour_handoff/python/repo_daily_counts.csv)。
-
-## 目录怎么分
-
-```text
-仓库根目录/                         ← 对应原来的 group_project/
-├── README.md                       ← 小组入口
-├── CS5488_AI_Repository_Lifecycle_Project.md
-├── A_启动任务_最小数据样本.md
-├── D_并行与分布式实验计划.md         ← D 的原实验计划与交付要求
-├── Project.pdf                     ← 课程项目要求
-├── a_data_pipeline/
-│   ├── B_接手指南.md
-│   ├── 数据处理全解.html
-│   ├── config/                     ← 输入范围与参数
-│   ├── scripts/                    ← 命令入口
-│   ├── rolling_pipeline/           ← 一周滚动代码、依赖、测试和交接说明
-│   ├── gharchive_a/                ← 处理实现
-│   ├── docs/                      ← 文档模板与证据快照
-│   ├── verification/              ← 一天、一周等小型验证记录
-│   ├── tests/                     ← 已有测试代码
-│   ├── sample_data/                ← 一份精选的 24 小时仓库活动汇总表
-│   ├── data/                      ← 原始下载，本地保留，Git 忽略
-│   └── runs/                      ← 本机运行产物，另有精选一小时交接快照
-└── b_repo_metadata/                ← B：元数据、AI 标签、复核与接回事件表
-    ├── README.md                   ← 跑法与字段说明
-    ├── LABELS.md                   ← 自动、人工与分析用标签的交接口径
-    ├── RESULTS.md                  ← 两批试跑结果与验收清单
-    ├── config/                     ← 种子、分层规模、API 参数
-    ├── rules/                      ← 当前及历史规则
-    ├── bmeta/                      ← 抓取、规则、复核、接回的实现
-    ├── scripts/                    ← 每个步骤一个命令入口
-    ├── reviews/                    ← 人工判断与理由
-    ├── tests/                      ← B 的离线验证
-    └── runs/                       ← debug_api_sample、pilot_01 与 pilot_02 结果
-```
-
-## 一小时试跑：快速熟悉管道
-
-从 clone 后的仓库根目录运行：
-
-```bash
-cd a_data_pipeline
-conda env create --file environment.yml
-conda activate cs5488-data
-python scripts/run_sample.py --with-spark
-```
-
-这条命令使用原来的**一小时默认样本**，下载并处理一个小时的数据，同时运行 Spark，适合熟悉目录和验证管道。需要联网和本机存储；此命令不会处理 24 小时。
-
-## 24 小时扩展数据：现在能用什么，如何获取完整结果
-
-2024-01-15 全天的 Python 处理已完成，是一周试跑中基准日的参照。
-
-- **可直接分析：** Git 中的 [`repo_daily_counts.csv`](a_data_pipeline/sample_data/20240115_24h/repo_daily_counts.csv) 按仓库、UTC 日期和事件类型汇总，共 1,340,785 行，合计 5,528,300 条事件。它是汇总表，不含逐条事件详情。
-- **生成完整事件数据：** 原始 `.json.gz` 和全天逐条事件表没有放进 Git。环境已创建并激活后，在仓库根目录运行：
-
-  ```bash
-  cd a_data_pipeline
-  conda activate cs5488-data
-  python scripts/run_sample.py --date 2024-01-15 --hours 0-23 --run-dir runs/20240115_python
-  ```
-
-  这会下载并清洗这一天的 24 个小时档案，结果保存在本机。详细步骤见 [A 数据管道 README](a_data_pipeline/README.md)。
-- **按日滚动与后续月级适配。** 已验证的一周程序在 [rolling_pipeline/](a_data_pipeline/rolling_pipeline/README.md)，包含按日调度、失败续跑、跨日去重与汇总校验。任意月份和可选批次时长由 D 在这套程序上继续适配，处理范围以实测验收记录为准。
-
-全天数据的数量、质量检查和限制见[全天结果与交接](a_data_pipeline/verification/20240115_1day/README.md)。

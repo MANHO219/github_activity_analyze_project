@@ -1,0 +1,26 @@
+{
+  "cohort_year": 2026,
+  "source_notebook_sha256": "f2c6463363706071583294769f578ebfdeedb20e856fb0fc23ca5f5109b6ba15",
+  "source_cells": [
+    12,
+    14,
+    16,
+    17,
+    18,
+    33,
+    35,
+    39
+  ],
+  "input_scope": "Fixed 200 IDs; calendar dates April 1–27, not creation-relative days",
+  "fixed_ids": 200,
+  "observed_ids_in_calendar_window": 168,
+  "unobserved_ids_in_calendar_window": 32,
+  "calendar_dates": 27,
+  "events": 2977,
+  "method_notes": [
+    "The two daily charts reuse Notebook 10.1 and 10.3 logic.",
+    "Basic histogram and active-day distribution refer to observed IDs, matching the original descriptive Notebook; fixed-cohort stage results retain all 200.",
+    "Calendar dates before a repository was created are not interpretable as its post-creation inactivity.",
+    "Only input wiring, date titles, ticks and crowded legend presentation were adapted; no new activity metric introduced."
+  ]
+}

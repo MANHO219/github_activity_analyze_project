@@ -1,0 +1,31 @@
+{
+  "state": "completed",
+  "data_kind": "Real Data",
+  "cohort_repositories": 200,
+  "observed_repositories": 183,
+  "unobserved_repo_ids": [
+    780457497,
+    780484438,
+    780649805,
+    781222592,
+    781396021,
+    781477404,
+    781494921,
+    781601283,
+    782129890,
+    782424349,
+    782489793,
+    782703929,
+    782943222,
+    783036577,
+    783126023,
+    783209821,
+    783238323
+  ],
+  "daily_rows": 1754,
+  "events": 17939,
+  "cohort_sha256": "f05a4d713273ba196b42eced85116a5fcfddf3bc788ccd89f17ae17d831439fa",
+  "daily_input_sha256": "28d850df3c57c371a08ed6d8ebf3c48ede6067c41ab40fc7effb2a5375023766",
+  "scope": "All source dates for frozen IDs; not yet filtered by days since creation"
+}
+

@@ -1,0 +1,32 @@
+{
+  "cohort_year": 2026,
+  "data_kind": "Real Data",
+  "window_days": 7,
+  "observation_days": 21,
+  "cohort_status": "assistant_reviewed_user_scope",
+  "analysis_seconds": 0.1815209169872105,
+  "inputs_sha256": {
+    "/Users/yipmanho/projects/cs5488/交付数据/C_双年份三周真实分析_20261114/frozen/2026/repo_metadata.csv": "dfea45bdd8234fe33dbf255ee7aeadc6c629ca3dff955afbafbaa4b3973833c9",
+    "/Users/yipmanho/projects/cs5488/交付数据/C_双年份三周真实分析_20261114/frozen/2026/repo_ai_labels_analysis.csv": "2b4552ecd088879a0dd9d48147fc127598374528c45f2fba47f4ceae291b519a",
+    "/Users/yipmanho/projects/cs5488/交付数据/C_双年份三周真实分析_20261114/2026/activity_input/repo_daily_counts.csv": "deb52407dc952610649c74b2028e3ba6f56285048e6ca771411ad48c6bdc6582",
+    "/Users/yipmanho/projects/cs5488/交付数据/C_双年份三周真实分析_20261114/2026/activity_input/coverage.json": "15f57a11fa26dd974c0da7df9f83517999db23df1bcc247fd0ff2f618557042f",
+    "/Users/yipmanho/projects/cs5488/交付数据/C_双年份三周真实分析_20261114/frozen/2026/cohort.csv": "523d32e10ba113b95f1f962870bab97911f92b6435ed95fa9dded3f80c6e024b",
+    "/Users/yipmanho/projects/cs5488/交付数据/C_双年份三周真实分析_20261114/frozen/2026/cohort_manifest.json": "112dfeceb2c31501e0129ea34a8916678940328a8b0f19b92bbdbbf4dfedc50b"
+  },
+  "exclusions": {
+    "fetch_status_not_ok": 0,
+    "api_repo_id_mismatch": 0,
+    "creation_time_unparseable": 0,
+    "invalid_metadata_rows": 0,
+    "invalid_metadata_repo_ids": [],
+    "no_label": 0,
+    "uncertain": 0,
+    "excluded": 0,
+    "out_of_range": 0,
+    "out_of_range_repo_ids": [],
+    "cohort_size": 200,
+    "outside_frozen_cohort": 0
+  },
+  "stage_rows": 600,
+  "cohort_size": 200
+}

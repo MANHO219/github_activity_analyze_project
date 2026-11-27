@@ -1,0 +1,9 @@
+{
+  "version": "user_scope_20261114_v1",
+  "confirmed_at": "2026-11-14T13:24:38.866975+00:00",
+  "include_agent_artifacts": "Include dedicated AI-agent skills, prompts/workflows, MCP components and AI engineering infrastructure in both years.",
+  "exclude_educational": "Exclude repositories explicitly made for courses, bootcamps, bachelor/master theses, degree projects and capstones. University research affiliation alone is not exclusion.",
+  "uncertain": "Insufficient evidence and unresolved scope conflicts remain uncertain; never used to fill the cohort.",
+  "selection": "Retain prior reviewed included objects, then accept reviewed reserves in original seeded priority order until exactly 200 per year. No activity-based selection.",
+  "review_attribution": "Codex assistant evidence review under user-confirmed scope; no human-independent validation claimed."
+}

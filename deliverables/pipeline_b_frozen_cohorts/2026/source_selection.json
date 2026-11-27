@@ -1,0 +1,797 @@
+{
+  "created_from": "2026-04-01",
+  "created_to": "2026-04-07",
+  "queries": [
+    "topic:ai",
+    "topic:artificial-intelligence",
+    "topic:machine-learning",
+    "topic:deep-learning",
+    "topic:llm",
+    "topic:generative-ai",
+    "topic:nlp",
+    "topic:computer-vision",
+    "topic:reinforcement-learning",
+    "topic:pytorch",
+    "topic:tensorflow",
+    "topic:chatgpt",
+    "topic:openai",
+    "topic:langchain",
+    "topic:rag",
+    "topic:ai-agents"
+  ],
+  "generated_at": "2026-11-14T12:43:21Z",
+  "rows": 9095,
+  "api_calls": 174,
+  "candidate_sha256": "1cb2c2789653b450c30480df80d2506971279d9baefda983abb8d9bf62cfaab5",
+  "search_pages": [
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q01_p01.json",
+      "sha256": "3bbb9ab7e72d6891d678cc8856cb355ab582767a5e3408ca16991a0a5c7a1333"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q01_p02.json",
+      "sha256": "2fe4d4254f69571fa81a2ff7a55dabeff6029f26fc3a8735838d4e222d2711e3"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q01_p03.json",
+      "sha256": "74a3865f642adb2bd7cc935f25a8604a0bf6baafa3f78c71eebb7c4d7ad99193"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q01_p04.json",
+      "sha256": "7bb771d0b9757dbe62905405d93b72eae5b00e8274036ec5f5769dc8bfba988b"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q02_p01.json",
+      "sha256": "e71a3e7fdf55052ffeb9c09831bc10aa9009d87bedb88678b32a35ba08857133"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q03_p01.json",
+      "sha256": "57c910798d6dfaaaeb119307989ee555a1737e51c63a4712f33612b9bcf3421f"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q03_p02.json",
+      "sha256": "b66ebaa5deb5e1a83e3c747d420e19d1f9237f63fc5b3f549143189d05a77687"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q03_p03.json",
+      "sha256": "db51a833f1c781bcb6d299d094f34a519cc7d99e16a275562de7c195d4ddf373"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q04_p01.json",
+      "sha256": "fb471a37b70f2a4357a35bb39617bc6ba23f801d540cc1a75eab36ea742ab80f"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q05_p01.json",
+      "sha256": "a7ac2264e34f4ae20e2a517bf9b650e4c7db5f959b8b23a70769a501491192d0"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q05_p02.json",
+      "sha256": "47dbf00337bd6ae792f7e661ad7ad0d67d9652eb2aeccdb54d6aef2fd8d9002d"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q05_p03.json",
+      "sha256": "a428548797a4343bb0584f7c36a4c2592e8265d065aa578fb7943843595f1285"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q05_p04.json",
+      "sha256": "5fd2a0d2f6da0bbcd8d0aee160ca2635a631086afd6a9b888e24c7f83664dea2"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q06_p01.json",
+      "sha256": "f1349c9d297265005cef91b1c688c096cd65ae3179fe73a2d4548ec5784bc40a"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q07_p01.json",
+      "sha256": "44d2cfe85c476b34b89d427cf875e196dd8440303f6e2801bdad0c8420f0ee09"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q08_p01.json",
+      "sha256": "00db1df03bacab2f9bb7c753fb59ff4ff6883e824d61866b34b89c9b2478a0be"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q09_p01.json",
+      "sha256": "b2fe90266e146a4926c2632cf3c6970510d310c86742d285fd23d8ed994cca06"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q10_p01.json",
+      "sha256": "bc51e3d73f8b0e8cd3b32bd1ffdafa3bcbe7c047667f23f98695c65a982e4894"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q11_p01.json",
+      "sha256": "8be883f1042c6c993b8434e0015f3c03baccfad2e62e1a9b6e5375782eff1a6e"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q12_p01.json",
+      "sha256": "0c953f52bca5d0bc97f0b7a506dfc4a54a9ab6dc7a619b6c91f80ac111688778"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q13_p01.json",
+      "sha256": "dad9e35aedad1207d52c84c1ae157b9b96f0156f57fa8e40910c8c696f515ed4"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q14_p01.json",
+      "sha256": "6e9b69b90d2b37e421689cc85fd91c91e17a523ddac76ab36e91814f4080022a"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q15_p01.json",
+      "sha256": "30d441bab9f37651ab1f553e36ed2a9f9f0682d1ad65fa4b6359a0b6d8d2f4d9"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q15_p02.json",
+      "sha256": "420625ae41d560cab891b4e7c68f7fa93d7b165e365a5f70200d085ca54bbd7f"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q16_p01.json",
+      "sha256": "f27435499751db39b937c0189cd1edfd712321f73b1f8143f7ad7a50ddc98453"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q16_p02.json",
+      "sha256": "34ed35ef4fbcf998fb4ff9b264b9f768b366216753256e49232ef7d25d96d610"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-01_q16_p03.json",
+      "sha256": "80b43cca774f1106ffeb0badb4d6807bb8d757f86e309fed4c5bfeef7549ef77"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q01_p01.json",
+      "sha256": "a322f5e342ad9cf0077617f18ab6afb98953a845d63f9a52f4b2c57cefa2cc7e"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q01_p02.json",
+      "sha256": "6fdcf42a4fdf6a722ad47a3f8d623b4c6380d6d7b0291bbe07320ceed4971e78"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q01_p03.json",
+      "sha256": "b1da4a1668eeb8beac326707496a7a3cbb54b287a262154ae0f2cb234930ae7e"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q01_p04.json",
+      "sha256": "03041cb3ffd3cba1c718d013c15514d383350f740db3998ebc7ef74b1dc1adb4"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q02_p01.json",
+      "sha256": "c45b20074e44e55d39afe26bab2dd934288f82c817562a1bbc9aa751088e012c"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q03_p01.json",
+      "sha256": "4279671e5e41e89cf4a3fb339dcee0687fd3644015910276428c784f1fe7842c"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q03_p02.json",
+      "sha256": "b11baf0adc6b3da8d2d8bb7d9eb43e774c8b678c82db77497da86244d34c5d54"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q03_p03.json",
+      "sha256": "6bc25da9b4ca02e443d80c3babde19df1217ddb27c877dcf369518780ccfcade"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q04_p01.json",
+      "sha256": "ba64ee334d0429346325e46b5b83c7a95785e88084d617831e45cfe1988abaaa"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q05_p01.json",
+      "sha256": "ec1fabd702affff31843bf06ad6983a0752ec0ba43c675ef720ca3d88422721f"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q05_p02.json",
+      "sha256": "52baf1aeca6f98a3641030e86cb663e07cfc5b269c62ec19d4b99c3695a78837"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q05_p03.json",
+      "sha256": "cc75257f82c92db4179fabbfa6eb4c84f59f96d5e7db5851281d35b5ca04e42c"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q05_p04.json",
+      "sha256": "76cb773740a545e392958df4c0d69063833648d3b5d6cc8ebba5e868face1a46"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q06_p01.json",
+      "sha256": "bf34cc812348a5c8d14c55664022aa2e8ebca6c1f92197db702f7d9a67ef2533"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q07_p01.json",
+      "sha256": "8753b5b616a44d29f020055243de44e1b9c0a858eacf5d618cecadb8638f8d32"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q08_p01.json",
+      "sha256": "25db170b93a8dcac3dc63fc0a8135842ee0abf011f56d9e4224d1aca2f2b97d5"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q09_p01.json",
+      "sha256": "35cfd0880c9d3268f389037ec36a0600c2d62809b4210a3cf7c48ebe715e9471"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q10_p01.json",
+      "sha256": "b5301d57e8114bc4856196f51c1cafdce955789a8cd3d8e9e4415bc1c730faa8"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q11_p01.json",
+      "sha256": "d539107bd1c17259f32b02ac6e84c8e04760a8e0723f58f636f8e21d049e214d"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q12_p01.json",
+      "sha256": "060e2c66bf5456bfa5ed0e22427aa5a033eaae58e3425f7f9d076330f2caa805"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q13_p01.json",
+      "sha256": "e1e9b29b0914b5398057dabe7b474938f1e83c35f4d4a480c78b5f6cb4f84c36"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q13_p02.json",
+      "sha256": "bf161b72d40065b9a8f43a39c7ba2abd56a5d16f339f873b5253a0c50361e2fe"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q14_p01.json",
+      "sha256": "a56d46835f2ce00013567e8850d307ec9e484353fb3e78bdcbb9292228aa93d8"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q15_p01.json",
+      "sha256": "38af38fd06148a05224c2f452c7343f63a7ff7220041a06b6cc5016f417fc77c"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q15_p02.json",
+      "sha256": "4297388e9f01fcab520029602788d137ae77cd28b8e1727ca05b9decad2dabb8"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q16_p01.json",
+      "sha256": "07e1ba69d1ed967865d9e8657b07f18ef2dbd38ff8285188039bbc89508be685"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q16_p02.json",
+      "sha256": "1fc88aff8495f0f781e957e50abb76c7a4d6cf0abcfb40af7b169fcbd5a280d8"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-02_q16_p03.json",
+      "sha256": "a20640a96c948943a9c2394a016ae207e41d6320eea9cbb514635cea8f2aa7ea"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q01_p01.json",
+      "sha256": "9975cb1e7647aca9b150b566334fcc6ba341ae3e128eb2ca2345479eaa9f2329"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q01_p02.json",
+      "sha256": "69a77652a4de628e2358b12e99b448a31a9a24a12b29030c62fd35405156d431"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q01_p03.json",
+      "sha256": "970c371ed8289728ccc879c892db37e11b1004993fbd32654a3821694e4d7bfc"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q01_p04.json",
+      "sha256": "81c30e2353688d63c17b6168eae7aafdd12045a7ba2241648db5a401aea76d3f"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q02_p01.json",
+      "sha256": "dc6fe09a93591a49e1cefa1ecfddfd9a48bb36505279d6174f5104bc4dab3819"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q03_p01.json",
+      "sha256": "71b34da291bee9e019d4149dada78b2b30d56e61a9c700da3f89d119aa9e6ae8"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q03_p02.json",
+      "sha256": "d0712a42f573794fdfad078cb3cb2af45952e81125531346dc5914e8a6042536"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q03_p03.json",
+      "sha256": "546e89429b8c5a9f3447d0c3708c60e7e80a1d1f9edeeb2f165c61d678d44511"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q04_p01.json",
+      "sha256": "25bba0de107a8045683cde0700b53e0e997a943a86068f17b71613936703f196"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q05_p01.json",
+      "sha256": "dd8c6265c7712ec4fc98d13f296acdf9f16720ef64af91db2d860304bf9179f2"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q05_p02.json",
+      "sha256": "ac68e3c2991c570cd81c571a8ec660f3ebb1ece950331a15c3757c341d32c4a2"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q05_p03.json",
+      "sha256": "41b9e36a3e33e2f5ca829a01ddf7cdc0c49d50b80314659ac0130d4687152e52"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q05_p04.json",
+      "sha256": "89f887dea51aae3eb28a95bee3932816db75506d1ea1869ec9536cc463adf134"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q06_p01.json",
+      "sha256": "82de1e656ec4e2ef4ad9913983773862c8c1c3f5b6b7cde3501fd3e725258c77"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q07_p01.json",
+      "sha256": "cfcf05abe4c4ab81fecaa7e694586a19a042f8a452a585a9455dcb070607b1fa"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q08_p01.json",
+      "sha256": "1856795aff1b2ffdeaa7160f40de899602c1903b71019d7dd11c445e57e19af7"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q09_p01.json",
+      "sha256": "2363a2ab5b55a6314653bc4df53fa621ce161507e97e8f10009597c412d10a41"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q10_p01.json",
+      "sha256": "51f0c97e505186c6ce64562ec18e1baafcaabc6aac1916768c4cb1634fc9b1d1"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q11_p01.json",
+      "sha256": "c117395e95e6c97a7e7702029a7ca63759802606308624566e6b4460959de66c"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q12_p01.json",
+      "sha256": "3609ac8616dc817d0b17640431180f04291c7e1b9b02a911482e679f4fec7acd"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q13_p01.json",
+      "sha256": "7081ff18b547bd88ee4b2f05ae4be1d72c0f72e05bb537cca91b7d0e73c83620"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q14_p01.json",
+      "sha256": "d7d407098871eb503d246face7b3fbdc4fb55974af0fa62fe5a8565a47769f0d"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q15_p01.json",
+      "sha256": "ff0e030e853ff54ce88bbdfd417a98cad761e020a878d1432265ed16031c92a1"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q15_p02.json",
+      "sha256": "433e1d0323a29b85399c7dbc547eea5e03b68cb0db3fbb73151c3c1a25f9ffee"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q16_p01.json",
+      "sha256": "bbef69b78671e5cd538d2bd7ea277da983d88ebd94aad083b9ffa9a56c87417f"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q16_p02.json",
+      "sha256": "e45b2d379ff17deb846cfba155a1054d6f2125aa3bfbf5e7ab9c6c17bbc33c94"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-03_q16_p03.json",
+      "sha256": "a028683b728f20d4d44e34829e4dbbc0ba5db256a80e79757a87b3f60fbd5f16"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q01_p01.json",
+      "sha256": "5b99edf42c070456d43d2693967ed35ba185e60a59624794fb83c165e067c08e"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q01_p02.json",
+      "sha256": "5a2d5634ad7453a3a63a02da591b435508c57987ccacbdea3da4d2abdb00e4c5"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q01_p03.json",
+      "sha256": "e79e08a8e27f21c7effbd720477f52a46fbbb851ab283834a490b2ce4e699f51"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q01_p04.json",
+      "sha256": "7282452d0f58e6073d95cd718dc77157d733f85897cc45ee28f39e5082d9a06f"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q02_p01.json",
+      "sha256": "ff818a724e72ed03748f5169a5de418b185e5aebf135e4f5c552bc0d45157868"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q03_p01.json",
+      "sha256": "1cc82d2ad1dcbb6fed5a1b88df45c8a9c0e44748a6b02575ad4032161d6f6a42"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q03_p02.json",
+      "sha256": "8d69a8a7c47498141c1391596bba2427c837a672b2d271005ba9b32ce109fa82"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q03_p03.json",
+      "sha256": "7a75bd553644a9d48e50a1a9b9215784c853128c5ae96ca7484d4a663a0472e4"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q04_p01.json",
+      "sha256": "e508c5b4c3d43411f7e1957ac9a0e1e364cf0b0087cbef9a7231a1700f99a78b"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q05_p01.json",
+      "sha256": "5f869ada0d6faf8cce4310c706d4038c950392d3feeb91f2f0cea400665db196"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q05_p02.json",
+      "sha256": "43c07d4b4ad6536a333d8c91becb9704b800533a14ccf4c4c3baca2faf86da33"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q05_p03.json",
+      "sha256": "802f0340960f0fa8ff0ceb6f303fbdefc3dc7e533309b0d63937fa682ce1735b"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q05_p04.json",
+      "sha256": "c7534c89ed83b2c6966bb130229b03c1f5b4020eda34361e051bfc8c25d0c5f9"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q06_p01.json",
+      "sha256": "ae58f64c7096b7644b2d53735f789bb021dcf325fbadd5269d1c499b02f00c6f"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q07_p01.json",
+      "sha256": "684f53f0652612f4847b6302e5baad0033919f281ba7913ab71e46c9acdc2891"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q08_p01.json",
+      "sha256": "73aa7f3d574d1ecbb709abcaf901c6eb58e46f9a54ccbba0dc12142f1ed540ce"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q09_p01.json",
+      "sha256": "7ed2cc864f6552dd82c32f2e9a4fb3bb5ee34807bd8cb1871cd0ddef59b9fc33"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q10_p01.json",
+      "sha256": "f1931d995d588c85fddf74ab7c3e2bc50b03ed8cd472ae70b5a68f7871b85fb0"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q11_p01.json",
+      "sha256": "7bf5d33a02f02091648e8353539e37a9938ce184f5104e09aa346fbd4783eb95"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q12_p01.json",
+      "sha256": "dec5ebc8d2f90ac29c46017ecfe323fa1c57e459a859ad6221bcc7c244f3400b"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q13_p01.json",
+      "sha256": "7777b1a711f6b2ce7c283d3407c1565480d8eda095bb918171579880e03183c0"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q14_p01.json",
+      "sha256": "46f4556906b82827f8d893d51c1d14dbae3fe305e3036ca053a46a386f17c965"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q15_p01.json",
+      "sha256": "f2dd66031402be13208780010f33e1e8d633b5448ca2ba279bc5ea7c88b70ce5"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q15_p02.json",
+      "sha256": "2924fc5c532e9aaac5c4ec8fd4340b40d05229027cf07b2c1898f40ff81d97b4"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q16_p01.json",
+      "sha256": "549e7c32bd88bbcfa70f568d81ca86fe40273398309e6b6889f139b998cdf610"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q16_p02.json",
+      "sha256": "da2ac3108fbc5db586552541f2865644038b6bb42aa422d55eb197f74754a22e"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-04_q16_p03.json",
+      "sha256": "d9736c1bd990ae047027f180a4248971d75cdf4f34fde1dc5440b108e77439ea"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q01_p01.json",
+      "sha256": "46154832bfcaa7411320ab44e1822906d886e0c57a288556475e27d7dd720807"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q01_p02.json",
+      "sha256": "da155d95d7303db2164b5ed9ed07fc7a59f07aa1c069ff66e09041d4037ce4cc"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q01_p03.json",
+      "sha256": "614999d9168902dd141a662ffd311e98a7aedd6dd03b970ed2b3fd6362bea682"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q01_p04.json",
+      "sha256": "b19cf7fedeb46e1dc6b1750c07d1a2b2bf25e6eccf69505482ca56e097663649"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q01_p05.json",
+      "sha256": "87de89694f3488c3530f0a628ce50b0206a7e517b8d1b4bb715dae0d19385b65"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q02_p01.json",
+      "sha256": "721e4fa7d1378883d6f5b92b7e504c6a0ec9f8e346988e7021755738f0254385"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q03_p01.json",
+      "sha256": "db92f63b2777a24d3eed20968b6418c84847f1a0e7026c0f046ec7465db5ceb7"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q03_p02.json",
+      "sha256": "1d283603f2f225144556943d31a95922609f2a0d5adbc73bdd88562d93f46cdb"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q03_p03.json",
+      "sha256": "2547b759232fbe9cbd857a0b5332d88ee90a53267093133d8257ca4ba975f234"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q04_p01.json",
+      "sha256": "a4c74743d40d1c0d7a24f1a17a82a7d1f5a6a64931353a0b54130481bb893d1b"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q05_p01.json",
+      "sha256": "53c87c88c090a49a3eace2fa7a383a4afcf8d4e8a3a4a04352c688b302cfeb7a"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q05_p02.json",
+      "sha256": "eeedd198fdc5dce0102d07f72b339eeb791b050db51321722fe4b74880cf9574"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q05_p03.json",
+      "sha256": "487fb44617343cf24ab1b21b0e29ac93495f1dc28e7eb58c0d45b0ed8347b11f"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q05_p04.json",
+      "sha256": "5684af1d12b1c90a8bfe0fe9f0a2938d36f84f57359ef6fd972bd11e12c95110"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q06_p01.json",
+      "sha256": "21e9294af56889c39a28116242c9bf5d87a4e55597b5f22e2b4e6e2643904472"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q07_p01.json",
+      "sha256": "4028de7ea5426bc5543945ac2a327fe5e7990c11ecd5eeb7ee680566411974d7"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q08_p01.json",
+      "sha256": "146bd97574f868f11d87f6caa215c0800c0d428c09e879e12dad2dafa00915aa"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q09_p01.json",
+      "sha256": "5f5726c1ef411b98785dab51ef65388b6f497051796a3c5a9f512b66fe9dd157"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q10_p01.json",
+      "sha256": "10f4c34278eec0e30ccf3aac11953d76631a8e03132d632ba1ba657a0f72511a"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q11_p01.json",
+      "sha256": "1c9ba73ffaf3205185e57c8b058e7b9ed6908571f9e72060aa49c424842685dc"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q12_p01.json",
+      "sha256": "a706c47d4dd8e4bc386b0d178c6361ef0fb5ed5e0e4c84d0782e6269f4881a63"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q13_p01.json",
+      "sha256": "77e8c65bffceffcfb8b1badfabf5568e3b3c74df13e6250c59810e66a531f8e7"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q14_p01.json",
+      "sha256": "e0cfb6571c898f101cc9822eb9e98109c4ae02fa34146b89be555d0a622aa621"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q15_p01.json",
+      "sha256": "ec82bd3a607adf4840860c7dad924b243331896ff495442289a467a5ae38b1bb"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q16_p01.json",
+      "sha256": "27bc1a7a6c748f0fcb35c01fb5c65c178825de027f3c633782c59f54f9917c00"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q16_p02.json",
+      "sha256": "8eb78b1f97e15d0e7e7d82b892ec5baaabdccfdeecde0d4e7b9c39850e22bb1f"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-05_q16_p03.json",
+      "sha256": "dca9d303a310f222a15d3795e8edfe211fae8a4efccd3d6ccf2054f9c721000c"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q01_p01.json",
+      "sha256": "9d114d83500f52a6803bcd7a828cb0c8bdf929d150e7d8201ec81a4215e3585e"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q01_p02.json",
+      "sha256": "9c7648bf59807c7a918deadbafed7b2736d7f2be7cbe92a2b84a6d74c7e905c0"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q01_p03.json",
+      "sha256": "74bc157641529e46fcb626b5f89ec41f617e2d73eb85fb23b5b2c3aec374028e"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q01_p04.json",
+      "sha256": "220aca02e30ba0c91d2515e8ff733925e5aa986e46bed944fd68605f0ebc7e43"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q02_p01.json",
+      "sha256": "27708d67c545b6e141d604a3713ba17354dda6574064815c64b0ff1bd4b5315f"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q03_p01.json",
+      "sha256": "434ad57b4f44605cbe5d28862b508b559c541163451846ae0697f154dd9ef765"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q03_p02.json",
+      "sha256": "c28b5541e8d620ad42ed15531693b1bdcdb52a571b9f354c8daee3a939dbeb2c"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q03_p03.json",
+      "sha256": "e9446f6aa4c0fbb5685bb8a70090d4da768f534de8a0005488a9bba3b4b9a6cf"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q04_p01.json",
+      "sha256": "bb34a8034d6cd5008485615c8fe44ee394bec925e0a80c6f0db02ed290e37468"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q04_p02.json",
+      "sha256": "d8ff83bba5bba6c0f74f8a280404aacb9310aa18efc0dfcfa6136f7e32b27f4f"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q05_p01.json",
+      "sha256": "b765c5b31d5dc0322c6a4c31ceaa3d5441b811847f027615ad1155ef18f07a1c"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q05_p02.json",
+      "sha256": "2ab440536dad6d5f934a7ebb93776c48525f05148c99236393d4c869b3480643"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q05_p03.json",
+      "sha256": "e1645f4c6d5e061277ccd8b4b97801122deb11d8901afd95beff9854536f5524"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q05_p04.json",
+      "sha256": "97d79099450478e877ee43ff7b03852358a53e926085a56591c026fe337dfb8e"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q05_p05.json",
+      "sha256": "8408fc0fa09e71ad52b87e0845d9cd78993a263173cdd578521a5d95d06d38cd"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q06_p01.json",
+      "sha256": "d2e057e9f495478d6bbca4967addec28cb7f8bd0e17cbe698c4e27ca64e72be7"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q07_p01.json",
+      "sha256": "fa7063a07eaf146fa63daec3a4ca50e2d06714a8b4bf384777f0126b39d8296f"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q08_p01.json",
+      "sha256": "7ea684246f41f819dda6d49e0f6baba31a5faaa82630f5a8c03c268f318a6d88"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q09_p01.json",
+      "sha256": "5a914b5c5305f11160feca82a52d8d6fbc084d6274cbe84e0a317d237d450454"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q10_p01.json",
+      "sha256": "1ce3270272ba8b3902858dec0a596944a91b9ef01733bd8725be9bf37438bfe9"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q11_p01.json",
+      "sha256": "eaacc2426094d689d660ec3b3a9349e7e5aab2432c43549c1343f927741373bf"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q12_p01.json",
+      "sha256": "cdba6fe5fd70cbce0adf47695f91f94cb5cd4997c7e39fd944ab67f0ef3fe323"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q13_p01.json",
+      "sha256": "4e6919ac060912b0833457c0bd45884e2f3c3318fc72a1a180fad98fabe39822"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q14_p01.json",
+      "sha256": "acb1285d4032dade8155bf8c8520cedf4fe588b37c779e12ec9736321fa801e8"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q15_p01.json",
+      "sha256": "83a5a142a03e5b589d8a61392fe28adb3fe2a065f0de1ccda42dcd3f9172187f"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q15_p02.json",
+      "sha256": "87672a50efe1f8f6d35f48d10ea0632e14aeef7a93571bd9d5773fae09161531"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q16_p01.json",
+      "sha256": "5c5ead6f68d9c7c33fe825445fc293cd6fb66e29ab79d214dff254e9c6cd5c19"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q16_p02.json",
+      "sha256": "3ddcef62ad033a3a3a0c39d4769cbd2c229ca3149700ae25ba2e2d3a39e8f88e"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-06_q16_p03.json",
+      "sha256": "5082618898fb37a238ea247bdd2248a5225039c7feac625eab85d8093a666bf2"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q01_p01.json",
+      "sha256": "f0004d483ac4b41db583f8aa69221405bcbca91ebea8607577f3785f41ca6e4c"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q01_p02.json",
+      "sha256": "efef383115af5e7dd29d4584b57bb0244abedd4a92b78d548f4fea118d02451c"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q01_p03.json",
+      "sha256": "0ae509b5bb1d9babb6e3086f9de23faaffabe4163ba97fd372e8aff81f946c7a"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q01_p04.json",
+      "sha256": "e52e6e7d120c0a6659d36ea234e0b3fd64cdb4e2b22117a64cca29e944e0fea1"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q02_p01.json",
+      "sha256": "ec34dc32b1eb9cf21a319085404e2b06e5d6158e085955777f45969a4db10849"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q03_p01.json",
+      "sha256": "419441c7f34eeeaea1045c914f040653d9f76a1a22b8c46ce181bf73a0f73a18"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q03_p02.json",
+      "sha256": "f77190478022d4f5ff3cab2ad69e11cf0de8da311ed2fe49f27bab8ecf7c13e0"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q03_p03.json",
+      "sha256": "22e277f77c418fddc78edcc2bd32e6734e2777d5f3e669fe6b416a01a01b66bc"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q04_p01.json",
+      "sha256": "d3056e6031c789a361799a43d3e318d66d31722e64ff34340b256e85e52879e3"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q05_p01.json",
+      "sha256": "a75a98daaec4a9b80234dbb9e70b2e981c85519d9e5bf383a15f290426bc4dbf"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q05_p02.json",
+      "sha256": "50981808c1d104b171440d46c608f626bd27ee40efb957de2af8f2a5e8243d25"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q05_p03.json",
+      "sha256": "321813fa3bcd0d00f0ecbe6b6264e8918637efec08be0bd2157177038aa68986"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q05_p04.json",
+      "sha256": "06b202cc5a3c0e9a33b254a2c39c68eb18c435a48fd32aae4687b36ad97cae44"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q06_p01.json",
+      "sha256": "229760b41a28da5910d12c280b970c6877776130c209fd3b8303fea23ae2d17a"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q07_p01.json",
+      "sha256": "6fb848e2b92e9d87255e68dc74e524238b5ae48f544cfb89defc1a4ec9eda7f9"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q08_p01.json",
+      "sha256": "1a81f9cc8a6866dd39acf16799a2b674f14a737f950059e5036374b5b407fc26"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q09_p01.json",
+      "sha256": "2c7dfae9ac4ff2afe2aea45aab52958fc1c491d640d901101f0ef91212289f75"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q10_p01.json",
+      "sha256": "d5e12bba53110d7f1a586935e88184d9bd1ee856dac3426d53292924018fb214"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q11_p01.json",
+      "sha256": "12a2ccc915a69c02bb5aa851c349db8a913d8b6d07cc58f6496015332e449ee6"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q12_p01.json",
+      "sha256": "7f36856090c46f195e5f0fae3b59d7b1025af1f9522a2702f46d596d48de917b"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q13_p01.json",
+      "sha256": "fb55d6bc5e81dfe9db5e7d6eeb097d987aa5b53024836582cfef3325b5394c09"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q14_p01.json",
+      "sha256": "99bdb1080f61fee3c597ce1fec409e0ae02e616fab7825206521c3ef8b39e585"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q15_p01.json",
+      "sha256": "914a3f8516ad4f65d54caec6fa7d6670f69110f3c3de57a576777b75d23a8fd5"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q15_p02.json",
+      "sha256": "262a5ab7fe7a124e0fec6df9d5c81fe1a8c377256c3d35005e60847abfa506c1"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q16_p01.json",
+      "sha256": "af002884a6ed9b6ac432464dc2d9b11bd0f1aae5ab425166e39afce901e40c12"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q16_p02.json",
+      "sha256": "ef88de8b2377b880e9347a7c9a1a15c49313b40b5ceb5783fdae8258c021eee7"
+    },
+    {
+      "path": "/Users/yipmanho/projects/cs5488/交付数据/B_双年份自动筛选_20261114/2026/candidates/search_pages/2026-04-07_q16_p03.json",
+      "sha256": "18b65330281bc4ee1edcd3f44f57ad31874da42d0c81f9f1700c7da6d5a3c466"
+    }
+  ],
+  "scope": "Currently public non-fork repositories matching saved queries; not all historical AI repositories"
+}

@@ -1,0 +1,7 @@
+cohort_year,data_kind,band,cohort_size,complete_21d_repos,not_complete_21d_repos,active_repos,active_ratio,total_events_sum,events_median,events_q25,events_q75,active_days_median,active_days_q25,active_days_q75,label_validation_status
+2024,Real Data,day_1_7,200,200,0,173,0.865,11845,6.0,2.0,13.0,2.0,1.0,3.0,assistant_reviewed_user_scope
+2024,Real Data,day_8_14,200,200,0,63,0.315,2917,0.0,0.0,2.0,0.0,0.0,1.0,assistant_reviewed_user_scope
+2024,Real Data,day_15_21,200,200,0,60,0.3,2613,0.0,0.0,1.0,0.0,0.0,1.0,assistant_reviewed_user_scope
+2026,Real Data,day_1_7,200,200,0,157,0.785,1678,2.0,1.0,7.0,1.0,1.0,2.0,assistant_reviewed_user_scope
+2026,Real Data,day_8_14,200,200,0,48,0.24,627,0.0,0.0,0.0,0.0,0.0,0.0,assistant_reviewed_user_scope
+2026,Real Data,day_15_21,200,200,0,37,0.185,558,0.0,0.0,0.0,0.0,0.0,0.0,assistant_reviewed_user_scope

@@ -1,0 +1,10 @@
+{
+  "start": "2026-04-01",
+  "end": "2026-04-27",
+  "state": "completed",
+  "stage": "completed",
+  "error": "CalledProcessError: Command '['/opt/homebrew/Caskroom/miniforge/base/envs/cs5488-data/bin/python', '/Users/yipmanho/projects/cs5488/github_analyze_group_project/a_data_pipeline/rolling_pipeline/weekly_merge.py', '--start', '2026-04-01', '--end', '2026-04-27', '--root', '/Users/yipmanho/projects/cs5488/github_analyze_group_project/a_data_pipeline/runs/cohort_2026_0401_0427', '--output', '/Users/yipmanho/projects/cs5488/github_analyze_group_project/a_data_pipeline/runs/cohort_2026_0401_0427/combined_20260401_20260427_01']' returned non-zero exit status 1.",
+  "two_day_check": "/Users/yipmanho/projects/cs5488/github_analyze_group_project/a_data_pipeline/runs/cohort_2026_0401_0427/two_day_check_01",
+  "final_output": "/Users/yipmanho/projects/cs5488/github_analyze_group_project/a_data_pipeline/runs/cohort_2026_0401_0427/combined_20260401_20260427_02",
+  "resumed_merge": "combined_20260401_20260427_02; memory tuned local copy"
+}

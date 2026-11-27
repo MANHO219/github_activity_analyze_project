@@ -1,0 +1,16 @@
+event_type,event_count,share,repo_count
+WatchEvent,10091,0.5625,77
+PushEvent,3301,0.184,154
+ForkEvent,958,0.0534,22
+PullRequestEvent,858,0.0478,19
+CreateEvent,769,0.0429,149
+IssueCommentEvent,750,0.0418,16
+IssuesEvent,409,0.0228,19
+DeleteEvent,316,0.0176,64
+PullRequestReviewEvent,222,0.0124,7
+PullRequestReviewCommentEvent,95,0.0053,4
+ReleaseEvent,94,0.0052,21
+PublicEvent,40,0.0022,40
+MemberEvent,24,0.0013,14
+GollumEvent,8,0.0004,2
+CommitCommentEvent,4,0.0002,2

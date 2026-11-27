@@ -1,0 +1,15 @@
+{
+  "start": "2024-04-01",
+  "end": "2024-04-27",
+  "state": "completed",
+  "stage": "completed",
+  "last_completed_day": "2024-04-27",
+  "last_error": "",
+  "resumed_at": "2026-11-14T10:05:00+00:00",
+  "paused_at": "2026-11-14T09:32:08+00:00",
+  "two_day_check": "/Users/yipmanho/projects/cs5488/github_analyze_group_project/a_data_pipeline/runs/cohort_2024_0401_0427/two_day_check_01",
+  "final_output": "/Users/yipmanho/projects/cs5488/github_analyze_group_project/a_data_pipeline/runs/cohort_2024_0401_0427/combined_20240401_20240427_01",
+  "completed_at": "2026-11-14",
+  "historical_error": "CalledProcessError: Command '['/opt/homebrew/Caskroom/miniforge/base/envs/cs5488-data/bin/python', '/Users/yipmanho/projects/cs5488/github_analyze_group_project/a_data_pipeline/rolling_pipeline/weekly_pipeline.py', '--start', '2024-04-15', '--end', '2024-04-15', '--output', '/Users/yipmanho/projects/cs5488/github_analyze_group_project/a_data_pipeline/runs/cohort_2024_0401_0427', '--volume', '/Volumes/T7 4 Mac', '--raw-root', '/Volumes/T7 4 Mac/cs5488/cohort_21d/2024/raw']' returned non-zero exit status 1.",
+  "historical_notes": "Earlier interrupted attempts on 2024-04-15 and 2024-04-18 were retried successfully; all 27 days and final merge passed."
+}

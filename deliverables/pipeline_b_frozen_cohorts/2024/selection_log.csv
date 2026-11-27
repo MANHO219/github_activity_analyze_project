@@ -1,0 +1,201 @@
+repo_id,cohort_year,repo_name,random_priority,selection_source,assistant_reason
+781222592,2024,qhuy0801/fin_timeseries,2,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780531151,2024,zezs/Smart-Marketing-Tool,3,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782966150,2024,xibn/http-openai-tts,4,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782809663,2024,shri30yans/3dgen,5,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783209821,2024,Trust4AI/EVA,6,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780949546,2024,mim-solutions/mim_nlp,7,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780649805,2024,cancer-estimator/application,8,original_reviewed,README 明确需同步 trained model 文件；癌症风险估计为核心，非只靠 AI topic。
+781183337,2024,adrien-lagesse/gnnco,9,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783066275,2024,snowclipsed/cricket_news,10,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782168829,2024,SatvikVarshney/GenAI-EvenMNIST,11,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781180277,2024,areebahmed575/Mcqs-Generator,13,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782786650,2024,wtyhub/MuseNet,14,original_reviewed,University-1652 是数据集名称，不能据此当成大学课程作业。
+781284374,2024,AsifIkbal1/Regression-for-Abalone-Age,15,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782136723,2024,AadithyaSairam/Pneumonia-Scans,16,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782922778,2024,yash-gajjjar/Predicting-Medical-Insurance-Price-ML,17,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780643729,2024,sarveshdesai/housing_visual,18,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782943222,2024,ramakrishnan2503/Melodify.ai,20,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783337846,2024,shevtsev/WordWeaver-AI,21,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780804295,2024,dynamicanupam/Skin_Cancer_Detection_using_CNN,22,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782685730,2024,HPC-Fortran2CPP/Fortran2Cpp,23,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782990636,2024,MSKazemi/ThermADNet,24,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783080347,2024,BooBSD/Tsetlin.jl,28,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782136073,2024,alingavriliuc/reinforcement-learning-gym-taxi-v3,29,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782747473,2024,KevKibe/docindex,31,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783040030,2024,Seja-menath-dev/SnapWiz-Ai-Chatbot,32,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780484438,2024,mdodovic/OMP-ChatGPT-and-Copilot,33,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782059899,2024,Cyber-Aju/Diabetic_retinopathy,35,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781703473,2024,Hanadali818/ReallySmartBrain,37,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781784912,2024,Xage0424/Comparative-Analysis-of-Activation-Functions-in-Shallow-Neural-Networks-for-Multi-Class-Image,38,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782984260,2024,vikasgrewal16/Cricketers-Retirement-Age-Prediction,39,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781446775,2024,despinoza119/EDA_and_NLP_test,40,original_reviewed,核心为分类算法与 LLM 摘要；internship technical test 不自动等同课程/训练营，保留来源备注。
+781702050,2024,straslerj/pdga-flight-forecast,41,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781600761,2024,threedle/iSeg,42,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781322390,2024,SurajSanap/Sale.Pred-ML,43,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782787384,2024,TylorShine/MNP-SVC,44,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781388020,2024,DVSR1411/SpamURLDetector,45,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781599192,2024,TianciGao/RussScholar-Seeker,46,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781841505,2024,SciPhi-AI/r2r-js,47,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783379048,2024,cu-sanjay/MusicRecommender,48,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780819138,2024,waleedgeo/FSM-PK,49,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780585311,2024,heitorrapela/ModTr,50,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782722981,2024,Guacam-Ole/chattygpt,51,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780321662,2024,Mohitkr95/qdrant-multi-node-cluster,52,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783434157,2024,Kaushal-Bora/StatePredictionModel,53,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781121800,2024,wayzeek/CustomGPT,55,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781422671,2024,Usama3627/tokenizer,56,original_reviewed,BPE tokenizer 是可复用 AI 工程组件；自学动机不等于课程作业。
+783459378,2024,darshpanchal/llm-server,58,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781194715,2024,Gyakobo/local-language-model,59,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781613870,2024,ShahDishank/placement_predictor,60,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780590337,2024,TanayKelkar/Style-Transfer-Using-VGG,64,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780625081,2024,lukasbach/pensieve,65,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782214994,2024,lag25/AutoPercept,66,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781783608,2024,yamamura-k/ReACG,68,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782717542,2024,nmcintyre5/cervicalCancerRiskML,69,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780440546,2024,Lizhaoyite/MALDINet,71,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781747990,2024,nassimmokhtari/Spatio-Temporal-Image-Encoding,73,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780853098,2024,Feel-The-AGI/alina-gpt-3.5-turbo-bot,77,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782434006,2024,tetis-nlp/landmatrix-graphql-python,78,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782217246,2024,devbravo/Banking-Intent-Classifier-BE,80,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782417074,2024,670027822/songshuAI-chatgpt-midjourneyplus--ppt-,85,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780616864,2024,amirR01/Federated-Learning,86,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781630643,2024,vojay-dev/gemini-movie-detectives-api,88,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781989746,2024,pew/cloudflare-workers-openai-mock,89,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783404269,2024,mohammadhprp/punny-picks,90,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782062101,2024,suraj1849/DeepFake-Video-Detection,91,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782963137,2024,susmitbanerjee/prediction_algorithms,93,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780299046,2024,GNOEYHEAT/PatchCore_transistor,95,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782047747,2024,CJReinforce/RIME_ICML2024,96,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783145936,2024,looechao/AQI-ML-Python,97,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781583583,2024,SR-Sujon/Chatter-AI,102,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782726712,2024,jrguignan/Descenso_del_Gradiente-from_scratch,103,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782629300,2024,willxxy/Text-EGM,104,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783396782,2024,rosyteran/Human-Stress-Analysis,106,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782703793,2024,m3mentomor1/Pneumonia_Detection_with_Lightweight-CNN-Models,107,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781435999,2024,dlr-wf/crack_tip_correction_symbolic_regression,108,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781670662,2024,Hanadali818/Machine-learning-1,109,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780573822,2024,vduseev/llmsh,110,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783095698,2024,JersonGB22/NeuralStyleTransfer-TensorFlow-PyTorch,111,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783278927,2024,arcuru/chaz,112,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781494921,2024,qiwang067/CoWorld,113,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781386414,2024,progremister/codera_ai,116,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781681513,2024,SystemSculpt/obsidian-systemsculpt-ai,121,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782553041,2024,prasadmallampati/Image_Recognition_for_Medical_Diagnosis_Advancing_Healthcare_with_Data_Science,123,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782371678,2024,Flames1217/LOL-DeepWinPredictor,124,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783193336,2024,yuhexiong/cbow-word2vec-pca-nlp-python,125,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781370915,2024,bookbot-hive/OpenBible-TTS,126,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780336753,2024,tamanna-sb/CHIME---ChatGPT-Inaccuracy-Mitigation-Engine,127,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781757543,2024,YAV-AI/Node.js-Azure-OpenAI-Custom-Tools-Starter,128,original_reviewed,Azure OpenAI custom-tools starter 是可复用 API 工程脚手架，不能仅因 starter 一词排除。
+781049548,2024,HenriTeinturier/ScrapEmbeddingNextjsDoc,129,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781043217,2024,zjysteven/mink-plus-plus,131,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781552261,2024,willian-kaminski/springboot-openai-chat,135,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782424349,2024,kethan-git/sentiment-analysis-finance-ml,136,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783332728,2024,nirdesh17/House-Price-Prediction,138,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783320256,2024,kjhq/Dusic,139,original_reviewed,README 明确自然语言交互由 LLM function calling 驱动；并非仅凭音乐机器人名称。
+780457497,2024,silaorg/sila,140,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780737106,2024,SWE-agent/SWE-agent,141,original_reviewed,大学研究组维护的论文/研究软件不等于课程作业。
+781968248,2024,echohello-dev/transcribe-me,143,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780897965,2024,DenisovAV/flutter_edge_ai,145,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782706135,2024,receptron/graphai,146,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780223652,2024,mlflow-oidc/mlflow-oidc-auth,147,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782209953,2024,hyungyokim/LIA_AMXGPU,148,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783284386,2024,boralg/sayle,149,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781845746,2024,swarnima000/Hotspot-Detection,150,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783190436,2024,VIROOPAKSHC/StreamBoard,151,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781056528,2024,kailash19961996/GenAI_Transformers_NLP,152,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781225308,2024,fattorib/CudaSoftmax,153,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781876363,2024,asciieyes/twaddle,154,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780803344,2024,angelo-casciani/Trace_similarity_LLM,155,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783120969,2024,Fus3n/TwoAI,157,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782703929,2024,Mufassir-Chowdhury/BnPC,158,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783357606,2024,AaryanAnand10/Flappy_Bird_AI,159,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780800384,2024,Sakthe-Balan/SynthLearn,160,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781139182,2024,ahmadsotoude/Diabetes_KNN,161,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781540794,2024,adityaoberai/CharacterChat,162,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781342292,2024,LlamaEdge/rag-api-server,164,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780854967,2024,Feel-The-AGI/MuraAI,165,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782792894,2024,bkmulusew/ml_pairs_trading,166,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+782730473,2024,olasupo/bubbln_network-automation,168,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780572983,2024,ksasso1028/vintage_vectors,169,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781082225,2024,neopadAI/monkeyAI,170,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781838172,2024,Raj-Dusane/DhrishtiYaan,171,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781765518,2024,ojaviva/OpenAI-Chatbot-Streamlit,172,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780554649,2024,slovanos/EmailManager,174,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783338157,2024,veb-101/keras-vision,175,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781914762,2024,julep-ai/julep,176,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783451877,2024,kyegomez/NeoSapiens,178,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780449841,2024,0xnu/fine_tune_llm_docker,179,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781739851,2024,jp1924/HF_builders,180,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780974651,2024,milosgajdos/playht_rs,181,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783331951,2024,tvone/subtitle-translator-electron,182,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780334059,2024,manthan-modi/people-tracking-system,183,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783160555,2024,egyajure/Dahlia-Detector,185,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781912774,2024,ChenHongruixuan/ChangeMamba,187,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781728535,2024,kahramankostas/Multi-class-attack-detection-on-NSL-KDD-dataset-using-TabTransformer,188,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780971315,2024,IcQuackson/Specto-Bard,193,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781138799,2024,averagepythonfan/mongomv,194,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780465897,2024,m-asaduddin/cnn-orange-disease,195,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780212890,2024,techysanjo/AmazonReviews_SentimentAnalysis_FineTune_BERT,196,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780335547,2024,Faisal-khann/Desktop-voice-Assistant,197,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+780303593,2024,engageintellect/svelte-ai-injection,199,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783416917,2024,MagnumVD/RotoForge-AI,202,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+783182194,2024,btfranklin/promptdown,203,original_reviewed,用途说明明确指向 AI 模型、应用、数据/评测或专用工程组件；本次查阅的描述/用途片段未见明确排除条件。
+781601283,2024,mmarinel/N-Puzzle-AI,204,reviewed_reserve,经典 N-Puzzle 搜索属于 AI 问题求解，不要求必须训练神经网络。
+781014196,2024,technion-cs-nlp/BiologicalTokenizers,205,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+781842817,2024,Aftar-Ahmad-Sami/Optical-Text-AI-Extractor,206,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783028764,2024,parsehex/buddyGenAI,209,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+782987057,2024,nguyenhung1903/VisionTransformer,210,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+780853166,2024,Feel-The-AGI/AIrticle,211,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+780421902,2024,dvp-git/RAG_mistralai_chat_bot,212,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+781397360,2024,Tanwar-12/SKIN-DISORDER-DETECTION,214,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+781396021,2024,Hollfelder-Lab/lrDMS-IRED,216,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+780986385,2024,ioannapoulou/TweetClassifier,218,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+780853308,2024,Feel-The-AGI/Discord-bot-js,220,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783000598,2024,Craniace/Image-Processing,221,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+781332181,2024,meliani/ai-voice-cli,222,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783036577,2024,juanjosemayorga/gptgenius,223,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+782881893,2024,ineshshukla/athena,224,reviewed_reserve,negamax/alpha-beta 棋类引擎属于经典 AI 搜索。
+780231135,2024,somenath203/malaria-cell-image-classification,225,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783126023,2024,microsoft/nnscaler,226,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+780548611,2024,eduardosantoshf/Major-bot,227,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+782129890,2024,shyde7/GPT-Discord-Bot,228,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+780641267,2024,blegodwin/deployment,229,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783182947,2024,DittoOne/sportPersonClassifier,231,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+781995058,2024,tobiasschreieder/aramis-image-argument-search,232,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+781692267,2024,Shuvob4/llm-app,233,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+780710789,2024,aymane-maghouti/Big-Data-Project,234,reviewed_reserve,README 明确使用 XGBoost 预测手机价格，未见明确课程制作证据。
+783097166,2024,JersonGB22/VAE-TensorFlow-PyTorch,235,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+781095782,2024,97k/YoutubeVideoAssistant,237,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783095005,2024,JersonGB22/GANControllableGeneration-TensorFlow-PyTorch,238,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+781033068,2024,sowmyavi/Digit-Recognition-Program,239,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+781232083,2024,zeeshanibrarali/Iris-dataset-Deep-learning-Classification,241,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783366487,2024,lucasangio01/statistical-learning-methods,242,reviewed_reserve,README 明确 PCA/聚类/随机森林/XGBoost；不能仅凭 PROJECT 标题推断课程作业。
+782416228,2024,Geo-y20/Airlines-Reviews-Prediction-Project,244,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+780957948,2024,ausboss/dbotjs,245,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+781477404,2024,aashnajoshi/Respiratory_Sound_Dataset,246,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783426413,2024,seanvelasco/ai,247,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+780606195,2024,Cl0ud-9/Weather-Prediction-Model,248,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783163112,2024,IvanLuLyf/bunny-llm,250,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+781639175,2024,Abhigyan126/Eng-to-HIN-Translator,251,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783274760,2024,noorkhokhar99/Track-Count-Objects-and-Speed-Estimation-using-YOLOv8-ByteTrack-Supervision,252,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+781524183,2024,WecoAI/aideml,253,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+782962591,2024,karanparekh14/Lead-Score-Case-Study,254,reviewed_reserve,X Education 是业务数据案例里的在线教育客户，并非作者参加课程的证据。
+781204260,2024,Roll4d4/KLEP,257,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783236475,2024,imtej/Stock-Trend-and-Price-Prediction-using-DL,258,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+780588363,2024,suprasauce/RNN_MEDIUM,261,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+782466723,2024,paulinelemenkova/Floods_Ganges_GRASS_GIS_DL_Image_Analysis,262,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783238323,2024,se-abdullahmustafa/IndustrialWatch,265,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+782489793,2024,rajsinghparihar/shoplifting-detection,266,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+782810589,2024,anselm94/cf-challenge-ai-storycard,267,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783211190,2024,Saeed-Biabani/LipReading,268,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+780526227,2024,veneta13/Spaceship-Titanic,271,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+780748910,2024,HritikDiyundi/Deep-Q-Learning-for-Lunar-Landing,272,reviewed_reserve,README 虽有生成式文案痕迹，但明确提供 DQN 网络、训练和 LunarLander 演示，不能因此当纯安装资料。
+781121779,2024,sonhm3029/Vietnamese-OCR-from-scratch-pytorch,273,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+781484980,2024,Tristan-Amadei/NLP,274,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+780783261,2024,webb-c/FrameDrop-RL-Jetson,275,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783356463,2024,RCSS-IR/futsal-challenge,276,reviewed_reserve,机器人足球仿真挑战环境可作为 AI 训练/评测基础设施。
+782903518,2024,taherfattahi/embedding-optimizer,279,reviewed_reserve,README 具体给出 EmbeddingOptimizer 和 LangChain/OpenAI/FAISS 用法，作为 RAG 工程组件保留。
+781047223,2024,SekelMadness/flask_azureapp_recommender,282,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+780935090,2024,F4biian/HalluRAG,283,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。
+783453627,2024,IBIZZI-Khalid/Data-Harvest-Ecommerce-Data-Collector-analyzer-,284,reviewed_reserve,描述与 README 用途支持 AI 模型、应用或专用工程组件；本次证据中未见明确课程/学位/资料集合排除条件。

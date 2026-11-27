@@ -1,0 +1,11 @@
+{
+  "sample_days": 27,
+  "average_raw_bytes_per_day": 2398333051,
+  "average_retained_daily_bytes": 616773074,
+  "estimated_30_days_raw_if_all_kept_bytes": 71949991532,
+  "estimated_30_days_daily_retained_bytes": 18503192216,
+  "additional_final_merge_outputs_and_peak_temp_are_not_included": true,
+  "two_day_merge": "/Users/yipmanho/projects/cs5488/github_analyze_group_project/a_data_pipeline/runs/cohort_2024_0401_0427/two_day_check_01",
+  "final_merge_sampled_temp_peak_bytes": 0,
+  "note": "Linear estimates use the measured date range; archive sizes and merge requirements vary."
+}
